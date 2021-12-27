@@ -11,7 +11,7 @@
         <tr><th>{{ translations.iron }}</th><td>{{ calculatedInputs.iron }}/h ({{ rawCalculatedInputs.iron }})</td><td>iron production per hour reduced by celebration needs</td></tr>
         <tr><th>{{ translations.crop }}</th><td>{{ calculatedInputs.crop }}/h ({{ rawCalculatedInputs.crop }})</td><td>crop production per hour reduced by celebration needs</td></tr>
         <tr><th>{{ translations.total }}</th><td>{{ calculatedInputs.total }}/h</td><td>total production per hour ignoring negative production</td></tr>
-        <tr><th>{{ translations.celebration }}</th><td>{{ inputs.celebration }}</td><td>desired celebrations to keep going 24/7</td></tr>
+        <tr><th>{{ translations.celebration }}</th><td>{{ translations[inputs.celebration] }}</td><td>desired celebrations to keep going 24/7</td></tr>
     </table>
     {% if results.error %}
         <p class="error">{{ results.error }}</p>
@@ -41,7 +41,7 @@
     </fieldset>
     <fieldset>
         <legend>{{ translations.celebrations }}</legend>
-        <label>Town Hall Level<input type="number" step='1' min='0' name="town_hall" value="{{ inputs.town_hall }}"/></label>
+        <label>{{ translations.town_hall_level }}<input type="number" step='1' min='0' name="town_hall" value="{{ inputs.town_hall }}"/></label>
         <label>{{ translations.celebration }}<select name="celebration">
                 <option value='none' {% if inputs.celebration == 'none' %}selected{% endif %}>{{ translations.none }}</option>
                 <option value='small' {% if inputs.celebration == 'small' %}selected{% endif %}>{{ translations.small }}</option>
@@ -50,7 +50,7 @@
     </fieldset>
     <fieldset>
         <legend>Advanced</legend>
-        <label title="Only select if it's wrongly detected">Tribe*<select name="tribe">
+        <label title="{{ translations.tribe_title }}">{{ translations.tribe }}*<select name="tribe">
                 <option value='auto' {% if inputs.speed == 'auto' %}selected{% endif %}>{{ translations.automatically }}</option>
                 <option value='vid_1' {% if inputs.speed == 'vid_1' %}selected{% endif %}>{{ translations.romans }}</option>
                 <option value='vid_2' {% if inputs.speed == 'vid_2' %}selected{% endif %}>{{ translations.teutons }}</option>

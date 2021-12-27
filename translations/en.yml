@@ -38,3 +38,5 @@ huns: Huns
 additional_target: Additional Target
 additional_target_title: 0|0 will be ignored
 only_crop: Only Crop
+town_hall_level: Town Hall Level
+tribe_title: Only select if it's wrongly detected
