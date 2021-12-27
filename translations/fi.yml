@@ -1,0 +1,43 @@
+title: Travian Calculators
+home: Home
+delivery: Lähetä resursseja
+imprint: Imprint
+travian_footer: This website is in no way endorsed by Travian Legends or Travian GmbH and is merely meant as a tool for players.
+welcome_header: Tervetuloa!
+welcome_text: Valitse laskuri yläpuolen valikosta.
+delivery_calculator: Lähetä resursseja
+inputs: Tiedot
+tribe: Heimo
+speed: Nopeus
+world_speed: Pelimaailman nopeus
+capacity: Kantokyky
+lumber: Puu
+clay: Savi
+iron: Rauta
+crop: Vilja
+total: Yhteensä
+celebration: Juhlinta
+trade_every: Lähetys joka
+traders_per_trade: Kauppiaita tarvitaan
+travel_time: Matka-aika
+distance: Etäisyys
+main: Main
+source: Lähdekoodi
+source_title: Kopioi torin "lähetä resursseja" sivun lähdekoodi tähän.
+celebrations: Juhlinta
+help: Do you want to help with code or translations?
+none: None
+small: Pieni
+great: Suuri
+automatically: Automaattinen
+romans: Roomalaiset
+teutons: Teutonit
+gauls: Gallialaiset
+egyptians: Egyptiläiset
+huns: Hunnit
+additional_target: Additional Target
+additional_target_title: 0|0 will be ignored
+only_crop: Vain vilja
+town_hall_level: Kaupungintalon taso
+tribe_title: Valitse vain jos ei automaattisesti havaittu
+advanced: Advanced
