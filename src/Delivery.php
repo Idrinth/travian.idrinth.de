@@ -3,10 +3,11 @@
 namespace De\Idrinth\Travian;
 
 use DOMDocument;
-use InvalidArgumentException;
 use Throwable;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
+use UnexpectedValueException;
+use Webmozart\Assert\Assert;
 
 class Delivery {
     private static $townHall = [
@@ -51,7 +52,7 @@ class Delivery {
         } else {
             $tribeCheck = $tribeInput;
         }
-        \Webmozart\Assert\Assert::inArray($tribeCheck, array_keys(self::$tribes), 'Unknown tribe.');
+        Assert::inArray($tribeCheck, array_keys(self::$tribes), 'Unknown tribe.');
         return self::$tribes[$tribeCheck];
     }
     private function getSpeed(\DOMDocument $doc): int
@@ -61,8 +62,8 @@ class Delivery {
             if (preg_match('/Travian.Game.speed\s+=/', $scripts->item($i)->textContent)) {
                 preg_match('/Travian.Game.speed\s=\s+([0-9]+);/', $scripts->item($i)->textContent, $matches);
                 $speed = intval($matches[1], 10);
-                \Webmozart\Assert\Assert::greaterThanEq($speed, 1, 'Speed was below 1');
-                \Webmozart\Assert\Assert::lessThanEq($speed, 10, 'Speed was above 10');
+                Assert::greaterThanEq($speed, 1, 'Speed was below 1');
+                Assert::lessThanEq($speed, 10, 'Speed was above 10');
                 return $speed;
             }
         }
@@ -117,7 +118,7 @@ class Delivery {
     {
         $data['village'] = $village;
         $data['distance'] = round(sqrt(($village['x'] - $rootVillage['x'])*($village['x'] - $rootVillage['x']) + ($village['y'] - $rootVillage['y'])*($village['y'] - $rootVillage['y'])) * 10) / 10; 
-        $data['travelTime'] = ceil(3600 * ['distance'] / $data['calculatedInputs']['speed'] / $data['calculatedInputs']['worldspeed']);
+        $data['travelTime'] = ceil(3600 * $data['distance'] / $inputs['speed'] / $inputs['worldspeed']);
         $data['traders'] = 0;
         do {
             $data['traders']++;
@@ -134,6 +135,7 @@ class Delivery {
     {
         $twig = new Environment(new FilesystemLoader(dirname(__DIR__) . '/templates'));
         $data = [
+            'translations' => Translations::get($_COOKIE['lang'] ?? 'en'),
             'inputs' => [
                 'content' => $post['content'] ?? '',
                 'tribe' => $post['tribe'] ?? 'auto',
@@ -150,7 +152,7 @@ class Delivery {
                 $doc->loadHTML($data['inputs']['content']);
                 list($data['calculatedInputs']['speed'], $data['calculatedInputs']['tribe']) = $this->getTribe($data['inputs']['tribe'], $doc);
                 $data['calculatedInputs']['capacity'] = intval($doc->getElementById('addRessourcesLink1')->textContent, 10);
-                \Webmozart\Assert\Assert::greaterThan($data['calculatedInputs']['capacity'], 0, 'Wrong page entered.');
+                Assert::greaterThan($data['calculatedInputs']['capacity'], 0, 'Wrong page entered.');
                 $data['rawCalculatedInputs'] = $this->getProduction($doc);
                 $data['calculatedInputs'] += $data['rawCalculatedInputs'];
                 $data['calculatedInputs']['worldspeed'] = $this->getSpeed($doc);

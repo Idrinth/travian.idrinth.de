@@ -33,24 +33,32 @@
         {% endfor %}
     {% endif %}
 {% endif %}
-<p>Enter the source code of the market place's send window</p>
 <form method="post">
-    <label>Source Code<textarea name="content">{{ inputs.content }}</textarea></label>
-    <label>Town Hall Level<input type="number" step='1' min='0' name="town_hall" value="{{ inputs.town_hall }}"/></label>
-    <label>Celebration<select name="celebration">
-            <option value='none' {% if inputs.celebration == 'none' %}selected{% endif %}>None</option>
-            <option value='small' {% if inputs.celebration == 'small' %}selected{% endif %}>Small</option>
-            <option value='great' {% if inputs.celebration == 'great' %}selected{% endif %}>Great</option>
-        </select></label>
-    <label title="Only select if it's wrongly detected">Tribe*<select name="tribe">
-            <option value='auto' {% if inputs.speed == 'auto' %}selected{% endif %}>Automatically</option>
-            <option value='vid_1' {% if inputs.speed == 'vid_1' %}selected{% endif %}>Romans</option>
-            <option value='vid_2' {% if inputs.speed == 'vid_2' %}selected{% endif %}>Teutons</option>
-            <option value='vid_3' {% if inputs.speed == 'vid_3' %}selected{% endif %}>Gaul</option>
-            <option value='vid_6' {% if inputs.speed == 'vid_6' %}selected{% endif %}>Egyptians</option>
-            <option value='vid_7' {% if inputs.speed == 'vid_7' %}selected{% endif %}>Huns</option>
-        </select></label>
-    <input type="submit"/>
+    <fieldset>
+        <legend>Main</legend>
+        <label title="Enter the source code of the market place's send window.">Source Code*<textarea name="content">{{ inputs.content }}</textarea></label>
+        <input type="submit"/>
+    </fieldset>
+    <fieldset>
+        <legend>Celebrations</legend>
+        <label>Town Hall Level<input type="number" step='1' min='0' name="town_hall" value="{{ inputs.town_hall }}"/></label>
+        <label>Celebration<select name="celebration">
+                <option value='none' {% if inputs.celebration == 'none' %}selected{% endif %}>None</option>
+                <option value='small' {% if inputs.celebration == 'small' %}selected{% endif %}>Small</option>
+                <option value='great' {% if inputs.celebration == 'great' %}selected{% endif %}>Great</option>
+            </select></label>
+    </fieldset>
+    <fieldset>
+        <legend>Advanced</legend>
+        <label title="Only select if it's wrongly detected">Tribe*<select name="tribe">
+                <option value='auto' {% if inputs.speed == 'auto' %}selected{% endif %}>Automatically</option>
+                <option value='vid_1' {% if inputs.speed == 'vid_1' %}selected{% endif %}>Romans</option>
+                <option value='vid_2' {% if inputs.speed == 'vid_2' %}selected{% endif %}>Teutons</option>
+                <option value='vid_3' {% if inputs.speed == 'vid_3' %}selected{% endif %}>Gaul</option>
+                <option value='vid_6' {% if inputs.speed == 'vid_6' %}selected{% endif %}>Egyptians</option>
+                <option value='vid_7' {% if inputs.speed == 'vid_7' %}selected{% endif %}>Huns</option>
+            </select></label>
+    </fieldset>
 </form>
 {% include 'footer.twig' %}
 <script>

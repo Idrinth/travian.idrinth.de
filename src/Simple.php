@@ -10,7 +10,7 @@ class Simple {
     public function run(string $template): void
     {
         $twig = new Environment(new FilesystemLoader(dirname(__DIR__) . '/templates'));
-        $twig->display($template);
+        $twig->display($template, ['translations' => Translations::get($_COOKIE['lang'] ?? 'en')]);
     }
 
 }
