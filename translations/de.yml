@@ -2,3 +2,39 @@ title: Travian Rechner
 home: Home
 delivery: Lieferung
 imprint: Impressum
+travian_footer: Diese Webseite ist in keiner Weise von Travian Legends oder Travian GmbH unterstützt und stellt lediglich ein Werkzeug für Spieler dar.
+welcome_header: Willkommen!
+welcome_text: Wähle einen Rechner aus dem obrigen Menü aus.
+delivery_calculator: Lieferrechner
+inputs: Eingaben
+tribe: Stamm
+speed: Geschwindigkeit
+world_speed: Weltgeschwindigkeit
+capacity: Kapazität
+lumber: Holz
+clay: Lehm
+iron: Eisen
+crop: Getreide
+total: Gesamt
+celebration: Feier
+trade_every: Ein Handle jede
+traders_per_trade: Händler pro Handel
+travel_time: Reisezeit
+distance: Distanz
+main: Hauptinformationen
+source: Quellcode
+source_title: Füge den Quelllcode des Verschicken-Fensters des Marktplatzes ein.
+celebrations: Feiern
+help: Möchtest du mit Code oder Übersetzungen helfen?
+none: Keine
+small: Kleine
+great: Große
+automatically: Automatisch
+romans: Römer
+teutons: Germanen
+gauls: Gallier
+egyptians: Ägypter
+huns: Hunnen
+additional_target: Zusätzliches Ziel
+additional_target_title: 0|0 wird ignoriert
+only_crop: Nur Getreide
