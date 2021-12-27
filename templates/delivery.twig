@@ -62,7 +62,6 @@
         <label>{{ translations.only_crop }}*<input type="hidden" name="only_crop" value="0"/><input type="checkbox" name="only_crop" {% if inputs.only_crop %}checked {% endif %}value="1"/></label>
     </fieldset>
 </form>
-{% include 'footer.twig' %}
 <script>
     (() => {
         const els = document.getElementsByClassName('result');
@@ -71,3 +70,4 @@
         }
     })();
 </script>
+{% include 'footer.twig' %}
