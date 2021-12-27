@@ -59,7 +59,7 @@
                 <option value='vid_7' {% if inputs.speed == 'vid_7' %}selected{% endif %}>{{ translations.huns }}</option>
             </select></label>
         <label title="{{ translations.additional_target_title }}">{{ translations.additional_target }}*<input type="number" name="x" value="{{ inputs.x }}"/>|<input type="number" name="y" value="{{ inputs.y }}"/></label>
-        <label>{{ translations.only_crop }}*<input type="hidden" name="only_crop" value="0"/><input type="checkbox" name="only_crop" {% if inputs.cop_only %}checked {% endif %}value="1"/></label>
+        <label>{{ translations.only_crop }}*<input type="hidden" name="only_crop" value="0"/><input type="checkbox" name="only_crop" {% if inputs.only_crop %}checked {% endif %}value="1"/></label>
     </fieldset>
 </form>
 {% include 'footer.twig' %}
