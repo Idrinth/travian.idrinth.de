@@ -80,11 +80,17 @@ medium_thief_effect: 15% plunder bonus
 great_thief: Sack of the thief
 great_thief_effect: 15% plunder bonus
 small_shield: Small Shield
+small_shield_effect: +250 fighting strength for Hero.
 medium_shield: Shield
-great_shield: Great Shield
-small_natars: Small Horn of the Natars
-medium_natars: Horn of the Natars
-great_natars: Great Horn of the Natars
+medium_shield_effect: +1000 fighting strength for Hero.
+great_shield: Large Shield
+great_shield_effect: +4000 fighting strength for Hero.
+small_natars: Small Horn of the Natarian
+small_natars_effect: +20% attacking strength against Natars (counts for hero as well as the troops attacking together with him)
+medium_natars: Horn of the Natarian
+medium_natars_effect: +25% attacking strength against Natars (counts for hero as well as the troops attacking together with him)
+great_natars: Huge Horn of the Natarian
+great_natars_effect: +30% attacking strength against Natars (counts for hero as well as the troops attacking together with him)
 small_legionaire: Small Legionaire
 medium_legionaire: Legionaire
 great_legionaire: Great Legionaire
