@@ -142,6 +142,9 @@ class Delivery {
                 'tribe' => $post['tribe'] ?? 'auto',
                 'town_hall' => min(20, max(0, intval($post['town_hall'] ?? 0))),
                 'celebration' => $post['celebration'] ?? 'none',
+                'only_crop' => 1 == $post['only_crop'] ?? 0,
+                'x' => intval($post['x']??0, 10),
+                'y' => intval($post['y']??0, 10)
             ],
             'calculatedInputs' => [],
             'rawCalculatedInputs' => [],
@@ -168,6 +171,12 @@ class Delivery {
                     $data['calculatedInputs']['iron'] = floor($data['calculatedInputs']['iron'] - 3600 / self::$townHall[$data['inputs']['town_hall'] - 1][1] * self::$celebrations['great'][2]);
                     $data['calculatedInputs']['crop'] = floor($data['calculatedInputs']['crop'] - 3600 / self::$townHall[$data['inputs']['town_hall'] - 1][1] * self::$celebrations['great'][3]);
                 }
+                if ($data['inputs']['only_crop']) {
+                    $data['calculatedInputs']['lumber'] = 0;
+                    $data['calculatedInputs']['clay'] = 0;
+                    $data['calculatedInputs']['iron'] = 0;
+
+                }
                 $data['calculatedInputs']['total'] = 0
                         + ($data['calculatedInputs']['lumber'] < 0 ? 0 : $data['calculatedInputs']['lumber'])
                         + ($data['calculatedInputs']['clay'] < 0 ? 0 : $data['calculatedInputs']['clay'])
@@ -178,8 +187,8 @@ class Delivery {
                 if ($post['x']??0 !== 0 || $post['x']??0 !== 0) {
                     $villages[] = [
                         'name' => $data['translations']['additional_target'],
-                        'x' => intval($post['x']??0, 10),
-                        'y' => intval($post['y']??0, 10)
+                        'x' => $data['inputs']['x'],
+                        'y' => $data['inputs']['y']
                     ];
                 }
                 $data['results'] = [];
