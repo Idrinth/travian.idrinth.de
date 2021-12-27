@@ -61,15 +61,24 @@ medium_map: Map
 medium_map_effect: +40% Return Speed
 great_map: Great Map
 great_map_effect: +50% Return Speed
-small_people_banner: Small people banner
-medium_people_banner: People banner
-great_people_banner: Great people banner
-small_alliance_banner: Small alliance banner
-medium_alliance_banner: Alliance banner
-great_alliance_banner: Great alliance banner
-small_thief: Small bag of the thief
+small_people_banner: Small Pennant
+small_people_banner_effect: 30% faster troops between own villages.
+medium_people_banner: Pennant
+medium_people_banner_effect: 40% faster troops between own villages.
+great_people_banner: Great Pennant
+great_people_banner_effect: 50% faster troops between own villages.
+small_alliance_banner: Small Standard
+small_alliance_banner_effect: 15% faster troops between alliance members. 
+medium_alliance_banner: Standard
+small_alliance_banner_effect: 20% faster troops between alliance members. 
+great_alliance_banner: Great Standard
+small_alliance_banner_effect: 35% faster troops between alliance members. 
+small_thief: Pouch of the thief
+small_thief_effect: 10% plunder bonus
 medium_thief: Bag of the thief
-great_thief: Great bag of the thief
+medium_thief_effect: 15% plunder bonus
+great_thief: Sack of the thief
+great_thief_effect: 15% plunder bonus
 small_shield: Small Shield
 medium_shield: Shield
 great_shield: Great Shield
