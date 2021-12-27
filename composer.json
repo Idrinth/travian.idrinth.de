@@ -1,0 +1,20 @@
+{
+    "name": "idrinth/travian",
+    "description": "Travian calculators.",
+    "authors": [
+        {
+            "name": "Björn Büttner",
+            "homepage": "https://github.com/idrinth"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.3",
+        "nikic/fast-route": "^1.3",
+        "webmozart/assert": "^1.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "De\\Idrinth\\Travian\\": "src"
+        }
+    }
+}

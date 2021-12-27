@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Travian Calculators</title>
+        <style>
+            html, body {
+                width: 100%;
+                height: 100%;
+                background: #ddd;
+                color: #333;
+            }
+            textarea, input, select {
+                background: #eee;
+                display:block;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            label {
+                display: block;
+            }
+            .error {
+                color: red;
+                font-weight: bold;
+            }
+            body > * {
+                width: 80%;
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 0;
+                box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+            }
+            body > div > .page {
+                margin: 0 5%;
+                width: 90%;
+                box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+            }
+            body > h1,
+            body > footer {
+                background: #333;
+                color: #ddd;
+                text-align: center;
+            }
+            body > iframe {
+                max-width: 100%;
+            }
+            nav {
+                display: block;
+            }
+            nav > ul {
+                display: flex;
+                margin: 0;
+                padding: 0;
+            }
+            nav > ul > li {
+                display: block;
+                margin: 0;
+                padding: 0;
+                flex: auto;
+            }
+            .result {
+                background: #d0d0d0;
+                border-radius: 1em;
+                box-shadow: 3px 3px 5px #000;
+                margin: 5px;
+            }
+            .result.hidden > table {
+                display: none;
+            }
+            h3 {
+                text-align: center;
+            }
+            .result > h3 {
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <h1><img src="/logo.png" alt="Logo"/>Travian Calculators for v4.6</h1>
+        <nav>
+            <ul>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="/delivery">Delivery</a>
+                </li>
+                <li>
+                    <a href="/imprint">Imprint</a>
+                </li>
+            </ul>
+        </nav>
+        <article>
+            <div class="page">
