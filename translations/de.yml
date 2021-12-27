@@ -16,10 +16,10 @@ clay: Lehm
 iron: Eisen
 crop: Getreide
 total: Gesamt
-celebration: Feier
-trade_every: Ein Handle jede
-traders_per_trade: Händler pro Handel
-travel_time: Reisezeit
+celebration: Fest
+trade_every: Ein Händler aller
+traders_per_trade: Händler je Lieferung 
+travel_time: Lieferzeit
 distance: Distanz
 main: Hauptinformationen
 source: Quellcode
@@ -38,6 +38,6 @@ huns: Hunnen
 additional_target: Zusätzliches Ziel
 additional_target_title: 0|0 wird ignoriert
 only_crop: Nur Getreide
-town_hall_level: Rathauslevel
+town_hall_level: Rathaus Stufe
 tribe_title: Only select if it's wrongly detected
 advanced: Erweitertes
