@@ -135,6 +135,7 @@ class Delivery {
     {
         $twig = new Environment(new FilesystemLoader(dirname(__DIR__) . '/templates'));
         $data = [
+            'lang' => $_COOKIE['lang'] ?? 'en',
             'translations' => Translations::get($_COOKIE['lang'] ?? 'en'),
             'inputs' => [
                 'content' => $post['content'] ?? '',

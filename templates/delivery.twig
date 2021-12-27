@@ -1,17 +1,17 @@
 {% include 'header.twig' %}
-<h2>Delivery Calculator</h2>
+<h2>{{ translations.delivery_calculator }}</h2>
 {% if results and calculatedInputs %}
-    <h3>Inputs</h3><table>
-        <tr><th>Tribe</th><td>{{ calculatedInputs.tribe }}</td><td>Your tribe</td></tr>
-        <tr><th>Speed</th><td>{{ calculatedInputs.speed }}/h</td><td>Your merchant's speed</td></tr>
-        <tr><th>World Speed</th><td>{{ calculatedInputs.worldspeed }}x</td><td>Your world's speed</td></tr>
-        <tr><th>Capacity</th><td>{{ calculatedInputs.capacity }}</td><td>Capacity of a single trader</td></tr>
-        <tr><th>Lumber</th><td>{{ calculatedInputs.lumber }}/h ({{ rawCalculatedInputs.lumber }})</td><td>lumber production per hour reduced by celebration needs</td></tr>
-        <tr><th>Clay</th><td>{{ calculatedInputs.clay }}/h ({{ rawCalculatedInputs.clay }})</td><td>clay production per hour reduced by celebration needs</td></tr>
-        <tr><th>Iron</th><td>{{ calculatedInputs.iron }}/h ({{ rawCalculatedInputs.iron }})</td><td>iron production per hour reduced by celebration needs</td></tr>
-        <tr><th>Crop</th><td>{{ calculatedInputs.crop }}/h ({{ rawCalculatedInputs.crop }})</td><td>crop production per hour reduced by celebration needs</td></tr>
-        <tr><th>Total</th><td>{{ calculatedInputs.total }}/h</td><td>total production per hour ignoring negative production</td></tr>
-        <tr><th>Celebration</th><td>{{ inputs.celebration }}</td><td>desired celebrations to keep going 24/7</td></tr>
+    <h3>{{ translations.inputs }}</h3><table>
+        <tr><th>{{ translations.tribe }}</th><td>{{ translations[calculatedInputs.tribe] }}</td><td>Your tribe</td></tr>
+        <tr><th>{{ translations.speed }}</th><td>{{ calculatedInputs.speed }}/h</td><td>Your merchant's speed</td></tr>
+        <tr><th>{{ translations.world_speed }}</th><td>{{ calculatedInputs.worldspeed }}x</td><td>Your world's speed</td></tr>
+        <tr><th>{{ translations.capacity }}</th><td>{{ calculatedInputs.capacity }}</td><td>Capacity of a single trader</td></tr>
+        <tr><th>{{ translations.lumber }}</th><td>{{ calculatedInputs.lumber }}/h ({{ rawCalculatedInputs.lumber }})</td><td>lumber production per hour reduced by celebration needs</td></tr>
+        <tr><th>{{ translations.clay }}</th><td>{{ calculatedInputs.clay }}/h ({{ rawCalculatedInputs.clay }})</td><td>clay production per hour reduced by celebration needs</td></tr>
+        <tr><th>{{ translations.iron }}</th><td>{{ calculatedInputs.iron }}/h ({{ rawCalculatedInputs.iron }})</td><td>iron production per hour reduced by celebration needs</td></tr>
+        <tr><th>{{ translations.crop }}</th><td>{{ calculatedInputs.crop }}/h ({{ rawCalculatedInputs.crop }})</td><td>crop production per hour reduced by celebration needs</td></tr>
+        <tr><th>{{ translations.total }}</th><td>{{ calculatedInputs.total }}/h</td><td>total production per hour ignoring negative production</td></tr>
+        <tr><th>{{ translations.celebration }}</th><td>{{ inputs.celebration }}</td><td>desired celebrations to keep going 24/7</td></tr>
     </table>
     {% if results.error %}
         <p class="error">{{ results.error }}</p>
@@ -20,14 +20,14 @@
             <div class="result">
                 <h3 onclick="this.parentNode.classList.toggle('hidden')">From <em>{{ calculatedInputs.village.name }}</em>({{ calculatedInputs.village.x }}|{{ calculatedInputs.village.y }}) to <em>{{ result.village.name }}</em>({{ result.village.x }}|{{ result.village.y }})</h3>
                 <table>
-                    <tr><th>Distance</th><td>{{ result.distance }}</td><td>The direct distance between villages</td></tr>
-                    <tr><th>Travel Time</th><td>{{ result.travelTime }}s</td><td>Traders required to carry a single hourly production</td></tr>
-                    <tr><th>Traders per trade</th><td>{{ result.traders }}</td><td>Optimal amount of traders required</td></tr>
-                    <tr><th>One Trade every</th><td>{{ result.minBetweenTrades }}min</td><td>How often would you need to setup a delivery</td></tr>
-                    <tr><th>Lumber</th><td>{{ result.lumber }}</td><td>lumber per trade</td></tr>
-                    <tr><th>Clay</th><td>{{ result.clay }}</td><td>clay per trade</td></tr>
-                    <tr><th>Iron</th><td>{{ result.iron }}</td><td>iron per trade</td></tr>
-                    <tr><th>Crop</th><td>{{ result.crop }}</td><td>crop per trade</td></tr>
+                    <tr><th>{{ translations.distance }}</th><td>{{ result.distance }}</td><td>The direct distance between villages</td></tr>
+                    <tr><th>{{ translations.travle_time }}</th><td>{{ result.travelTime }}s</td><td>Traders required to carry a single hourly production</td></tr>
+                    <tr><th>{{ translations.traders_per_trade }}</th><td>{{ result.traders }}</td><td>Optimal amount of traders required</td></tr>
+                    <tr><th>{{ translations.trade_every }}</th><td>{{ result.minBetweenTrades }}min</td><td>How often would you need to setup a delivery</td></tr>
+                    <tr><th>{{ translations.lumber }}</th><td>{{ result.lumber }}</td><td>lumber per trade</td></tr>
+                    <tr><th>{{ translations.clay }}</th><td>{{ result.clay }}</td><td>clay per trade</td></tr>
+                    <tr><th>{{ translations.iron }}</th><td>{{ result.iron }}</td><td>iron per trade</td></tr>
+                    <tr><th>{{ translations.crop }}</th><td>{{ result.crop }}</td><td>crop per trade</td></tr>
                 </table>
             </div>
         {% endfor %}
@@ -35,28 +35,28 @@
 {% endif %}
 <form method="post">
     <fieldset>
-        <legend>Main</legend>
-        <label title="Enter the source code of the market place's send window.">Source Code*<textarea name="content">{{ inputs.content }}</textarea></label>
+        <legend>{{ translations.main }}</legend>
+        <label title="{{ translations.source_title }}">{{ translations.source }}*<textarea name="content">{{ inputs.content }}</textarea></label>
         <input type="submit"/>
     </fieldset>
     <fieldset>
-        <legend>Celebrations</legend>
+        <legend>{{ translations.celebrations }}</legend>
         <label>Town Hall Level<input type="number" step='1' min='0' name="town_hall" value="{{ inputs.town_hall }}"/></label>
-        <label>Celebration<select name="celebration">
-                <option value='none' {% if inputs.celebration == 'none' %}selected{% endif %}>None</option>
-                <option value='small' {% if inputs.celebration == 'small' %}selected{% endif %}>Small</option>
-                <option value='great' {% if inputs.celebration == 'great' %}selected{% endif %}>Great</option>
+        <label>{{ translations.celebration }}<select name="celebration">
+                <option value='none' {% if inputs.celebration == 'none' %}selected{% endif %}>{{ translations.none }}</option>
+                <option value='small' {% if inputs.celebration == 'small' %}selected{% endif %}>{{ translations.small }}</option>
+                <option value='great' {% if inputs.celebration == 'great' %}selected{% endif %}>{{ translations.great }}</option>
             </select></label>
     </fieldset>
     <fieldset>
         <legend>Advanced</legend>
         <label title="Only select if it's wrongly detected">Tribe*<select name="tribe">
-                <option value='auto' {% if inputs.speed == 'auto' %}selected{% endif %}>Automatically</option>
-                <option value='vid_1' {% if inputs.speed == 'vid_1' %}selected{% endif %}>Romans</option>
-                <option value='vid_2' {% if inputs.speed == 'vid_2' %}selected{% endif %}>Teutons</option>
-                <option value='vid_3' {% if inputs.speed == 'vid_3' %}selected{% endif %}>Gaul</option>
-                <option value='vid_6' {% if inputs.speed == 'vid_6' %}selected{% endif %}>Egyptians</option>
-                <option value='vid_7' {% if inputs.speed == 'vid_7' %}selected{% endif %}>Huns</option>
+                <option value='auto' {% if inputs.speed == 'auto' %}selected{% endif %}>{{ translations.automatically }}</option>
+                <option value='vid_1' {% if inputs.speed == 'vid_1' %}selected{% endif %}>{{ translations.romans }}</option>
+                <option value='vid_2' {% if inputs.speed == 'vid_2' %}selected{% endif %}>{{ translations.teutons }}</option>
+                <option value='vid_3' {% if inputs.speed == 'vid_3' %}selected{% endif %}>{{ translations.gauls }}</option>
+                <option value='vid_6' {% if inputs.speed == 'vid_6' %}selected{% endif %}>{{ translations.egyptians< }}/option>
+                <option value='vid_7' {% if inputs.speed == 'vid_7' %}selected{% endif %}>{{ translations.huns }}</option>
             </select></label>
     </fieldset>
 </form>
