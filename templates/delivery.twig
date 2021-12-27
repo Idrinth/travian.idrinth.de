@@ -49,7 +49,7 @@
             </select></label>
     </fieldset>
     <fieldset>
-        <legend>Advanced</legend>
+        <legend>{{ translations.advanced }}</legend>
         <label title="{{ translations.tribe_title }}">{{ translations.tribe }}*<select name="tribe">
                 <option value='auto' {% if inputs.speed == 'auto' %}selected{% endif %}>{{ translations.automatically }}</option>
                 <option value='vid_1' {% if inputs.speed == 'vid_1' %}selected{% endif %}>{{ translations.romans }}</option>
