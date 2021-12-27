@@ -18,6 +18,14 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
         $d = new De\Idrinth\Travian\Delivery();
         $d->run($post);
     });
+    $r->addRoute('GET', '/hero-check', function ($post) {
+        $d = new De\Idrinth\Travian\HeroRecogniser();
+        $d->run($post);
+    });
+    $r->addRoute('POST', '/hero-check', function ($post) {
+        $d = new De\Idrinth\Travian\HeroRecogniser();
+        $d->run($post);
+    });
 });
 
 // Fetch method and URI from somewhere

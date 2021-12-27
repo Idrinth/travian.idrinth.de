@@ -41,3 +41,150 @@ only_crop: Only Crop
 town_hall_level: Town Hall Level
 tribe_title: Only select if it's wrongly detected
 advanced: Advanced
+gelding: Gelding
+gelding_effect: The speed of your hero is raised to 14 fields per hour
+thoroughbred: Thoroughbred
+thoroughbred_effect: The speed of your hero is raised to 17 fields per hour
+warhorse: Warhorse
+warhorse_effect: The speed of your hero is raised to 20 fields per hour
+empty: Empty
+hero_image_url: Hero Image URL
+helmet: Helmet
+armor: armor
+right_hand: Right Hand
+left_hand: Left Hand
+shoes: Shoes
+horse: Horse
+small_map: Small Map
+small_map_effect: +30% Return Speed
+medium_map: Map
+medium_map_effect: +40% Return Speed
+great_map: Great Map
+great_map_effect: +50% Return Speed
+small_people_banner: Small people banner
+medium_people_banner: People banner
+great_people_banner: Great people banner
+small_alliance_banner: Small alliance banner
+medium_alliance_banner: Alliance banner
+great_alliance_banner: Great alliance banner
+small_thief: Small bag of the thief
+medium_thief: Bag of the thief
+great_thief: Great bag of the thief
+small_shield: Small Shield
+medium_shield: Shield
+great_shield: Great Shield
+small_natars: Small Horn of the Natars
+medium_natars: Horn of the Natars
+great_natars: Great Horn of the Natars
+small_legionaire: Small Legionaire
+medium_legionaire: Legionaire
+great_legionaire: Great Legionaire
+small_praetorian: Small Praetorian
+medium_praetorian: Praetorian
+great_praetorian: Great Praetorian
+small_imperian: Small Imperian
+medium_imperian: Imperian
+great_imperian: Great Imperian
+small_imperatoris: Small Imperatoris
+medium_imperatoris: Imperatoris
+great_imperatoris: Great Imperatoris
+small_caesaris: Small Caesaris
+medium_caesaris: Caesaris
+great_caesaris: Great Caesaris
+small_phalanx: Small Phalanx,
+medium_phalanx: Phalanx
+great_phalanx: Great Phalanx
+small_sword: Small Swordman
+medium_sword: Swordman
+great_sword: Great Swordman
+small_theutates: Small Theutates
+medium_theutates: Theutates
+great_theutates: Great Theutates
+small_druid: Small Druid rider
+medium_druid: Druid rider
+great_druid: Great Druid rider
+small_haeduaner: Small Haeduaner
+medium_haeduaner: Medium Haeduaner
+great_haeduaner: Great Haeduaner
+small_club: Small club
+medium_club: Club
+great_club: Great Club
+small_speer: Small Speer
+medium_speer: Speer
+great_speer: Great Speer
+small_axe: Small Axe
+medium_axe: Axe
+great_axe: Great Axe
+small_knight: Small Knight
+medium_knight: Knight
+great_knight: Great Knight
+small_teuton: Small Teuton
+medium_teuton: Teuton
+great_tueton: Great Teuton
+small_slave: Small Slave
+medium_slave: Slave
+great_slave: Great Slave
+small_ash: Small Ash warden
+medium_ash: Ash warden
+great_ash: Great Ash warden
+small_warrior: Small Warrior
+medium_warrior: Warrior
+great_warrior: Great Warrior
+small_anhor: Small Anhor
+medium_anhor: Anhor
+great_anhor: Great Anhor
+small_resheph: Small Resheph
+medium_resheph: Resheph
+great_resheph: Great Resheph
+small_mercenary: Small Mercenary
+medium_mercenary: Mercenary
+great_mercenary: Great Mercenary
+small_bownmen: Small Bowmen
+medium_bowmen: Bowmen
+great_bowmen: Great Bowmen
+small_steppe: Small Steppe Rider
+medium_steppe: Steppe Rider
+great_steppe: Great Steppe Rider
+small_marksman: Small Marksman
+medium_marksman: Marksman
+great_marksman: Great Marksman
+small_marauder: Small Marauder
+medium_marauder: Marauder
+great_marauder: Great Marauder
+small_regen_shoes: Small Regen
+medium_regen_shoes: Regen
+great_regen_shoes: Great Regen
+small_speed_shoes: Small Speed
+medium_speed_shoes: Speed
+great_speed_shoes: Great Speed
+small_horse_shoes: Small Horse Shoes
+medium_horse_shoes: Horse Shoes
+great_horse_shoes: Great Horse Shoes
+small_xp_helmet: Small Experience
+medium_xp_helmet: Experience
+great_xp_helmet: Great Experience
+small_regen_helmet: Small Regen
+medium_regen_helmet: Regen
+great_regen_helmet: Great Regen
+small_cp_helmet: Small Culture Points
+medium_cp_helmet: Culture Points
+great_cp_helmet: Great Culture Points
+small_cavalry_helmet: Small Cavalry
+medium_cavalry_helmet: Cavalry
+great_cavalry_helmet: Great Cavalry
+small_infantry_helmet: Small Infantry
+medium_infantry_helmet: Infantry
+great_infantry_helmet: Great Infantry
+small_regen_armor: Small Regen
+medium_regen_armor: Regen
+great_regen_armor: Great Regen
+small_scales_armor: Small Scales
+medium_scales_armor: Scales
+great_scales_armor: Great Scales
+small_chest_armor: Small Chest
+medium_chest_armor: Chest
+great_chest_armor: Great Chest
+small_chain_armor: Small Chain
+medium_chain_armor: Medium Chain
+great_chain_armor: Great Chain
+hero_check: Hero Item Check

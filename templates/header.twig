@@ -16,8 +16,18 @@
                 width: 100%;
                 box-sizing: border-box;
             }
+            input[type=submit] {
+                background: red;
+                color: #fff;
+            }
             label {
                 display: block;
+            }
+            a, a:visited, a:hover, a:focus, a:active {
+                color: red;
+            }
+            h1 > a {
+                text-decoration: none;
             }
             .error {
                 color: red;
@@ -92,6 +102,9 @@
             <ul>
                 <li>
                     <a href="/delivery">{{ translations.delivery }}</a>
+                </li>
+                <li>
+                    <a href="/hero-check">{{ translations.hero_check }}</a>
                 </li>
             </ul>
         </nav>
