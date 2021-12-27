@@ -18,7 +18,7 @@
     {% else %}
         {% for result in results %}
             <div class="result">
-                <h3 onclick="this.parentNode.classList.toggle('hidden')">From <em>{{ calculatedInputs.village.name }}</em>({{ calculatedInputs.village.x }}|{{ calculatedInputs.village.y }}) to <em>{{ result.village.name }}</em>({{ result.village.x }}|{{ result.village.y }})</h3>
+                <h3 onclick="this.parentNode.classList.toggle('hidden');"><em>{{ calculatedInputs.village.name }}</em>({{ calculatedInputs.village.x }}|{{ calculatedInputs.village.y }}) &rarr; <em>{{ result.village.name }}</em>({{ result.village.x }}|{{ result.village.y }})</h3>
                 <table>
                     <tr><th>{{ translations.distance }}</th><td>{{ result.distance }}</td><td>The direct distance between villages</td></tr>
                     <tr><th>{{ translations.travle_time }}</th><td>{{ result.travelTime }}s</td><td>Traders required to carry a single hourly production</td></tr>
@@ -55,9 +55,10 @@
                 <option value='vid_1' {% if inputs.speed == 'vid_1' %}selected{% endif %}>{{ translations.romans }}</option>
                 <option value='vid_2' {% if inputs.speed == 'vid_2' %}selected{% endif %}>{{ translations.teutons }}</option>
                 <option value='vid_3' {% if inputs.speed == 'vid_3' %}selected{% endif %}>{{ translations.gauls }}</option>
-                <option value='vid_6' {% if inputs.speed == 'vid_6' %}selected{% endif %}>{{ translations.egyptians< }}/option>
+                <option value='vid_6' {% if inputs.speed == 'vid_6' %}selected{% endif %}>{{ translations.egyptians }}/option>
                 <option value='vid_7' {% if inputs.speed == 'vid_7' %}selected{% endif %}>{{ translations.huns }}</option>
             </select></label>
+        <label title="{{ translations.additional_target_title }}">{{ translations.additional_target }}*<input type="number" name="x">|<input type="number" name="y"></label>
     </fieldset>
 </form>
 {% include 'footer.twig' %}

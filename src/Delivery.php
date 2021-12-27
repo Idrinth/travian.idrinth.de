@@ -39,9 +39,9 @@ class Delivery {
     private static $tribes = [
         'vid_1' => [16, 'roman'],
         'vid_2' => [12, 'teutons'],
-        'vid_3' => [24, 'gaul'],
+        'vid_3' => [24, 'gauls'],
         'vid_7' => [20, 'huns'],
-        'vid_6' => [16, 'eqyptian'],
+        'vid_6' => [16, 'egyptians'],
     ];
     private function getTribe(string $tribeInput, DOMDocument $doc): array
     {
@@ -175,6 +175,13 @@ class Delivery {
                         + ($data['calculatedInputs']['crop'] < 0 ? 0 : $data['calculatedInputs']['crop']);
                 $requiredTraders = ceil($data['calculatedInputs']['total'] / $data['calculatedInputs']['capacity']);
                 list($data['calculatedInputs']['village'], $villages) = $this->getVillages($doc);
+                if ($post['x']??0 !== 0 || $post['x']??0 !== 0) {
+                    $villages[] = [
+                        'name' => $data['translations']['additional_target'],
+                        'x' => intval($post['x']??0, 10),
+                        'y' => intval($post['y']??0, 10)
+                    ];
+                }
                 $data['results'] = [];
                 foreach ($villages as $pos => $village) {
                     $data['results'][$pos] = $this->calculateVillageResult($data['calculatedInputs']['village'], $village, $requiredTraders, $data['calculatedInputs']);
