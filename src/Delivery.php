@@ -142,7 +142,7 @@ class Delivery {
                 'tribe' => $post['tribe'] ?? 'auto',
                 'town_hall' => min(20, max(0, intval($post['town_hall'] ?? 0))),
                 'celebration' => $post['celebration'] ?? 'none',
-                'only_crop' => 1 == $post['only_crop'] ?? 0,
+                'only_crop' => 1 == ($post['only_crop'] ?? 0),
                 'x' => intval($post['x']??0, 10),
                 'y' => intval($post['y']??0, 10)
             ],

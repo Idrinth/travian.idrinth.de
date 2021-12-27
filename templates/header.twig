@@ -82,9 +82,10 @@
             </a>
             Travian Calculators for v4.6
             <select style="width: auto; display: inline;" onchange="document.cookie='lang=' + this.value;location.reload();">
-                <option value="en">English</option>
-                <option value="de">Deutsch</option>
-                <option value="tr">Türkçe</option>
+                <option{% if lang=='en' %} selected{% endif %} value="en">English</option>
+                <option{% if lang=='de' %} selected{% endif %} value="de">Deutsch</option>
+                <option{% if lang=='tr' %} selected{% endif %} value="tr">Türkçe</option>
+                <option{% if lang=='nl' %} selected{% endif %} value="nl">Nederlands</option>
             </select>
         </h1>
         <nav>
