@@ -41,3 +41,214 @@ only_crop: Nur Getreide
 town_hall_level: Rathaus Stufe
 tribe_title: Only select if it's wrongly detected
 advanced: Erweitertes
+gelding: Leichts Reitpferd 
+gelding_effect: The speed of your hero is raised to 14 fields per hour
+thoroughbred: Thoroughbred
+thoroughbred_effect: The speed of your hero is raised to 17 fields per hour
+warhorse: Warhorse
+warhorse_effect: The speed of your hero is raised to 20 fields per hour
+empty: Empty
+hero_image_url: Hero Image URL
+helmet: Helmet
+armor: armor
+right_hand: Rechte Hand
+left_hand: Linke Hand
+shoes: Schuhe
+horse: Pferd
+small_map: Kleine Karte
+small_map_effect: +30% Return Speed
+medium_map: Karte
+medium_map_effect: +40% Return Speed
+great_map: Große Karte
+great_map_effect: +50% Return Speed
+small_people_banner: Small Pennant
+small_people_banner_effect: 30% faster troops between own villages.
+medium_people_banner: Pennant
+medium_people_banner_effect: 40% faster troops between own villages.
+great_people_banner: Great Pennant
+great_people_banner_effect: 50% faster troops between own villages.
+small_alliance_banner: Small Standard
+small_alliance_banner_effect: 15% faster troops between alliance members. 
+medium_alliance_banner: Standard
+medium_alliance_banner_effect: 20% faster troops between alliance members. 
+great_alliance_banner: Great Standard
+great_alliance_banner_effect: 35% faster troops between alliance members. 
+small_thief: Kleiner Sack des Diebes
+small_thief_effect: 10% Plünderbonus
+medium_thief: Sack des Diebes
+medium_thief_effect: 15% Plünderbonus
+great_thief: Großer Sack des Diebes
+great_thief_effect: 15% Plünderbonus
+small_shield: Kleiner Kriegsschild 
+small_shield_effect: +250 Kampfkraft für den Helden.
+medium_shield: Kriegsschild
+medium_shield_effect: +1000 Kampfkraft für den Helden.
+great_shield: Großer Kriegsschild
+great_shield_effect: +4000 Kampfkraft für den Helden.
+small_natars: Kleines Kriegshorn der Nataren 
+small_natars_effect: +20% Angriffskraft gegen Nataren (counts for hero as well as the troops attacking together with him)
+medium_natars: Kriegshorn der Nataren 
+medium_natars_effect: +25% Angriffskraft gegen Nataren (counts for hero as well as the troops attacking together with him)
+great_natars: Großes Kriegshorn der Nataren
+great_natars_effect: +30% aAngriffskraft gegen Nataren (counts for hero as well as the troops attacking together with him)
+small_legionaire: Small Legionaire
+medium_legionaire: Legionaire
+great_legionaire: Great Legionaire
+small_praetorian: Small Praetorian
+medium_praetorian: Praetorian
+great_praetorian: Great Praetorian
+small_imperian: Small Imperian
+medium_imperian: Imperian
+great_imperian: Great Imperian
+small_imperatoris: Small Imperatoris
+medium_imperatoris: Imperatoris
+great_imperatoris: Great Imperatoris
+small_caesaris: Small Caesaris
+medium_caesaris: Caesaris
+great_caesaris: Great Caesaris
+small_phalanx: Small Phalanx,
+medium_phalanx: Phalanx
+great_phalanx: Great Phalanx
+small_sword: Small Swordman
+medium_sword: Swordman
+great_sword: Great Swordman
+small_theutates: Small Theutates
+medium_theutates: Theutates
+great_theutates: Great Theutates
+small_druid: Small Druid rider
+medium_druid: Druid rider
+great_druid: Great Druid rider
+small_haeduaner: Small Haeduaner
+medium_haeduaner: Medium Haeduaner
+great_haeduaner: Great Haeduaner
+small_club: Small club
+medium_club: Club
+great_club: Great Club
+small_speer: Small Speer
+medium_speer: Speer
+great_speer: Great Speer
+small_axe: Small Axe
+medium_axe: Axe
+great_axe: Great Axe
+small_knight: Small Knight
+medium_knight: Knight
+great_knight: Great Knight
+small_teuton: Small Teuton
+medium_teuton: Teuton
+great_tueton: Great Teuton
+small_slave: Small Slave
+medium_slave: Slave
+great_slave: Great Slave
+small_ash: Small Ash warden
+medium_ash: Ash warden
+great_ash: Great Ash warden
+small_warrior: Small Warrior
+medium_warrior: Warrior
+great_warrior: Great Warrior
+small_anhor: Small Anhor
+medium_anhor: Anhor
+great_anhor: Great Anhor
+small_resheph: Small Resheph
+medium_resheph: Resheph
+great_resheph: Great Resheph
+small_mercenary: Small Mercenary
+medium_mercenary: Mercenary
+great_mercenary: Great Mercenary
+small_bownmen: Small Bowmen
+medium_bowmen: Bowmen
+great_bowmen: Great Bowmen
+small_steppe: Small Steppe Rider
+medium_steppe: Steppe Rider
+great_steppe: Great Steppe Rider
+small_marksman: Small Marksman
+medium_marksman: Marksman
+great_marksman: Great Marksman
+small_marauder: Small Marauder
+medium_marauder: Marauder
+great_marauder: Great Marauder
+small_regen_shoes: Boots of Regeneration
+small_regen_shoes_effect: +10HP/day
+medium_regen_shoes: Boots of Health
+medium_regen_shoes_effect: +15HP/day
+great_regen_shoes: Boots of Healing
+great_regen_shoes_effect: +20HP/day
+small_speed_shoes: Boots of the Mercenary
+small_speed_shoes_effect: +25% speed on the army's base speed for distances > 20 fields
+medium_speed_shoes: Boots of the Warrior
+medium_speed_shoes_effect: +50% speed on the army's base speed for distances > 20 fields
+great_speed_shoes: Boots of the Archon
+great_speed_shoes_effect: +75% speed on the army's base speed for distances > 20 fields
+small_horse_shoes: Small Spurs
+small_horse_shoes_effect: +3 fields per hour
+medium_horse_shoes: Spurs
+medium_horse_shoes_effect: +4 fields per hour
+great_horse_shoes: Nasty Spurs
+great_horse_shoes_effect: +5 fields per hour
+small_xp_helmet: Helmet of Awareness
+small_xp_helmet_effect: +15% Experience
+medium_xp_helmet: Helmet of Enlightenment
+medium_xp_helmet_effect: +20% Experience
+great_xp_helmet: Helmet of Wisdom
+great_xp_helmet_effect: +25% Experience
+small_regen_helmet: Helmet of Regeneration
+small_regen_helme_effectt: +10 HP/day
+medium_regen_helmet: Helmet of Health
+medium_regen_helme_effectt: +15 HP/day
+great_regen_helmet: Helmet of Healing
+great_regen_helme_effectt: +20 HP/day
+small_cp_helmet: Helmet of the Gladiator
+small_cp_helmet_effect: +100 Culture Points per day
+medium_cp_helmet: Helmet of the Tribune
+medium_cp_helmet_effect: +400 Culture Points per day
+great_cp_helmet: Helmet of the Consul
+great_cp_helmet_effect: +1600 Culture Points per day
+small_cavalry_helmet: Helmet of the Horseman
+small_cavalry_helmet_effect: Training time in Stable reduced by 10%.
+medium_cavalry_helmet: Helmet of the Cavalry
+medium_cavalry_helmet_effect: Training time in Stable reduced by 15%.
+great_cavalry_helmet: Helmet of the Heavy Cavalry
+great_cavalry_helmet_effect: Training time in Stable reduced by 20%.
+small_infantry_helmet: Helmet of the Mercenary
+small_infantry_helmet_effect: Training time in Barracks reduced by 10%.
+medium_infantry_helmet: Helmet of the Warrior
+medium_infantry_helmet_effect: Training time in Barracks reduced by 15%.
+great_infantry_helmet: Helmet of the Archon
+great_infantry_helmet_effect: Training time in Barracks reduced by 20%.
+small_regen_armor: Armour of Regeneration
+small_regen_armor_effect: +20 health points regeneration per day.
+medium_regen_armor: Armour of Health
+medium_regen_armor_effect: +30 health points regeneration per day.
+great_regen_armor: Armour of Healing
+great_regen_armor_effect: +40 health points regeneration per day.
+small_scales_armor: Light Scale Armour
+small_scales_armor_effect: Damage reduced by 4 health points + 10 HP regeneration.
+medium_scales_armor: Scale Armour
+medium_scales_armor_effect: Damage reduced by 6 health points + 15 HP regeneration.
+great_scales_armor: Heavy Scale Armour
+great_scales_armor_effect: Damage reduced by 8 health points + 20 HP regeneration.
+small_chest_armor: Light Breast-plate
+small_chest_armor_effect: +250 fighting strength for Hero.
+medium_chest_armor: Breast-plate
+medium_chest_armor_effect: +1000 fighting strength for Hero.
+great_chest_armor: Heavy Breast-plate
+great_chest_armor_effect: +4000 fighting strength for Hero.
+small_chain_armor: Light Segmented-armour
+small_chain_armor_effect: Damage reduced by 3 and +125 fighting strength for Hero.
+medium_chain_armor: Segmented-armour
+medium_chain_armor_effect: Damage reduced by 4 and +500 fighting strength for Hero.
+great_chain_armor: Heavy Segmented-armour
+great_chain_armor_effect: Damage reduced by 5 and +2000 fighting strength for Hero.
+hero_check: Hero Item Check
+deff_call: Deff Call
+account: Account
+troops: Troops
+scouts: Scouts
+arrival: Arrival
+created: Added
+village: Village
+here: here
+status: Status
+added: Your data was added.
+hidden_details: With the current link details are hidden.
+share: Share Link
+share_full: Details Share Link
