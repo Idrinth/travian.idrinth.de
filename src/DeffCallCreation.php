@@ -15,7 +15,7 @@ class DeffCallCreation
             'lang' => $_COOKIE['lang'] ?? 'en',
             'translations' => Translations::get($_COOKIE['lang'] ?? 'en'),
         ];
-        if ($post['url'] ?? false && $post['scouts'] ?? false && $post['troops']??false && $post['time']??false) {
+        if (isset($post['url']) && isset($post['scouts']) && $post['scouts'] >= 0 && isset($post['troops']) && $post['troops'] >= 0 && ($post['troops']+$post['scouts'] > 0) && isset($post['time'])) {
             $uuid = Uuid::uuid6();
             $key = Uuid::uuid6();
             file_put_contents(dirname(__DIR__) . '/deff/' . $uuid . '.json', json_encode([

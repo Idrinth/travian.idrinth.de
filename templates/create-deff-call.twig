@@ -5,8 +5,8 @@
         <legend>{{ translations.main }}</legend>
         <label>Village URL<input name="url" type="url"/></label>
         <label>Arrival Time<input name="time" type="datetime"/></label>
-        <label>Desired scouts<input name="scouts" type="number"/></label>
-        <label>Desired troops<input name="troops" type="number"/></label>
+        <label>Desired scouts<input name="scouts" type="number" min="0"/></label>
+        <label>Desired troops<input name="troops" type="number" min="0"/></label>
         <input type="submit"/>
     </fieldset>
 </form>

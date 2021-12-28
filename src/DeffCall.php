@@ -25,7 +25,7 @@ class DeffCall
             'translations' => Translations::get($_COOKIE['lang'] ?? 'en'),
         ];
         $json['supports'] = $json['supports'] ?? [];
-        if (isset($post['scouts']) && $post['scouts'] >= 0 && isset($post['troops']) && $post['troops'] >= 0 && ($post['troops']+$post['scouts'] > 1) && isset($post['time']) && isset($post['account']) && time() < $json['target']['time']) {
+        if (isset($post['scouts']) && $post['scouts'] >= 0 && isset($post['troops']) && $post['troops'] >= 0 && ($post['troops']+$post['scouts'] > 0) && isset($post['time']) && isset($post['account']) && time() < $json['target']['time']) {
             $json['supports'][] = [
                 'scouts' => intval($post['scouts'], 10),
                 'troops' => intval($post['troops'], 10),
