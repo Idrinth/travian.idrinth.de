@@ -76,9 +76,9 @@ great_alliance_banner_effect: 35% schnellere Truppen zwischen Allianzmitgliedern
 small_thief: Kleiner Sack des Diebes
 small_thief_effect: 10% Plünderbonus
 medium_thief: Sack des Diebes
-medium_thief_effect: 15% Plünderbonus
+medium_thief_effect: 15% Plünderbonus.
 great_thief: Großer Sack des Diebes
-great_thief_effect: 15% Plünderbonus
+great_thief_effect: 15% Plünderbonus.
 small_shield: Kleiner Kriegsschild 
 small_shield_effect: +250 Kampfkraft für den Helden.
 medium_shield: Kriegsschild
@@ -233,7 +233,7 @@ medium_chest_armor_effect: +1000 Kampfkraft für den Helden.
 great_chest_armor: Schwerer Brustpanzer
 great_chest_armor_effect: +4000 Kampfkraft für den Helden.
 small_chain_armor: Leichter Gliederpanzer
-small_chain_armor_effect: DDer Gesundheitsverlust wird um 3 Punkte reduziert +125 Kampfkraft für den Helden.
+small_chain_armor_effect: Der Gesundheitsverlust wird um 3 Punkte reduziert +125 Kampfkraft für den Helden.
 medium_chain_armor: Gliederpanzer
 medium_chain_armor_effect: Der Gesundheitsverlust wird um 4 Punkte reduziert +500 Kampfkraft für den Helden.
 great_chain_armor: Schwerer Gliederpanzer
