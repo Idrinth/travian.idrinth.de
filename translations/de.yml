@@ -185,11 +185,11 @@ medium_horse_shoes_effect: +4 Felder pro Stunde für den berittenen Helden.
 great_horse_shoes: Große Pferdesporen
 great_horse_shoes_effect: +5 Felder pro Stunde für den berittenen Helden.
 small_xp_helmet: Helm der Erkenntnis
-small_xp_helmet_effect: +15% 15% mehr Erfahrung für den Helden.
+small_xp_helmet_effect: +15% mehr Erfahrung für den Helden.
 medium_xp_helmet: Helm der Erleuchtung
-medium_xp_helmet_effect: +20% 15% mehr Erfahrung für den Helden.
+medium_xp_helmet_effect: +20% mehr Erfahrung für den Helden.
 great_xp_helmet: Helm der Weisheit
-great_xp_helmet_effect: +25% 15% mehr Erfahrung für den Helden.
+great_xp_helmet_effect: +25% mehr Erfahrung für den Helden.
 small_regen_helmet: Helm der Regeneration
 small_regen_helme_effectt: +10 HP/Tag.
 medium_regen_helmet: Helm der Gesundheit
