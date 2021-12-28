@@ -159,7 +159,6 @@ class HeroRecogniser
     ];
     public function run(array $post): void
     {
-        ini_set('display_errors', 1);
         $twig = new Environment(new FilesystemLoader(dirname(__DIR__) . '/templates'));
         $data = [
             'lang' => $_COOKIE['lang'] ?? 'en',

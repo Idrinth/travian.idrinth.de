@@ -1,0 +1,36 @@
+{% include 'header.twig' %}
+<h2>{{ translations.deff_call }} {{ id }}</h2>
+{% set totalScouts=0 %}
+{% set totalTroops=0 %}
+<table>
+    <tr><th>{{ translations.account }}</th><th>{{ translations.troops }}</th><th>{{ translations.arrival }}</th></tr>
+{% for support in supports %}
+    {% if support.time > target.time %}
+        <tr class="late"><th>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="Added {{ support.added|date('y-m-d H:i:s') }}">{{ support.time|date('Y-m-d H:i:s') }}</td></tr>
+    {% else %}
+        <tr><th>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="{{ translations.created }} {{ support.added|date('y-m-d H:i:s') }}">{{ support.time|date('Y-m-d H:i:s') }}</td></tr>
+        {% set totalScouts=totalScouts+support.scouts %}
+        {% set totalTroops=totalTroops+support.troops %}
+    {% endif %}
+{% endfor %}
+</table>
+<h3>{{ translations.status }}</h3>
+<table>
+    <tr><th>{{ translations.village }}</th><td><a href="{{ target.url }}" target="_blank">{{ translations.here }}</a></td></tr>
+    <tr><th>{{ translations.scouts }}</th><td>{{totalScouts }}/{{ target.scouts }}</td></tr>
+    <tr><th>{{ translations.troops }}</th><td>{{totalTroops }}/{{ target.troops }}</td></tr>
+    <tr><th>{{ translations.arrival }}</th><td>{{ target.time|date('Y-m-d H:i:s') }}</tr>
+</table>
+{% if now < target.time %}
+<form method="post">
+    <fieldset>
+        <legend>{{ translations.main }}</legend>
+        <label>{{ translations.account }}<input name="account" type="string"/></label>
+        <label>{{ translations.scouts }}<input name="scouts" type="number"/></label>
+        <label>{{ translations.troops }}<input name="troops" type="number"/></label>
+        <label>{{ translations.arrival }}<input name="time" type="datetime"/></label>
+        <input type="submit"/>
+    </fieldset>
+</form>
+{% endif %}
+{% include 'footer.twig' %}

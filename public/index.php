@@ -26,6 +26,22 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
         $d = new De\Idrinth\Travian\HeroRecogniser();
         $d->run($post);
     });
+    $r->addRoute('GET', '/deff-call', function ($post) {
+        $d = new De\Idrinth\Travian\DeffCallCreation();
+        $d->run($post);
+    });
+    $r->addRoute('POST', '/deff-call', function ($post) {
+        $d = new De\Idrinth\Travian\DeffCallCreation();
+        $d->run($post);
+    });
+    $r->addRoute('GET', '/deff-call/{uuid}', function ($post, $id) {
+        $d = new De\Idrinth\Travian\DeffCall();
+        $d->run($post, $id);
+    });
+    $r->addRoute('POST', '/deff-call/{uuid}', function ($post, $id) {
+        $d = new De\Idrinth\Travian\DeffCall();
+        $d->run($post, $id);
+    });
 });
 
 // Fetch method and URI from somewhere
@@ -50,6 +66,6 @@ switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::FOUND:
         $handler = $routeInfo[1];
         $vars = $routeInfo[2];
-        $handler($_POST, ...$vars);
+        $handler($_POST, ...array_values($vars));
         break;
 }

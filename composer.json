@@ -11,7 +11,8 @@
         "twig/twig": "^3.3",
         "nikic/fast-route": "^1.3",
         "webmozart/assert": "^1.10",
-        "idrinth/yaml-facade": "^1.2"
+        "idrinth/yaml-facade": "^1.2",
+        "ramsey/uuid": "^4.2"
     },
     "autoload": {
         "psr-4": {
