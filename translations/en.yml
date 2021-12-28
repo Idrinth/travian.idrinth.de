@@ -214,18 +214,30 @@ medium_infantry_helmet: Helmet of the Warrior
 medium_infantry_helmet_effect: Training time in Barracks reduced by 15%.
 great_infantry_helmet: Helmet of the Archon
 great_infantry_helmet_effect: Training time in Barracks reduced by 20%.
-small_regen_armor: Small Regen
-medium_regen_armor: Regen
-great_regen_armor: Great Regen
-small_scales_armor: Small Scales
-medium_scales_armor: Scales
-great_scales_armor: Great Scales
-small_chest_armor: Small Chest
-medium_chest_armor: Chest
-great_chest_armor: Great Chest
-small_chain_armor: Small Chain
-medium_chain_armor: Medium Chain
-great_chain_armor: Great Chain
+small_regen_armor: Armour of Regeneration
+small_regen_armor_effect: +20 health points regeneration per day.
+medium_regen_armor: Armour of Health
+medium_regen_armor_effect: +30 health points regeneration per day.
+great_regen_armor: Armour of Healing
+great_regen_armor_effect: +40 health points regeneration per day.
+small_scales_armor: Light Scale Armour
+small_scales_armor_effect: Damage reduced by 4 health points + 10 HP regeneration.
+medium_scales_armor: Scale Armour
+medium_scales_armor_effect: Damage reduced by 6 health points + 15 HP regeneration.
+great_scales_armor: Heavy Scale Armour
+great_scales_armor_effect: Damage reduced by 8 health points + 20 HP regeneration.
+small_chest_armor: Light Breast-plate
+small_chest_armor_effect: +250 fighting strength for Hero.
+medium_chest_armor: Breast-plate
+medium_chest_armor_effect: +1000 fighting strength for Hero.
+great_chest_armor: Heavy Breast-plate
+great_chest_armor_effect: +4000 fighting strength for Hero.
+small_chain_armor: Light Segmented-armour
+small_chain_armor_effect: Damage reduced by 3 and +125 fighting strength for Hero.
+medium_chain_armor: Segmented-armour
+medium_chain_armor_effect: Damage reduced by 4 and +500 fighting strength for Hero.
+great_chain_armor: Heavy Segmented-armour
+great_chain_armor_effect: Damage reduced by 5 and +2000 fighting strength for Hero.
 hero_check: Hero Item Check
 deff_call: Deff Call
 account: Account
