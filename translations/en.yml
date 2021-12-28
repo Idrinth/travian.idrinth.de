@@ -166,15 +166,24 @@ great_marksman: Great Marksman
 small_marauder: Small Marauder
 medium_marauder: Marauder
 great_marauder: Great Marauder
-small_regen_shoes: Small Regen
-medium_regen_shoes: Regen
-great_regen_shoes: Great Regen
-small_speed_shoes: Small Speed
-medium_speed_shoes: Speed
-great_speed_shoes: Great Speed
-small_horse_shoes: Small Horse Shoes
-medium_horse_shoes: Horse Shoes
-great_horse_shoes: Great Horse Shoes
+small_regen_shoes: Boots of Regeneration
+small_regen_shoes_effect: +10HP/day
+medium_regen_shoes: Boots of Health
+medium_regen_shoes_effect: +15HP/day
+great_regen_shoes: Boots of Healing
+great_regen_shoes_effect: +20HP/day
+small_speed_shoes: Boots of the Mercenary
+small_speed_shoes_effect: +25% speed on the army's base speed for distances > 20 fields
+medium_speed_shoes: Boots of the Warrior
+medium_speed_shoes_effect: +50% speed on the army's base speed for distances > 20 fields
+great_speed_shoes: Boots of the Archon
+great_speed_shoes_effect: +75% speed on the army's base speed for distances > 20 fields
+small_horse_shoes: Small Spurs
+small_horse_shoes_effect: +3 fields per hour
+medium_horse_shoes: Spurs
+medium_horse_shoes_effect: +4 fields per hour
+great_horse_shoes: Nasty Spurs
+great_horse_shoes_effect: +5 fields per hour
 small_xp_helmet: Small Experience
 medium_xp_helmet: Experience
 great_xp_helmet: Great Experience
