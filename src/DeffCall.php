@@ -2,14 +2,13 @@
 
 namespace De\Idrinth\Travian;
 
-        ini_set('display_errors', 1);
 use Ramsey\Uuid\Uuid;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 class DeffCall
 {
-    public function run(array $post, $id): void
+    public function run(array $post, $id, $key=''): void
     {
         $twig = new Environment(new FilesystemLoader(dirname(__DIR__) . '/templates'));
         if (!Uuid::isValid($id) || !is_file(dirname(__DIR__) . '/deff/' . $id . '.json')) {
@@ -19,12 +18,14 @@ class DeffCall
         $json = json_decode(file_get_contents(dirname(__DIR__) . '/deff/' . $id . '.json'), true);
         $data = [
             'id' => $id,
+            'key' => $key,
             'now' => time(),
+            'added' => false,
             'lang' => $_COOKIE['lang'] ?? 'en',
             'translations' => Translations::get($_COOKIE['lang'] ?? 'en'),
         ];
         $json['supports'] = $json['supports'] ?? [];
-        if ($post['scouts'] ?? false && $post['troops'] ?? false && $post['time'] ?? false && $post['account']??false && time() < $json['target']['time']) {
+        if (isset($post['scouts']) && isset($post['troops']) && isset($post['time']) && isset($post['account']) && time() < $json['target']['time']) {
             $json['supports'][] = [
                 'scouts' => intval($post['scouts'], 10),
                 'troops' => intval($post['troops'], 10),
@@ -33,6 +34,7 @@ class DeffCall
                 'added' => time(),
             ];
             file_put_contents(dirname(__DIR__) . '/deff/' . $id . '.json', json_encode($json));
+            $data['added'] = true;
         }
         $data['supports'] = $json['supports'];
         $data['target'] = $json['target'];

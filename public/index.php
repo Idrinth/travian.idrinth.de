@@ -36,11 +36,19 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     });
     $r->addRoute('GET', '/deff-call/{uuid}', function ($post, $id) {
         $d = new De\Idrinth\Travian\DeffCall();
-        $d->run($post, $id);
+        $d->run($post, $id, '');
     });
     $r->addRoute('POST', '/deff-call/{uuid}', function ($post, $id) {
         $d = new De\Idrinth\Travian\DeffCall();
-        $d->run($post, $id);
+        $d->run($post, $id, '');
+    });
+    $r->addRoute('GET', '/deff-call/{uuid}/{key}', function ($post, $id, $key) {
+        $d = new De\Idrinth\Travian\DeffCall();
+        $d->run($post, $id, $key);
+    });
+    $r->addRoute('POST', '/deff-call/{uuid}/{key}', function ($post, $id, $key) {
+        $d = new De\Idrinth\Travian\DeffCall();
+        $d->run($post, $id, $key);
     });
 });
 

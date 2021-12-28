@@ -2,24 +2,40 @@
 <h2>{{ translations.deff_call }} {{ id }}</h2>
 {% set totalScouts=0 %}
 {% set totalTroops=0 %}
-<table>
-    <tr><th>{{ translations.account }}</th><th>{{ translations.troops }}</th><th>{{ translations.arrival }}</th></tr>
-{% for support in supports %}
-    {% if support.time > target.time %}
-        <tr class="late"><th>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="Added {{ support.added|date('y-m-d H:i:s') }}">{{ support.time|date('Y-m-d H:i:s') }}</td></tr>
-    {% else %}
-        <tr><th>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="{{ translations.created }} {{ support.added|date('y-m-d H:i:s') }}">{{ support.time|date('Y-m-d H:i:s') }}</td></tr>
-        {% set totalScouts=totalScouts+support.scouts %}
-        {% set totalTroops=totalTroops+support.troops %}
+{% if key==target.key and key is not empty %}
+    <table>
+        <tr><th>{{ translations.account }}</th><th>{{ translations.troops }}</th><th>{{ translations.arrival }}</th></tr>
+    {% for support in supports %}
+        {% if support.time > target.time %}
+            <tr class="late"><th>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="Added {{ support.added|date('y-m-d H:i:s') }}">{{ support.time|date('Y-m-d H:i:s') }}</td></tr>
+        {% else %}
+            <tr><th>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="{{ translations.created }} {{ support.added|date('y-m-d H:i:s') }}">{{ support.time|date('Y-m-d H:i:s') }}</td></tr>
+            {% set totalScouts=totalScouts+support.scouts %}
+            {% set totalTroops=totalTroops+support.troops %}
+        {% endif %}
+    {% endfor %}
+{% else %}
+    {% if added %}
+        <p>{{ translations.added }}</p>
     {% endif %}
-{% endfor %}
-</table>
+    <p>{{ translation.hidden_details }}</p>
+    {% for support in supports %}
+        {% if support.time <= target.time %}
+            {% set totalScouts=totalScouts+support.scouts %}
+            {% set totalTroops=totalTroops+support.troops %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
 <h3>{{ translations.status }}</h3>
 <table>
     <tr><th>{{ translations.village }}</th><td><a href="{{ target.url }}" target="_blank">{{ translations.here }}</a></td></tr>
     <tr><th>{{ translations.scouts }}</th><td>{{totalScouts }}/{{ target.scouts }}</td></tr>
     <tr><th>{{ translations.troops }}</th><td>{{totalTroops }}/{{ target.troops }}</td></tr>
     <tr><th>{{ translations.arrival }}</th><td>{{ target.time|date('Y-m-d H:i:s') }}</tr>
+    <tr><th>{{ translations.share }}</th><td><a href="https://travian.idrinth.de/deff-call/{{ id }}">https://travian.idrinth.de/deff-call/{{ id }}</a></tr>
+    {% if key==target.key and key is not empty %}
+        <tr><th>{{ translations.share_full }}</th><td><a href="https://travian.idrinth.de/deff-call/{{ id }}/{{ key }}">https://travian.idrinth.de/deff-call/{{ id }}/{{ key }}</a></tr>
+    {% endif %}
 </table>
 {% if now < target.time %}
 <form method="post">
