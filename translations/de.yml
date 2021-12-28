@@ -42,37 +42,37 @@ town_hall_level: Rathaus Stufe
 tribe_title: Only select if it's wrongly detected
 advanced: Erweitertes
 gelding: Leichts Reitpferd 
-gelding_effect: The speed of your hero is raised to 14 fields per hour
-thoroughbred: Thoroughbred
-thoroughbred_effect: The speed of your hero is raised to 17 fields per hour
-warhorse: Warhorse
-warhorse_effect: The speed of your hero is raised to 20 fields per hour
-empty: Empty
-hero_image_url: Hero Image URL
-helmet: Helmet
-armor: armor
+gelding_effect: Die Geschwindigkeit des Helden steigert sich auf 14 Felder pro Stunde.
+thoroughbred: Edles Vollblut
+thoroughbred_effect: TDie Geschwindigkeit des Helden steigert sich auf 17 Felder pro Stunde.
+warhorse: Streitross
+warhorse_effect: Die Geschwindigkeit des Helden steigert sich auf 20 Felder pro Stunde.
+empty: Leer
+hero_image_url: Helden Bild URL
+helmet: Helm
+armor: Rüstung
 right_hand: Rechte Hand
 left_hand: Linke Hand
 shoes: Schuhe
 horse: Pferd
 small_map: Kleine Karte
-small_map_effect: +30% Return Speed
+small_map_effect: +30%  schnellere Rückkehr.
 medium_map: Karte
-medium_map_effect: +40% Return Speed
+medium_map_effect: +40%  schnellere Rückkehr.
 great_map: Große Karte
-great_map_effect: +50% Return Speed
-small_people_banner: Small Pennant
-small_people_banner_effect: 30% faster troops between own villages.
-medium_people_banner: Pennant
-medium_people_banner_effect: 40% faster troops between own villages.
-great_people_banner: Great Pennant
-great_people_banner_effect: 50% faster troops between own villages.
-small_alliance_banner: Small Standard
-small_alliance_banner_effect: 15% faster troops between alliance members. 
-medium_alliance_banner: Standard
-medium_alliance_banner_effect: 20% faster troops between alliance members. 
-great_alliance_banner: Great Standard
-great_alliance_banner_effect: 35% faster troops between alliance members. 
+great_map_effect: +50%  schnellere Rückkehr.
+small_people_banner: Kleine Standarten des Volkes
+small_people_banner_effect: 30% schnellere Truppen zwischen eigenen Dörfern.
+medium_people_banner: Standarten des Volkes
+medium_people_banner_effect: 40% schnellere Truppen zwischen eigenen Dörfern.
+great_people_banner: Große Standarten des Volkes
+great_people_banner_effect: 50% schnellere Truppen zwischen eigenen Dörfern.
+small_alliance_banner: Kleine Standarte des Bundes
+small_alliance_banner_effect: 15% schnellere Truppen zwischen Allianzmitgliedern. 
+medium_alliance_banner: Standarte des Bundes
+medium_alliance_banner_effect: 20% schnellere Truppen zwischen Allianzmitgliedern. 
+great_alliance_banner: Große Standarte des Bundes
+great_alliance_banner_effect: 35% schnellere Truppen zwischen Allianzmitgliedern. 
 small_thief: Kleiner Sack des Diebes
 small_thief_effect: 10% Plünderbonus
 medium_thief: Sack des Diebes
@@ -91,51 +91,51 @@ medium_natars: Kriegshorn der Nataren
 medium_natars_effect: +25% Angriffskraft gegen Nataren (counts for hero as well as the troops attacking together with him)
 great_natars: Großes Kriegshorn der Nataren
 great_natars_effect: +30% aAngriffskraft gegen Nataren (counts for hero as well as the troops attacking together with him)
-small_legionaire: Small Legionaire
-medium_legionaire: Legionaire
-great_legionaire: Great Legionaire
-small_praetorian: Small Praetorian
-medium_praetorian: Praetorian
-great_praetorian: Great Praetorian
-small_imperian: Small Imperian
-medium_imperian: Imperian
-great_imperian: Great Imperian
-small_imperatoris: Small Imperatoris
-medium_imperatoris: Imperatoris
-great_imperatoris: Great Imperatoris
-small_caesaris: Small Caesaris
-medium_caesaris: Caesaris
-great_caesaris: Great Caesaris
-small_phalanx: Small Phalanx,
-medium_phalanx: Phalanx
-great_phalanx: Great Phalanx
-small_sword: Small Swordman
-medium_sword: Swordman
-great_sword: Great Swordman
-small_theutates: Small Theutates
-medium_theutates: Theutates
-great_theutates: Great Theutates
-small_druid: Small Druid rider
-medium_druid: Druid rider
-great_druid: Great Druid rider
-small_haeduaner: Small Haeduaner
-medium_haeduaner: Medium Haeduaner
-great_haeduaner: Great Haeduaner
-small_club: Small club
-medium_club: Club
-great_club: Great Club
-small_speer: Small Speer
-medium_speer: Speer
-great_speer: Great Speer
-small_axe: Small Axe
-medium_axe: Axe
-great_axe: Great Axe
-small_knight: Small Knight
-medium_knight: Knight
-great_knight: Great Knight
-small_teuton: Small Teuton
-medium_teuton: Teuton
-great_tueton: Great Teuton
+small_legionaire: Kurzschwert des Legionärs
+medium_legionaire: Schwert des Legionärs
+great_legionaire: Langschwert des Legionärs
+small_praetorian: Kurzschwert des Prätorianers
+medium_praetorian: Schwert des Prätorianers
+great_praetorian: Langschwert des Prätorianers
+small_imperian: Kurzschwert des Imperianers
+medium_imperian: Schwert des Imperianers
+great_imperian: Langschwert des Imperianers
+small_imperatoris: Kurzschwert des Imperatoris
+medium_imperatoris: Schwert des Imperatoris
+great_imperatoris: Langschwert des Imperatoris
+small_caesaris: Leichte Lanze des Caesaris
+medium_caesaris: Lanze des Caesaris
+great_caesaris: Schwere Lanze des Caesaris
+small_phalanx: Speer der Phalanx
+medium_phalanx: Spieß der Phalanx
+great_phalanx: Lanze der Phalanx
+small_sword: Kurzschwert des Schwertkämpfers
+medium_sword: Schwert des Schwertkämpfers
+great_sword: Langschwert des Schwertkämpfers
+small_theutates: Kurzbogen des Theutates
+medium_theutates: Bogen des Theutates
+great_theutates: Langbogen des Theutates
+small_druid: Wanderstab des Druidenreiters
+medium_druid: Stab des Druidenreiters
+great_druid: Kampfstab des Druidenreiters
+small_haeduaner: Leichte Lanze des Haeduaners
+medium_haeduaner: Lanze Lanze des Haeduaners
+great_haeduaner: Schwere Lanze des Haeduaners
+small_club: Knüppel des Keulenschwingers
+medium_club: Streitkolben des Keulenschwingers
+great_club: Morgenstern des Keulenschwingers
+small_speer: Speer des Speerkämpfers
+medium_speer: Spieß des Speerkämpfers
+great_speer: Lanze des Speerkämpfers
+small_axe: Beil des Axtkämpfers
+medium_axe: Axt des Axtkämpfers
+great_axe: Streitaxt des Axtkämpfers
+small_knight: Leichter Hammer des Paladins
+medium_knight: Hammer des Paladins
+great_knight: Schwerer Hammer des Paladins
+small_teuton: Kurzschwert des Teutonen Reiters
+medium_teuton: Schwert des Teutonen Reiters
+great_tueton: Langschwert des Teutonen Reiters
 small_slave: Small Slave
 medium_slave: Slave
 great_slave: Great Slave
@@ -166,89 +166,89 @@ great_marksman: Great Marksman
 small_marauder: Small Marauder
 medium_marauder: Marauder
 great_marauder: Great Marauder
-small_regen_shoes: Boots of Regeneration
-small_regen_shoes_effect: +10HP/day
-medium_regen_shoes: Boots of Health
-medium_regen_shoes_effect: +15HP/day
-great_regen_shoes: Boots of Healing
-great_regen_shoes_effect: +20HP/day
-small_speed_shoes: Boots of the Mercenary
-small_speed_shoes_effect: +25% speed on the army's base speed for distances > 20 fields
-medium_speed_shoes: Boots of the Warrior
-medium_speed_shoes_effect: +50% speed on the army's base speed for distances > 20 fields
-great_speed_shoes: Boots of the Archon
-great_speed_shoes_effect: +75% speed on the army's base speed for distances > 20 fields
-small_horse_shoes: Small Spurs
-small_horse_shoes_effect: +3 fields per hour
-medium_horse_shoes: Spurs
-medium_horse_shoes_effect: +4 fields per hour
-great_horse_shoes: Nasty Spurs
-great_horse_shoes_effect: +5 fields per hour
-small_xp_helmet: Helmet of Awareness
-small_xp_helmet_effect: +15% Experience
-medium_xp_helmet: Helmet of Enlightenment
-medium_xp_helmet_effect: +20% Experience
-great_xp_helmet: Helmet of Wisdom
-great_xp_helmet_effect: +25% Experience
-small_regen_helmet: Helmet of Regeneration
-small_regen_helme_effectt: +10 HP/day
-medium_regen_helmet: Helmet of Health
-medium_regen_helme_effectt: +15 HP/day
-great_regen_helmet: Helmet of Healing
-great_regen_helme_effectt: +20 HP/day
-small_cp_helmet: Helmet of the Gladiator
-small_cp_helmet_effect: +100 Culture Points per day
-medium_cp_helmet: Helmet of the Tribune
-medium_cp_helmet_effect: +400 Culture Points per day
-great_cp_helmet: Helmet of the Consul
-great_cp_helmet_effect: +1600 Culture Points per day
-small_cavalry_helmet: Helmet of the Horseman
-small_cavalry_helmet_effect: Training time in Stable reduced by 10%.
-medium_cavalry_helmet: Helmet of the Cavalry
-medium_cavalry_helmet_effect: Training time in Stable reduced by 15%.
-great_cavalry_helmet: Helmet of the Heavy Cavalry
-great_cavalry_helmet_effect: Training time in Stable reduced by 20%.
-small_infantry_helmet: Helmet of the Mercenary
-small_infantry_helmet_effect: Training time in Barracks reduced by 10%.
-medium_infantry_helmet: Helmet of the Warrior
-medium_infantry_helmet_effect: Training time in Barracks reduced by 15%.
-great_infantry_helmet: Helmet of the Archon
-great_infantry_helmet_effect: Training time in Barracks reduced by 20%.
-small_regen_armor: Armour of Regeneration
-small_regen_armor_effect: +20 health points regeneration per day.
-medium_regen_armor: Armour of Health
-medium_regen_armor_effect: +30 health points regeneration per day.
-great_regen_armor: Armour of Healing
-great_regen_armor_effect: +40 health points regeneration per day.
-small_scales_armor: Light Scale Armour
-small_scales_armor_effect: Damage reduced by 4 health points + 10 HP regeneration.
-medium_scales_armor: Scale Armour
-medium_scales_armor_effect: Damage reduced by 6 health points + 15 HP regeneration.
-great_scales_armor: Heavy Scale Armour
-great_scales_armor_effect: Damage reduced by 8 health points + 20 HP regeneration.
-small_chest_armor: Light Breast-plate
-small_chest_armor_effect: +250 fighting strength for Hero.
-medium_chest_armor: Breast-plate
-medium_chest_armor_effect: +1000 fighting strength for Hero.
-great_chest_armor: Heavy Breast-plate
-great_chest_armor_effect: +4000 fighting strength for Hero.
-small_chain_armor: Light Segmented-armour
-small_chain_armor_effect: Damage reduced by 3 and +125 fighting strength for Hero.
-medium_chain_armor: Segmented-armour
-medium_chain_armor_effect: Damage reduced by 4 and +500 fighting strength for Hero.
-great_chain_armor: Heavy Segmented-armour
-great_chain_armor_effect: Damage reduced by 5 and +2000 fighting strength for Hero.
-hero_check: Hero Item Check
-deff_call: Deff Call
+small_regen_shoes: Schuhe der Regeneration
+small_regen_shoes_effect: +10HP/Tag
+medium_regen_shoes: Schuhe der Gesundheit
+medium_regen_shoes_effect: +15HP/Tag
+great_regen_shoes: Schuhe der Heilung 
+great_regen_shoes_effect: +20HP/Tag
+small_speed_shoes: Schuhe des Söldners
+small_speed_shoes_effect: +25% Geschwindigkeit auf den Basiswert der Armee bei Entfernungen > 20 Felder.
+medium_speed_shoes: Schuhe des Soldaten
+medium_speed_shoes_effect: +50% Geschwindigkeit auf den Basiswert der Armee bei Entfernungen > 20 Felder.
+great_speed_shoes: Schuhe des Anführers
+great_speed_shoes_effect: +75% Geschwindigkeit auf den Basiswert der Armee bei Entfernungen > 20 Felder.
+small_horse_shoes: Kleine Pferdesporen
+small_horse_shoes_effect: +3 Felder pro Stunde für den berittenen Helden.
+medium_horse_shoes: Pferdesporen
+medium_horse_shoes_effect: +4 Felder pro Stunde für den berittenen Helden.
+great_horse_shoes: Große Pferdesporen
+great_horse_shoes_effect: +5 Felder pro Stunde für den berittenen Helden.
+small_xp_helmet: Helm der Erkenntnis
+small_xp_helmet_effect: +15% 15% mehr Erfahrung für den Helden.
+medium_xp_helmet: Helm der Erleuchtung
+medium_xp_helmet_effect: +20% 15% mehr Erfahrung für den Helden.
+great_xp_helmet: Helm der Weisheit
+great_xp_helmet_effect: +25% 15% mehr Erfahrung für den Helden.
+small_regen_helmet: Helm der Regeneration
+small_regen_helme_effectt: +10 HP/Tag.
+medium_regen_helmet: Helm der Gesundheit
+medium_regen_helme_effectt: +15 HP/Tag.
+great_regen_helmet: Helm der Heilung
+great_regen_helme_effectt: +20 HP/Tag.
+small_cp_helmet: Helm des Gladiators Gladiator
+small_cp_helmet_effect: +100 Kulturpunkte pro Tag.
+medium_cp_helmet: Helm des Gladiators Tribune
+medium_cp_helmet_effect: +400 Kulturpunkte pro Tag.
+great_cp_helmet: Helm des Gladiators Consul
+great_cp_helmet_effect: +1600 Kulturpunkte pro Tag.
+small_cavalry_helmet: Helm der Reiterei
+small_cavalry_helmet_effect: 10% kürzere Ausbildungszeit im Stall.
+medium_cavalry_helmet: Helm der Kavallerie
+medium_cavalry_helmet_effect: 15% kürzere Ausbildungszeit im Stall.
+great_cavalry_helmet: Helm der schweren Reiterei
+great_cavalry_helmet_effect: 20% kürzere Ausbildungszeit im Stall.
+small_infantry_helmet: Helm des Söldners
+small_infantry_helmet_effect: 10% kürzere Ausbildungszeit in der Kaserne.
+medium_infantry_helmet: Helm des Kämpfers
+medium_infantry_helmet_effect: 15% kürzere Ausbildungszeit in der Kaserne.
+great_infantry_helmet: Helm des Anführer
+great_infantry_helmet_effect: 20% kürzere Ausbildungszeit in der Kaserne.
+small_regen_armor: Leichte Rüstung der Regeneration
+small_regen_armor_effect: +20 Gesundheit pro Tag.
+medium_regen_armor: Rüstung der Regeneration
+medium_regen_armor_effect: +30 Gesundheit pro Tag.
+great_regen_armor: Schwere Rüstung der Regeneration
+great_regen_armor_effect: +40 Gesundheit pro Tag.
+small_scales_armor: Leichter Schuppenpanzer
+small_scales_armor_effect: Der Gesundheitsverlust wird um 4 Punkte reduziert + 10 Gesundheit pro Tag.
+medium_scales_armor: Schuppenpanzer
+medium_scales_armor_effect: Der Gesundheitsverlust wird um 6 Punkte reduziert + 15 Gesundheit pro Tag.
+great_scales_armor: Schwerer Schuppenpanzer
+great_scales_armor_effect: Der Gesundheitsverlust wird um 8 Punkte reduziert + 20 Gesundheit pro Tag.
+small_chest_armor: Leichter Brustpanzer
+small_chest_armor_effect: +250 Kampfkraft für den Helden.
+medium_chest_armor: Brustpanzer
+medium_chest_armor_effect: +1000 Kampfkraft für den Helden.
+great_chest_armor: Schwerer Brustpanzer
+great_chest_armor_effect: +4000 Kampfkraft für den Helden.
+small_chain_armor: Leichter Gliederpanzer
+small_chain_armor_effect: DDer Gesundheitsverlust wird um 3 Punkte reduziert +125 Kampfkraft für den Helden.
+medium_chain_armor: Gliederpanzer
+medium_chain_armor_effect: Der Gesundheitsverlust wird um 4 Punkte reduziert +500 Kampfkraft für den Helden.
+great_chain_armor: Schwerer Gliederpanzer
+great_chain_armor_effect: Der Gesundheitsverlust wird um 5 Punkte reduziert +2000 Kampfkraft für den Helden.
+hero_check: Helden Gegenstände Prüfer 
+deff_call: Deff Aufruf
 account: Account
-troops: Troops
-scouts: Scouts
-arrival: Arrival
-created: Added
-village: Village
-here: here
+troops: Truppen
+scouts: Grüne Socken
+arrival: Ankunft
+created: Hinzugefügt 
+village: Dorf
+here: Hier
 status: Status
-added: Your data was added.
+added: Deine Daten sind hinzugefügt .
 hidden_details: With the current link details are hidden.
 share: Share Link
 share_full: Details Share Link
