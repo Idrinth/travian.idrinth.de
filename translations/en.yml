@@ -197,11 +197,11 @@ medium_regen_helme_effectt: +15 HP/day
 great_regen_helmet: Helmet of Healing
 great_regen_helme_effectt: +20 HP/day
 small_cp_helmet: Helmet of the Gladiator
-small_cp_helmet: +100 Culture Points per day
+small_cp_helmet_effect: +100 Culture Points per day
 medium_cp_helmet: Helmet of the Tribune
-medium_cp_helmet: +400 Culture Points per day
+medium_cp_helmet_effect: +400 Culture Points per day
 great_cp_helmet: Helmet of the Consul
-great_cp_helmet: +1600 Culture Points per day
+great_cp_helmet_effect: +1600 Culture Points per day
 small_cavalry_helmet: Helmet of the Horseman
 small_cavalry_helmet_effect: Training time in Stable reduced by 10%.
 medium_cavalry_helmet: Helmet of the Cavalry
