@@ -1,5 +1,7 @@
 {% include 'header.twig' %}
 <h2>{{ translations.deff_call }} {{ id }}</h2>
+<h3>{{ translations.status }}</h3>
+<div class="split2">
 {% set totalScouts=0 %}
 {% set totalTroops=0 %}
 {% if key==target.key and key is not empty %}
@@ -26,7 +28,6 @@
         {% endif %}
     {% endfor %}
 {% endif %}
-<h3>{{ translations.status }}</h3>
 <table>
     <tr><th>{{ translations.village }}</th><td><a href="{{ target.url }}" target="_blank">{{ translations.here }}</a></td></tr>
     <tr><th>{{ translations.scouts }}</th><td>{{totalScouts }}/{{ target.scouts }}</td></tr>
@@ -37,6 +38,7 @@
         <tr><th>{{ translations.share_full }}</th><td><a href="https://travian.idrinth.de/deff-call/{{ id }}/{{ key }}">https://travian.idrinth.de/deff-call/{{ id }}/{{ key }}</a></tr>
     {% endif %}
 </table>
+</div>
 {% if now < target.time %}
 <form method="post">
     <fieldset>
