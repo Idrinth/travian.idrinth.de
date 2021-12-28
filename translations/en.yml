@@ -184,21 +184,36 @@ medium_horse_shoes: Spurs
 medium_horse_shoes_effect: +4 fields per hour
 great_horse_shoes: Nasty Spurs
 great_horse_shoes_effect: +5 fields per hour
-small_xp_helmet: Small Experience
-medium_xp_helmet: Experience
-great_xp_helmet: Great Experience
-small_regen_helmet: Small Regen
-medium_regen_helmet: Regen
-great_regen_helmet: Great Regen
-small_cp_helmet: Small Culture Points
-medium_cp_helmet: Culture Points
-great_cp_helmet: Great Culture Points
-small_cavalry_helmet: Small Cavalry
-medium_cavalry_helmet: Cavalry
-great_cavalry_helmet: Great Cavalry
-small_infantry_helmet: Small Infantry
-medium_infantry_helmet: Infantry
-great_infantry_helmet: Great Infantry
+small_xp_helmet: Helmet of Awareness
+small_xp_helmet_effect: +15% Experience
+medium_xp_helmet: Helmet of Enlightenment
+medium_xp_helmet_effect: +20% Experience
+great_xp_helmet: Helmet of Wisdom
+great_xp_helmet_effect: +25% Experience
+small_regen_helmet: Helmet of Regeneration
+small_regen_helme_effectt: +10 HP/day
+medium_regen_helmet: Helmet of Health
+medium_regen_helme_effectt: +15 HP/day
+great_regen_helmet: Helmet of Healing
+great_regen_helme_effectt: +20 HP/day
+small_cp_helmet: Helmet of the Gladiator
+small_cp_helmet: +100 Culture Points per day
+medium_cp_helmet: Helmet of the Tribune
+medium_cp_helmet: +400 Culture Points per day
+great_cp_helmet: Helmet of the Consul
+great_cp_helmet: +1600 Culture Points per day
+small_cavalry_helmet: Helmet of the Horseman
+small_cavalry_helmet_effect: Training time in Stable reduced by 10%.
+medium_cavalry_helmet: Helmet of the Cavalry
+medium_cavalry_helmet_effect: Training time in Stable reduced by 15%.
+great_cavalry_helmet: Helmet of the Heavy Cavalry
+great_cavalry_helmet_effect: Training time in Stable reduced by 20%.
+small_infantry_helmet: Helmet of the Mercenary
+small_infantry_helmet_effect: Training time in Barracks reduced by 10%.
+medium_infantry_helmet: Helmet of the Warrior
+medium_infantry_helmet_effect: Training time in Barracks reduced by 15%.
+great_infantry_helmet: Helmet of the Archon
+great_infantry_helmet_effect: Training time in Barracks reduced by 20%.
 small_regen_armor: Small Regen
 medium_regen_armor: Regen
 great_regen_armor: Great Regen
