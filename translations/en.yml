@@ -243,6 +243,8 @@ deff_call: Deff Call
 account: Account
 troops: Troops
 scouts: Scouts
+desired_troops: Desired Troops
+desired_scouts: Desired Scouts
 arrival: Arrival
 created: Added
 village: Village
@@ -252,3 +254,4 @@ added: Your data was added.
 hidden_details: With the current link details are hidden.
 share: Share Link
 share_full: Details Share Link
+village_url: Village URL

@@ -3,10 +3,10 @@
 <form method="post">
     <fieldset>
         <legend>{{ translations.main }}</legend>
-        <label>Village URL<input name="url" type="url"/></label>
-        <label>Arrival Time<input name="time" type="datetime"/></label>
-        <label>Desired troops<input name="troops" type="number" value="0" min="0"/></label>
-        <label>Desired scouts<input name="scouts" type="number" value="0" min="0"/></label>
+        <label>{{ translations.village_url }}<input name="url" type="url"/></label>
+        <label>{{ translations.arrival }}<input name="time" type="datetime"/></label>
+        <label>{{ translations.desired_troops }}<input name="troops" type="number" value="0" min="0"/></label>
+        <label>{{ translations.desired_scouts }}<input name="scouts" type="number" value="0" min="0"/></label>
         <input type="submit"/>
     </fieldset>
 </form>
