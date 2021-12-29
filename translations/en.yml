@@ -1,6 +1,6 @@
 title: Travian Calculators
 home: Home
-delivery: Delivery
+delivery: Delivery Calculator
 imprint: Imprint
 travian_footer: This website is in no way endorsed by Travian Legends or Travian GmbH and is merely meant as a tool for players.
 welcome_header: Welcome!
@@ -265,3 +265,10 @@ trader_capacity_info: Capacity of a single trader
 world_speed_info: Your world's speed
 trader_speed_info: Your merchant's speed
 tribe_info: This is used to calculate some trader information
+traders_distance_info: The direct distance between villages
+traders_time_info: The time to travel between villages
+traders_delivery_info: How often would you need to setup a delivery
+lumber_per_trade_info: lumber per trade
+clay_per_trade_info: clay per trade
+iron_per_trade_info: iron per trade
+crop_per_trade_info: crop per trade

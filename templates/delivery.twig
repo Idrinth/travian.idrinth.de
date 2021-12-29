@@ -20,14 +20,14 @@
             <div class="result">
                 <h3 onclick="this.parentNode.classList.toggle('hidden');"><em>{{ calculatedInputs.village.name }}</em>({{ calculatedInputs.village.x }}|{{ calculatedInputs.village.y }}) &rarr; <em>{{ result.village.name }}</em>({{ result.village.x }}|{{ result.village.y }})</h3>
                 <table>
-                    <tr><th>{{ translations.distance }}</th><td>{{ result.distance }}</td><td>The direct distance between villages</td></tr>
-                    <tr><th>{{ translations.travle_time }}</th><td>{{ result.travelTime }}s</td><td>Traders required to carry a single hourly production</td></tr>
+                    <tr><th>{{ translations.distance }}</th><td>{{ result.distance }}</td><td>{{ translations.traders_distance_info }}</td></tr>
+                    <tr><th>{{ translations.travel_time }}</th><td>{{ result.travelTime }}s</td><td>{{ translations.traders_time_info }}</td></tr>
                     <tr><th>{{ translations.traders_per_trade }}</th><td>{{ result.traders }}</td><td>Optimal amount of traders required</td></tr>
-                    <tr><th>{{ translations.trade_every }}</th><td>{{ result.minBetweenTrades }}min</td><td>How often would you need to setup a delivery</td></tr>
-                    <tr><th>{{ translations.lumber }}</th><td>{{ result.lumber }}</td><td>lumber per trade</td></tr>
-                    <tr><th>{{ translations.clay }}</th><td>{{ result.clay }}</td><td>clay per trade</td></tr>
-                    <tr><th>{{ translations.iron }}</th><td>{{ result.iron }}</td><td>iron per trade</td></tr>
-                    <tr><th>{{ translations.crop }}</th><td>{{ result.crop }}</td><td>crop per trade</td></tr>
+                    <tr><th>{{ translations.trade_every }}</th><td>{{ result.minBetweenTrades }}min</td><td>{{ translations.traders_delivery_info }}</td></tr>
+                    <tr><th>{{ translations.lumber }}</th><td>{{ result.lumber }}</td><td>{{ translations.lumber_per_trade_info }}</td></tr>
+                    <tr><th>{{ translations.clay }}</th><td>{{ result.clay }}</td><td>{{ translations.clay_per_trade_info }}</td></tr>
+                    <tr><th>{{ translations.iron }}</th><td>{{ result.iron }}</td><td>{{ translations.iron_per_trade_info }}</td></tr>
+                    <tr><th>{{ translations.crop }}</th><td>{{ result.crop }}</td><td>{{ translations.crop_per_trade_info }}</td></tr>
                 </table>
             </div>
         {% endfor %}
