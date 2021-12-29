@@ -255,3 +255,13 @@ hidden_details: With the current link details are hidden.
 share: Share Link
 share_full: Details Share Link
 village_url: Village URL
+desired_celebrations_info: desired celebrations to keep going 24/7
+total_production_info: total production per hour ignoring negative production
+crop_production_info: crop production per hour reduced by celebration needs
+iron_production_info: iron production per hour reduced by celebration needs
+clay_production_info: clay production per hour reduced by celebration needs
+lumber_production_info: lumber production per hour reduced by celebration needs
+trader_capacity_info: Capacity of a single trader
+world_speed_info: Your world's speed
+trader_speed_info: Your merchant's speed
+tribe_info: This is used to calculate some trader information

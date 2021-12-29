@@ -2,16 +2,16 @@
 <h2>{{ translations.delivery_calculator }}</h2>
 {% if results and calculatedInputs %}
     <h3>{{ translations.inputs }}</h3><table>
-        <tr><th>{{ translations.tribe }}</th><td>{{ translations[calculatedInputs.tribe] }}</td><td>Your tribe</td></tr>
-        <tr><th>{{ translations.speed }}</th><td>{{ calculatedInputs.speed }}/h</td><td>Your merchant's speed</td></tr>
-        <tr><th>{{ translations.world_speed }}</th><td>{{ calculatedInputs.worldspeed }}x</td><td>Your world's speed</td></tr>
-        <tr><th>{{ translations.capacity }}</th><td>{{ calculatedInputs.capacity }}</td><td>Capacity of a single trader</td></tr>
-        <tr><th>{{ translations.lumber }}</th><td>{{ calculatedInputs.lumber }}/h ({{ rawCalculatedInputs.lumber }})</td><td>lumber production per hour reduced by celebration needs</td></tr>
-        <tr><th>{{ translations.clay }}</th><td>{{ calculatedInputs.clay }}/h ({{ rawCalculatedInputs.clay }})</td><td>clay production per hour reduced by celebration needs</td></tr>
-        <tr><th>{{ translations.iron }}</th><td>{{ calculatedInputs.iron }}/h ({{ rawCalculatedInputs.iron }})</td><td>iron production per hour reduced by celebration needs</td></tr>
-        <tr><th>{{ translations.crop }}</th><td>{{ calculatedInputs.crop }}/h ({{ rawCalculatedInputs.crop }})</td><td>crop production per hour reduced by celebration needs</td></tr>
-        <tr><th>{{ translations.total }}</th><td>{{ calculatedInputs.total }}/h</td><td>total production per hour ignoring negative production</td></tr>
-        <tr><th>{{ translations.celebration }}</th><td>{{ translations[inputs.celebration] }}</td><td>desired celebrations to keep going 24/7</td></tr>
+        <tr><th>{{ translations.tribe }}</th><td>{{ translations[calculatedInputs.tribe] }}</td><td>{{ translations.tribe_info }}</td></tr>
+        <tr><th>{{ translations.speed }}</th><td>{{ calculatedInputs.speed }}/h</td><td>{{ translations.trader_speed_info }}</td></tr>
+        <tr><th>{{ translations.world_speed }}</th><td>{{ calculatedInputs.worldspeed }}x</td><td>{{ translations.world_speed_info }}</td></tr>
+        <tr><th>{{ translations.capacity }}</th><td>{{ calculatedInputs.capacity }}</td><td>{{ translations.trader_capacity }}</td></tr>
+        <tr><th>{{ translations.lumber }}</th><td>{{ calculatedInputs.lumber }}/h ({{ rawCalculatedInputs.lumber }})</td>{{ translations.total_lumber_info }}<td></td></tr>
+        <tr><th>{{ translations.clay }}</th><td>{{ calculatedInputs.clay }}/h ({{ rawCalculatedInputs.clay }})</td><td>{{ translations.total_clay_info }}</td></tr>
+        <tr><th>{{ translations.iron }}</th><td>{{ calculatedInputs.iron }}/h ({{ rawCalculatedInputs.iron }})</td><td>{{ translations.total_iron_info }}</td></tr>
+        <tr><th>{{ translations.crop }}</th><td>{{ calculatedInputs.crop }}/h ({{ rawCalculatedInputs.crop }})</td><td>{{ translations.total_crop_info }}</td></tr>
+        <tr><th>{{ translations.total }}</th><td>{{ calculatedInputs.total }}/h</td><td>{{ translations.total_production_info }}</td></tr>
+        <tr><th>{{ translations.celebration }}</th><td>{{ translations[inputs.celebration] }}</td><td>{{ translations.desired_celebration_info }}</td></tr>
     </table>
     {% if results.error %}
         <p class="error">{{ results.error }}</p>
