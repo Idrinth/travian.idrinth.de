@@ -17,7 +17,7 @@ iron: Eisen
 crop: Getreide
 total: Gesamt
 celebration: Fest
-trade_every: Ein Händler aller
+trade_every: Rohstoffe tauschen
 traders_per_trade: Händler je Lieferung 
 travel_time: Lieferzeit
 distance: Distanz
@@ -78,7 +78,7 @@ small_thief_effect: 10% Plünderbonus
 medium_thief: Sack des Diebes
 medium_thief_effect: 15% Plünderbonus.
 great_thief: Großer Sack des Diebes
-great_thief_effect: 15% Plünderbonus.
+great_thief_effect: 20% Plünderbonus.
 small_shield: Kleiner Kriegsschild 
 small_shield_effect: +250 Kampfkraft für den Helden.
 medium_shield: Kriegsschild
@@ -136,36 +136,36 @@ great_knight: Schwerer Hammer des Paladins
 small_teuton: Kurzschwert des Teutonen Reiters
 medium_teuton: Schwert des Teutonen Reiters
 great_tueton: Langschwert des Teutonen Reiters
-small_slave: Small Slave
-medium_slave: Slave
-great_slave: Great Slave
-small_ash: Small Ash warden
-medium_ash: Ash warden
-great_ash: Great Ash warden
-small_warrior: Small Warrior
-medium_warrior: Warrior
-great_warrior: Great Warrior
-small_anhor: Small Anhor
-medium_anhor: Anhor
-great_anhor: Great Anhor
-small_resheph: Small Resheph
-medium_resheph: Resheph
-great_resheph: Great Resheph
-small_mercenary: Small Mercenary
-medium_mercenary: Mercenary
-great_mercenary: Great Mercenary
-small_bownmen: Small Bowmen
-medium_bowmen: Bowmen
-great_bowmen: Great Bowmen
-small_steppe: Small Steppe Rider
-medium_steppe: Steppe Rider
-great_steppe: Great Steppe Rider
-small_marksman: Small Marksman
-medium_marksman: Marksman
-great_marksman: Great Marksman
-small_marauder: Small Marauder
-medium_marauder: Marauder
-great_marauder: Great Marauder
+small_slave: Keule der Sklaven Miliz
+medium_slave: Morgenstern der Sklaven Miliz
+great_slave: Großer Morgenstern der Sklaven Miliz
+small_ash: Beil des Asche Wächter
+medium_ash: Axt des Asche Wächter
+great_ash: Streit Axt des Asche Wächter
+small_warrior: Kurze Sichel des Cheops Krieger
+medium_warrior: Sichel des Cheops Krieger
+great_warrior: Lange Sichel des Cheops Krieger
+small_anhor: Kleiner Speer Des Anhur Wächter
+medium_anhor: Speer des Anhur Wächter
+great_anhor: Lanze des Anhur Wächter
+small_resheph: Kurzbogen des Resheph Streitwagen
+medium_resheph: Bogen des Resheph Streitwagen
+great_resheph: Langbogen des Resheph Streitwagen
+small_mercenary: Beil des Söldners
+medium_mercenary: Axt des Söldners
+great_mercenary: Streitaxt des Söldners
+small_bownmen: Kurzbogen des Bogenschützen
+medium_bowmen: Bogen des Bogenschützen
+great_bowmen: Langbogen des Bogenschützen
+small_steppe: Kurzschwert des Steppenreiter
+medium_steppe: Schwert des Steppenreiter
+great_steppe: Langschwert des Steppenreiter
+small_marksman: Kurzer Compositebogen des Scharfschützen
+medium_marksman: Compositebogen des Scharfschützen
+great_marksman: Langer Compositebogen des Scharfschützen
+small_marauder: Kurzschwert des Rumtreiber
+medium_marauder: Schwert des Rumtreiber
+great_marauder: Langschwert des Marodeur
 small_regen_shoes: Schuhe der Regeneration
 small_regen_shoes_effect: +10HP/Tag
 medium_regen_shoes: Schuhe der Gesundheit
@@ -242,7 +242,7 @@ hero_check: Helden Gegenstände Prüfer
 deff_call: Deff Aufruf
 account: Account
 troops: Truppen
-scouts: Grüne Socken
+scouts: Späher
 arrival: Ankunft
 created: Hinzugefügt 
 village: Dorf
@@ -250,5 +250,5 @@ here: Hier
 status: Status
 added: Deine Daten sind hinzugefügt .
 hidden_details: With the current link details are hidden.
-share: Share Link
-share_full: Details Share Link
+share: Link zum Teilen
+share_full: Alle Deteils zum Teilen Link
