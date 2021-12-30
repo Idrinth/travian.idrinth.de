@@ -47,11 +47,21 @@
                 width: 90%;
                 box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
             }
-            body > h1,
+            body > #header,
             body > footer {
                 background: #333;
                 color: #ddd;
                 text-align: center;
+            }
+            #header {
+                display: flex;
+            }
+            #header > * {
+                flex: auto;
+                background: #333;
+                color: #eee;
+                display: inline;
+                vertical-align: middle;
             }
             body > iframe {
                 max-width: 100%;
@@ -96,13 +106,29 @@
                 flex: auto;
             }
         </style>
+        <script>
+            const zeropad = (string) => {
+                string = '' + string;
+                if (string.length < 1) {
+                    return '00';
+                }
+                if (string.length < 2) {
+                    return '0' + string;;
+                }
+                return string;
+            };
+            window.setInterval(() => {
+                const date = new Date();
+                document.getElementById('time').innerHTML = zeropad(date.getUTCHours()) + ':' + zeropad(date.getUTCMinutes()) + ':' + zeropad(date.getUTCSeconds());
+            }, 500);
+        </script>
     </head>
     <body>
-        <h1>
+        <div id="header">
             <a href="/">
                 <img src="/logo.png" alt=""/>
             </a>
-            Travian Tools for v4.6 (alpha)
+            <h1>Travian Tools for v4.6 (alpha)</h1>
             <select style="width: auto; display: inline;" onchange="document.cookie='lang=' + this.value;location.reload();">
                 <option{% if lang=='en' %} selected{% endif %} value="en">English</option>
                 <option{% if lang=='de' %} selected{% endif %} value="de">Deutsch</option>
@@ -112,7 +138,8 @@
                 <option{% if lang=='fi' %} selected{% endif %} value="fr">Français</option>
                 <option{% if lang=='jp' %} selected{% endif %} value="jp">日本語</option>
             </select>
-        </h1>
+            <span id="time"></span>
+        </div>
         <nav>
             <ul>
                 <li>
