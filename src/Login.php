@@ -25,9 +25,9 @@ class Login
                 'code' => $_GET['code']
             ]);
             $user = $provider->getResourceOwner($token);
-
             $_SESSION['user'] = $user->getUsername();
             $_SESSION['discriminator'] = $user->getDiscriminator();
+            $_SESSION['id'] = $user->getId();
             header('Location: /', true, 307);
         }
     }
