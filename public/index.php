@@ -1,54 +1,73 @@
 <?php
+
+use De\Idrinth\Travian\DeffCall;
+use De\Idrinth\Travian\DeffCallCreation;
+use De\Idrinth\Travian\Delivery;
+use De\Idrinth\Travian\HeroRecogniser;
+use De\Idrinth\Travian\Login;
+use De\Idrinth\Travian\Simple;
+use Dotenv\Dotenv;
+use FastRoute\Dispatcher;
+use FastRoute\RouteCollector;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
+Dotenv::createImmutable(dirname(__DIR__))->load();
+
+session_start();
+
+$dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
     $r->addRoute('GET', '/', function ($post) {
-        $d = new De\Idrinth\Travian\Simple();
+        $d = new Simple();
         $d->run('home.twig');
     });
     $r->addRoute('GET', '/imprint', function ($post) {
-        $d = new De\Idrinth\Travian\Simple();
+        $d = new Simple();
         $d->run('imprint.twig');
     });
     $r->addRoute('GET', '/delivery', function ($post) {
-        $d = new De\Idrinth\Travian\Delivery();
+        $d = new Delivery();
         $d->run($post);
     });
     $r->addRoute('POST', '/delivery', function ($post) {
-        $d = new De\Idrinth\Travian\Delivery();
+        $d = new Delivery();
         $d->run($post);
     });
     $r->addRoute('GET', '/hero-check', function ($post) {
-        $d = new De\Idrinth\Travian\HeroRecogniser();
+        $d = new HeroRecogniser();
         $d->run($post);
     });
     $r->addRoute('POST', '/hero-check', function ($post) {
-        $d = new De\Idrinth\Travian\HeroRecogniser();
+        $d = new HeroRecogniser();
         $d->run($post);
     });
     $r->addRoute('GET', '/deff-call', function ($post) {
-        $d = new De\Idrinth\Travian\DeffCallCreation();
+        $d = new DeffCallCreation();
         $d->run($post);
     });
     $r->addRoute('POST', '/deff-call', function ($post) {
-        $d = new De\Idrinth\Travian\DeffCallCreation();
+        $d = new DeffCallCreation();
         $d->run($post);
     });
     $r->addRoute('GET', '/deff-call/{uuid}', function ($post, $id) {
-        $d = new De\Idrinth\Travian\DeffCall();
+        $d = new DeffCall();
         $d->run($post, $id, '');
     });
     $r->addRoute('POST', '/deff-call/{uuid}', function ($post, $id) {
-        $d = new De\Idrinth\Travian\DeffCall();
+        $d = new DeffCall();
         $d->run($post, $id, '');
     });
     $r->addRoute('GET', '/deff-call/{uuid}/{key}', function ($post, $id, $key) {
-        $d = new De\Idrinth\Travian\DeffCall();
+        $d = new DeffCall();
         $d->run($post, $id, $key);
     });
     $r->addRoute('POST', '/deff-call/{uuid}/{key}', function ($post, $id, $key) {
-        $d = new De\Idrinth\Travian\DeffCall();
+        $d = new DeffCall();
         $d->run($post, $id, $key);
+    });
+    $r->addRoute('GET', '/login', function ($post) {
+        $d = new Login();
+        $d->run($post);
     });
 });
 
@@ -64,14 +83,14 @@ $uri = rawurldecode($uri);
 
 $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 switch ($routeInfo[0]) {
-    case FastRoute\Dispatcher::NOT_FOUND:
+    case Dispatcher::NOT_FOUND:
         header('', true, 404);
         break;
-    case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
+    case Dispatcher::METHOD_NOT_ALLOWED:
         $allowedMethods = $routeInfo[1];
         header('', true, 405);
         break;
-    case FastRoute\Dispatcher::FOUND:
+    case Dispatcher::FOUND:
         $handler = $routeInfo[1];
         $vars = $routeInfo[2];
         $handler($_POST, ...array_values($vars));

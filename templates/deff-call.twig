@@ -9,9 +9,9 @@
         <tr><th>{{ translations.account }}</th><th>{{ translations.troops }}</th><th>{{ translations.arrival }}</th></tr>
     {% for support in supports %}
         {% if support.time > target.time %}
-            <tr class="late"><th>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="Added {{ support.added|date('y-m-d H:i:s') }}">{{ support.time|date('Y-m-d H:i:s') }}</td></tr>
+            <tr class="late"><th{% if support.discord is not empty %} title="{{ support.discord }}"{% endif %}>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="Added {{ support.added|date('y-m-d H:i:s') }}">{{ support.time|date('Y-m-d H:i:s') }}</td></tr>
         {% else %}
-            <tr><th>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="{{ translations.created }} {{ support.added|date('y-m-d H:i:s') }}">{{ support.time|date('Y-m-d H:i:s') }}</td></tr>
+            <tr><th{% if support.discord is not empty %} title="{{ support.discord }}"{% endif %}>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="{{ translations.created }} {{ support.added|date('y-m-d H:i:s') }}">{{ support.time|date('Y-m-d H:i:s') }}</td></tr>
             {% set totalScouts=totalScouts+support.scouts %}
             {% set totalTroops=totalTroops+support.troops %}
         {% endif %}

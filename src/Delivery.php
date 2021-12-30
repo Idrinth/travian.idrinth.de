@@ -149,6 +149,7 @@ class Delivery {
             'calculatedInputs' => [],
             'rawCalculatedInputs' => [],
             'results' => [],
+            'session' => $_SESSION,
         ];
         if ($data['inputs']['content']) {
             try {

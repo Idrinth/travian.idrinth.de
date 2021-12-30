@@ -28,7 +28,7 @@
             a, a:visited, a:hover, a:focus, a:active {
                 color: red;
             }
-            h1 > a {
+            a.invisible {
                 text-decoration: none;
             }
             .error {
@@ -125,7 +125,7 @@
     </head>
     <body>
         <div id="header">
-            <a href="/">
+            <a class="invisible" href="/">
                 <img src="/logo.png" alt=""/>
             </a>
             <h1>Travian Tools for v4.6 (alpha)</h1>
@@ -138,7 +138,15 @@
                 <option{% if lang=='fi' %} selected{% endif %} value="fr">Français</option>
                 <option{% if lang=='jp' %} selected{% endif %} value="jp">日本語</option>
             </select>
-            <span id="time"></span>
+            <div>
+                <span id="time"></span>
+                <br />
+                {% if session.user is empty %}
+                    <a href="/login">{{ translations.login }}</a>
+                {% else %}
+                    <span>{{ session.user }}#{{ session.discriminator }}</span>
+                {% endif %}
+            </div>
         </div>
         <nav>
             <ul>

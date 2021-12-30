@@ -12,7 +12,8 @@ class Simple {
         $twig = new Environment(new FilesystemLoader(dirname(__DIR__) . '/templates'));
         $twig->display($template, [
             'lang' => $_COOKIE['lang'] ?? 'en',
-            'translations' => Translations::get($_COOKIE['lang'] ?? 'en')
+            'translations' => Translations::get($_COOKIE['lang'] ?? 'en'),
+            'session' => $_SESSION,
         ]);
     }
 

@@ -23,6 +23,7 @@ class DeffCall
             'added' => false,
             'lang' => $_COOKIE['lang'] ?? 'en',
             'translations' => Translations::get($_COOKIE['lang'] ?? 'en'),
+            'session' => $_SESSION,
         ];
         $json['supports'] = $json['supports'] ?? [];
         if (isset($post['scouts']) && $post['scouts'] >= 0 && isset($post['troops']) && $post['troops'] >= 0 && ($post['troops']+$post['scouts'] > 0) && isset($post['time']) && isset($post['account']) && time() < $json['target']['time']) {
@@ -30,6 +31,7 @@ class DeffCall
                 'scouts' => intval($post['scouts'], 10),
                 'troops' => intval($post['troops'], 10),
                 'account' => $post['account'],
+                'discord' => isset($_SESSION['user']) && isset($_SESSION['discriminator']) ? $_SESSION['user'] . '#' . $_SESSION['discriminator'] : '',
                 'time' => strtotime($post['time']),
                 'added' => time(),
             ];

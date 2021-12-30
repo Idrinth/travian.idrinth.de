@@ -14,10 +14,11 @@ class DeffCallCreation
         $data = [
             'lang' => $_COOKIE['lang'] ?? 'en',
             'translations' => Translations::get($_COOKIE['lang'] ?? 'en'),
+            'session' => $_SESSION,
         ];
         if (isset($post['url']) && isset($post['scouts']) && $post['scouts'] >= 0 && isset($post['troops']) && $post['troops'] >= 0 && ($post['troops']+$post['scouts'] > 0) && isset($post['time'])) {
             $uuid = Uuid::uuid6();
-            $key = Uuid::uuid6();
+            $key = Uuid::uuid1();
             file_put_contents(dirname(__DIR__) . '/deff/' . $uuid . '.json', json_encode([
                 'target' => [
                     'key' => $key,

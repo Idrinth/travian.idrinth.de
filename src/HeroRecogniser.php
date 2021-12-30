@@ -167,6 +167,7 @@ class HeroRecogniser
                 'url' => $post['url'] ?? ''
             ],
             'results' => [],
+            'session' => $_SESSION,
         ];
         if ($data['inputs']['url']) {
             $ids = substr($data['inputs']['url'], strpos($data['inputs']['url'], '/body/') + 6, 68);
