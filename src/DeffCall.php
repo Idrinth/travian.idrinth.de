@@ -60,7 +60,7 @@ class DeffCall
                 ':troops' => intval($post['troops'], 10),
                 ':account' => $post['account'],
                 ':creator' => $_SESSION['id'] ?? 0,
-                ':arrival' => strtotime($post['date'] . ' ' . $post['time']),
+                ':arrival' => $post['date'] . ' ' . $post['time'],
                 ':deff_call' => $data['target']['aid'],
             ]);
             $data['added'] = true;

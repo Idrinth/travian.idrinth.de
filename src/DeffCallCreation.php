@@ -2,10 +2,12 @@
 
 namespace De\Idrinth\Travian;
 
+use Exception;
 use PDO;
 use Ramsey\Uuid\Uuid;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
+use Webmozart\Assert\Assert;
 
 class DeffCallCreation
 {
@@ -32,20 +34,25 @@ class DeffCallCreation
                 $post['world'] = substr($post['world'], 8);
             }
             $post['world'] = explode('/', $post['world'])[0];
-            $key = Uuid::uuid4();
-            $stmt->execute([
-                ':id' => $uuid,
-                ':key' => $key,
-                ':world' => strtolower($post['world']),
-                ':x' => intval($post['x'], 10),
-                ':y' => intval($post['y'], 10),
-                ':scouts' => intval($post['scouts'], 10),
-                ':troops' => intval($post['troops'], 10),
-                ':arrival' => date('Y-m-d H:i:s', strtotime($post['date'] . ' ' . $post['time'])),
-                ':creator' => $_SESSION['id'] ?? 0
-            ]);
-            header('Location: /deff-call/' . $uuid . '/' . $key, true, 307);
-            return;
+            try {
+                Assert::regex($post['world'], '/^ts[0-9]+\.x[0-9]+\.[a-z]+\.travian\.com$/');
+                $key = Uuid::uuid4();
+                $stmt->execute([
+                    ':id' => $uuid,
+                    ':key' => $key,
+                    ':world' => strtolower($post['world']),
+                    ':x' => intval($post['x'], 10),
+                    ':y' => intval($post['y'], 10),
+                    ':scouts' => intval($post['scouts'], 10),
+                    ':troops' => intval($post['troops'], 10),
+                    ':arrival' => date('Y-m-d H:i:s', strtotime($post['date'] . ' ' . $post['time'])),
+                    ':creator' => $_SESSION['id'] ?? 0
+                ]);
+                header('Location: /deff-call/' . $uuid . '/' . $key, true, 307);
+                return;
+            } catch(Exception $e) {
+                //someone messed up
+            }
         }
         $twig->display('create-deff-call.twig', $data);
     }

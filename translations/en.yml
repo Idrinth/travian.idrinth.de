@@ -274,3 +274,14 @@ login: Login via Discord
 world: World
 position: Position
 link: Link
+duration: Duration
+troop_type: Troop Type
+recruiting_level: Recruitment Building Level
+great_recruiting_level: Great Recruitment Building Level
+use_great_recruiting: Use Great Recruitment Building
+normal_recruiting: Normally recruited Troops
+helmet_bonus: Helmet Bonus
+horse_trough_level: Horse drinking trouve level
+artefact_bonus: Artefact Bonus
+alliance_bonus: Alliance Bonus
+soldier_cost: Soldier Cost Calculator

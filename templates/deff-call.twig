@@ -9,15 +9,15 @@
     {% for support in supports %}
         {% if support.time > target.time %}
             {% if key==target.key and key is not empty %}
-                <tr class="late"><th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="Added {{ support.added|date('y-m-d H:i:s') }}">{{ support.time|date('Y-m-d H:i:s') }}</td></tr>
+                <tr class="late"><th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="Added {{ support.created }}">{{ support.arrival }}</td></tr>
             {% elseif session.user ~ '#' ~ session.discriminator == support.name ~ '#' ~ support.discriminator %}
-                <tr class="late"><th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="Added {{ support.added|date('y-m-d H:i:s') }}">{{ support.time|date('Y-m-d H:i:s') }}</td></tr>
+                <tr class="late"><th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="Added {{ support.created }}">{{ support.arrival }}</td></tr>
             {% endif %}
         {% else %}
             {% if key==target.key and key is not empty %}
-                <tr><th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="{{ translations.created }} {{ support.added|date('y-m-d H:i:s') }}">{{ support.time|date('Y-m-d H:i:s') }}</td></tr>
+                <tr><th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="{{ translations.created }} {{ support.created }}">{{ support.arrival }}</td></tr>
             {% elseif session.user ~ '#' ~ session.discriminator == support.name ~ '#' ~ support.discriminator %}
-                <tr><th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="Added {{ support.added|date('y-m-d H:i:s') }}">{{ support.time|date('Y-m-d H:i:s') }}</td></tr>
+                <tr><th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="Added {{ support.created }}">{{ support.arrival }}</td></tr>
             {% endif %}
             {% set totalScouts=totalScouts+support.scouts %}
             {% set totalTroops=totalTroops+support.troops %}

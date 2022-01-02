@@ -1,0 +1,105 @@
+{% include 'header.twig' %}
+<h2>{{ translations.soldier_cost }}</h2>
+{% if result %}
+    <table>
+        <tr>
+            <th>{{ translations.lumber }}</th>
+            <td>{{ result.lumber }}({{ result.lumber_ph }}/h)</td>
+        </tr>
+        <tr>
+            <th>{{ translations.clay }}</th>
+            <td>{{ result.clay }}({{ result.clay_ph }}/h)</td>
+        </tr>
+        <tr>
+            <th>{{ translations.iron }}</th>
+            <td>{{ result.iron }}({{ result.iron_ph }}/h)</td>
+        </tr>
+        <tr>
+            <th>{{ translations.crop }}</th>
+            <td>{{ result.crop }}({{ result.crop_ph }}/h)</td>
+        </tr>
+        <tr>
+            <th>{{ translations.total }}</th>
+            <td>{{ result.lumber + result.clay + result.iron + result.crop }}</td>
+        </tr>
+        <tr>
+            <th>{{ translations.duration }}</th>
+            <td>{{ floor(result.duration/3600) }}:{{ floor(result.duration/60)%60 }}:{{ result.duration%60 }}</td>
+        </tr>
+        <tr>
+            <th>{{ translations.normal_recruiting }}</th>
+            <td>{{ result.normal_recruiting }}</td>
+        </tr>
+    </table>
+{% endif %}
+<form method="post">
+    <fieldset>
+        <legend>{{ translations.main }}</legend>
+        <label>{{ translations.troops }}<input required name="troops" type="number" min="1" value="{{ inputs.troops }}"/></label>
+        <label>{{ translations.troop_type }}<select required name="troop_type">
+                <optgroup label="{{ translations.romans }}">
+                    <option{% if inputs.troop_type=='roman_legionaire' %} selected{% endif %} value="roman_legionaire">Legionaire</option>
+                    <option{% if inputs.troop_type=='roman_praetorian' %} selected{% endif %} value="roman_praetorian">Praetorian</option>
+                    <option{% if inputs.troop_type=='roman_imperian' %} selected{% endif %} value="roman_imperian">Imperian</option>
+                    <option{% if inputs.troop_type=='roman_legatis' %} selected{% endif %} value="roman_legatis">Equites Legatis</option>
+                    <option{% if inputs.troop_type=='roman_imperatoris' %} selected{% endif %} value="roman_imperatoris">Equites Imperatoris</option>
+                    <option{% if inputs.troop_type=='roman_caesaris' %} selected{% endif %} value="roman_caesaris">Equites Caesaris</option>
+                    <option{% if inputs.troop_type=='roman_catapult' %} selected{% endif %} value="roman_catapult">Fire Catapult</option>
+                    <option{% if inputs.troop_type=='roman_ram' %} selected{% endif %} value="roman_ram">Battering Ram</option>
+                </optgroup>
+                <optgroup label="{{ translations.gauls }}">
+                    <option{% if inputs.troop_type=='gaul_phalanx' %} selected{% endif %} value="gaul_phalanx">Phalanx</option>
+                    <option{% if inputs.troop_type=='gaul_swordsman' %} selected{% endif %} value="gaul_swordsman">Swordsman</option>
+                    <option{% if inputs.troop_type=='gaul_pathfinder' %} selected{% endif %} value="gaul_pathfinder">Pathfinder</option>
+                    <option{% if inputs.troop_type=='gaul_thunder' %} selected{% endif %} value="gaul_thunder">Theutates Thunder</option>
+                    <option{% if inputs.troop_type=='gaul_druid' %} selected{% endif %} value="gaul_druid">Druidrider</option>
+                    <option{% if inputs.troop_type=='gaul_haeduan' %} selected{% endif %} value="gaul_haeduan">Haeduan</option>
+                    <option{% if inputs.troop_type=='gaul_ram' %} selected{% endif %} value="gaul_ram">Ram</option>
+                    <option{% if inputs.troop_type=='gaul_trebuchet' %} selected{% endif %} value="gaul_trebuchet">Trebuchet</option>
+                </optgroup>
+                <optgroup label="{{ translations.teutons }}">
+                    <option{% if inputs.troop_type=='teuton_clubswinger' %} selected{% endif %} value="teuton_clubswinger">Clubswinger</option>
+                    <option{% if inputs.troop_type=='teuton_spearman' %} selected{% endif %} value="teuton_spearman">Spearman</option>
+                    <option{% if inputs.troop_type=='teuton_axeman' %} selected{% endif %} value="teuton_axeman">Axeman</option>
+                    <option{% if inputs.troop_type=='teuton_scout' %} selected{% endif %} value="teuton_scout">Scout</option>
+                    <option{% if inputs.troop_type=='teuton_paladin' %} selected{% endif %} value="teuton_paladin">Paladin</option>
+                    <option{% if inputs.troop_type=='teuton_knight' %} selected{% endif %} value="teuton_knight">Teutonic Knight</option>
+                    <option{% if inputs.troop_type=='teuton_ram' %} selected{% endif %} value="teuton_ram">Ram</option>
+                    <option{% if inputs.troop_type=='teuton_catapult' %} selected{% endif %} value="teuton_catapult">Catapult</option>
+                </optgroup>
+                <optgroup label="{{ translations.egyptians }}">
+                </optgroup>
+                <optgroup label="{{ translations.huns }}">
+                </optgroup>
+            </select></label>
+        <input type="submit"/>
+    </fieldset>
+    <fieldset>
+        <legend>{{ translations.advanced }}</legend>
+        <label>{{ translations.recruiting_level }}<input required name="recruiting_level" type="number" min="1" max="20" value="{{ inputs.recruiting_level }}"/></label>
+        <label>{{ translations.use_great_recruiting }}<input name="use_great_recruiting" value="1" type="checkbox"{% if inputs.use_great_recruiting %} checked{% endif %}/></label>
+        <label>{{ translations.great_recruiting_level }}<input required name="great_recruiting_level" type="number" min="0" value="{{ inputs.great_recruiting_level }}" max="20"/></label>
+        <label>{{ translations.horse_trough_level }}<input required name="horse_trough_level" type="number" min="0" value="{{ inputs.horse_trough_level }}" max="20"/></label>
+        <label>{{ translations.helmet_bonus }}<select name="helmet_bonus">
+                <option{% if inputs.helmet_bonus==1 %} selected{% endif %} value="1">0%</option>
+                <option{% if inputs.helmet_bonus==0.9 %} selected{% endif %} value="0.9">10%</option>
+                <option{% if inputs.helmet_bonus==0.85 %} selected{% endif %} value="0.85">15%</option>
+                <option{% if inputs.helmet_bonus==0.8 %} selected{% endif %} value="0.8">20%</option>
+            </select></label>
+        <label>{{ translations.artefact_bonus }}<select name="artefact_bonus">
+                <option{% if inputs.artefact_bonus==1 %} selected{% endif %} value="1">0%</option>
+                <option{% if inputs.artefact_bonus==0.75 %} selected{% endif %} value="0.75">25%</option>
+                <option{% if inputs.artefact_bonus==0.5 %} selected{% endif %} value="0.5">50%</option>
+                <option{% if inputs.artefact_bonus==0.25 %} selected{% endif %} value="0.25">75%</option>
+            </select></label>
+        <label>{{ translations.alliance_bonus }}<select name="alliance_bonus">
+                <option{% if inputs.alliance_bonus==1 %} selected{% endif %} value="1">0%</option>
+                <option{% if inputs.alliance_bonus==0.98 %} selected{% endif %} value="0.98">2%</option>
+                <option{% if inputs.alliance_bonus==0.96 %} selected{% endif %} value="0.96">4%</option>
+                <option{% if inputs.alliance_bonus==0.94 %} selected{% endif %} value="0.94">6%</option>
+                <option{% if inputs.alliance_bonus==0.92 %} selected{% endif %} value="0.92">8%</option>
+                <option{% if inputs.alliance_bonus==0.9 %} selected{% endif %} value="0.9">10%</option>
+            </select></label>
+    </fieldset>
+</form>
+{% include 'footer.twig' %}

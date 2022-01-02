@@ -7,6 +7,7 @@ use De\Idrinth\Travian\HeroRecogniser;
 use De\Idrinth\Travian\Login;
 use De\Idrinth\Travian\Profile;
 use De\Idrinth\Travian\Simple;
+use De\Idrinth\Travian\SoldierCost;
 use De\Idrinth\Travian\Styles;
 use Dotenv\Dotenv;
 use FastRoute\Dispatcher;
@@ -33,6 +34,14 @@ $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
     });
     $r->addRoute('POST', '/delivery', function ($post) {
         $d = new Delivery();
+        $d->run($post);
+    });
+    $r->addRoute('GET', '/soldier-cost', function ($post) {
+        $d = new SoldierCost();
+        $d->run($post);
+    });
+    $r->addRoute('POST', '/soldier-cost', function ($post) {
+        $d = new SoldierCost();
         $d->run($post);
     });
     $r->addRoute('GET', '/hero-check', function ($post) {
@@ -135,6 +144,7 @@ $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
         $d = new Styles();
         $d->run();
     });
+    $r->addRoute('GET', '/ping', function ($post) {});
 });
 
 // Fetch method and URI from somewhere

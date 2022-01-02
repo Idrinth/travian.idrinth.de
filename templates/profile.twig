@@ -6,7 +6,7 @@
 {% for call in deff_calls %}
     <tr>
         <th>{{ call.world }}</th>
-        <td><a href="/deff-call/{{ call.id }}{% if call.advanced %}/{{ call.key }}{% endif %}">({{ call.x }}|{{ call.y }}</a></td>
+        <td><a href="/deff-call/{{ call.id }}{% if call.advanced %}/{{ call.key }}{% endif %}">({{ call.x }}|{{ call.y }})</a></td>
         <td>{{ call.arrival }}</a></td>
     </tr>
 {% endfor %}
