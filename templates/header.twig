@@ -63,6 +63,11 @@
                 <li>
                     <a href="/soldier-cost">{{ translations.soldier_cost }}</a>
                 </li>
+                {% if session.user is not empty %}
+                    <li>
+                        <a href="/alliance">{{ translations.alliance }}</a>
+                    </li>
+                {% endif %}
             </ul>
         </nav>
         <article>

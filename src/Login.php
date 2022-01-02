@@ -14,6 +14,10 @@ class Login
     }
     public function run(array $post): void
     {
+        if (($_SESSION['id'] ?? 0) !== 0) {
+            header('Location: /profile', true, 307);
+            return;
+        }
         $provider = new Discord([
             'clientId' => $_ENV['DISCORD_CLIENT_ID'],
             'clientSecret' => $_ENV['DISCORD_CLIENT_SECRET'],

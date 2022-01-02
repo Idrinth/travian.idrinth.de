@@ -37,6 +37,17 @@ class DeffCall
             header('Location: /deff-call', true, 307);
             return;
         }
+        if ($data['target']['alliance'] == '0') {
+            $data['target']['alliance'] = '';
+        } else {
+            $stmt = $this->database->prepare('SELECT alliances.name, alliances.id FROM user_alliance INNER JOIN alliances ON alliances.aid=user_alliance.alliance AND user_alliance.user=:user');
+            $stmt->execute([':user' => $_SESSION['id'] ?? 0]);
+            $data['target']['alliance'] = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (false === $data['target']['alliance']) {
+                header('Location: /deff-call', true, 307);
+                return;
+            }
+        }
         if (isset($_SESSION['id']) && $_SESSION['id'] > 0) {
             $this->database
                 ->prepare("INSERT IGNORE INTO user_deff_call (user, deff_call) VALUES(:user, :deff_call)")

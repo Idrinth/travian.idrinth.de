@@ -1,0 +1,46 @@
+{% include 'header.twig' %}
+<h2>{{ translations.alliance }}</h2>
+<h3>{{ alliance.name }}</h3>
+<p>on {{ alliance.world }}</p>
+{% set mayInvite=false %}
+<table>
+    <tr>
+        <th>Discord</th>
+        <th>{{ translations.name }}</th>
+        <th>{{ translations.rank }}</th>
+    </tr>
+{% for player in players %}
+    <tr>
+        <th>{{ player.discord ~  '#' ~ player.discriminator }}</th>
+        <td>{{ player.name }}</td>
+        <td>{{ player.rank }}</td>
+    </tr>
+    {% if player.rank=='Creator' or player.rank=='High Council' %}
+        {% if player.user == session.id %}
+            {% set mayInvite=true %}
+        {% endif %}
+    {% endif %}
+{% endfor %}
+</table>
+{% if mayInvite %}
+    <a href="/alliance/{{ alliance.id }}/{{ alliance.key }}">{{ translations.invite }}</a>
+{% endif %}
+<h4>{{ translations.deff_calls }}</h4>
+<table>
+    <tr>
+        <th>{{ translations.world }}</th>
+        <th>{{ translations.position }}</th>
+    </tr>
+{% for deff_call in deff_calls %}
+    <tr>
+        <th>{{ deff_call.world }}</th>
+        <td><a href="/deff-call/{{ deff_call.id }}">({{ deff_call.x }}|{{ deff_call.x }})</a></td>
+    </tr>
+    {% if player.rank=='Creator' or player.rank=='High Council' %}
+        {% if player.user == session.id %}
+            {% set mayInvite=true %}
+        {% endif %}
+    {% endif %}
+{% endfor %}
+</table>
+{% include 'footer.twig' %}

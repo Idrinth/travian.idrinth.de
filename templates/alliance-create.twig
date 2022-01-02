@@ -1,0 +1,9 @@
+{% include 'header.twig' %}
+<h2>{{ translations.alliance }}</h2>
+<form method="post">
+    <legend>{{ translations.main }}</legend>
+    <label>{{ translations.name }}<input type="text" name="name"/></label>
+    <label title="ts8.x1.europe.travian.com">{{ translations.world }}*<input type="text" name="world"/></label>
+    <input type="submit"/>
+</form>
+{% include 'footer.twig' %}

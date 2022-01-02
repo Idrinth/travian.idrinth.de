@@ -10,13 +10,13 @@
         {% if support.time > target.time %}
             {% if key==target.key and key is not empty %}
                 <tr class="late"><th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="Added {{ support.created }}">{{ support.arrival }}</td></tr>
-            {% elseif session.user ~ '#' ~ session.discriminator == support.name ~ '#' ~ support.discriminator %}
+            {% elseif session.id == support.creator and session.id > 0 %}
                 <tr class="late"><th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="Added {{ support.created }}">{{ support.arrival }}</td></tr>
             {% endif %}
         {% else %}
             {% if key==target.key and key is not empty %}
                 <tr><th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="{{ translations.created }} {{ support.created }}">{{ support.arrival }}</td></tr>
-            {% elseif session.user ~ '#' ~ session.discriminator == support.name ~ '#' ~ support.discriminator %}
+            {% elseif session.id == support.creator and session.id > 0 %}
                 <tr><th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="Added {{ support.created }}">{{ support.arrival }}</td></tr>
             {% endif %}
             {% set totalScouts=totalScouts+support.scouts %}
@@ -26,6 +26,7 @@
 </table>
 <table>
     <tr><th>{{ translations.world }}</th><td>{{ target.world }}</td></tr>
+    <tr><th>{{ translations.alliance }}</th><td><a href="/alliance/{{ target.alliance.id }}">{{ target.alliance.name }}</a></td></tr>
     <tr><th>{{ translations.village }}</th><td><a href="https://{{ target.world }}/position_details.php?x={{ target.x }}&y={{ target.y }}" target="_blank">({{ target.x }}|{{ target.y }})</a></td></tr>
     <tr><th>{{ translations.scouts }}</th><td>{{totalScouts }}/{{ target.scouts }}</td></tr>
     <tr><th>{{ translations.troops }}</th><td>{{totalTroops }}/{{ target.troops }}</td></tr>

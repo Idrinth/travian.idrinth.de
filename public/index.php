@@ -1,5 +1,6 @@
 <?php
 
+use De\Idrinth\Travian\Alliance;
 use De\Idrinth\Travian\DeffCall;
 use De\Idrinth\Travian\DeffCallCreation;
 use De\Idrinth\Travian\Delivery;
@@ -145,6 +146,61 @@ $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
         $d->run();
     });
     $r->addRoute('GET', '/ping', function ($post) {});
+    $r->addRoute('GET', '/alliance', function ($post) {
+        $d = new Alliance(new PDO(
+            'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
+            $_ENV['DATABASE_USER'],
+            $_ENV['DATABASE_PASSWORD'],
+            [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            ]
+        ));
+        $d->run($post);
+    });
+    $r->addRoute('POST', '/alliance', function ($post) {
+        $d = new Alliance(new PDO(
+            'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
+            $_ENV['DATABASE_USER'],
+            $_ENV['DATABASE_PASSWORD'],
+            [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            ]
+        ));
+        $d->run($post);
+    });
+    $r->addRoute('GET', '/alliance/{id}', function ($post, $id) {
+        $d = new Alliance(new PDO(
+            'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
+            $_ENV['DATABASE_USER'],
+            $_ENV['DATABASE_PASSWORD'],
+            [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            ]
+        ));
+        $d->run($post, $id);
+    });
+    $r->addRoute('POST', '/alliance/{id}', function ($post, $id) {
+        $d = new Alliance(new PDO(
+            'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
+            $_ENV['DATABASE_USER'],
+            $_ENV['DATABASE_PASSWORD'],
+            [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            ]
+        ));
+        $d->run($post, $id);
+    });
+    $r->addRoute('GET', '/alliance/{id}/{key}', function ($post, $id, $key) {
+        $d = new Alliance(new PDO(
+            'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
+            $_ENV['DATABASE_USER'],
+            $_ENV['DATABASE_PASSWORD'],
+            [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            ]
+        ));
+        $d->run($post, $id, $key);
+    });
 });
 
 // Fetch method and URI from somewhere

@@ -3,7 +3,6 @@
 namespace De\Idrinth\Travian;
 
 use PDO;
-use Ramsey\Uuid\Uuid;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -28,12 +27,21 @@ class Profile
             . "ON deff_calls.aid=user_deff_call.deff_call "
             . "AND user_deff_call.user=:user"
         );
+        $stmt1 = $this->database->prepare(
+            "SELECT alliances.name, alliances.world, alliances.id, user_alliance.rank "
+            . "FROM user_alliance "
+            . "INNER JOIN alliances "
+            . "ON alliances.aid=user_alliance.alliance "
+            . "AND user_alliance.user=:user"
+        );
         $stmt->execute([':user' => $_SESSION['id']]);
+        $stmt1->execute([':user' => $_SESSION['id']]);
         $data = [
             'lang' => $_COOKIE['lang'] ?? 'en',
             'translations' => Translations::get($_COOKIE['lang'] ?? 'en'),
             'session' => $_SESSION,
             'deff_calls' => $stmt->fetchAll(PDO::FETCH_ASSOC),
+            'alliances' => $stmt1->fetchAll(PDO::FETCH_ASSOC),
         ];
         $twig->display('profile.twig', $data);
     }

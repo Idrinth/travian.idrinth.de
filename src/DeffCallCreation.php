@@ -27,8 +27,8 @@ class DeffCallCreation
         if (isset($post['x']) && isset($post['y']) && isset($post['world']) && isset($post['scouts']) && $post['scouts'] >= 0 && isset($post['troops']) && $post['troops'] >= 0 && ($post['troops']+$post['scouts'] > 0) && isset($post['time']) && isset($post['date'])) {
             $uuid = Uuid::uuid6();
             $stmt = $this->database->prepare(
-                "INSERT INTO deff_calls (id, `key`, scouts, troops, `x`, `y`, world, creator, arrival) "
-                . "VALUES (:id, :key, :scouts, :troops, :x, :y, :world, :creator, :arrival)"
+                "INSERT INTO deff_calls (id, `key`, scouts, troops, `x`, `y`, world, creator, arrival, alliance) "
+                . "VALUES (:id, :key, :scouts, :troops, :x, :y, :world, :creator, :arrival, :alliance)"
             );
             if (strpos($post['world'], 'https://') === 0) {
                 $post['world'] = substr($post['world'], 8);
@@ -46,7 +46,8 @@ class DeffCallCreation
                     ':scouts' => intval($post['scouts'], 10),
                     ':troops' => intval($post['troops'], 10),
                     ':arrival' => date('Y-m-d H:i:s', strtotime($post['date'] . ' ' . $post['time'])),
-                    ':creator' => $_SESSION['id'] ?? 0
+                    ':creator' => $_SESSION['id'] ?? 0,
+                    ':alliance' => intval($post['alliance_lock'], 10),
                 ]);
                 header('Location: /deff-call/' . $uuid . '/' . $key, true, 307);
                 return;
@@ -54,6 +55,9 @@ class DeffCallCreation
                 //someone messed up
             }
         }
+        $stmt = $this->database->prepare("SELECT alliances.* FROM user_alliance INNER JOIN alliances ON alliances.aid=user_alliance.alliance AND user_alliance.user=:user");
+        $stmt->execute([':user' => $_SESSION['id'] ?? 0]);
+        $data['alliances'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $twig->display('create-deff-call.twig', $data);
     }
 }

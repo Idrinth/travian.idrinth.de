@@ -9,6 +9,12 @@
         <label>{{ translations.arrival }}<input required name="date" type="date"/><input required name="time" step="1" type="time"/></label>
         <label>{{ translations.desired_troops }}<input required name="troops" type="number" value="0" min="0"/></label>
         <label>{{ translations.desired_scouts }}<input required name="scouts" type="number" value="0" min="0"/></label>
+        <label>{{ translations.alliance_lock }}<select name="alliance_lock">
+            <option value="0">{{ translations.none }}</option>
+            {% for alliance in alliances %}
+                <option value="{{ alliance.aid }}">{{ alliance.world }}: {{ alliance.name }}</option>
+            {% endfor %}
+            </select></label>
         <input type="submit"/>
     </fieldset>
 </form>
