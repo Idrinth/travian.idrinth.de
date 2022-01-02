@@ -27,14 +27,14 @@ class DeffCall
             'session' => $_SESSION,
         ];
         if (!Uuid::isValid($id)) {
-            header('Location: /deff-call', true, 307);
+            header('Location: /deff-call', true, 303);
             return;
         }
         $stmt = $this->database->prepare("SELECT * FROM deff_calls WHERE id=:id");
         $stmt->execute([':id' => $id]);
         $data['target'] = $stmt->fetch(PDO::FETCH_ASSOC);
         if (false === $data['target']) {
-            header('Location: /deff-call', true, 307);
+            header('Location: /deff-call', true, 303);
             return;
         }
         if ($data['target']['alliance'] == '0') {
@@ -44,7 +44,7 @@ class DeffCall
             $stmt->execute([':user' => $_SESSION['id'] ?? 0]);
             $data['target']['alliance'] = $stmt->fetch(PDO::FETCH_ASSOC);
             if (false === $data['target']['alliance']) {
-                header('Location: /deff-call', true, 307);
+                header('Location: /deff-call', true, 303);
                 return;
             }
         }

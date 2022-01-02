@@ -3,6 +3,7 @@
 <h3>{{ alliance.name }}</h3>
 <p>on {{ alliance.world }}</p>
 {% set mayInvite=false %}
+{% set rank='Follower' %}
 <table>
     <tr>
         <th>Discord</th>
@@ -10,20 +11,31 @@
         <th>{{ translations.rank }}</th>
     </tr>
 {% for player in players %}
-    <tr>
-        <th>{{ player.discord ~  '#' ~ player.discriminator }}</th>
-        <td>{{ player.name }}</td>
-        <td>{{ player.rank }}</td>
-    </tr>
     {% if player.rank=='Creator' or player.rank=='High Council' %}
         {% if player.user == session.id %}
             {% set mayInvite=true %}
+            {% set rank=player.rank %}
         {% endif %}
     {% endif %}
+{% endfor %}
+{% for player in players %}
+    <tr>
+        <th>{{ player.discord ~  '#' ~ player.discriminator }}</th>
+        <td>{{ player.name }}</td>
+        <td>{% if mayInvite and player.rank!='Creator' and player.user!=session.id %}<form method="post">
+                <input type="hidden" name="user" value="{{ player.aid }}"/>
+                <select name="rank">
+                    <option>Kick</option>
+                    <option{% if player.rank=='Follower' %} selected{% endif %}>Follower</option>
+                    <option{% if player.rank=='Member' %} selected{% endif %}>Member</option>
+                    <option{% if player.rank=='High Council' %} selected{% endif %}>High Council</option>
+                </select><input type="submit"/></form>{% else %}{{ player.rank }}{% endif %}</td>
+    </tr>
 {% endfor %}
 </table>
 {% if mayInvite %}
     <a href="/alliance/{{ alliance.id }}/{{ alliance.key }}">{{ translations.invite }}</a>
+    <form method="post"><input type="hidden" value="1" name="regen-key"/><input type="submit" value="Regenerate"/></form>
 {% endif %}
 <h4>{{ translations.deff_calls }}</h4>
 <table>
@@ -36,11 +48,6 @@
         <th>{{ deff_call.world }}</th>
         <td><a href="/deff-call/{{ deff_call.id }}">({{ deff_call.x }}|{{ deff_call.x }})</a></td>
     </tr>
-    {% if player.rank=='Creator' or player.rank=='High Council' %}
-        {% if player.user == session.id %}
-            {% set mayInvite=true %}
-        {% endif %}
-    {% endif %}
 {% endfor %}
 </table>
 {% include 'footer.twig' %}

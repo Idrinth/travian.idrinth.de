@@ -49,7 +49,7 @@ class DeffCallCreation
                     ':creator' => $_SESSION['id'] ?? 0,
                     ':alliance' => intval($post['alliance_lock'], 10),
                 ]);
-                header('Location: /deff-call/' . $uuid . '/' . $key, true, 307);
+                header('Location: /deff-call/' . $uuid . '/' . $key, true, 303);
                 return;
             } catch(Exception $e) {
                 //someone messed up

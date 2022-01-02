@@ -15,7 +15,7 @@ class Login
     public function run(array $post): void
     {
         if (($_SESSION['id'] ?? 0) !== 0) {
-            header('Location: /profile', true, 307);
+            header('Location: /profile', true, 303);
             return;
         }
         $provider = new Discord([
@@ -26,7 +26,7 @@ class Login
         if (!isset($_GET['code'])) {
             $authUrl = $provider->getAuthorizationUrl(['scope' => 'identify']);
             $_SESSION['oauth2state'] = $provider->getState();
-            header('Location: ' . $authUrl, true, 307);
+            header('Location: ' . $authUrl, true, 303);
         } elseif (empty($_GET['state']) || ($_GET['state'] !== $_SESSION['oauth2state'])) {
             unset($_SESSION['oauth2state']);
             exit('Invalid state');
@@ -50,7 +50,11 @@ class Login
                 ':discordId' => $user->getId(),
             ]);
             $_SESSION['id'] = intval($stmt->fetchColumn(), 10);
-            header('Location: /', true, 307);
+            if (isset($_SESSION['redirect'])) {
+                header('Location: ' . $_SESSION['redirect'], true, 303);
+                return;
+            }
+            header('Location: /', true, 303);
         }
     }
 }

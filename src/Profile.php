@@ -17,7 +17,7 @@ class Profile
     {
         $twig = new Environment(new FilesystemLoader(dirname(__DIR__) . '/templates'));
         if (!isset($_SESSION['id']) || !$_SESSION['id']) {
-            header('Location: /login', true, 307);
+            header('Location: /login', true, 303);
             return;
         }
         $stmt = $this->database->prepare(
