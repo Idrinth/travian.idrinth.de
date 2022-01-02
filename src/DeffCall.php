@@ -37,6 +37,22 @@ class DeffCall
             header('Location: /deff-call', true, 307);
             return;
         }
+        if (isset($_SESSION['id']) && $_SESSION['id'] > 0) {
+            $this->database
+                ->prepare("INSERT IGNORE INTO user_deff_call (user, deff_call) VALUES(:user, :deff_call)")
+                ->execute([
+                    ':user' => $_SESSION['id'],
+                    ':deff_call' => $data['target']['aid']
+                ]);
+            if ($data['target']['key'] === $key) {
+                $this->database
+                    ->prepare("UPDATE user_deff_call SET advanced=1 WHERE user=:user AND deff_call=:deff_call")
+                    ->execute([
+                        ':user' => $_SESSION['id'],
+                        ':deff_call' => $data['target']['aid']
+                    ]);
+            }
+        }
         if (isset($post['scouts']) && $post['scouts'] >= 0 && isset($post['troops']) && $post['troops'] >= 0 && ($post['troops']+$post['scouts'] > 0) && isset($post['time']) && isset($post['account']) && time() < strtotime($data['target']['arrival'])) {
             $stmt = $this->database->prepare("INSERT INTO deff_call_supports (creator, scouts, troops, arrival, deff_call, account) VALUES(:creator, :scouts, :troops, :arrival, :deff_call, :account)");
             $stmt->execute([

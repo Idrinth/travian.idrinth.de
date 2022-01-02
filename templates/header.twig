@@ -144,7 +144,7 @@
                 {% if session.user is empty %}
                     <a href="/login">{{ translations.login }}</a>
                 {% else %}
-                    <span>{{ session.user }}#{{ session.discriminator }}</span>
+                    <a href="/profile">{{ session.user }}#{{ session.discriminator }}</a>
                 {% endif %}
             </div>
         </div>

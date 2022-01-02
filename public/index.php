@@ -5,6 +5,7 @@ use De\Idrinth\Travian\DeffCallCreation;
 use De\Idrinth\Travian\Delivery;
 use De\Idrinth\Travian\HeroRecogniser;
 use De\Idrinth\Travian\Login;
+use De\Idrinth\Travian\Profile;
 use De\Idrinth\Travian\Simple;
 use Dotenv\Dotenv;
 use FastRoute\Dispatcher;
@@ -109,6 +110,17 @@ $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
     });
     $r->addRoute('GET', '/login', function ($post) {
         $d = new Login(new PDO(
+            'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
+            $_ENV['DATABASE_USER'],
+            $_ENV['DATABASE_PASSWORD'],
+            [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            ]
+        ));
+        $d->run($post);
+    });
+    $r->addRoute('GET', '/profile', function ($post) {
+        $d = new Profile(new PDO(
             'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
             $_ENV['DATABASE_USER'],
             $_ENV['DATABASE_PASSWORD'],
