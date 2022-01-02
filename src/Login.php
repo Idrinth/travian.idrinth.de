@@ -2,10 +2,16 @@
 
 namespace De\Idrinth\Travian;
 
+use PDO;
 use Wohali\OAuth2\Client\Provider\Discord;
 
 class Login
 {
+    private $database;
+    public function __construct(PDO $database)
+    {
+        $this->database = $database;
+    }
     public function run(array $post): void
     {
         $provider = new Discord([
@@ -27,7 +33,19 @@ class Login
             $user = $provider->getResourceOwner($token);
             $_SESSION['user'] = $user->getUsername();
             $_SESSION['discriminator'] = $user->getDiscriminator();
-            $_SESSION['id'] = $user->getId();
+            $this->database
+                ->prepare("INSERT INTO users (discord_id, name, discriminator) VALUES (:discordId, :name, :discriminator) ON DUPLICATE KEY UPDATE name=name,discriminator=discriminator")
+                ->execute([
+                    ':discordId' => $user->getId(),
+                    ':name' => $user->getUsername(),
+                    ':discriminator' => $user->getDiscriminator(),
+                ]);
+            $stmt = $this->database
+                ->prepare("SELECT aid FROM users WHERE discord_id=:discordId");
+            $stmt->execute([
+                ':discordId' => $user->getId(),
+            ]);
+            $_SESSION['id'] = intval($stmt->fetchColumn(), 10);
             header('Location: /', true, 307);
         }
     }

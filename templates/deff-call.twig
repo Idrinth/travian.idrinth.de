@@ -9,29 +9,24 @@
     {% for support in supports %}
         {% if support.time > target.time %}
             {% if key==target.key and key is not empty %}
-                <tr class="late"><th{% if support.discord is not empty %} title="{{ support.discord }}"{% endif %}>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="Added {{ support.added|date('y-m-d H:i:s') }}">{{ support.time|date('Y-m-d H:i:s') }}</td></tr>
-            {% elseif session.user ~ '#' ~ session.discriminator == support.discord %}
-                <tr class="late"><th{% if support.discord is not empty %} title="{{ support.discord }}"{% endif %}>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="Added {{ support.added|date('y-m-d H:i:s') }}">{{ support.time|date('Y-m-d H:i:s') }}</td></tr>
+                <tr class="late"><th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="Added {{ support.added|date('y-m-d H:i:s') }}">{{ support.time|date('Y-m-d H:i:s') }}</td></tr>
+            {% elseif session.user ~ '#' ~ session.discriminator == support.name ~ '#' ~ support.discriminator %}
+                <tr class="late"><th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="Added {{ support.added|date('y-m-d H:i:s') }}">{{ support.time|date('Y-m-d H:i:s') }}</td></tr>
             {% endif %}
         {% else %}
             {% if key==target.key and key is not empty %}
-                <tr><th{% if support.discord is not empty %} title="{{ support.discord }}"{% endif %}>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="{{ translations.created }} {{ support.added|date('y-m-d H:i:s') }}">{{ support.time|date('Y-m-d H:i:s') }}</td></tr>
-            {% elseif session.user ~ '#' ~ session.discriminator == support.discord %}
-                <tr><th{% if support.discord is not empty %} title="{{ support.discord }}"{% endif %}>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="Added {{ support.added|date('y-m-d H:i:s') }}">{{ support.time|date('Y-m-d H:i:s') }}</td></tr>
+                <tr><th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="{{ translations.created }} {{ support.added|date('y-m-d H:i:s') }}">{{ support.time|date('Y-m-d H:i:s') }}</td></tr>
+            {% elseif session.user ~ '#' ~ session.discriminator == support.name ~ '#' ~ support.discriminator %}
+                <tr><th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="Added {{ support.added|date('y-m-d H:i:s') }}">{{ support.time|date('Y-m-d H:i:s') }}</td></tr>
             {% endif %}
             {% set totalScouts=totalScouts+support.scouts %}
             {% set totalTroops=totalTroops+support.troops %}
         {% endif %}
     {% endfor %}
 </table>
-{% if added %}
-    <p>{{ translations.added }}</p>
-{% endif %}
-{% if key!=target.key or key is not empty %}
-    <p>{{ translation.hidden_details }}</p>
-{% endif %}
 <table>
-    <tr><th>{{ translations.village }}</th><td><a href="{{ target.url }}" target="_blank">{{ translations.here }}</a></td></tr>
+    <tr><th>{{ translations.world }}</th><td>{{ target.world }}</td></tr>
+    <tr><th>{{ translations.village }}</th><td><a href="https://{{ target.world }}/position_details.php?x={{ target.x }}&y={{ target.y }}" target="_blank">({{ target.x }}|{{ target.y }})</a></td></tr>
     <tr><th>{{ translations.scouts }}</th><td>{{totalScouts }}/{{ target.scouts }}</td></tr>
     <tr><th>{{ translations.troops }}</th><td>{{totalTroops }}/{{ target.troops }}</td></tr>
     <tr><th>{{ translations.arrival }}</th><td>{{ target.time|date('Y-m-d H:i:s') }}</tr>
@@ -41,7 +36,13 @@
     {% endif %}
 </table>
 </div>
-{% if now < target.time %}
+{% if added %}
+    <p>{{ translations.added }}</p>
+{% endif %}
+{% if key!=target.key or key is not empty %}
+    <p>{{ translation.hidden_details }}</p>
+{% endif %}
+{% if now < target.arrival %}
 <form method="post">
     <fieldset>
         <legend>{{ translations.main }}</legend>

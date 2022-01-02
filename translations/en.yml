@@ -248,13 +248,11 @@ desired_scouts: Desired Scouts
 arrival: Arrival
 created: Added
 village: Village
-here: here
 status: Status
 added: Your data was added.
 hidden_details: With the current link details are hidden.
 share: Share Link
 share_full: Details Share Link
-village_url: Village URL
 desired_celebrations_info: desired celebrations to keep going 24/7
 total_production_info: total production per hour ignoring negative production
 crop_production_info: crop production per hour reduced by celebration needs
@@ -273,3 +271,4 @@ clay_per_trade_info: clay per trade
 iron_per_trade_info: iron per trade
 crop_per_trade_info: crop per trade
 login: Login via Discord
+world: World

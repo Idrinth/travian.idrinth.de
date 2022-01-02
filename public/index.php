@@ -42,31 +42,80 @@ $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
         $d->run($post);
     });
     $r->addRoute('GET', '/deff-call', function ($post) {
-        $d = new DeffCallCreation();
+        $d = new DeffCallCreation(new PDO(
+            'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
+            $_ENV['DATABASE_USER'],
+            $_ENV['DATABASE_PASSWORD'],
+            [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            ]
+        ));
         $d->run($post);
     });
     $r->addRoute('POST', '/deff-call', function ($post) {
-        $d = new DeffCallCreation();
+        $d = new DeffCallCreation(new PDO(
+            'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
+            $_ENV['DATABASE_USER'],
+            $_ENV['DATABASE_PASSWORD'],
+            [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            ]
+        ));
         $d->run($post);
     });
     $r->addRoute('GET', '/deff-call/{uuid}', function ($post, $id) {
-        $d = new DeffCall();
+        $d = new DeffCall(new PDO(
+            'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
+            $_ENV['DATABASE_USER'],
+            $_ENV['DATABASE_PASSWORD'],
+            [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            ]
+        ));
         $d->run($post, $id, '');
     });
     $r->addRoute('POST', '/deff-call/{uuid}', function ($post, $id) {
-        $d = new DeffCall();
+        $d = new DeffCall(new PDO(
+            'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
+            $_ENV['DATABASE_USER'],
+            $_ENV['DATABASE_PASSWORD'],
+            [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            ]
+        ));
         $d->run($post, $id, '');
     });
     $r->addRoute('GET', '/deff-call/{uuid}/{key}', function ($post, $id, $key) {
-        $d = new DeffCall();
+        $d = new DeffCall(new PDO(
+            'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
+            $_ENV['DATABASE_USER'],
+            $_ENV['DATABASE_PASSWORD'],
+            [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            ]
+        ));
         $d->run($post, $id, $key);
     });
     $r->addRoute('POST', '/deff-call/{uuid}/{key}', function ($post, $id, $key) {
-        $d = new DeffCall();
+        $d = new DeffCall(new PDO(
+            'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
+            $_ENV['DATABASE_USER'],
+            $_ENV['DATABASE_PASSWORD'],
+            [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            ]
+        ));
         $d->run($post, $id, $key);
     });
     $r->addRoute('GET', '/login', function ($post) {
-        $d = new Login();
+        $d = new Login(new PDO(
+            'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
+            $_ENV['DATABASE_USER'],
+            $_ENV['DATABASE_PASSWORD'],
+            [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            ]
+        ));
         $d->run($post);
     });
 });
