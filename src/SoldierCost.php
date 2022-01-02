@@ -226,28 +226,6 @@ class SoldierCost
             'war_engine' => true,
         ],
     ];
-    private static $speed = [
-        1,
-        0.9,
-        0.81,
-        0.73,
-        0.66,
-        0.59,
-        0.53,
-        0.48,
-        0.43,
-        0.39,
-        0.35,
-        0.31,
-        0.28,
-        0.25,
-        0.23,
-        0.21,
-        0.19,
-        0.17,
-        0.15,
-        0.14,
-    ];
     public function run(array $post): void
     {
         $twig = new Environment(new FilesystemLoader(dirname(__DIR__) . '/templates'));
@@ -258,7 +236,7 @@ class SoldierCost
             'inputs' => [
                 'troops' => $post['troops'] ?? 0,
                 'troop_type' => $post['troop_type'] ?? 'fail',
-                'recruiting_level' => min(20, max(0, intval($post['recruiting_level'] ?? 0))),
+                'recruiting_level' => min(20, max(1, intval($post['recruiting_level'] ?? 0))),
                 'great_recruiting_level' => min(20, max(0, intval($post['great_recruiting_level'] ?? 0))),
                 'use_great_recruiting' => 1 == ($post['use_great_recruiting'] ?? 0),
                 'helmet_bonus' => floatval($post['helmet_bonus'] ?? 1),
@@ -273,7 +251,7 @@ class SoldierCost
             $remaining = $data['inputs']['troops'];
             $greater = $lesser = 0;
             while ($remaining > 0) {
-                if ($data['inputs']['use_great_recruiting'] && !self::$troops[$data['inputs']['troop_type']]['war_engine'] && $data['inputs']['great_recruiting_level'] > 0 && $greater * self::$speed[$data['inputs']['great_recruiting_level'] - 1] < $lesser * self::$speed[$data['inputs']['recruiting_level'] - 1]) {
+                if ($data['inputs']['use_great_recruiting'] && !self::$troops[$data['inputs']['troop_type']]['war_engine'] && $data['inputs']['great_recruiting_level'] > 0 && $greater * pow(0.9, $data['inputs']['great_recruiting_level'] - 1) < $lesser * pow(0.9, $data['inputs']['recruiting_level'] - 1)) {
                     $greater ++;
                 } else {
                     $lesser ++;
@@ -281,7 +259,7 @@ class SoldierCost
                 $remaining --;
             }
             $data['result']['normal_recruiting'] = $lesser;
-            $data['result']['duration'] = $data['inputs']['alliance_bonus'] * (self::$troops[$data['inputs']['troop_type']]['roman_horse'] ? 1 - $data['inputs']['horse_trough_level']/100 : 1) * $data['inputs']['helmet_bonus'] * $data['inputs']['artefact_bonus'] * ($data['inputs']['use_great_recruiting'] ? max($greater * self::$speed[$data['inputs']['great_recruiting_level'] - 1], $lesser * self::$speed[$data['inputs']['recruiting_level'] - 1]) : $lesser * self::$speed[$data['inputs']['recruiting_level'] - 1]) * self::$troops[$data['inputs']['troop_type']]['duration'];
+            $data['result']['duration'] = round($data['inputs']['alliance_bonus'] * (self::$troops[$data['inputs']['troop_type']]['roman_horse'] ? 1 - $data['inputs']['horse_trough_level']/100 : 1) * $data['inputs']['helmet_bonus'] * $data['inputs']['artefact_bonus'] * ($data['inputs']['use_great_recruiting'] ? max($greater * pow(0.9, $data['inputs']['great_recruiting_level'] - 1), $lesser * pow(0.9, $data['inputs']['recruiting_level'] - 1)) : $lesser * pow(0.9, $data['inputs']['recruiting_level'] - 1)) * self::$troops[$data['inputs']['troop_type']]['duration']);
             $data['result']['iron'] = ($lesser + 3*$greater) * self::$troops[$data['inputs']['troop_type']]['iron'];
             $data['result']['crop'] = ($lesser + 3*$greater) * self::$troops[$data['inputs']['troop_type']]['crop'];
             $data['result']['clay'] = ($lesser + 3*$greater) * self::$troops[$data['inputs']['troop_type']]['clay'];
