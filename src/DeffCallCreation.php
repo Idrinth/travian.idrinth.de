@@ -28,6 +28,10 @@ class DeffCallCreation
                 "INSERT INTO deff_calls (id, `key`, scouts, troops, `x`, `y`, world, creator, arrival) "
                 . "VALUES (:id, :key, :scouts, :troops, :x, :y, :world, :creator, :arrival)"
             );
+            if (strpos($post['world'], 'https://') === 0) {
+                $post['world'] = substr($post['world'], 8);
+            }
+            $post['world'] = explode('/', $post['world'])[0];
             $key = Uuid::uuid4();
             $stmt->execute([
                 ':id' => $uuid,
