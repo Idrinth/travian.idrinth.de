@@ -29,7 +29,7 @@
     <tr><th>{{ translations.village }}</th><td><a href="https://{{ target.world }}/position_details.php?x={{ target.x }}&y={{ target.y }}" target="_blank">({{ target.x }}|{{ target.y }})</a></td></tr>
     <tr><th>{{ translations.scouts }}</th><td>{{totalScouts }}/{{ target.scouts }}</td></tr>
     <tr><th>{{ translations.troops }}</th><td>{{totalTroops }}/{{ target.troops }}</td></tr>
-    <tr><th>{{ translations.arrival }}</th><td>{{ target.time|date('Y-m-d H:i:s') }}</tr>
+    <tr><th>{{ translations.arrival }}</th><td>{{ target.arrival }}</tr>
     <tr><th>{{ translations.share }}</th><td><a href="https://travian.idrinth.de/deff-call/{{ id }}">https://travian.idrinth.de/deff-call/{{ id }}</a></tr>
     {% if key==target.key and key is not empty %}
         <tr><th>{{ translations.share_full }}</th><td><a href="https://travian.idrinth.de/deff-call/{{ id }}/{{ key }}">https://travian.idrinth.de/deff-call/{{ id }}/{{ key }}</a></tr>
@@ -49,7 +49,7 @@
         <label>{{ translations.account }}<input required name="account" type="string"/></label>
         <label>{{ translations.scouts }}<input required name="scouts" type="number" min="0"/></label>
         <label>{{ translations.troops }}<input required name="troops" type="number" min="0"/></label>
-        <label>{{ translations.arrival }}<input required name="time" type="datetime-local"/></label>
+        <label>{{ translations.arrival }}<input required name="date" type="date"/><input required name="time" step="1" type="time"/></label>
         <input type="submit"/>
     </fieldset>
 </form>
