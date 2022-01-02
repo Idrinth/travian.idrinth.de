@@ -36,13 +36,13 @@
 <form method="post">
     <fieldset>
         <legend>{{ translations.main }}</legend>
-        <label title="{{ translations.source_title }}">{{ translations.source }}*<textarea name="content">{{ inputs.content }}</textarea></label>
+        <label title="{{ translations.source_title }}">{{ translations.source }}*<textarea required name="content">{{ inputs.content }}</textarea></label>
         <input type="submit"/>
     </fieldset>
     <fieldset>
         <legend>{{ translations.celebrations }}</legend>
-        <label>{{ translations.town_hall_level }}<input type="number" step='1' min='0' name="town_hall" value="{{ inputs.town_hall }}"/></label>
-        <label>{{ translations.celebration }}<select name="celebration">
+        <label>{{ translations.town_hall_level }}<input required type="number" step='1' min='0' name="town_hall" value="{{ inputs.town_hall }}"/></label>
+        <label>{{ translations.celebration }}<select required name="celebration">
                 <option value='none' {% if inputs.celebration == 'none' %}selected{% endif %}>{{ translations.none }}</option>
                 <option value='small' {% if inputs.celebration == 'small' %}selected{% endif %}>{{ translations.small }}</option>
                 <option value='great' {% if inputs.celebration == 'great' %}selected{% endif %}>{{ translations.great }}</option>
@@ -50,7 +50,7 @@
     </fieldset>
     <fieldset>
         <legend>{{ translations.advanced }}</legend>
-        <label title="{{ translations.tribe_title }}">{{ translations.tribe }}*<select name="tribe">
+        <label required title="{{ translations.tribe_title }}">{{ translations.tribe }}*<select name="tribe">
                 <option value='auto' {% if inputs.speed == 'auto' %}selected{% endif %}>{{ translations.automatically }}</option>
                 <option value='vid_1' {% if inputs.speed == 'vid_1' %}selected{% endif %}>{{ translations.romans }}</option>
                 <option value='vid_2' {% if inputs.speed == 'vid_2' %}selected{% endif %}>{{ translations.teutons }}</option>
@@ -59,8 +59,8 @@
                 <option value='vid_7' {% if inputs.speed == 'vid_7' %}selected{% endif %}>{{ translations.huns }}</option>
             </select></label>
         <div title="{{ translations.additional_target_title }}">{{ translations.additional_target }}*
-            <label>X<input type="number" name="x" value="{{ inputs.x }}"/></label>
-            <label>Y<input type="number" name="y" value="{{ inputs.y }}"/></label>
+            <label>X<input required type="number" name="x" value="{{ inputs.x }}"/></label>
+            <label>Y<input required type="number" name="y" value="{{ inputs.y }}"/></label>
         </div>
         <label>{{ translations.only_crop }}*<input type="hidden" name="only_crop" value="0"/><input type="checkbox" name="only_crop" {% if inputs.only_crop %}checked {% endif %}value="1"/></label>
     </fieldset>

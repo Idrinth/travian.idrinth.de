@@ -3,12 +3,12 @@
 <form method="post">
     <fieldset>
         <legend>{{ translations.main }}</legend>
-        <label tiotle="ts9.x1.europe.travian.com">{{ translations.world }}*<input name="world"/></label>
-        <label>X<input name="x" type="number"/></label>
-        <label>Y<input name="y" type="number"/></label>
-        <label>{{ translations.arrival }}<input name="time" type="datetime-local"/></label>
-        <label>{{ translations.desired_troops }}<input name="troops" type="number" value="0" min="0"/></label>
-        <label>{{ translations.desired_scouts }}<input name="scouts" type="number" value="0" min="0"/></label>
+        <label tiotle="ts9.x1.europe.travian.com">{{ translations.world }}*<input required name="world"/></label>
+        <label>X<input required name="x" type="number"/></label>
+        <label>Y<input required name="y" type="number"/></label>
+        <label>{{ translations.arrival }}<input required name="time" type="datetime-local"/></label>
+        <label>{{ translations.desired_troops }}<input required name="troops" type="number" value="0" min="0"/></label>
+        <label>{{ translations.desired_scouts }}<input required name="scouts" type="number" value="0" min="0"/></label>
         <input type="submit"/>
     </fieldset>
 </form>
