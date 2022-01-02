@@ -30,7 +30,6 @@ class Profile
         );
         $stmt->execute([':user' => $_SESSION['id']]);
         $data = [
-            'id' => $id,
             'lang' => $_COOKIE['lang'] ?? 'en',
             'translations' => Translations::get($_COOKIE['lang'] ?? 'en'),
             'session' => $_SESSION,

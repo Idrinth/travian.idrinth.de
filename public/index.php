@@ -7,6 +7,7 @@ use De\Idrinth\Travian\HeroRecogniser;
 use De\Idrinth\Travian\Login;
 use De\Idrinth\Travian\Profile;
 use De\Idrinth\Travian\Simple;
+use De\Idrinth\Travian\Styles;
 use Dotenv\Dotenv;
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
@@ -129,6 +130,10 @@ $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
             ]
         ));
         $d->run($post);
+    });
+    $r->addRoute('GET', '/styles.css', function ($post) {
+        $d = new Styles();
+        $d->run();
     });
 });
 
