@@ -22,7 +22,7 @@ class Profile
             return;
         }
         $stmt = $this->database->prepare(
-            "SELECT user_deff_call.advanced, deff_calls.key, deff_calls.id, deff_calls.world, deff_calls.x, deff_calls.y "
+            "SELECT user_deff_call.advanced, deff_calls.arrival, deff_calls.key, deff_calls.id, deff_calls.world, deff_calls.x, deff_calls.y "
             . "FROM user_deff_call "
             . "INNER JOIN deff_calls "
             . "ON deff_calls.aid=user_deff_call.deff_call "
