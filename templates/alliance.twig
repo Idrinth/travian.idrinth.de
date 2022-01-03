@@ -4,6 +4,7 @@
 <p>on {{ alliance.world }}</p>
 {% set mayInvite=false %}
 {% set rank='Follower' %}
+{% set name='' %}
 <table>
     <tr>
         <th>Discord</th>
@@ -11,8 +12,9 @@
         <th>{{ translations.rank }}</th>
     </tr>
 {% for player in players %}
-    {% if player.rank=='Creator' or player.rank=='High Council' %}
-        {% if player.user == session.id %}
+    {% if player.user == session.id %}
+        {% set name=player.name %}
+        {% if player.rank=='Creator' or player.rank=='High Council' %}
             {% set mayInvite=true %}
             {% set rank=player.rank %}
         {% endif %}
@@ -37,6 +39,13 @@
     <a href="/alliance/{{ alliance.id }}/{{ alliance.key }}">{{ translations.invite }}</a>
     <form method="post"><input type="hidden" value="1" name="regen-key"/><input type="submit" value="Regenerate"/></form>
 {% endif %}
+<form method="post">
+    <fieldset>
+        <legend>{{ translations.main }}</legend>
+        <label title="{{ translations.ingame }}">{{ translations.name }}*<input name="ingame" type="text" value="{{ name }}" required/></label>
+        <input type="submit"/>
+    </fieldset>
+</form>
 <h4>{{ translations.deff_calls }}</h4>
 <table>
     <tr>
@@ -56,12 +65,14 @@
         <th>{{ translations.player }}</th>
         <th>{{ translations.updated }}</th>
         <th>{{ translations.changed }}</th>
+        <th>{{ translations.gear }}</th>
     </tr>
 {% for hero in heroes %}
     <tr>
         <th><a href="https://{{ alliance.world }}/profile/{{ hero.player }}" target="_blank">{{ hero.player }}</a></th>
         <td>{{ hero.last_update }}</a></td>
         <td>{{ hero.last_change }}</td>
+        <td><a href="/hero-check/{{ hero.aid}}">{{ translations.here }}</a></td>
     </tr>
 {% endfor %}
 </table>

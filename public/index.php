@@ -19,7 +19,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 Dotenv::createImmutable(dirname(__DIR__))->load();
 date_default_timezone_set('UTC');
 session_start();
-
+setcookie('lang', $_COOKIE['lang']??'en', 0, '/', 'travian.idrinth.de', true, false);
 $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
     $database = new PDO(
         'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
@@ -60,6 +60,10 @@ $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
     $r->addRoute('POST', '/hero-check', function ($post) use (&$database) {
         $d = new HeroRecogniser($database);
         $d->run($post);
+    });
+    $r->addRoute('GET', '/hero-check/{id}', function ($post, $id) use (&$database) {
+        $d = new HeroRecogniser($database);
+        $d->run($post, $id);
     });
     $r->addRoute('GET', '/deff-call', function ($post) use(&$database) {
         $d = new DeffCallCreation($database);

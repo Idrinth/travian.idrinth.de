@@ -163,7 +163,7 @@ class HeroRecogniser
     {
         $this->database = $database;
     }
-    public function run(array $post): void
+    public function run(array $post, $id = 0): void
     {
         $twig = new Environment(new FilesystemLoader(dirname(__DIR__) . '/templates'));
         $data = [
@@ -175,7 +175,39 @@ class HeroRecogniser
             'result' => [],
             'session' => $_SESSION,
         ];
-        if ($data['inputs']['url']) {
+        if ($id) {
+            $stmt = $this->database->prepare("SELECT * FROM hero WHERE aid=:id");
+            $stmt->execute([
+                ':id' => $id,
+            ]);
+            $data['previously'] = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (false === $data['previously']) {
+                header('Location: /hero-check', 303, true);
+                return;
+            }
+            $stmt = $this->database->prepare("SELECT rank FROM user_alliance WHERE alliance=:alliance AND user=:user");
+            $stmt->execute([
+                ':user' => $_SESSION['id'] ?? 0,
+                ':alliance' => $data['previously']['alliance'],
+            ]);
+            $rank = $stmt->fetchColumn();
+            if (false===$rank) {
+                header('Location: /hero-check', 303, true);
+                return;
+            }
+            $data['result']['horse'] = self::$horse[intval($data['previously']['horse'], 10)];
+            $data['result']['left_hand'] = self::$left[intval($data['previously']['left_hand'], 10)];
+            $data['result']['right_hand'] = self::$right[intval($data['previously']['right_hand'], 10)];
+            $data['result']['shoes'] = self::$shoes[intval($data['previously']['shoes'], 10)];
+            $data['result']['armor'] = self::$armor[intval($data['previously']['armor'], 10)];
+            $data['result']['helmet'] = self::$helmet[intval($data['previously']['helmet'], 10)];
+            $data['previously']['horse'] = self::$horse[intval($data['previously']['horse'], 10)];
+            $data['previously']['left_hand'] = self::$left[intval($data['previously']['left_hand'], 10)];
+            $data['previously']['right_hand'] = self::$right[intval($data['previously']['right_hand'], 10)];
+            $data['previously']['shoes'] = self::$shoes[intval($data['previously']['shoes'], 10)];
+            $data['previously']['armor'] = self::$armor[intval($data['previously']['armor'], 10)];
+            $data['previously']['helmet'] = self::$helmet[intval($data['previously']['helmet'], 10)];
+        } elseif ($data['inputs']['url']) {
             $ids = substr($data['inputs']['url'], strpos($data['inputs']['url'], '/body/') + 6, 68);
             $data['result']['horse'] = self::$horse[hexdec(substr($ids, 40, 2))];
             $data['result']['left_hand'] = self::$left[hexdec(substr($ids, 56, 2))];
@@ -184,6 +216,8 @@ class HeroRecogniser
             $data['result']['armor'] = self::$armor[hexdec(substr($ids, 60, 2))];
             $data['result']['helmet'] = self::$helmet[hexdec(substr($ids, 49, 1))];
             if (isset($post['player_id']) && $post['player_id'] > 0 && isset($post['hero_share']) && $post['hero_share'] > 0) {
+                $data['inputs']['player_id'] = $post['player_id'];
+                $data['inputs']['hero_share'] = $post['hero_share'];
                 $stmt = $this->database->prepare("SELECT 1 FROM user_alliance WHERE user=:user AND rank<>'Follower' AND alliance=:alliance");
                 $stmt->execute([':user' => $_SESSION['id'], ':alliance' => $post['hero_share']]);
                 $allowed = (bool) $stmt->fetchColumn();
@@ -204,6 +238,13 @@ class HeroRecogniser
                         );
                         $data['previously'] = $stmt->fetch(PDO::FETCH_ASSOC);
                     }
+                    $this->database
+                        ->prepare("INSERT IGNORE INTO hero_updates (hero,user,date) VALUES (:hero,:user,:date)")
+                        ->execute([
+                            ':user' => $_SESSION['id'],
+                            ':hero' => $data['previously']['aid'],
+                            ':date' => date('Y-m-d'),
+                        ]);
                     $data['previously']['horse'] = self::$horse[intval($data['previously']['horse'], 10)];
                     $data['previously']['left_hand'] = self::$left[intval($data['previously']['left_hand'], 10)];
                     $data['previously']['right_hand'] = self::$right[intval($data['previously']['right_hand'], 10)];
