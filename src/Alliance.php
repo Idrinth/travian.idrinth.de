@@ -4,15 +4,15 @@ namespace De\Idrinth\Travian;
 
 use PDO;
 use Ramsey\Uuid\Uuid;
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
 
 class Alliance
 {
     private $database;
-    public function __construct(PDO $database)
+    private $twig;
+    public function __construct(PDO $database, Twig $twig)
     {
         $this->database = $database;
+        $this->twig = $twig;
     }
     public function run(array $post, $id = '', $key=''): void
     {
@@ -68,21 +68,36 @@ class Alliance
                         ->execute([':alliance' => $alliance['aid'], ':user' => $post['user'], ':rank' => $post['rank']]);
                 }
             }
-            $twig = new Environment(new FilesystemLoader(dirname(__DIR__) . '/templates'));
             $stmt = $this->database->prepare("SELECT user_alliance.*, users.aid, users.name as discord, users.discriminator FROM user_alliance INNER JOIN users ON users.aid=user_alliance.user WHERE alliance=:alliance");
             $stmt->execute([':alliance' => $alliance['aid']]);
             $stmt2 = $this->database->prepare("SELECT deff_calls.id, deff_calls.arrival, deff_calls.world, deff_calls.x, deff_calls.y FROM deff_calls WHERE alliance=:alliance");
             $stmt2->execute([':alliance' => $alliance['aid']]);
             $stmt3 = $this->database->prepare("SELECT * FROM hero WHERE alliance=:alliance");
             $stmt3->execute([':alliance' => $alliance['aid']]);
-            $twig->display('alliance.twig', [
-                'lang' => $_COOKIE['lang'] ?? 'en',
-                'translations' => Translations::get($_COOKIE['lang'] ?? 'en'),
-                'session' => $_SESSION,
+            $stmt4 = $this->database->prepare("SELECT
+	SUM(deff_call_supports.troops/10000)
+	+ SUM(deff_call_supports.scouts/5000)
+	+ COUNT(DISTINCT deff_call_supports.deff_call)
+	+ COUNT(DISTINCT hero_updates.`date`) AS activity,
+	user_alliance.`user`
+FROM user_alliance
+
+LEFT JOIN deff_calls ON deff_calls.alliance=:alliance
+LEFT JOIN deff_call_supports ON deff_calls.aid=deff_call_supports.deff_call AND deff_call_supports.creator=user_alliance.user
+
+LEFT JOIN hero ON hero.alliance=:alliance
+LEFT JOIN hero_updates ON hero.aid=hero_updates.hero AND hero_updates.user=user_alliance.user
+
+WHERE user_alliance.alliance=:alliance
+
+GROUP BY user_alliance.`user`");
+            $stmt4->execute([':alliance' => $alliance['aid']]);
+            $this->twig->display('alliance.twig', [
                 'alliance' => $alliance,
                 'players' => $stmt->fetchAll(PDO::FETCH_ASSOC),
                 'deff_calls' => $stmt2->fetchAll(PDO::FETCH_ASSOC),
                 'heroes' => $stmt3->fetchAll(PDO::FETCH_ASSOC),
+                'activity' => $stmt4->fetchAll(PDO::FETCH_ASSOC),
             ]);
             return;
         }
@@ -109,11 +124,6 @@ class Alliance
             header('Location: /profile', true, 303);
             return;
         }
-        $twig = new Environment(new FilesystemLoader(dirname(__DIR__) . '/templates'));
-        $twig->display('alliance-create.twig', [
-            'lang' => $_COOKIE['lang'] ?? 'en',
-            'translations' => Translations::get($_COOKIE['lang'] ?? 'en'),
-            'session' => $_SESSION,
-        ]);
+        $this->twig->display('alliance-create.twig');
     }
 }

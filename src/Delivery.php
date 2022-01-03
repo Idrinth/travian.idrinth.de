@@ -4,8 +4,6 @@ namespace De\Idrinth\Travian;
 
 use DOMDocument;
 use Throwable;
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
 use UnexpectedValueException;
 use Webmozart\Assert\Assert;
 
@@ -43,6 +41,11 @@ class Delivery {
         'vid_7' => [20, 'huns'],
         'vid_6' => [16, 'egyptians'],
     ];
+    private $twig;
+    public function __construct(Twig $twig)
+    {
+        $this->twig = $twig;
+    }
     private function getTribe(string $tribeInput, DOMDocument $doc): array
     {
         if ($tribeInput === 'auto') {
@@ -133,10 +136,7 @@ class Delivery {
     }
     public function run(array $post): void
     {
-        $twig = new Environment(new FilesystemLoader(dirname(__DIR__) . '/templates'));
         $data = [
-            'lang' => $_COOKIE['lang'] ?? 'en',
-            'translations' => Translations::get($_COOKIE['lang'] ?? 'en'),
             'inputs' => [
                 'content' => $post['content'] ?? '',
                 'tribe' => $post['tribe'] ?? 'auto',
@@ -149,7 +149,6 @@ class Delivery {
             'calculatedInputs' => [],
             'rawCalculatedInputs' => [],
             'results' => [],
-            'session' => $_SESSION,
         ];
         if ($data['inputs']['content']) {
             try {
@@ -203,7 +202,6 @@ class Delivery {
                 $data['results'] = ['error' => 'Failed parsing your data: ' . $t->getMessage()];
             }
         }
-        $twig->display('delivery.twig', $data);
+        $this->twig->display('delivery.twig', $data);
     }
-
 }

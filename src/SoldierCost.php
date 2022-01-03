@@ -226,13 +226,14 @@ class SoldierCost
             'war_engine' => true,
         ],
     ];
+    private $twig;
+    public function __construct(Twig $twig)
+    {
+        $this->twig = $twig;
+    }
     public function run(array $post): void
     {
-        $twig = new Environment(new FilesystemLoader(dirname(__DIR__) . '/templates'));
-        $twig->addFunction(new TwigFunction('floor', 'floor'));
         $data = [
-            'lang' => $_COOKIE['lang'] ?? 'en',
-            'translations' => Translations::get($_COOKIE['lang'] ?? 'en'),
             'inputs' => [
                 'troops' => $post['troops'] ?? 0,
                 'troop_type' => $post['troop_type'] ?? 'fail',
@@ -245,7 +246,6 @@ class SoldierCost
                 'horse_trough_level' => intval($post['horse_trough_level'] ?? 0),
             ],
             'result' => [],
-            'session' => $_SESSION,
         ];
         if ($data['inputs']['troops'] > 0 && isset(self::$troops[$post['troop_type']])) {
             $remaining = $data['inputs']['troops'];
@@ -269,7 +269,6 @@ class SoldierCost
             $data['result']['clay_ph'] = ceil($data['result']['clay']/$data['result']['duration'] * 3600);
             $data['result']['lumber_ph'] = ceil($data['result']['lumber']/$data['result']['duration'] * 3600);
         }
-        $twig->display('soldier-cost.twig', $data);
+        $this->twig->display('soldier-cost.twig', $data);
     }
-
 }

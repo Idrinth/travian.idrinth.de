@@ -159,23 +159,21 @@ class HeroRecogniser
         105 => 'warhorse',
     ];
     private $database;
-    public function __construct(PDO $database)
+    private $twig;
+    public function __construct(PDO $database, Twig $twig)
     {
         $this->database = $database;
+        $this->twig = $twig;
     }
     public function run(array $post, $id = 0): void
     {
-        $twig = new Environment(new FilesystemLoader(dirname(__DIR__) . '/templates'));
         $data = [
-            'lang' => $_COOKIE['lang'] ?? 'en',
-            'translations' => Translations::get($_COOKIE['lang'] ?? 'en'),
             'inputs' => [
                 'url' => $post['url'] ?? '',
                 'hero_share' => intval($post['hero_share'] ?? 0, 10),
                 'player_id' => intval($post['player_id'] ?? 0, 10),
             ],
             'result' => [],
-            'session' => $_SESSION,
         ];
         if ($id) {
             $stmt = $this->database->prepare("SELECT * FROM hero WHERE aid=:id");
@@ -324,6 +322,6 @@ class HeroRecogniser
             $stmt->execute([':user' => $_SESSION['id']]);
             $data['alliances'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
-        $twig->display('hero_recognizer.twig', $data);                
+        $this->twig->display('hero_recognizer.twig', $data);                
     }
 }

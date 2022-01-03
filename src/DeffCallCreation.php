@@ -5,25 +5,19 @@ namespace De\Idrinth\Travian;
 use Exception;
 use PDO;
 use Ramsey\Uuid\Uuid;
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
 use Webmozart\Assert\Assert;
 
 class DeffCallCreation
 {
     private $database;
-    public function __construct(PDO $database)
+    private $twig;
+    public function __construct(PDO $database, Twig $twig)
     {
         $this->database = $database;
+        $this->twig = $twig;
     }
     public function run(array $post): void
     {
-        $twig = new Environment(new FilesystemLoader(dirname(__DIR__) . '/templates'));
-        $data = [
-            'lang' => $_COOKIE['lang'] ?? 'en',
-            'translations' => Translations::get($_COOKIE['lang'] ?? 'en'),
-            'session' => $_SESSION,
-        ];
         if (isset($post['x']) && isset($post['y']) && isset($post['world']) && isset($post['scouts']) && $post['scouts'] >= 0 && isset($post['troops']) && $post['troops'] >= 0 && ($post['troops']+$post['scouts'] > 0) && isset($post['time']) && isset($post['date'])) {
             $uuid = Uuid::uuid6();
             $stmt = $this->database->prepare(
@@ -58,6 +52,6 @@ class DeffCallCreation
         $stmt = $this->database->prepare("SELECT alliances.* FROM user_alliance INNER JOIN alliances ON alliances.aid=user_alliance.alliance AND user_alliance.user=:user");
         $stmt->execute([':user' => $_SESSION['id'] ?? 0]);
         $data['alliances'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $twig->display('create-deff-call.twig', $data);
+        $this->twig->display('create-deff-call.twig');
     }
 }

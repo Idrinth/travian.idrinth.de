@@ -300,3 +300,6 @@ alliance_lock: Lock to Alliance
 ingame:  Ingame name
 heroes: Heroes
 gear: Hero Gear
+activity: Activity Score
+player_id: Player-ID
+hero_share: Share with Alliance

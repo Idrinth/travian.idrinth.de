@@ -3,19 +3,18 @@
 namespace De\Idrinth\Travian;
 
 use PDO;
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
 
 class Profile
 {
     private $database;
-    public function __construct(PDO $database)
+    private $twig;
+    public function __construct(PDO $database, Twig $twig)
     {
         $this->database = $database;
+        $this->twig = $twig;
     }
     public function run(array $post): void
     {
-        $twig = new Environment(new FilesystemLoader(dirname(__DIR__) . '/templates'));
         if (!isset($_SESSION['id']) || !$_SESSION['id']) {
             header('Location: /login', true, 303);
             return;
@@ -36,13 +35,9 @@ class Profile
         );
         $stmt->execute([':user' => $_SESSION['id']]);
         $stmt1->execute([':user' => $_SESSION['id']]);
-        $data = [
-            'lang' => $_COOKIE['lang'] ?? 'en',
-            'translations' => Translations::get($_COOKIE['lang'] ?? 'en'),
-            'session' => $_SESSION,
+        $this->twig->display('profile.twig', [
             'deff_calls' => $stmt->fetchAll(PDO::FETCH_ASSOC),
             'alliances' => $stmt1->fetchAll(PDO::FETCH_ASSOC),
-        ];
-        $twig->display('profile.twig', $data);
+        ]);
     }
 }

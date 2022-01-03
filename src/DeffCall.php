@@ -4,27 +4,23 @@ namespace De\Idrinth\Travian;
 
 use PDO;
 use Ramsey\Uuid\Uuid;
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
 
 class DeffCall
 {
     private $database;
-    public function __construct(PDO $database)
+    private $twig;
+    public function __construct(PDO $database, Twig $twig)
     {
         $this->database = $database;
+        $this->twig = $twig;
     }
     public function run(array $post, $id, $key=''): void
     {
-        $twig = new Environment(new FilesystemLoader(dirname(__DIR__) . '/templates'));
         $data = [
             'id' => $id,
             'key' => $key,
             'now' => date('Y-m-d H:i:s'),
             'added' => false,
-            'lang' => $_COOKIE['lang'] ?? 'en',
-            'translations' => Translations::get($_COOKIE['lang'] ?? 'en'),
-            'session' => $_SESSION,
         ];
         if (!Uuid::isValid($id)) {
             header('Location: /deff-call', true, 303);
@@ -79,6 +75,6 @@ class DeffCall
         $stmt = $this->database->prepare("SELECT deff_call_supports.*,users.name,users.discriminator FROM deff_call_supports LEFT JOIN users ON deff_call_supports.creator=users.aid WHERE deff_call=:id");
         $stmt->execute([':id' => $data['target']['aid']]);
         $data['supports'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $twig->display('deff-call.twig', $data);
+        $this->twig->display('deff-call.twig', $data);
     }
 }

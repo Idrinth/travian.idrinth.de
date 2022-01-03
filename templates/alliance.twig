@@ -5,12 +5,6 @@
 {% set mayInvite=false %}
 {% set rank='Follower' %}
 {% set name='' %}
-<table>
-    <tr>
-        <th>Discord</th>
-        <th>{{ translations.name }}</th>
-        <th>{{ translations.rank }}</th>
-    </tr>
 {% for player in players %}
     {% if player.user == session.id %}
         {% set name=player.name %}
@@ -20,6 +14,15 @@
         {% endif %}
     {% endif %}
 {% endfor %}
+<table>
+    <tr>
+        <th>Discord</th>
+        <th>{{ translations.name }}</th>
+        <th>{{ translations.rank }}</th>
+        {% if mayInvite %}
+            <th>{{ translations.activity }}</th>
+        {% endif %}
+    </tr>
 {% for player in players %}
     <tr>
         <th>{{ player.discord ~  '#' ~ player.discriminator }}</th>
@@ -32,6 +35,18 @@
                     <option{% if player.rank=='Member' %} selected{% endif %}>Member</option>
                     <option{% if player.rank=='High Council' %} selected{% endif %}>High Council</option>
                 </select><input type="submit"/></form>{% else %}{{ player.rank }}{% endif %}</td>
+        {% if mayInvite %}
+            {% set found=false %}
+            {% for act in activity %}
+                {% if act.user == player.aid %}
+                    <td>{{ act.activity }}</td>
+                    {% set found=true %}
+                {% endif %}
+            {% endfor %}
+            {% if not found %}
+                <td>0</td>
+            {% endif %}
+        {% endif %}
     </tr>
 {% endfor %}
 </table>
