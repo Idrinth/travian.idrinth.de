@@ -6,6 +6,8 @@ use Dotenv\Dotenv;
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use ReflectionClass;
+use ReflectionMethod;
+use function FastRoute\simpleDispatcher;
 
 class Router
 {
@@ -20,7 +22,7 @@ class Router
         setcookie('lang', $_COOKIE['lang']??'en', 0, '/', 'travian.idrinth.de', true, false);
     }
 
-    public function register(object $singleton)
+    public function register(object $singleton): self
     {
         $this->singletons[get_class($singleton)] = $singleton;
         return $this;
@@ -42,7 +44,7 @@ class Router
 
     public function run(): void
     {
-        $dispatcher = \FastRoute\simpleDispatcher(function(RouteCollector $r) {
+        $dispatcher = simpleDispatcher(function(RouteCollector $r) {
             foreach ($this->routes as $path => $data) {
                 foreach($data as $method => $func) {
                     $r->addRoute($method, $path, $func);
@@ -71,7 +73,7 @@ class Router
                 $rf = new ReflectionClass($handler);
                 $args = [];
                 $constructor = $rf->getConstructor();
-                if ($constructor instanceof \ReflectionMethod) {
+                if ($constructor instanceof ReflectionMethod) {
                     foreach ($constructor->getParameters() as $parameter) {
                         $args[] = $this->singletons[$parameter->getType()->getName()];
                     }
