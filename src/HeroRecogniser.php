@@ -170,7 +170,9 @@ class HeroRecogniser
             'lang' => $_COOKIE['lang'] ?? 'en',
             'translations' => Translations::get($_COOKIE['lang'] ?? 'en'),
             'inputs' => [
-                'url' => $post['url'] ?? ''
+                'url' => $post['url'] ?? '',
+                'hero_share' => intval($post['hero_share'] ?? 0, 10),
+                'player_id' => intval($post['player_id'] ?? 0, 10),
             ],
             'result' => [],
             'session' => $_SESSION,
@@ -207,6 +209,8 @@ class HeroRecogniser
             $data['previously']['shoes'] = self::$shoes[intval($data['previously']['shoes'], 10)];
             $data['previously']['armor'] = self::$armor[intval($data['previously']['armor'], 10)];
             $data['previously']['helmet'] = self::$helmet[intval($data['previously']['helmet'], 10)];
+            $data['inputs']['hero_share'] = intval($data['previously']['alliance'], 10);
+            $data['inputs']['player_id'] = intval($data['previously']['player'], 10);
         } elseif ($data['inputs']['url']) {
             $ids = substr($data['inputs']['url'], strpos($data['inputs']['url'], '/body/') + 6, 68);
             $data['result']['horse'] = self::$horse[hexdec(substr($ids, 40, 2))];
