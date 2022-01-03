@@ -69,6 +69,8 @@ class Alliance
             $stmt->execute([':alliance' => $alliance['aid']]);
             $stmt2 = $this->database->prepare("SELECT deff_calls.id, deff_calls.arrival, deff_calls.world, deff_calls.x, deff_calls.y FROM deff_calls WHERE alliance=:alliance");
             $stmt2->execute([':alliance' => $alliance['aid']]);
+            $stmt3 = $this->database->prepare("SELECT * FROM hero WHERE alliance=:alliance");
+            $stmt3->execute([':alliance' => $alliance['aid']]);
             $twig->display('alliance.twig', [
                 'lang' => $_COOKIE['lang'] ?? 'en',
                 'translations' => Translations::get($_COOKIE['lang'] ?? 'en'),
@@ -76,6 +78,7 @@ class Alliance
                 'alliance' => $alliance,
                 'players' => $stmt->fetchAll(PDO::FETCH_ASSOC),
                 'deff_calls' => $stmt2->fetchAll(PDO::FETCH_ASSOC),
+                'heroes' => $stmt3->fetchAll(PDO::FETCH_ASSOC),
             ]);
             return;
         }

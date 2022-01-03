@@ -50,4 +50,19 @@
     </tr>
 {% endfor %}
 </table>
+<h4>{{ translations.heroes }}</h4>
+<table>
+    <tr>
+        <th>{{ translations.player }}</th>
+        <th>{{ translations.updated }}</th>
+        <th>{{ translations.changed }}</th>
+    </tr>
+{% for hero in heroes %}
+    <tr>
+        <th><a href="https://{{ alliance.world }}/profile/{{ hero.player }}" target="_blank">{{ hero.player }}</a></th>
+        <td>{{ hero.last_update }}</a></td>
+        <td>{{ hero.last_change }}</td>
+    </tr>
+{% endfor %}
+</table>
 {% include 'footer.twig' %}

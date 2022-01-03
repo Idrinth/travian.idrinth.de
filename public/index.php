@@ -17,10 +17,18 @@ use FastRoute\RouteCollector;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 Dotenv::createImmutable(dirname(__DIR__))->load();
-
+date_default_timezone_set('UTC');
 session_start();
 
 $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
+    $database = new PDO(
+        'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
+        $_ENV['DATABASE_USER'],
+        $_ENV['DATABASE_PASSWORD'],
+        [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+        ]
+    );
     $r->addRoute('GET', '/', function ($post) {
         $d = new Simple();
         $d->run('home.twig');
@@ -45,160 +53,69 @@ $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
         $d = new SoldierCost();
         $d->run($post);
     });
-    $r->addRoute('GET', '/hero-check', function ($post) {
-        $d = new HeroRecogniser();
+    $r->addRoute('GET', '/hero-check', function ($post) use (&$database) {
+        $d = new HeroRecogniser($database);
         $d->run($post);
     });
-    $r->addRoute('POST', '/hero-check', function ($post) {
-        $d = new HeroRecogniser();
+    $r->addRoute('POST', '/hero-check', function ($post) use (&$database) {
+        $d = new HeroRecogniser($database);
         $d->run($post);
     });
-    $r->addRoute('GET', '/deff-call', function ($post) {
-        $d = new DeffCallCreation(new PDO(
-            'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
-            $_ENV['DATABASE_USER'],
-            $_ENV['DATABASE_PASSWORD'],
-            [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-            ]
-        ));
+    $r->addRoute('GET', '/deff-call', function ($post) use(&$database) {
+        $d = new DeffCallCreation($database);
         $d->run($post);
     });
-    $r->addRoute('POST', '/deff-call', function ($post) {
-        $d = new DeffCallCreation(new PDO(
-            'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
-            $_ENV['DATABASE_USER'],
-            $_ENV['DATABASE_PASSWORD'],
-            [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-            ]
-        ));
+    $r->addRoute('POST', '/deff-call', function ($post) use(&$database) {
+        $d = new DeffCallCreation($database);
         $d->run($post);
     });
-    $r->addRoute('GET', '/deff-call/{uuid}', function ($post, $id) {
-        $d = new DeffCall(new PDO(
-            'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
-            $_ENV['DATABASE_USER'],
-            $_ENV['DATABASE_PASSWORD'],
-            [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-            ]
-        ));
+    $r->addRoute('GET', '/deff-call/{uuid}', function ($post, $id) use(&$database) {
+        $d = new DeffCall($database);
         $d->run($post, $id, '');
     });
-    $r->addRoute('POST', '/deff-call/{uuid}', function ($post, $id) {
-        $d = new DeffCall(new PDO(
-            'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
-            $_ENV['DATABASE_USER'],
-            $_ENV['DATABASE_PASSWORD'],
-            [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-            ]
-        ));
+    $r->addRoute('POST', '/deff-call/{uuid}', function ($post, $id) use (&$database) {
+        $d = new DeffCall($database);
         $d->run($post, $id, '');
     });
-    $r->addRoute('GET', '/deff-call/{uuid}/{key}', function ($post, $id, $key) {
-        $d = new DeffCall(new PDO(
-            'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
-            $_ENV['DATABASE_USER'],
-            $_ENV['DATABASE_PASSWORD'],
-            [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-            ]
-        ));
+    $r->addRoute('GET', '/deff-call/{uuid}/{key}', function ($post, $id, $key) use (&$database) {
+        $d = new DeffCall($database);
         $d->run($post, $id, $key);
     });
-    $r->addRoute('POST', '/deff-call/{uuid}/{key}', function ($post, $id, $key) {
-        $d = new DeffCall(new PDO(
-            'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
-            $_ENV['DATABASE_USER'],
-            $_ENV['DATABASE_PASSWORD'],
-            [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-            ]
-        ));
+    $r->addRoute('POST', '/deff-call/{uuid}/{key}', function ($post, $id, $key) use (&$database) {
+        $d = new DeffCall($database);
         $d->run($post, $id, $key);
     });
-    $r->addRoute('GET', '/login', function ($post) {
-        $d = new Login(new PDO(
-            'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
-            $_ENV['DATABASE_USER'],
-            $_ENV['DATABASE_PASSWORD'],
-            [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-            ]
-        ));
+    $r->addRoute('GET', '/login', function ($post) use (&$database) {
+        $d = new Login($database);
         $d->run($post);
     });
-    $r->addRoute('GET', '/profile', function ($post) {
-        $d = new Profile(new PDO(
-            'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
-            $_ENV['DATABASE_USER'],
-            $_ENV['DATABASE_PASSWORD'],
-            [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-            ]
-        ));
+    $r->addRoute('GET', '/profile', function ($post) use (&$database) {
+        $d = new Profile($database);
         $d->run($post);
     });
-    $r->addRoute('GET', '/styles.css', function ($post) {
+    $r->addRoute('GET', '/styles.css', function ($post) use (&$database) {
         $d = new Styles();
         $d->run();
     });
     $r->addRoute('GET', '/ping', function ($post) {});
-    $r->addRoute('GET', '/alliance', function ($post) {
-        $d = new Alliance(new PDO(
-            'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
-            $_ENV['DATABASE_USER'],
-            $_ENV['DATABASE_PASSWORD'],
-            [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-            ]
-        ));
+    $r->addRoute('GET', '/alliance', function ($post) use (&$database) {
+        $d = new Alliance($database);
         $d->run($post);
     });
-    $r->addRoute('POST', '/alliance', function ($post) {
-        $d = new Alliance(new PDO(
-            'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
-            $_ENV['DATABASE_USER'],
-            $_ENV['DATABASE_PASSWORD'],
-            [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-            ]
-        ));
+    $r->addRoute('POST', '/alliance', function ($post) use (&$database) {
+        $d = new Alliance($database);
         $d->run($post);
     });
-    $r->addRoute('GET', '/alliance/{id}', function ($post, $id) {
-        $d = new Alliance(new PDO(
-            'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
-            $_ENV['DATABASE_USER'],
-            $_ENV['DATABASE_PASSWORD'],
-            [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-            ]
-        ));
+    $r->addRoute('GET', '/alliance/{id}', function ($post, $id) use (&$database) {
+        $d = new Alliance($database);
         $d->run($post, $id);
     });
-    $r->addRoute('POST', '/alliance/{id}', function ($post, $id) {
-        $d = new Alliance(new PDO(
-            'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
-            $_ENV['DATABASE_USER'],
-            $_ENV['DATABASE_PASSWORD'],
-            [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-            ]
-        ));
+    $r->addRoute('POST', '/alliance/{id}', function ($post, $id) use (&$database) {
+        $d = new Alliance($database);
         $d->run($post, $id);
     });
-    $r->addRoute('GET', '/alliance/{id}/{key}', function ($post, $id, $key) {
-        $d = new Alliance(new PDO(
-            'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
-            $_ENV['DATABASE_USER'],
-            $_ENV['DATABASE_PASSWORD'],
-            [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-            ]
-        ));
+    $r->addRoute('GET', '/alliance/{id}/{key}', function ($post, $id, $key) use (&$database) {
+        $d = new Alliance($database);
         $d->run($post, $id, $key);
     });
 });

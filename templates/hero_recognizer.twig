@@ -1,28 +1,70 @@
 {% include 'header.twig' %}
 <h2>{{ translations.hero_gear }}</h2>
 <p>The data for this tool was provided by LolaM</p>
-{% if results %}
-    {% if results.error %}
-        <p class="error">{{ results.error }}</p>
-    {% else %}
-        <div class="result">
-            <h3>{{ translations.items }}</h3>
-            <table>
-                <tr><th>{{ translations.helmet }}</th><td>{{ translations[results.helmet] }}</td><td>{{ translations[results.helmet ~ '_effect'] }}</td></tr>
-                <tr><th>{{ translations.armor }}</th><td>{{ translations[results.armor] }}</td><td>{{ translations[results.armor ~ '_effect'] }}</td></tr>
-                <tr><th>{{ translations.right_hand }}</th><td>{{ translations[results.right_hand] }}</td><td>{{ translations[results.right_hand ~ '_effect'] }}</td></tr>
-                <tr><th>{{ translations.left_hand }}</th><td>{{ translations[results.left_hand]  }}</td><td>{{ translations[results.left_hand ~ '_effect']  }}</td></tr>
-                <tr><th>{{ translations.shoes }}</th><td>{{ translations[results.shoes] }}</td><td>{{ translations[results.shoes ~ '_effect'] }}</td></tr>
-                <tr><th>{{ translations.horse }}</th><td>{{ translations[results.horse] }}</td><td>{{ translations[results.horse ~ '_effect'] }}</td></tr>
-            </table>
-        </div>
-    {% endif %}
+{% if result %}
+    <div class="result">
+        <h3>{{ translations.items }}</h3>
+        <table>
+            <tr>
+                <td></td>
+                <th>{{ translations.name }}</th>
+                <th>{{ translations.effect }}</th>
+                {% if previously %}<th>{{ translations.previously }}</th>{% endif %}
+            </tr>
+            <tr>
+                <th>{{ translations.helmet }}</th>
+                <td>{{ translations[result.helmet] }}</td>
+                <td>{{ translations[result.helmet ~ '_effect'] }}</td>
+                {% if previously %}<td title="{{ previously.helmet_first_seen }} - {{ previously.helmet_last_seen }}">{{ translations[previously.helmet] }}</td>{% endif %}
+            </tr>
+            <tr>
+                <th>{{ translations.armor }}</th>
+                <td>{{ translations[result.armor] }}</td>
+                <td>{{ translations[result.armor ~ '_effect'] }}</td>
+                {% if previously %}<td title="{{ previously.armor_first_seen }} - {{ previously.armor_last_seen }}">{{ translations[previously.armor] }}</td>{% endif %}
+            </tr>
+            <tr>
+                <th>{{ translations.right_hand }}</th>
+                <td>{{ translations[result.right_hand] }}</td>
+                <td>{{ translations[result.right_hand ~ '_effect'] }}</td>
+                {% if previously %}<td title="{{ previously.right_hand_first_seen }} - {{ previously.right_hand_last_seen }}">{{ translations[previously.right_hand] }}</td>{% endif %}
+            </tr>
+            <tr>
+                <th>{{ translations.left_hand }}</th>
+                <td>{{ translations[result.left_hand]  }}</td>
+                <td>{{ translations[result.left_hand ~ '_effect']  }}</td>
+                {% if previously %}<td title="{{ previously.left_hand_first_seen }} - {{ previously.left_hand_last_seen }}">{{ translations[previously.left_hand]  }}</td>{% endif %}
+            </tr>
+            <tr>
+                <th>{{ translations.shoes }}</th>
+                <td>{{ translations[result.shoes] }}</td>
+                <td>{{ translations[result.shoes ~ '_effect'] }}</td>
+                {% if previously %}<td title="{{ previously.shoes_first_seen }} - {{ previously.shoes_last_seen }}">{{ translations[previously.shoes] }}</td>{% endif %}
+            </tr>
+            <tr>
+                <th>{{ translations.horse }}</th>
+                <td>{{ translations[result.horse] }}</td>
+                <td>{{ translations[result.horse ~ '_effect'] }}</td>
+                {% if previously %}<td title="{{ previously.horse_first_seen }} - {{ previously.horse_last_seen }}">{{ translations[previously.horse] }}</td>{% endif %}
+            </tr>
+        </table>
+    </div>
 {% endif %}
 <form method="post">
     <fieldset>
         <legend>{{ translations.main }}</legend>
         <label>{{ translations.hero_image_url }}<input required name="url" type="url" value="{{ inputs.url }}"/></label>
         <input type="submit"/>
+    </fieldset>
+    <fieldset>
+        <legend>{{ translations.advanced }}</legend>
+        <label>{{ translations.hero_share }}<select name="hero_share">
+            <option value="0">{{ translations.none }}</option>
+            {% for alliance in alliances %}
+                <option value="{{ alliance.aid }}">{{ alliance.world }}: {{ alliance.name }}</option>
+            {% endfor %}
+            </select></label>
+        <label>{{ translations.player_id }}<input type="number" name="player_id" min="1"/></label>
     </fieldset>
 </form>
 {% include 'footer.twig' %}
