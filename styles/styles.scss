@@ -120,7 +120,7 @@ p {
     background: red;
 }
 .split2 {
-   display: flex; 
+    display: flex;
 }
 .split2 > table {
     flex: auto;
@@ -129,46 +129,49 @@ table tr:nth-of-type(2n) {
     background-color: rgba(0,0,0,0.05);
 }
 input, select {
-  background: #eee;
-  color: #333;
-  border-radius: 0.1em;
+    background: #eee;
+    color: #333;
+    border-radius: 0.1em;
 }
-select {  
-  text-align: center;
+select {
+    text-align: center;
 }
 input[type=number] {
-  text-align: right;
+    text-align: right;
 }
 .page {
-  background: rgba(0,0,0,0.05);
+    background: rgba(0,0,0,0.05);
 }
 body {
-  padding-top: 1em;
-  padding-bottom: 1em;
-  box-sizing: border-box;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    box-sizing: border-box;
 }
 #header, footer {
-  background-color: #333;
-  background-image: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0), rgba(0,0,0,0.2));
+    background-color: #333;
+    background-image: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0), rgba(0,0,0,0.2));
 }
 nav {
-  background-color: #333;
-  background-image: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0), rgba(0,0,0,0.2));
+    background-color: #333;
+    background-image: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0), rgba(0,0,0,0.2));
 }
 nav li:hover {
-  background-color: rgba(255,0,0,0.5);
-  border-radius: 1em;
-  background-image: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0), rgba(0,0,0,0.2));
+    background-color: rgba(255,0,0,0.5);
+    border-radius: 1em;
+    background-image: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0), rgba(0,0,0,0.2));
 }
 nav li:hover a {
-  color: #eee;
+    color: #eee;
 }
 label {
-  padding-bottom: 0.25em;
+    padding-bottom: 0.25em;
 }
 body > * {
     width: 100%
 }
 #header > div {
-  padding-top: 1.5em;
+    padding-top: 1.5em;
+}
+legend {
+    font-style: italic;
 }
