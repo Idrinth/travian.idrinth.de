@@ -3,8 +3,6 @@
 namespace De\Idrinth\Travian;
 
 use PDO;
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
 
 class HeroRecogniser
 {
@@ -232,8 +230,8 @@ class HeroRecogniser
                     $data['previously'] = $stmt->fetch(PDO::FETCH_ASSOC);
                     if (false === $data['previously']) {
                         $this->database
-                            ->prepare("INSERT INTO hero (player, alliance) VALUES (:player, :alliance)")
-                            ->execute([':player' => $post['player_id'], ':alliance' => $post['hero_share']]);
+                            ->prepare("INSERT INTO hero (player, alliance, name) VALUES (:player, :alliance, :name)")
+                            ->execute([':player' => $post['player_id'], ':alliance' => $post['hero_share'], ':name' => $post['name']??'']);
                         $stmt = $this->database->prepare("SELECT * FROM hero WHERE alliance=:alliance AND player=:player");
                         $stmt->execute(
                             [':player' => $post['player_id'], ':alliance' => $post['hero_share']]
@@ -253,6 +251,11 @@ class HeroRecogniser
                     $data['previously']['shoes'] = self::$shoes[intval($data['previously']['shoes'], 10)];
                     $data['previously']['armor'] = self::$armor[intval($data['previously']['armor'], 10)];
                     $data['previously']['helmet'] = self::$helmet[intval($data['previously']['helmet'], 10)];
+                    if ($data['previously']['name'] !== $post['name']) {
+                        $this->database
+                            ->prepare("UPDATE hero SET name=:name WHERE aid=:id")
+                            ->execute([':id' => $data['previously']['aid'], ':name' => $post['name']??'']);
+                    }
                     if ($data['previously']['horse'] === $data['result']['horse']) {
                         $this->database
                             ->prepare("UPDATE hero SET horse_last_seen=:now, last_update=:now WHERE aid=:id")

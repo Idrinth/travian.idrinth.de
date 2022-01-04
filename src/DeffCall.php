@@ -36,10 +36,15 @@ class DeffCall
         if ($data['target']['alliance'] == '0') {
             $data['target']['alliance'] = '';
         } else {
-            $stmt = $this->database->prepare('SELECT alliances.name, alliances.id FROM user_alliance INNER JOIN alliances ON alliances.aid=user_alliance.alliance AND user_alliance.user=:user');
+            $stmt = $this->database->prepare('SELECT alliances.name, alliances.id, user_alliance.name as player FROM user_alliance INNER JOIN alliances ON alliances.aid=user_alliance.alliance AND user_alliance.user=:user');
             $stmt->execute([':user' => $_SESSION['id'] ?? 0]);
             $data['target']['alliance'] = $stmt->fetch(PDO::FETCH_ASSOC);
             if (false === $data['target']['alliance']) {
+                if ($_SESSION['id'] ?? 0 === 0) {
+                    $_SESSION['redirect'] = $_SERVER['REQUEST_URI'];
+                    header('Location: /login', true, 303);
+                    return;
+                }
                 header('Location: /deff-call', true, 303);
                 return;
             }

@@ -39,7 +39,10 @@
             {% set found=false %}
             {% for act in activity %}
                 {% if act.user == player.aid %}
-                    <td>{{ act.activity }}</td>
+                    <td title="{{ act.deffCalls }} Deff Calls
+{{ act.troops }} Troops
+{{ act.scouts }}Scouts
+{{ act.heroes }} Hero Updates">{{ act.activity }}</td>
                     {% set found=true %}
                 {% endif %}
             {% endfor %}
@@ -70,7 +73,7 @@
 {% for deff_call in deff_calls %}
     <tr>
         <th>{{ deff_call.world }}</th>
-        <td><a href="/deff-call/{{ deff_call.id }}">({{ deff_call.x }}|{{ deff_call.x }})</a></td>
+        <td><a href="/deff-call/{{ deff_call.id }}{% if mayInvite %}/{{ deff_call.key }}{% endif %}">{{ deff_call.player }} ({{ deff_call.x }}|{{ deff_call.x }})</a></td>
     </tr>
 {% endfor %}
 </table>
@@ -84,7 +87,7 @@
     </tr>
 {% for hero in heroes %}
     <tr>
-        <th><a href="https://{{ alliance.world }}/profile/{{ hero.player }}" target="_blank">{{ hero.player }}</a></th>
+        <th><a href="https://{{ alliance.world }}/profile/{{ hero.player }}" target="_blank">{{ hero.name }}({{ hero.player }})</a></th>
         <td>{{ hero.last_update }}</a></td>
         <td>{{ hero.last_change }}</td>
         <td><a href="/hero-check/{{ hero.aid}}">{{ translations.here }}</a></td>

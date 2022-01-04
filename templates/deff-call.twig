@@ -1,5 +1,5 @@
 {% include 'header.twig' %}
-<h2>{{ translations.deff_call }} {{ id }}</h2>
+<h2>{{ translations.deff_call }} {{ target.player }} ({{ target.x }}|{{ target.y }})</h2>
 <h3>{{ translations.status }}</h3>
 <div class="split2">
 {% set totalScouts=0 %}
@@ -26,8 +26,8 @@
 </table>
 <table>
     <tr><th>{{ translations.world }}</th><td>{{ target.world }}</td></tr>
-    <tr><th>{{ translations.alliance }}</th><td><a href="/alliance/{{ target.alliance.id }}">{{ target.alliance.name }}</a></td></tr>
-    <tr><th>{{ translations.village }}</th><td><a href="https://{{ target.world }}/position_details.php?x={{ target.x }}&y={{ target.y }}" target="_blank">({{ target.x }}|{{ target.y }})</a></td></tr>
+    {% if target.alliance.id is not empty %}<t0r><th>{{ translations.alliance }}</th><td><a href="/alliance/{{ target.alliance.id }}">{{ target.alliance.name }}</a></td></tr>{% endif %}
+    <tr><th>{{ translations.village }}</th><td><a href="https://{{ target.world }}/position_details.php?x={{ target.x }}&y={{ target.y }}" target="_blank">{{ target.player }} ({{ target.x }}|{{ target.y }})</a></td></tr>
     <tr><th>{{ translations.scouts }}</th><td>{{totalScouts }}/{{ target.scouts }}</td></tr>
     <tr><th>{{ translations.troops }}</th><td>{{totalTroops }}/{{ target.troops }}</td></tr>
     <tr><th>{{ translations.arrival }}</th><td>{{ target.arrival }}</tr>
@@ -47,10 +47,10 @@
 <form method="post">
     <fieldset>
         <legend>{{ translations.main }}</legend>
-        <label>{{ translations.account }}<input required name="account" type="string"/></label>
+        <label>{{ translations.account }}<input required name="account" value="{{ target.alliance.player }}" type="string"/></label>
         <label>{{ translations.scouts }}<input required name="scouts" type="number" min="0"/></label>
         <label>{{ translations.troops }}<input required name="troops" type="number" min="0"/></label>
-        <label>{{ translations.arrival }}<input required name="date" type="date"/><input required name="time" step="1" type="time"/></label>
+        <label>{{ translations.arrival }}<input required name="date" type="date" value="{{ target.arrival|slice(0, 10) }}"/><input required name="time" step="1" type="time" value="{{ target.arrival|slice(11, 8) }}"/></label>
         <input type="submit"/>
     </fieldset>
 </form>

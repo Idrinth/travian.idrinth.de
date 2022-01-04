@@ -70,16 +70,20 @@ class Alliance
             }
             $stmt = $this->database->prepare("SELECT user_alliance.*, users.aid, users.name as discord, users.discriminator FROM user_alliance INNER JOIN users ON users.aid=user_alliance.user WHERE alliance=:alliance");
             $stmt->execute([':alliance' => $alliance['aid']]);
-            $stmt2 = $this->database->prepare("SELECT deff_calls.id, deff_calls.arrival, deff_calls.world, deff_calls.x, deff_calls.y FROM deff_calls WHERE alliance=:alliance");
+            $stmt2 = $this->database->prepare("SELECT deff_calls.player, deff_calls.id, deff_calls.arrival, deff_calls.world, deff_calls.x, deff_calls.y, deff_calls.key FROM deff_calls WHERE alliance=:alliance");
             $stmt2->execute([':alliance' => $alliance['aid']]);
             $stmt3 = $this->database->prepare("SELECT * FROM hero WHERE alliance=:alliance");
             $stmt3->execute([':alliance' => $alliance['aid']]);
             $stmt4 = $this->database->prepare("SELECT
-	SUM(deff_call_supports.troops/10000)
-	+ SUM(deff_call_supports.scouts/5000)
-	+ COUNT(DISTINCT deff_call_supports.deff_call)
-	+ COUNT(DISTINCT hero_updates.`date`) AS activity,
-	user_alliance.`user`
+	IFNULL(SUM(deff_call_supports.troops/1000), 0)
+	+ IFNULL(SUM(deff_call_supports.scouts/500), 0)
+	+ COUNT(DISTINCT deff_call_supports.deff_call)*2.5
+	+ COUNT(DISTINCT hero_updates.`date`)*0.5 AS activity,
+	user_alliance.`user`,
+	IFNULL(SUM(deff_call_supports.troops), 0) AS troops,
+	IFNULL(SUM(deff_call_supports.scouts), 0) AS scouts,
+	COUNT(DISTINCT deff_call_supports.deff_call) AS deffCalls,
+	COUNT(DISTINCT hero_updates.`date`) AS heroes
 FROM user_alliance
 
 LEFT JOIN deff_calls ON deff_calls.alliance=:alliance

@@ -8,13 +8,14 @@ html, body {
 }
 textarea, input, select {
     background: #eee;
+    color: #333;
     display:block;
     width: 100%;
     box-sizing: border-box;
 }
 input[type=submit] {
     background: red;
-    color: #fff;
+    color: #eee;
 }
 label {
     display: block;
@@ -49,13 +50,22 @@ body > footer {
 }
 #header {
     display: flex;
+    border-radius: 1em 1em 0 0;
+    margin-top: 1em;
+}
+footer {
+    border-radius: 0 0 1em 1em;
+    margin-bottom: 1em;
 }
 #header > * {
     flex: auto;
-    background: #333;
-    color: #eee;
+    color: #ddd;
     display: inline;
     vertical-align: middle;
+}
+#header > select {
+    color: #ddd;
+    background: #333;
 }
 body > iframe {
     max-width: 100%;
@@ -84,8 +94,24 @@ nav > ul > li {
 .result.hidden > table {
     display: none;
 }
-h3 {
+h2 {
+    margin: 0;
     text-align: center;
+    padding: 1em;
+}
+h3 {
+    margin: 0;
+    text-align: center;
+    padding: 0.75em;
+}
+h4 {
+    margin: 0;
+    text-align: center;
+    padding: 0.5em;
+}
+p {
+    margin: 0;
+    padding: 0.5em;
 }
 .result > h3 {
     cursor: pointer;
@@ -101,4 +127,48 @@ h3 {
 }
 table tr:nth-of-type(2n) {
     background-color: rgba(0,0,0,0.05);
+}
+input, select {
+  background: #eee;
+  color: #333;
+  border-radius: 0.1em;
+}
+select {  
+  text-align: center;
+}
+input[type=number] {
+  text-align: right;
+}
+.page {
+  background: rgba(0,0,0,0.05);
+}
+body {
+  padding-top: 1em;
+  padding-bottom: 1em;
+  box-sizing: border-box;
+}
+#header, footer {
+  background-color: #333;
+  background-image: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0), rgba(0,0,0,0.2));
+}
+nav {
+  background-color: #333;
+  background-image: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0), rgba(0,0,0,0.2));
+}
+nav li:hover {
+  background-color: rgba(255,0,0,0.5);
+  border-radius: 1em;
+  background-image: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0), rgba(0,0,0,0.2));
+}
+nav li:hover a {
+  color: #eee;
+}
+label {
+  padding-bottom: 0.25em;
+}
+body > * {
+    width: 100%
+}
+#header > div {
+  padding-top: 1.5em;
 }
