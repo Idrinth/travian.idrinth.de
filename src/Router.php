@@ -38,7 +38,7 @@ class Router
     public function post(string $path, string $class): self
     {
         $this->routes[$path] = $this->routes[$path] ?? [];
-        $this->routes[$path]['GET'] = $class;
+        $this->routes[$path]['POST'] = $class;
         return $this;
     }
 
