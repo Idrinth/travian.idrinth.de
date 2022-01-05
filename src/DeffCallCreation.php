@@ -18,11 +18,11 @@ class DeffCallCreation
     }
     public function run(array $post): void
     {
-        if (isset($post['x']) && isset($post['y']) && isset($post['player']) && isset($post['world']) && isset($post['scouts']) && $post['scouts'] >= 0 && isset($post['troops']) && $post['troops'] >= 0 && ($post['troops']+$post['scouts'] > 0) && isset($post['time']) && isset($post['date'])) {
+        if (isset($post['x']) && isset($post['y']) && isset($post['player']) && isset($post['world']) && isset($post['scouts']) && $post['scouts'] >= 0 && isset($post['troops']) && $post['troops'] >= 0 && ($post['troops']+$post['scouts']+$post['heroes'] > 0) && isset($post['time']) && isset($post['date'])) {
             $uuid = Uuid::uuid6();
             $stmt = $this->database->prepare(
-                "INSERT INTO deff_calls (player, id, `key`, scouts, troops, `x`, `y`, world, creator, arrival, alliance) "
-                . "VALUES (:player, :id, :key, :scouts, :troops, :x, :y, :world, :creator, :arrival, :alliance)"
+                "INSERT INTO deff_calls (heroes, player, id, `key`, scouts, troops, `x`, `y`, world, creator, arrival, alliance) "
+                . "VALUES (:heroes, :player, :id, :key, :scouts, :troops, :x, :y, :world, :creator, :arrival, :alliance)"
             );
             if (strpos($post['world'], 'https://') === 0) {
                 $post['world'] = substr($post['world'], 8);
@@ -39,6 +39,7 @@ class DeffCallCreation
                     ':y' => intval($post['y'], 10),
                     ':scouts' => intval($post['scouts'], 10),
                     ':troops' => intval($post['troops'], 10),
+                    ':heroes' => intval($post['heroes'], 10),
                     ':arrival' => date('Y-m-d H:i:s', strtotime($post['date'] . ' ' . $post['time'])),
                     ':creator' => $_SESSION['id'] ?? 0,
                     ':alliance' => intval($post['alliance_lock'], 10),

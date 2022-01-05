@@ -12,6 +12,7 @@ textarea, input, select {
     display:block;
     width: 100%;
     box-sizing: border-box;
+    border-radius: 0.1em;
 }
 input[type=submit] {
     background: red;
@@ -128,11 +129,6 @@ p {
 table tr:nth-of-type(2n) {
     background-color: rgba(0,0,0,0.05);
 }
-input, select {
-    background: #eee;
-    color: #333;
-    border-radius: 0.1em;
-}
 select {
     text-align: center;
 }
@@ -174,4 +170,12 @@ body > * {
 }
 legend {
     font-style: italic;
+}
+body.dark  {
+    background: #333;
+    color: #eee;
+    textarea, input, select {
+        color: #eee;
+        background: #333;
+    }    
 }

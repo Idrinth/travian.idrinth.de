@@ -4,23 +4,41 @@
 <div class="split2">
 {% set totalScouts=0 %}
 {% set totalTroops=0 %}
+{% set totalHeroes=0 %}
 <table>
     <tr><th>{{ translations.account }}</th><th>{{ translations.troops }}</th><th>{{ translations.arrival }}</th></tr>
     {% for support in supports %}
         {% if support.time > target.time %}
             {% if key==target.key and key is not empty %}
-                <tr class="late"><th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="Added {{ support.created }}">{{ support.arrival }}</td></tr>
+                <tr class="late">
+                    <th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th>
+                    <td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}<br/>{{ support.hero }}{{ translations.heroes }}</td>
+                    <td title="Added {{ support.created }}">{{ support.arrival }}</td>
+                </tr>
             {% elseif session.id == support.creator and session.id > 0 %}
-                <tr class="late"><th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="Added {{ support.created }}">{{ support.arrival }}</td></tr>
+                <tr class="late">
+                    <th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th>
+                    <td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}<br/>{{ support.hero }}{{ translations.heroes }}</td>
+                    <td title="Added {{ support.created }}">{{ support.arrival }}</td>
+                </tr>
             {% endif %}
         {% else %}
             {% if key==target.key and key is not empty %}
-                <tr><th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="{{ translations.created }} {{ support.created }}">{{ support.arrival }}</td></tr>
+                <tr>
+                    <th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th>
+                    <td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}<br/>{{ support.hero }}{{ translations.heroes }}</td>
+                    <td title="{{ translations.created }} {{ support.created }}">{{ support.arrival }}</td>
+                </tr>
             {% elseif session.id == support.creator and session.id > 0 %}
-                <tr><th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th><td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}</td><td title="Added {{ support.created }}">{{ support.arrival }}</td></tr>
+                <tr>
+                    <th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th>
+                    <td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}<br/>{{ support.hero }}{{ translations.heroes }}</td>
+                    <td title="Added {{ support.created }}">{{ support.arrival }}</td>
+                </tr>
             {% endif %}
             {% set totalScouts=totalScouts+support.scouts %}
             {% set totalTroops=totalTroops+support.troops %}
+            {% set totalHeroes=totalHeroes+support.hero %}
         {% endif %}
     {% endfor %}
 </table>
@@ -30,6 +48,7 @@
     <tr><th>{{ translations.village }}</th><td><a href="https://{{ target.world }}/position_details.php?x={{ target.x }}&y={{ target.y }}" target="_blank">{{ target.player }} ({{ target.x }}|{{ target.y }})</a></td></tr>
     <tr><th>{{ translations.scouts }}</th><td>{{totalScouts }}/{{ target.scouts }}</td></tr>
     <tr><th>{{ translations.troops }}</th><td>{{totalTroops }}/{{ target.troops }}</td></tr>
+    <tr><th>{{ translations.heroes }}</th><td>{{totalHeroes }}/{{ target.heroes }}</td></tr>
     <tr><th>{{ translations.arrival }}</th><td>{{ target.arrival }}</tr>
     <tr><th>{{ translations.share }}</th><td><a href="https://travian.idrinth.de/deff-call/{{ id }}">https://travian.idrinth.de/deff-call/{{ id }}</a></tr>
     {% if key==target.key and key is not empty %}
@@ -50,6 +69,7 @@
         <label>{{ translations.account }}<input required name="account" value="{{ target.alliance.player }}" type="string"/></label>
         <label>{{ translations.scouts }}<input required name="scouts" type="number" min="0"/></label>
         <label>{{ translations.troops }}<input required name="troops" type="number" min="0"/></label>
+        <label>{{ translations.hero }}<input required name="hero" type="number" min="0" max="1"/></label>
         <label>{{ translations.arrival }}<input required name="date" type="date" value="{{ target.arrival|slice(0, 10) }}"/><input required name="time" step="1" type="time" value="{{ target.arrival|slice(11, 8) }}"/></label>
         <input type="submit"/>
     </fieldset>

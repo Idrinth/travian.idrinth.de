@@ -24,7 +24,7 @@
             }, 10000);
         </script>
     </head>
-    <body>
+    <body class="{{ style }}">
         <div id="header">
             <a class="invisible" href="/">
                 <img src="/logo.png" alt=""/>
@@ -38,6 +38,10 @@
                 <option{% if lang=='fi' %} selected{% endif %} value="fi">Suomi</option>
                 <option{% if lang=='fr' %} selected{% endif %} value="fr">Français</option>
                 <option{% if lang=='jp' %} selected{% endif %} value="jp">日本語</option>
+            </select>
+            <select style="width: auto; display: inline;" onchange="document.cookie='style=' + this.value;document.body.setAttribute('class', this.value);">
+                <option{% if style=='light' %} selected{% endif %} value="light">&#9788;</option>
+                <option{% if style=='dark' %} selected{% endif %} value="dark">&#9789;</option>
             </select>
             <div>
                 <span id="time"></span>

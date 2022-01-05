@@ -77,25 +77,27 @@ class Alliance
             $stmt4 = $this->database->prepare("SELECT
 	IFNULL(SUM(deff_call_supports.troops/1000), 0)
 	+ IFNULL(SUM(deff_call_supports.scouts/500), 0)
+	+ IFNULL(SUM(deff_call_supports.hero/5), 0)
 	+ COUNT(DISTINCT deff_call_supports.deff_call)*2.5
 	+ COUNT(DISTINCT hero_updates.`date`)*0.5 AS activity,
 	user_alliance.`user`,
 	IFNULL(SUM(deff_call_supports.troops), 0) AS troops,
 	IFNULL(SUM(deff_call_supports.scouts), 0) AS scouts,
 	COUNT(DISTINCT deff_call_supports.deff_call) AS deffCalls,
-	COUNT(DISTINCT hero_updates.`date`) AS heroes
+	COUNT(DISTINCT hero_updates.`date`) AS heroes,
+	IFNULL(SUM(deff_call_supports.hero), 0) AS heroesDeff
 FROM user_alliance
 
-LEFT JOIN deff_calls ON deff_calls.alliance=:alliance
+LEFT JOIN deff_calls ON deff_calls.alliance=:alliance AND deff_calls.arrival >= :cutoffDate
 LEFT JOIN deff_call_supports ON deff_calls.aid=deff_call_supports.deff_call AND deff_call_supports.creator=user_alliance.user
 
 LEFT JOIN hero ON hero.alliance=:alliance
-LEFT JOIN hero_updates ON hero.aid=hero_updates.hero AND hero_updates.user=user_alliance.user
+LEFT JOIN hero_updates ON hero.aid=hero_updates.hero AND hero_updates.user=user_alliance.user AND hero_updates.date >= :cutoffDate
 
 WHERE user_alliance.alliance=:alliance
 
 GROUP BY user_alliance.`user`");
-            $stmt4->execute([':alliance' => $alliance['aid']]);
+            $stmt4->execute([':alliance' => $alliance['aid'], ':cutoffDate' => date('Y-m-d', strtotime(time() - 86400 * 7))]);
             $this->twig->display('alliance.twig', [
                 'alliance' => $alliance,
                 'players' => $stmt->fetchAll(PDO::FETCH_ASSOC),

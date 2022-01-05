@@ -65,11 +65,12 @@ class DeffCall
                     ]);
             }
         }
-        if (isset($post['scouts']) && $post['scouts'] >= 0 && isset($post['troops']) && $post['troops'] >= 0 && ($post['troops']+$post['scouts'] > 0) && isset($post['time']) && isset($post['date']) && isset($post['account']) && time() < strtotime($data['target']['arrival'])) {
-            $stmt = $this->database->prepare("INSERT INTO deff_call_supports (creator, scouts, troops, arrival, deff_call, account) VALUES(:creator, :scouts, :troops, :arrival, :deff_call, :account)");
+        if (isset($post['scouts']) && $post['scouts'] >= 0 && isset($post['troops']) && $post['troops'] >= 0 && ($post['troops']+$post['scouts']+$post['hero'] > 0) && isset($post['time']) && isset($post['date']) && isset($post['account']) && time() < strtotime($data['target']['arrival'])) {
+            $stmt = $this->database->prepare("INSERT INTO deff_call_supports (hero, creator, scouts, troops, arrival, deff_call, account) VALUES(:hero, :creator, :scouts, :troops, :arrival, :deff_call, :account)");
             $stmt->execute([
                 ':scouts' => intval($post['scouts'], 10),
                 ':troops' => intval($post['troops'], 10),
+                ':hero' => intval($post['hero'], 10),
                 ':account' => $post['account'],
                 ':creator' => $_SESSION['id'] ?? 0,
                 ':arrival' => $post['date'] . ' ' . $post['time'],

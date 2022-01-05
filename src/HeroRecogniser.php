@@ -313,7 +313,7 @@ class HeroRecogniser
                 }
             }
         }
-        if ($_SESSION['id'] > 0) {
+        if ($_SESSION['id']??0 > 0) {
             $stmt = $this->database->prepare(
                 "SELECT alliances.name, alliances.world, alliances.aid "
                 . "FROM user_alliance "

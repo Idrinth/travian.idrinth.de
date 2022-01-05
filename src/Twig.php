@@ -17,6 +17,7 @@ class Twig extends Environment
     public function display($name, $context = []): void
     {
         $context['lang'] = $_COOKIE['lang'] ?? 'en';
+        $context['style'] = $_COOKIE['style'] ?? 'light';
         $context['translations'] = Translations::get($_COOKIE['lang'] ?? 'en');
         $context['session'] = $_SESSION;
         parent::display($name, $context);

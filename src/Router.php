@@ -20,6 +20,7 @@ class Router
         date_default_timezone_set('UTC');
         session_start();
         setcookie('lang', $_COOKIE['lang']??'en', 0, '/', 'travian.idrinth.de', true, false);
+        setcookie('style', $_COOKIE['style']??'light', 0, '/', 'travian.idrinth.de', true, false);
     }
 
     public function register(object $singleton): self
