@@ -42,10 +42,10 @@
         </form>
     {% endfor %}
 {% else %}
-    <p>No Data to show!</p>
+    <p>{{ translations.no_data }}</p>
 {% endfor %}
 {% if troops is not empty %}
-    <h3>Delete Village</h3>
+    <h3>{{ translations.delete_village }}</h3>
     <form method="post">
         <label>{{ translations.village }}<select name="aid">
                 {% for world,tribes in troops %}
@@ -60,7 +60,7 @@
         <input type="submit"/>
     </form>
 {% endif %}
-<h3>New Village</h3>
+<h3>{{ translations.new_village }}</h3>
 <form method="post">
     <fieldset>
         <legend>{{ translations.main }}</legend>
@@ -75,6 +75,15 @@
                 <option value="hun">{{ translations.huns }}</option>
                 <option value="egyptian">{{ translations.egyptians }}</option>
             </select></label>
+        <input type="submit"/>
+    </fieldset>
+</form>
+<h3>{{ translations.plus_import }}</h3>
+<form method="post">
+    <fieldset>
+        <legend>{{ translations.main }}</legend>
+        <label title="ts1.x1.europe.travian.com">{{ translations.world }}*<input type="text" name="world"/></label>
+        <label>{{ translations.source }}<textarea name="source"></textarea></label>
         <input type="submit"/>
     </fieldset>
 </form>

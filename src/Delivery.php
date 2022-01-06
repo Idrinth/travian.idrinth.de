@@ -175,7 +175,6 @@ class Delivery {
                     $data['calculatedInputs']['lumber'] = 0;
                     $data['calculatedInputs']['clay'] = 0;
                     $data['calculatedInputs']['iron'] = 0;
-
                 }
                 $data['calculatedInputs']['total'] = 0
                         + ($data['calculatedInputs']['lumber'] < 0 ? 0 : $data['calculatedInputs']['lumber'])

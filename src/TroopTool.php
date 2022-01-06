@@ -2,13 +2,23 @@
 
 namespace De\Idrinth\Travian;
 
+use DOMDocument;
 use PDO;
+use UnexpectedValueException;
 use Webmozart\Assert\Assert;
 
 class TroopTool
 {
     private $database;
     private $twig;
+    
+    private static $tribes = [
+        'vid_1' => 'roman',
+        'vid_2' => 'teuton',
+        'vid_3' => 'gaul',
+        'vid_7' => 'hun',
+        'vid_6' => 'egyptian',
+    ];
     public function __construct(PDO $database, Twig $twig)
     {
         $this->database = $database;
@@ -72,8 +82,69 @@ class TroopTool
                         ':hero' => $post['hero'][$aid] ?? 0,
                     ]);
             }
+        } elseif (isset($post['source']) && $post['source']) {
+            $doc = new DOMDocument();
+            $doc->loadHTML($post['source']);
+            $villages = $this->getVillages($doc);
+            $tribe = $this->getTribe($doc);
+            foreach ($villages as $village) {
+                if (strpos($post['world'], 'https://') === 0) {
+                    $post['world'] = substr($post['world'], 8);
+                }
+                $post['world'] = explode('/', $post['world'])[0];
+                Assert::regex($post['world'], '/^ts[0-9]+\.x[0-9]+\.[a-z]+\.travian\.com$/');
+                $stmt = $this->database->prepare("SELECT 1 FROM troops WHERE user=:user AND world=:world AND x=:x AND y=:y");
+                $stmt->execute([
+                    ':user' => $_SESSION['id'],
+                    ':world' => $post['world'],
+                    ':y' => $village['y'],
+                    ':x' => $village['x'],
+                ]);
+                if ($stmt->fetchColumn() === false) {
+                    $this->database
+                        ->prepare("INSERT INTO troops(user,world,x,y,name, tribe) VALUES (:user,:world,:x,:y,:name,:tribe)")
+                        ->execute([
+                            ':user' => $_SESSION['id'],
+                            ':world' => $post['world'],
+                            ':y' => $village['y'],
+                            ':x' => $village['x'],
+                            ':name' => $village['name'],
+                            ':tribe' => $tribe,
+                        ]);
+                }
+            }
+            $els = $doc->getElementById('troops')->getElementsByTagName('tr');
+            for ($i=1; $i < $els->length -2; $i++) {
+                $tds = $els->item($i)->childNodes;
+                $list = [];
+                for ($j=0;$j< $tds->length; $j++) {
+                    if ($tds->item($j)->nodeName === 'td') {
+                        $list[] = $tds->item($j)->textContent;
+                    }
+                }
+                $this->database
+                    ->prepare("UPDATE troops SET soldier1=:soldier1,soldier2=:soldier2,soldier3=:soldier3,soldier5=:soldier4,soldier5=:soldier5,soldier6=:soldier6,settler=:settler,chief=:chief,hero=:hero,ram=:ram,catapult=:catapult,name=:name WHERE user=:user AND world=:world AND x=:x AND y=:y")
+                    ->execute([
+                        ':user' => $_SESSION['id'],
+                        ':world' => $post['world'],
+                        ':y' => $villages[$i]['y'],
+                        ':x' => $villages[$i]['x'],
+                        ':name' => $villages[$i]['name'],
+                        ':soldier1' => $list[1],
+                        ':soldier2' => $list[2],
+                        ':soldier3' => $list[3],
+                        ':soldier4' => $list[4],
+                        ':soldier5' => $list[5],
+                        ':soldier6' => $list[6],
+                        ':ram' => $list[7],
+                        ':catapult' => $list[8],
+                        ':settler' => $list[9],
+                        ':chief' => $list[10],
+                        ':hero' => $list[11],
+                    ]);
+            }
         }
-        $stmt = $this->database->prepare("SELECT * FROM troops WHERE user=:id ORDER BY world DESC, tribe DESC, name DESC");
+        $stmt = $this->database->prepare("SELECT * FROM troops WHERE user=:id ORDER BY world DESC, tribe DESC, name ASC");
         $stmt->execute([':id' => $_SESSION['id']]);
         $troopsData = [];
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
@@ -84,5 +155,33 @@ class TroopTool
         $this->twig->display('troop-tool.twig', [
             'troops' => $troopsData,
         ]);
+    }
+    private function getVillages(DOMDocument $doc): array
+    {
+        $villages = [];
+        $divs = $doc->getElementById('sidebarBoxVillagelist')->getElementsByTagName('div');
+        for ($i=0; $i < $divs->length; $i++) {
+            if (in_array('villageList', explode(' ', $divs->item($i)->attributes->getNamedItem('class')->textContent), true)) {
+                $as = $divs->item($i)->getElementsByTagName('a');
+                for ($j=0; $j < $as->length; $j++) {
+                    $span = $as->item($j)->nextSibling->nextSibling;
+                    $villages[] = [
+                        'name' => $span->attributes->getNamedItem('data-villagename')->textContent,
+                        'x' => intval($span->attributes->getNamedItem('data-x')->textContent, 10),
+                        'y' => intval($span->attributes->getNamedItem('data-y')->textContent, 10),
+                    ];
+                }
+                return $villages;
+            }
+        }
+        throw new UnexpectedValueException('No Village found');
+    }
+    private function getTribe(DOMDocument $doc): string
+    {
+        $tribeCheck = array_values(array_filter(explode(' ', $doc->getElementById('questmasterButton')->getAttribute('class')), function ($part) {
+            return preg_match('/^vid_[0-9]/', $part);
+        }))[0];
+        Assert::inArray($tribeCheck, array_keys(self::$tribes), 'Unknown tribe.');
+        return self::$tribes[$tribeCheck];
     }
 }
