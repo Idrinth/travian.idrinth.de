@@ -99,12 +99,27 @@ WHERE user_alliance.alliance=:alliance
 
 GROUP BY user_alliance.`user`");
             $stmt4->execute([':alliance' => $alliance['aid'], ':cutoffDate' => date('Y-m-d', strtotime(time() - 86400 * 7))]);
+            $stmt5 = $this->database->prepare("SELECT
+	user_alliance.user,
+	SUM(troops.soldier1+troops.soldier2+troops.soldier3+troops.soldier4+troops.soldier5+troops.soldier6) AS troops,
+	SUM(troops.settler) AS settlers,
+	SUM(troops.chief) AS chiefs,
+	SUM(troops.ram) AS rams,
+	SUM(troops.catapult) AS catapults,
+        MAX(troops.updated) AS updated
+FROM alliances
+INNER JOIN user_alliance ON user_alliance.alliance=alliances.aid
+INNER JOIN troops ON user_alliance.user=troops.user AND alliances.world=troops.world
+WHERE alliances.aid=:aid
+GROUP BY user_alliance.user,alliances.aid");
+            $stmt5->execute([':aid' => $alliance['aid']]);
             $this->twig->display('alliance.twig', [
                 'alliance' => $alliance,
                 'players' => $stmt->fetchAll(PDO::FETCH_ASSOC),
                 'deff_calls' => $stmt2->fetchAll(PDO::FETCH_ASSOC),
                 'heroes' => $stmt3->fetchAll(PDO::FETCH_ASSOC),
                 'activity' => $stmt4->fetchAll(PDO::FETCH_ASSOC),
+                'troops' => $stmt5->fetchAll(PDO::FETCH_ASSOC),
             ]);
             return;
         }

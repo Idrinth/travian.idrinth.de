@@ -21,6 +21,7 @@
         <th>{{ translations.rank }}</th>
         {% if mayInvite %}
             <th>{{ translations.activity }}</th>
+            <th>{{ translations.troops }}</th>
         {% endif %}
     </tr>
 {% for player in players %}
@@ -49,6 +50,22 @@
             {% endfor %}
             {% if not found %}
                 <td>0</td>
+            {% endif %}
+            {% set found=false %}
+            {% for act in troops %}
+                {% if act.user == player.aid %}
+                    <td title="Updated {{ act.updated }}">
+                        {% if act.troops %}<div>{{ act.troops }} Troops</div>{% endif %}
+                        {% if act.settlers %}<div>{{ act.settlers }} Settlers</div>{% endif %}
+                        {% if act.chiefs %}<div>{{ act.chiefs }} Chiefs</div>{% endif %}
+                        {% if act.rams %}<div>{{ act.rams }} Rams</div>{% endif %}
+                        {% if act.catapults %}<div>{{ act.catapults }} Catapults</div>{% endif %}
+                    </td>
+                    {% set found=true %}
+                {% endif %}
+            {% endfor %}
+            {% if not found %}
+                <td></td>
             {% endif %}
         {% endif %}
     </tr>
