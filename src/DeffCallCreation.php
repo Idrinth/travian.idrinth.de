@@ -19,17 +19,22 @@ class DeffCallCreation
     public function run(array $post): void
     {
         if (isset($post['x']) && isset($post['y']) && isset($post['player']) && isset($post['world']) && isset($post['scouts']) && $post['scouts'] >= 0 && isset($post['troops']) && $post['troops'] >= 0 && ($post['troops']+$post['scouts']+$post['heroes'] > 0) && isset($post['time']) && isset($post['date'])) {
-            $uuid = Uuid::uuid6();
-            $stmt = $this->database->prepare(
-                "INSERT INTO deff_calls (heroes, player, id, `key`, scouts, troops, `x`, `y`, world, creator, arrival, alliance) "
-                . "VALUES (:heroes, :player, :id, :key, :scouts, :troops, :x, :y, :world, :creator, :arrival, :alliance)"
-            );
-            if (strpos($post['world'], 'https://') === 0) {
-                $post['world'] = substr($post['world'], 8);
-            }
-            $post['world'] = explode('/', $post['world'])[0];
             try {
-                Assert::regex($post['world'], '/^ts[0-9]+\.x[0-9]+\.[a-z]+\.travian\.com$/');
+                $uuid = Uuid::uuid6();
+                $stmt = $this->database->prepare(
+                    "INSERT INTO deff_calls (heroes, player, id, `key`, scouts, troops, `x`, `y`, world, creator, arrival, alliance) "
+                    . "VALUES (:heroes, :player, :id, :key, :scouts, :troops, :x, :y, :world, :creator, :arrival, :alliance)"
+                );
+                if (strpos($post['world'], 'https://') === 0) {
+                    $post['world'] = substr($post['world'], 8);
+                }
+                $post['world'] = explode('/', $post['world'])[0];
+                Assert::regex($post['world'], '/^ts[0-9]+\.x[0-9]+\.[a-z]+\.travian\.com$/', 'World format is wrong');
+                if ($post['alliance_lock'] > 0) {
+                    $stmt2 = $this->database->prepare("SELECT world FROM alliances WHERE aid=:aid");
+                    $stmt2->execute([':aid' => $post['alliance_lock']]);
+                    Assert::eq($stmt2->fetchColumn(), $post['world'], 'Alliance and entered world don\'t match');
+                }
                 $key = Uuid::uuid4();
                 $stmt->execute([
                     ':id' => $uuid,
@@ -48,7 +53,8 @@ class DeffCallCreation
                 header('Location: /deff-call/' . $uuid . '/' . $key, true, 303);
                 return;
             } catch(Exception $e) {
-                //someone messed up
+                $data['error'] = $e->getMessage();
+                $data['inputs'] = $post;
             }
         }
         $stmt = $this->database->prepare("SELECT alliances.* FROM user_alliance INNER JOIN alliances ON alliances.aid=user_alliance.alliance AND user_alliance.user=:user");
