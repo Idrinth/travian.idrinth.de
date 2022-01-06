@@ -113,35 +113,37 @@ class TroopTool
                         ]);
                 }
             }
-            $els = $doc->getElementById('troops')->getElementsByTagName('tr');
-            for ($i=1; $i < $els->length -2; $i++) {
-                $tds = $els->item($i)->childNodes;
-                $list = [];
-                for ($j=0;$j< $tds->length; $j++) {
-                    if ($tds->item($j)->nodeName === 'td') {
-                        $list[] = $tds->item($j)->textContent;
+            if ($doc->getElementById('troops') !== null) {
+                $els = $doc->getElementById('troops')->getElementsByTagName('tr');
+                for ($i=1; $i < $els->length -2; $i++) {
+                    $tds = $els->item($i)->childNodes;
+                    $list = [];
+                    for ($j=0;$j< $tds->length; $j++) {
+                        if ($tds->item($j)->nodeName === 'td') {
+                            $list[] = $tds->item($j)->textContent;
+                        }
                     }
+                    $this->database
+                        ->prepare("UPDATE troops SET soldier1=:soldier1,soldier2=:soldier2,soldier3=:soldier3,soldier5=:soldier4,soldier5=:soldier5,soldier6=:soldier6,settler=:settler,chief=:chief,hero=:hero,ram=:ram,catapult=:catapult,name=:name WHERE user=:user AND world=:world AND x=:x AND y=:y")
+                        ->execute([
+                            ':user' => $_SESSION['id'],
+                            ':world' => $post['world'],
+                            ':y' => $villages[$i]['y'],
+                            ':x' => $villages[$i]['x'],
+                            ':name' => $villages[$i]['name'],
+                            ':soldier1' => $list[1],
+                            ':soldier2' => $list[2],
+                            ':soldier3' => $list[3],
+                            ':soldier4' => $list[4],
+                            ':soldier5' => $list[5],
+                            ':soldier6' => $list[6],
+                            ':ram' => $list[7],
+                            ':catapult' => $list[8],
+                            ':settler' => $list[9],
+                            ':chief' => $list[10],
+                            ':hero' => $list[11],
+                        ]);
                 }
-                $this->database
-                    ->prepare("UPDATE troops SET soldier1=:soldier1,soldier2=:soldier2,soldier3=:soldier3,soldier5=:soldier4,soldier5=:soldier5,soldier6=:soldier6,settler=:settler,chief=:chief,hero=:hero,ram=:ram,catapult=:catapult,name=:name WHERE user=:user AND world=:world AND x=:x AND y=:y")
-                    ->execute([
-                        ':user' => $_SESSION['id'],
-                        ':world' => $post['world'],
-                        ':y' => $villages[$i]['y'],
-                        ':x' => $villages[$i]['x'],
-                        ':name' => $villages[$i]['name'],
-                        ':soldier1' => $list[1],
-                        ':soldier2' => $list[2],
-                        ':soldier3' => $list[3],
-                        ':soldier4' => $list[4],
-                        ':soldier5' => $list[5],
-                        ':soldier6' => $list[6],
-                        ':ram' => $list[7],
-                        ':catapult' => $list[8],
-                        ':settler' => $list[9],
-                        ':chief' => $list[10],
-                        ':hero' => $list[11],
-                    ]);
             }
         }
         $stmt = $this->database->prepare("SELECT * FROM troops WHERE user=:id ORDER BY world DESC, tribe DESC, name ASC");
