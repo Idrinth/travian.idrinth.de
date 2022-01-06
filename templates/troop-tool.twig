@@ -20,6 +20,7 @@
                     <th>{{ translations.settler }}</th>
                     <th>{{ translations.chief }}</th>
                     <th>{{ translations.hero }}</th>
+                    <th>{{ translations.tournament_square }}</th>
                 </tr>
                 {% for village in villages %}
                     <tr>
@@ -35,6 +36,7 @@
                         <td><input name="settler[{{ village.aid }}]" type="number" value="{{ village.settler }}" min="0" max="9" /></td>
                         <td><input name="chief[{{ village.aid }}]" type="number" value="{{ village.chief }}" min="0" max="3"/></td>
                         <td><input name="hero[{{ village.aid }}]" type="number" value="{{ village.hero }}" min="0" max="1" /></td>
+                        <td><input name="tournament_square[{{ village.aid }}]" type="number" value="{{ village.tournament_square }}" min="0" max="20" /></td>
                     </tr>
                 {% endfor %}
             </table>

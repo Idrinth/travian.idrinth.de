@@ -64,7 +64,7 @@ class TroopTool
             foreach ($post['soldier1'] as $aid => $data) {
                 $this->database
                     ->prepare("UPDATE troops "
-                        . "SET soldier1=:soldier1, soldier2=:soldier2, soldier3=:soldier3, soldier4=:soldier4, soldier5=:soldier5, soldier6=:soldier6, ram=:ram, catapult=:catapult, settler=:settler, chief=:chief, hero=:hero "
+                        . "SET tournament_square=:tournament_square,soldier1=:soldier1, soldier2=:soldier2, soldier3=:soldier3, soldier4=:soldier4, soldier5=:soldier5, soldier6=:soldier6, ram=:ram, catapult=:catapult, settler=:settler, chief=:chief, hero=:hero "
                         . "WHERE aid=:aid AND user=:user")
                     ->execute([
                         ':user' => $_SESSION['id'],
@@ -80,6 +80,7 @@ class TroopTool
                         ':settler' => $post['settler'][$aid] ?? 0,
                         ':chief' => $post['chief'][$aid] ?? 0,
                         ':hero' => $post['hero'][$aid] ?? 0,
+                        ':tournament_square' => $post['tournament_square'][$aid] ?? 0,
                     ]);
             }
         } elseif (isset($post['source']) && $post['source']) {
@@ -128,9 +129,9 @@ class TroopTool
                         ->execute([
                             ':user' => $_SESSION['id'],
                             ':world' => $post['world'],
-                            ':y' => $villages[$i]['y'],
-                            ':x' => $villages[$i]['x'],
-                            ':name' => $villages[$i]['name'],
+                            ':y' => $villages[$i-1]['y'],
+                            ':x' => $villages[$i-1]['x'],
+                            ':name' => $villages[$i-1]['name'],
                             ':soldier1' => $list[1],
                             ':soldier2' => $list[2],
                             ':soldier3' => $list[3],
