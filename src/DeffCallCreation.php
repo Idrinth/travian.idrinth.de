@@ -18,12 +18,17 @@ class DeffCallCreation
     }
     public function run(array $post): void
     {
+        $data['inputs'] = [
+            'scouts' => 0,
+            'troops' => 0,
+            'heroes' => 0,
+        ];
         if (isset($post['x']) && isset($post['y']) && isset($post['player']) && isset($post['world']) && isset($post['scouts']) && $post['scouts'] >= 0 && isset($post['troops']) && $post['troops'] >= 0 && ($post['troops']+$post['scouts']+$post['heroes'] > 0) && isset($post['time']) && isset($post['date'])) {
             try {
                 $uuid = Uuid::uuid6();
                 $stmt = $this->database->prepare(
-                    "INSERT INTO deff_calls (heroes, player, id, `key`, scouts, troops, `x`, `y`, world, creator, arrival, alliance) "
-                    . "VALUES (:heroes, :player, :id, :key, :scouts, :troops, :x, :y, :world, :creator, :arrival, :alliance)"
+                    "INSERT INTO deff_calls (heroes, player, id, `key`, scouts, troops, `x`, `y`, world, creator, arrival, alliance,advanced_troop_data) "
+                    . "VALUES (:heroes, :player, :id, :key, :scouts, :troops, :x, :y, :world, :creator, :arrival, :alliance,:advanced_troop_data)"
                 );
                 if (strpos($post['world'], 'https://') === 0) {
                     $post['world'] = substr($post['world'], 8);
@@ -48,7 +53,8 @@ class DeffCallCreation
                     ':arrival' => date('Y-m-d H:i:s', strtotime($post['date'] . ' ' . $post['time'])),
                     ':creator' => $_SESSION['id'] ?? 0,
                     ':alliance' => intval($post['alliance_lock'], 10),
-                    ':player' => $post['player'] ?? ''
+                    ':player' => $post['player'] ?? '',
+                    ':advanced_troop_data' => $post['advanced_troop_data'] ?? 0,
                 ]);
                 header('Location: /deff-call/' . $uuid . '/' . $key, true, 303);
                 return;

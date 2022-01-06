@@ -12,6 +12,7 @@ class Twig extends Environment
     {
         parent::__construct(new FilesystemLoader(dirname(__DIR__) . '/templates'));
         $this->addFunction(new TwigFunction('floor', 'floor'));
+        $this->addFunction(new TwigFunction('strtotime', 'strtotime'));
     }
 
     public function display($name, $context = []): void
