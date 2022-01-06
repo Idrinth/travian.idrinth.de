@@ -32,8 +32,8 @@ a.invisible {
     font-weight: bold;
 }
 body > * {
-    width: 80%;
-    max-width: 800px;
+    width: 100%;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 0;
     box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
@@ -126,6 +126,9 @@ p {
 .split2 > table {
     flex: auto;
 }
+table {
+    width: 100%;
+}
 table tr:nth-of-type(2n) {
     background-color: rgba(0,0,0,0.05);
 }
@@ -161,9 +164,6 @@ nav li:hover a {
 }
 label {
     padding-bottom: 0.25em;
-}
-body > * {
-    width: 100%
 }
 #header > div {
     padding-top: 1.5em;

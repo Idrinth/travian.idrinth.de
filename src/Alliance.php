@@ -4,6 +4,7 @@ namespace De\Idrinth\Travian;
 
 use PDO;
 use Ramsey\Uuid\Uuid;
+use Webmozart\Assert\Assert;
 
 class Alliance
 {
@@ -112,6 +113,7 @@ GROUP BY user_alliance.`user`");
                 $post['world'] = substr($post['world'], 8);
             }
             $post['world'] = explode('/', $post['world'])[0];
+            Assert::regex($post['world'], '/^ts[0-9]+\.x[0-9]+\.[a-z]+\.travian\.com$/');
             $id = Uuid::uuid6();
             $this->database
                 ->prepare("INSERT INTO alliances (id, name, world, `key`) VALUES (:id, :name, :world, :key)")

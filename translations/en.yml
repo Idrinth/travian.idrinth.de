@@ -289,7 +289,7 @@ deff_calls: Deff-Calls
 alliances: Alliances
 name: Name
 rank: Rank
-login_benefits: Login to save your deff-calls in your profile page and join alliances.
+login_benefits: Login to save your deff-calls in your profile page and join alliances for advanced features like hero tracking and troop tool.
 invite: Invite
 alliance: Alliance
 effect: Effect
@@ -305,3 +305,39 @@ player_id: Player-ID
 hero_share: Share with Alliance
 player: Player
 desired_heroes: Desired Heroes
+troop_tool: Troop Tool
+chief: Chief
+hero: Hero
+settler: Settlers
+ram: Ram
+catapult: Catapult
+roman_soldier1: Legionaire
+roman_soldier2: Praetorian
+roman_soldier3: Imperian
+roman_soldier4: Equites Legati
+roman_soldier5: Equites Imperatis
+roman_soldier6: Equites Caesaris
+gaul_soldier1: Phalanx
+gaul_soldier2: Swordman
+gaul_soldier3: Pathfinder
+gaul_soldier4: Theutates Thunder
+gaul_soldier5: Druidrider
+gaul_soldier6: Haeduan
+teuton_soldier1: Clubswinger
+teuton_soldier2: Spearman
+teuton_soldier3: Axeman
+teuton_soldier4: Scout
+teuton_soldier5: Paladin
+teuton_soldier6: Teutonic Knight
+hun_soldier1: Mercenary
+hun_soldier2: Bowman
+hun_soldier3: Spotter
+hun_soldier4: Steppe Rider
+hun_soldier5: Marksman
+hun_soldier6: Marauder
+egyptian_soldier1: Slave Militia
+egyptian_soldier2: Ash Warden
+egyptian_soldier3: Khopesh Warrior
+egyptian_soldier4: Sopdu Explorer
+egyptian_soldier5: Anhur Guard
+egyptian_soldier6: Resheph Chariot

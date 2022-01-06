@@ -80,7 +80,12 @@ class Router
                     }
                 }
                 $obj = new $handler(...$args);
-                $obj->run($_POST, ...array_values($vars));
+                try {
+                    $obj->run($_POST, ...array_values($vars));
+                } catch (\Throwable $t) {
+                    header('', true, 500);
+                    echo "Failed with {$t->getMessage()}";
+                }
                 break;
         }
     }

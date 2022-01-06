@@ -1,0 +1,81 @@
+{% include 'header.twig' %}
+<h2>{{ translations.troop_tool }}</h2>
+{% set lastWorld='' %}
+{% for world,tribes in troops %}
+    <h3>{{ world }}</h3>
+    {% for tribe,villages in tribes %}
+        <h4>{{ translations[tribe ~ 's'] }}</h4>
+        <form method="post">
+            <table>
+                <tr>
+                    <th>Village</th>
+                    <th>{{ translations[tribe ~ '_soldier1'] }}</th>
+                    <th>{{ translations[tribe ~ '_soldier2'] }}</th>
+                    <th>{{ translations[tribe ~ '_soldier3'] }}</th>
+                    <th>{{ translations[tribe ~ '_soldier4'] }}</th>
+                    <th>{{ translations[tribe ~ '_soldier5'] }}</th>
+                    <th>{{ translations[tribe ~ '_soldier6'] }}</th>
+                    <th>{{ translations.ram }}</th>
+                    <th>{{ translations.catapult }}</th>
+                    <th>{{ translations.settler }}</th>
+                    <th>{{ translations.chief }}</th>
+                    <th>{{ translations.hero }}</th>
+                </tr>
+                {% for village in villages %}
+                    <tr>
+                        <th><a href="https://{{ village.world }}/position_details.php?x={{ village.x }}&y={{ village.y }}" target="_blank">{{ village.name }} ({{ village.x }}|{{ village.y }})</a></th>
+                        <td><input name="soldier1[{{ village.aid }}]" type="number" value="{{ village.soldier1 }}" min="0" /></td>
+                        <td><input name="soldier2[{{ village.aid }}]" type="number" value="{{ village.soldier2 }}" min="0" /></td>
+                        <td><input name="soldier3[{{ village.aid }}]" type="number" value="{{ village.soldier3 }}" min="0" /></td>
+                        <td><input name="soldier4[{{ village.aid }}]" type="number" value="{{ village.soldier4 }}" min="0" /></td>
+                        <td><input name="soldier5[{{ village.aid }}]" type="number" value="{{ village.soldier5 }}" min="0" /></td>
+                        <td><input name="soldier6[{{ village.aid }}]" type="number" value="{{ village.soldier6 }}" min="0" /></td>
+                        <td><input name="ram[{{ village.aid }}]" type="number" value="{{ village.ram }}" min="0" /></td>
+                        <td><input name="catapult[{{ village.aid }}]" type="number" value="{{ village.catapult }}" min="0" /></td>
+                        <td><input name="settler[{{ village.aid }}]" type="number" value="{{ village.settler }}" min="0" max="9" /></td>
+                        <td><input name="chief[{{ village.aid }}]" type="number" value="{{ village.chief }}" min="0" max="3"/></td>
+                        <td><input name="hero[{{ village.aid }}]" type="number" value="{{ village.hero }}" min="0" max="1" /></td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <input type="submit" value="Update"/>
+        </form>
+    {% endfor %}
+{% else %}
+    <p>No Data to show!</p>
+{% endfor %}
+{% if troops is not empty %}
+    <h3>Delete Village</h3>
+    <form method="post">
+        <label>{{ translations.village }}<select name="aid">
+                {% for world,tribes in troops %}
+                    {% for tribe,villages in tribes %}
+                        {% for village in villages %}
+                            <option value="{{ village.aid }}">{{ village.world }}: {{ village.name }} ({{ village.x }}|{{ village.y }})</option>
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+            </select></label>
+        <input type="hidden" name="type" value="delete"/>
+        <input type="submit"/>
+    </form>
+{% endif %}
+<h3>New Village</h3>
+<form method="post">
+    <fieldset>
+        <legend>{{ translations.main }}</legend>
+        <label title="ts1.x1.europe.travian.com">{{ translations.world }}*<input type="text" name="world"/></label>
+        <label>X<input type="number" name="x"/></label>
+        <label>Y<input type="number" name="y"/></label>
+        <label>{{ translations.name }}<input type="text" name="name"/></label>
+        <label>{{ translations.tribe }}<select name="tribe">
+                <option value="roman">{{ translations.romans }}</option>
+                <option value="gaul">{{ translations.gauls }}</option>
+                <option value="teuton">{{ translations.teutons }}</option>
+                <option value="hun">{{ translations.huns }}</option>
+                <option value="egyptian">{{ translations.egyptians }}</option>
+            </select></label>
+        <input type="submit"/>
+    </fieldset>
+</form>
+{% include 'footer.twig' %}

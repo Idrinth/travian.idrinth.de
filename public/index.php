@@ -13,6 +13,7 @@ use De\Idrinth\Travian\Profile;
 use De\Idrinth\Travian\Router;
 use De\Idrinth\Travian\SoldierCost;
 use De\Idrinth\Travian\Styles;
+use De\Idrinth\Travian\TroopTool;
 use De\Idrinth\Travian\Twig;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -51,4 +52,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->get('/alliance/{id}', Alliance::class)
     ->post('/alliance/{id}', Alliance::class)
     ->get('/alliance/{id}/{key}', Alliance::class)
+    ->post('/troop-tool', TroopTool::class)
+    ->get('/troop-tool', TroopTool::class)
     ->run();
