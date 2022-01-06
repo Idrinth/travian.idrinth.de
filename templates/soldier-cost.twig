@@ -68,14 +68,14 @@
                     <option{% if inputs.troop_type=='teuton_catapult' %} selected{% endif %} value="teuton_catapult">{{ translations.catapult }}</option>
                 </optgroup>
                 <optgroup label="{{ translations.egyptians }}">
-                    <option disabled>{{ translations.egyptian_soldier1 }}</option>
-                    <option disabled>{{ translations.egyptian_soldier2 }}</option>
-                    <option disabled>{{ translations.egyptian_soldier3 }}</option>
-                    <option disabled>{{ translations.egyptian_soldier4 }}</option>
-                    <option disabled>{{ translations.egyptian_soldier5 }}</option>
-                    <option disabled>{{ translations.egyptian_soldier6 }}</option>
-                    <option disabled>{{ translations.ram }}</option>
-                    <option disabled>{{ translations.catapult }}</option>
+                    <option{% if inputs.troop_type=='egyptian_slave' %} selected{% endif %} value="egyptian_slave">{{ translations.egyptian_soldier1 }}</option>
+                    <option{% if inputs.troop_type=='egyptian_ash' %} selected{% endif %} value="egyptian_ash">{{ translations.egyptian_soldier2 }}</option>
+                    <option{% if inputs.troop_type=='egyptian_khopesh' %} selected{% endif %} value="egyptian_khopesh">{{ translations.egyptian_soldier3 }}</option>
+                    <option{% if inputs.troop_type=='egyptian_sopdu' %} selected{% endif %} value="egyptian_sopdu">{{ translations.egyptian_soldier4 }}</option>
+                    <option{% if inputs.troop_type=='egyptian_anhur' %} selected{% endif %} value="egyptian_anhur">{{ translations.egyptian_soldier5 }}</option>
+                    <option{% if inputs.troop_type=='egyptian_resheph' %} selected{% endif %} value="egyptian_resheph">{{ translations.egyptian_soldier6 }}</option>
+                    <option{% if inputs.troop_type=='egyptian_ram' %} selected{% endif %} value="egyptian_ram">{{ translations.ram }}</option>
+                    <option{% if inputs.troop_type=='egyptian_catapult' %} selected{% endif %} value="egyptian_catapult">{{ translations.catapult }}</option>
                 </optgroup>
                 <optgroup label="{{ translations.huns }}">
                     <option{% if inputs.troop_type=='hun_mercenary' %} selected{% endif %} value="hun_mercenary">{{ translations.hun_soldier1 }}</option>
