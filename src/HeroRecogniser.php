@@ -2,7 +2,9 @@
 
 namespace De\Idrinth\Travian;
 
+use Exception;
 use PDO;
+use Webmozart\Assert\Assert;
 
 class HeroRecogniser
 {
@@ -173,145 +175,157 @@ class HeroRecogniser
             ],
             'result' => [],
         ];
-        if ($id) {
-            $stmt = $this->database->prepare("SELECT * FROM hero WHERE aid=:id");
-            $stmt->execute([
-                ':id' => $id,
-            ]);
-            $data['previously'] = $stmt->fetch(PDO::FETCH_ASSOC);
-            if (false === $data['previously']) {
-                header('Location: /hero-check', 303, true);
-                return;
-            }
-            $stmt = $this->database->prepare("SELECT rank FROM user_alliance WHERE alliance=:alliance AND user=:user");
-            $stmt->execute([
-                ':user' => $_SESSION['id'] ?? 0,
-                ':alliance' => $data['previously']['alliance'],
-            ]);
-            $rank = $stmt->fetchColumn();
-            if (false===$rank) {
-                header('Location: /hero-check', 303, true);
-                return;
-            }
-            $data['result']['horse'] = self::$horse[intval($data['previously']['horse'], 10)];
-            $data['result']['left_hand'] = self::$left[intval($data['previously']['left_hand'], 10)];
-            $data['result']['right_hand'] = self::$right[intval($data['previously']['right_hand'], 10)];
-            $data['result']['shoes'] = self::$shoes[intval($data['previously']['shoes'], 10)];
-            $data['result']['armor'] = self::$armor[intval($data['previously']['armor'], 10)];
-            $data['result']['helmet'] = self::$helmet[intval($data['previously']['helmet'], 10)];
-            $data['previously']['horse'] = self::$horse[intval($data['previously']['horse'], 10)];
-            $data['previously']['left_hand'] = self::$left[intval($data['previously']['left_hand'], 10)];
-            $data['previously']['right_hand'] = self::$right[intval($data['previously']['right_hand'], 10)];
-            $data['previously']['shoes'] = self::$shoes[intval($data['previously']['shoes'], 10)];
-            $data['previously']['armor'] = self::$armor[intval($data['previously']['armor'], 10)];
-            $data['previously']['helmet'] = self::$helmet[intval($data['previously']['helmet'], 10)];
-            $data['inputs']['hero_share'] = intval($data['previously']['alliance'], 10);
-            $data['inputs']['player_id'] = intval($data['previously']['player'], 10);
-        } elseif ($data['inputs']['url']) {
-            $ids = substr($data['inputs']['url'], strpos($data['inputs']['url'], '/body/') + 6, 68);
-            $data['result']['horse'] = self::$horse[hexdec(substr($ids, 40, 2))];
-            $data['result']['left_hand'] = self::$left[hexdec(substr($ids, 56, 2))];
-            $data['result']['right_hand'] = self::$right[hexdec(substr($ids, 52, 2))];
-            $data['result']['shoes'] = self::$shoes[hexdec(substr($ids, 64, 2))];
-            $data['result']['armor'] = self::$armor[hexdec(substr($ids, 60, 2))];
-            $data['result']['helmet'] = self::$helmet[hexdec(substr($ids, 49, 1))];
-            if (isset($post['player_id']) && $post['player_id'] > 0 && isset($post['hero_share']) && $post['hero_share'] > 0) {
-                $data['inputs']['player_id'] = $post['player_id'];
-                $data['inputs']['hero_share'] = $post['hero_share'];
-                $stmt = $this->database->prepare("SELECT 1 FROM user_alliance WHERE user=:user AND rank<>'Follower' AND alliance=:alliance");
-                $stmt->execute([':user' => $_SESSION['id'], ':alliance' => $post['hero_share']]);
-                $allowed = (bool) $stmt->fetchColumn();
-                if ($allowed) {
-                    $now = date('Y-m-d H:i:s');
-                    $stmt = $this->database->prepare("SELECT * FROM hero WHERE alliance=:alliance AND player=:player");
-                    $stmt->execute(
-                        [':player' => $post['player_id'], ':alliance' => $post['hero_share']]
-                    );
-                    $data['previously'] = $stmt->fetch(PDO::FETCH_ASSOC);
-                    if (false === $data['previously']) {
-                        $this->database
-                            ->prepare("INSERT INTO hero (player, alliance, name) VALUES (:player, :alliance, :name)")
-                            ->execute([':player' => $post['player_id'], ':alliance' => $post['hero_share'], ':name' => $post['name']??'']);
+        try {
+            if ($id) {
+                $stmt = $this->database->prepare("SELECT * FROM hero WHERE aid=:id");
+                $stmt->execute([
+                    ':id' => $id,
+                ]);
+                $data['previously'] = $stmt->fetch(PDO::FETCH_ASSOC);
+                if (false === $data['previously']) {
+                    header('Location: /hero-check', 303, true);
+                    return;
+                }
+                $stmt = $this->database->prepare("SELECT rank FROM user_alliance WHERE alliance=:alliance AND user=:user");
+                $stmt->execute([
+                    ':user' => $_SESSION['id'] ?? 0,
+                    ':alliance' => $data['previously']['alliance'],
+                ]);
+                $rank = $stmt->fetchColumn();
+                if (false===$rank) {
+                    header('Location: /hero-check', 303, true);
+                    return;
+                }
+                $data['result']['horse'] = self::$horse[intval($data['previously']['horse'], 10)];
+                $data['result']['left_hand'] = self::$left[intval($data['previously']['left_hand'], 10)];
+                $data['result']['right_hand'] = self::$right[intval($data['previously']['right_hand'], 10)];
+                $data['result']['shoes'] = self::$shoes[intval($data['previously']['shoes'], 10)];
+                $data['result']['armor'] = self::$armor[intval($data['previously']['armor'], 10)];
+                $data['result']['helmet'] = self::$helmet[intval($data['previously']['helmet'], 10)];
+                $data['previously']['horse'] = self::$horse[intval($data['previously']['horse'], 10)];
+                $data['previously']['left_hand'] = self::$left[intval($data['previously']['left_hand'], 10)];
+                $data['previously']['right_hand'] = self::$right[intval($data['previously']['right_hand'], 10)];
+                $data['previously']['shoes'] = self::$shoes[intval($data['previously']['shoes'], 10)];
+                $data['previously']['armor'] = self::$armor[intval($data['previously']['armor'], 10)];
+                $data['previously']['helmet'] = self::$helmet[intval($data['previously']['helmet'], 10)];
+                $data['inputs']['hero_share'] = intval($data['previously']['alliance'], 10);
+                $data['inputs']['player_id'] = intval($data['previously']['player'], 10);
+            } elseif ($data['inputs']['url']) {
+                $ids = substr($data['inputs']['url'], strpos($data['inputs']['url'], '/body/') + 6, 68);
+                $data['result']['horse'] = self::$horse[hexdec(substr($ids, 40, 2))];
+                $data['result']['left_hand'] = self::$left[hexdec(substr($ids, 56, 2))];
+                $data['result']['right_hand'] = self::$right[hexdec(substr($ids, 52, 2))];
+                $data['result']['shoes'] = self::$shoes[hexdec(substr($ids, 64, 2))];
+                $data['result']['armor'] = self::$armor[hexdec(substr($ids, 60, 2))];
+                $data['result']['helmet'] = self::$helmet[hexdec(substr($ids, 49, 1))];
+                if (isset($post['player_id']) && $post['player_id'] > 0 && isset($post['hero_share']) && $post['hero_share'] > 0) {
+                    $data['inputs']['player_id'] = $post['player_id'];
+                    $data['inputs']['hero_share'] = $post['hero_share'];
+                    $stmt = $this->database->prepare("SELECT 1 FROM user_alliance WHERE user=:user AND rank<>'Follower' AND alliance=:alliance");
+                    $stmt->execute([':user' => $_SESSION['id'], ':alliance' => $post['hero_share']]);
+                    $allowed = (bool) $stmt->fetchColumn();
+                    if ($allowed) {
+                        $world = $data['inputs']['url'];
+                        if (strpos($world, 'https://') === 0) {
+                            $world = substr($world, 8);
+                        }
+                        $world = explode('/', $world)[0];
+                        $stmt2 = $this->database->prepare("SELECT world FROM alliances WHERE aid=:aid");
+                        $stmt2->execute([':aid' => $post['hero_share']]);
+                        Assert::eq($stmt2->fetchColumn(), $world, 'Alliance and entered world don\'t match');
+                        $now = date('Y-m-d H:i:s');
                         $stmt = $this->database->prepare("SELECT * FROM hero WHERE alliance=:alliance AND player=:player");
                         $stmt->execute(
                             [':player' => $post['player_id'], ':alliance' => $post['hero_share']]
                         );
                         $data['previously'] = $stmt->fetch(PDO::FETCH_ASSOC);
-                    }
-                    $this->database
-                        ->prepare("INSERT IGNORE INTO hero_updates (hero,user,date) VALUES (:hero,:user,:date)")
-                        ->execute([
-                            ':user' => $_SESSION['id'],
-                            ':hero' => $data['previously']['aid'],
-                            ':date' => date('Y-m-d'),
-                        ]);
-                    $data['previously']['horse'] = self::$horse[intval($data['previously']['horse'], 10)];
-                    $data['previously']['left_hand'] = self::$left[intval($data['previously']['left_hand'], 10)];
-                    $data['previously']['right_hand'] = self::$right[intval($data['previously']['right_hand'], 10)];
-                    $data['previously']['shoes'] = self::$shoes[intval($data['previously']['shoes'], 10)];
-                    $data['previously']['armor'] = self::$armor[intval($data['previously']['armor'], 10)];
-                    $data['previously']['helmet'] = self::$helmet[intval($data['previously']['helmet'], 10)];
-                    if ($data['previously']['name'] !== $post['name']) {
+                        if (false === $data['previously']) {
+                            $this->database
+                                ->prepare("INSERT INTO hero (player, alliance, name) VALUES (:player, :alliance, :name)")
+                                ->execute([':player' => $post['player_id'], ':alliance' => $post['hero_share'], ':name' => $post['name']??'']);
+                            $stmt = $this->database->prepare("SELECT * FROM hero WHERE alliance=:alliance AND player=:player");
+                            $stmt->execute(
+                                [':player' => $post['player_id'], ':alliance' => $post['hero_share']]
+                            );
+                            $data['previously'] = $stmt->fetch(PDO::FETCH_ASSOC);
+                        }
                         $this->database
-                            ->prepare("UPDATE hero SET name=:name WHERE aid=:id")
-                            ->execute([':id' => $data['previously']['aid'], ':name' => $post['name']??'']);
-                    }
-                    if ($data['previously']['horse'] === $data['result']['horse']) {
-                        $this->database
-                            ->prepare("UPDATE hero SET horse_last_seen=:now, last_update=:now WHERE aid=:id")
-                            ->execute([':now' => $now, ':id' => $data['previously']['aid']]);
-                    } else {
-                        $this->database
-                            ->prepare("UPDATE hero SET horse_last_seen=:now, horse_first_seen=:now, horse=:horse, last_change=:now, last_update=:now WHERE aid=:id")
-                            ->execute([':now' => $now, ':id' => $data['previously']['aid'], ':horse' => array_flip(self::$horse)[$data['result']['horse']]]);
-                    }
-                    if ($data['previously']['left_hand'] === $data['result']['left_hand']) {
-                        $this->database
-                            ->prepare("UPDATE hero SET left_hand_last_seen=:now, last_update=:now WHERE aid=:id")
-                            ->execute([':now' => $now, ':id' => $data['previously']['aid']]);
-                    } else {
-                        $this->database
-                            ->prepare("UPDATE hero SET left_hand_last_seen=:now, left_hand_first_seen=:now, left_hand=:left_hand, last_change=:now, last_update=:now WHERE aid=:id")
-                            ->execute([':now' => $now, ':id' => $data['previously']['aid'], ':left_hand' => array_flip(self::$left)[$data['result']['left_hand']]]);
-                    }
-                    if ($data['previously']['right_hand'] === $data['result']['right_hand']) {
-                        $this->database
-                            ->prepare("UPDATE hero SET right_hand_last_seen=:now, last_update=:now WHERE aid=:id")
-                            ->execute([':now' => $now, ':id' => $data['previously']['aid']]);
-                    } else {
-                        $this->database
-                            ->prepare("UPDATE hero SET right_hand_last_seen=:now, right_hand_first_seen=:now, right_hand=:right_hand, last_change=:now, last_update=:now WHERE aid=:id")
-                            ->execute([':now' => $now, ':id' => $data['previously']['aid'], ':right_hand' => array_flip(self::$right)[$data['result']['right_hand']]]);
-                    }
-                    if ($data['previously']['shoes'] === $data['result']['shoes']) {
-                        $this->database
-                            ->prepare("UPDATE hero SET shoes_last_seen=:now, last_update=:now WHERE aid=:id")
-                            ->execute([':now' => $now, ':id' => $data['previously']['aid']]);
-                    } else {
-                        $this->database
-                            ->prepare("UPDATE hero SET shoes_last_seen=:now, shoes_first_seen=:now, shoes=:shoes, last_change=:now, last_update=:now WHERE aid=:id")
-                            ->execute([':now' => $now, ':id' => $data['previously']['aid'], ':shoes' => array_flip(self::$shoes)[$data['result']['shoes']]]);
-                    }
-                    if ($data['previously']['armor'] === $data['result']['armor']) {
-                        $this->database
-                            ->prepare("UPDATE hero SET armor_last_seen=:now, last_update=:now WHERE aid=:id")
-                            ->execute([':now' => $now, ':id' => $data['previously']['aid']]);
-                    } else {
-                        $this->database
-                            ->prepare("UPDATE hero SET armor_last_seen=:now, armor_first_seen=:now, armor=:armor, last_change=:now, last_update=:now WHERE aid=:id")
-                            ->execute([':now' => $now, ':id' => $data['previously']['aid'], ':armor' => array_flip(self::$armor)[$data['result']['armor']]]);
-                    }
-                    if ($data['previously']['helmet'] === $data['result']['helmet']) {
-                        $this->database
-                            ->prepare("UPDATE hero SET helmet_last_seen=:now, last_update=:now WHERE aid=:id")
-                            ->execute([':now' => $now, ':id' => $data['previously']['aid']]);
-                    } else {
-                        $this->database
-                            ->prepare("UPDATE hero SET helmet_last_seen=:now, helmet_first_seen=:now, helmet=:helmet, last_change=:now, last_update=:now WHERE aid=:id")
-                            ->execute([':now' => $now, ':id' => $data['previously']['aid'], ':helmet' => array_flip(self::$helmet)[$data['result']['helmet']]]);
+                            ->prepare("INSERT IGNORE INTO hero_updates (hero,user,date) VALUES (:hero,:user,:date)")
+                            ->execute([
+                                ':user' => $_SESSION['id'],
+                                ':hero' => $data['previously']['aid'],
+                                ':date' => date('Y-m-d'),
+                            ]);
+                        $data['previously']['horse'] = self::$horse[intval($data['previously']['horse'], 10)];
+                        $data['previously']['left_hand'] = self::$left[intval($data['previously']['left_hand'], 10)];
+                        $data['previously']['right_hand'] = self::$right[intval($data['previously']['right_hand'], 10)];
+                        $data['previously']['shoes'] = self::$shoes[intval($data['previously']['shoes'], 10)];
+                        $data['previously']['armor'] = self::$armor[intval($data['previously']['armor'], 10)];
+                        $data['previously']['helmet'] = self::$helmet[intval($data['previously']['helmet'], 10)];
+                        if ($data['previously']['name'] !== $post['name']) {
+                            $this->database
+                                ->prepare("UPDATE hero SET name=:name WHERE aid=:id")
+                                ->execute([':id' => $data['previously']['aid'], ':name' => $post['name']??'']);
+                        }
+                        if ($data['previously']['horse'] === $data['result']['horse']) {
+                            $this->database
+                                ->prepare("UPDATE hero SET horse_last_seen=:now, last_update=:now WHERE aid=:id")
+                                ->execute([':now' => $now, ':id' => $data['previously']['aid']]);
+                        } else {
+                            $this->database
+                                ->prepare("UPDATE hero SET horse_last_seen=:now, horse_first_seen=:now, horse=:horse, last_change=:now, last_update=:now WHERE aid=:id")
+                                ->execute([':now' => $now, ':id' => $data['previously']['aid'], ':horse' => array_flip(self::$horse)[$data['result']['horse']]]);
+                        }
+                        if ($data['previously']['left_hand'] === $data['result']['left_hand']) {
+                            $this->database
+                                ->prepare("UPDATE hero SET left_hand_last_seen=:now, last_update=:now WHERE aid=:id")
+                                ->execute([':now' => $now, ':id' => $data['previously']['aid']]);
+                        } else {
+                            $this->database
+                                ->prepare("UPDATE hero SET left_hand_last_seen=:now, left_hand_first_seen=:now, left_hand=:left_hand, last_change=:now, last_update=:now WHERE aid=:id")
+                                ->execute([':now' => $now, ':id' => $data['previously']['aid'], ':left_hand' => array_flip(self::$left)[$data['result']['left_hand']]]);
+                        }
+                        if ($data['previously']['right_hand'] === $data['result']['right_hand']) {
+                            $this->database
+                                ->prepare("UPDATE hero SET right_hand_last_seen=:now, last_update=:now WHERE aid=:id")
+                                ->execute([':now' => $now, ':id' => $data['previously']['aid']]);
+                        } else {
+                            $this->database
+                                ->prepare("UPDATE hero SET right_hand_last_seen=:now, right_hand_first_seen=:now, right_hand=:right_hand, last_change=:now, last_update=:now WHERE aid=:id")
+                                ->execute([':now' => $now, ':id' => $data['previously']['aid'], ':right_hand' => array_flip(self::$right)[$data['result']['right_hand']]]);
+                        }
+                        if ($data['previously']['shoes'] === $data['result']['shoes']) {
+                            $this->database
+                                ->prepare("UPDATE hero SET shoes_last_seen=:now, last_update=:now WHERE aid=:id")
+                                ->execute([':now' => $now, ':id' => $data['previously']['aid']]);
+                        } else {
+                            $this->database
+                                ->prepare("UPDATE hero SET shoes_last_seen=:now, shoes_first_seen=:now, shoes=:shoes, last_change=:now, last_update=:now WHERE aid=:id")
+                                ->execute([':now' => $now, ':id' => $data['previously']['aid'], ':shoes' => array_flip(self::$shoes)[$data['result']['shoes']]]);
+                        }
+                        if ($data['previously']['armor'] === $data['result']['armor']) {
+                            $this->database
+                                ->prepare("UPDATE hero SET armor_last_seen=:now, last_update=:now WHERE aid=:id")
+                                ->execute([':now' => $now, ':id' => $data['previously']['aid']]);
+                        } else {
+                            $this->database
+                                ->prepare("UPDATE hero SET armor_last_seen=:now, armor_first_seen=:now, armor=:armor, last_change=:now, last_update=:now WHERE aid=:id")
+                                ->execute([':now' => $now, ':id' => $data['previously']['aid'], ':armor' => array_flip(self::$armor)[$data['result']['armor']]]);
+                        }
+                        if ($data['previously']['helmet'] === $data['result']['helmet']) {
+                            $this->database
+                                ->prepare("UPDATE hero SET helmet_last_seen=:now, last_update=:now WHERE aid=:id")
+                                ->execute([':now' => $now, ':id' => $data['previously']['aid']]);
+                        } else {
+                            $this->database
+                                ->prepare("UPDATE hero SET helmet_last_seen=:now, helmet_first_seen=:now, helmet=:helmet, last_change=:now, last_update=:now WHERE aid=:id")
+                                ->execute([':now' => $now, ':id' => $data['previously']['aid'], ':helmet' => array_flip(self::$helmet)[$data['result']['helmet']]]);
+                        }
                     }
                 }
             }
+        } catch (Exception $e) {
+            $data['error'] = $e->getMessage();
         }
         if ($_SESSION['id']??0 > 0) {
             $stmt = $this->database->prepare(

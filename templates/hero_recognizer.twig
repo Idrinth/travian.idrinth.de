@@ -51,6 +51,9 @@
         </table>
     </div>
 {% endif %}
+{% if error %}
+    <p class="error">{{ error }}</p>
+{% endif %}
 <form method="post" action="/hero-check">
     <fieldset>
         <legend>{{ translations.main }}</legend>
