@@ -1,0 +1,35 @@
+<?php
+
+namespace De\Idrinth\Travian;
+
+use PDO;
+
+class DeffCallOverview
+{
+    private $database;
+    private $twig;
+    public function __construct(PDO $database, Twig $twig)
+    {
+        $this->database = $database;
+        $this->twig = $twig;
+    }
+    public function run(array $post): void
+    {
+        if (($_SESSION['id']??0) === 0) {
+            header('Location: /login', true, 303);
+            $_SESSION['redirect'] = $_SERVER['REQUEST_URI'];
+            return;
+        }
+        $stmt = $this->database->prepare('SELECT deff_calls.player,deff_calls.troops AS desiredTroops,deff_calls.scouts AS desiredScouts,deff_calls.heroes AS desiredHeroes, deff_calls.x,deff_calls.y,deff_calls.world,deff_calls.arrival, deff_calls.id,IFNULL(SUM(deff_call_supports.troops), 0) AS troops, IFNULL(SUM(deff_call_supports.scouts), 0) AS scouts, IFNULL(SUM(deff_call_supports.hero), 0) AS heroes
+FROM user_deff_call
+INNER JOIN deff_calls ON user_deff_call.deff_call=deff_calls.aid
+LEFT JOIN deff_call_supports ON deff_call_supports.deff_call AND deff_call_supports.arrival < deff_calls.arrival
+WHERE user_deff_call.user=:id AND deff_calls.arrival >= :date
+GROUP BY deff_calls.aid');
+        $stmt->execute([':id' => $_SESSION['id'], ':date' => date('y-m-d H:i:s', time() - 3600)]);
+        $data = [
+            'deff_calls' => $stmt->fetchAll(PDO::FETCH_ASSOC),
+        ];
+        $this->twig->display('deff-call-overview.twig', $data);
+    }
+}

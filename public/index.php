@@ -3,6 +3,7 @@
 use De\Idrinth\Travian\Alliance;
 use De\Idrinth\Travian\DeffCall;
 use De\Idrinth\Travian\DeffCallCreation;
+use De\Idrinth\Travian\DeffCallOverview;
 use De\Idrinth\Travian\Delivery;
 use De\Idrinth\Travian\HeroRecogniser;
 use De\Idrinth\Travian\Home;
@@ -54,4 +55,5 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->get('/alliance/{id}/{key}', Alliance::class)
     ->post('/troop-tool', TroopTool::class)
     ->get('/troop-tool', TroopTool::class)
+    ->get('/deff-call-overview', DeffCallOverview::class)
     ->run();

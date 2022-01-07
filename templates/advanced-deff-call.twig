@@ -41,74 +41,60 @@
 {% if key!=target.key or key is not empty %}
     <p>{{ translation.hidden_details }}</p>
 {% endif %}
-{% if now < target.arrival %}
-    {% if target.advanced_troop_data %}
-        <form method="post">
-            <fieldset>
-                <legend>{{ translations.main }}</legend>
-                <label>{{ translations.account }}<input required name="account" value="{{ target.alliance.player }}" type="string"/></label>
-                <label>{{ translations.amount }}<input required name="amount" type="number" min="1"/></label>
-                <label>{{ translations.troop_type }}<select required name="troop_type">
-                        <optgroup label="{{ translations.hero }}">
-                            <option{% if inputs.troop_type=='hero' %} selected{% endif %} value="hero">{{ translations.hero }}</option>
-                        </optgroup>
-                        <optgroup label="{{ translations.romans }}">
-                            <option{% if inputs.troop_type=='roman_soldier1' %} selected{% endif %} value="roman_soldier1">{{ translations.roman_soldier1 }}</option>
-                            <option{% if inputs.troop_type=='roman_soldier2' %} selected{% endif %} value="roman_soldier2">{{ translations.roman_soldier2 }}</option>
-                            <option{% if inputs.troop_type=='roman_soldier3' %} selected{% endif %} value="roman_soldier3">{{ translations.roman_soldier3 }}</option>
-                            <option{% if inputs.troop_type=='roman_soldier4' %} selected{% endif %} value="roman_soldier4">{{ translations.roman_soldier4 }}</option>
-                            <option{% if inputs.troop_type=='roman_soldier5' %} selected{% endif %} value="roman_soldier5">{{ translations.roman_soldier5 }}</option>
-                            <option{% if inputs.troop_type=='roman_soldier6' %} selected{% endif %} value="roman_soldier6">{{ translations.roman_soldier6 }}</option>
-                        </optgroup>
-                        <optgroup label="{{ translations.gauls }}">
-                            <option{% if inputs.troop_type=='gaul_soldier1' %} selected{% endif %} value="gaul_soldier1">{{ translations.gaul_soldier1 }}</option>
-                            <option{% if inputs.troop_type=='gaul_soldier2' %} selected{% endif %} value="gaul_soldier2">{{ translations.gaul_soldier2 }}</option>
-                            <option{% if inputs.troop_type=='gaul_soldier3' %} selected{% endif %} value="gaul_soldier3">{{ translations.gaul_soldier3 }}</option>
-                            <option{% if inputs.troop_type=='gaul_soldier4' %} selected{% endif %} value="gaul_soldier4">{{ translations.gaul_soldier4 }}</option>
-                            <option{% if inputs.troop_type=='gaul_soldier5' %} selected{% endif %} value="gaul_soldier5">{{ translations.gaul_soldier5 }}</option>
-                            <option{% if inputs.troop_type=='gaul_soldier6' %} selected{% endif %} value="gaul_soldier6">{{ translations.gaul_soldier6 }}</option>
-                        </optgroup>
-                        <optgroup label="{{ translations.teutons }}">
-                            <option{% if inputs.troop_type=='teuton_soldier1' %} selected{% endif %} value="teuton_soldier1">{{ translations.teuton_soldier1 }}</option>
-                            <option{% if inputs.troop_type=='teuton_soldier2' %} selected{% endif %} value="teuton_soldier2">{{ translations.teuton_soldier2 }}</option>
-                            <option{% if inputs.troop_type=='teuton_soldier3' %} selected{% endif %} value="teuton_soldier3">{{ translations.teuton_soldier3 }}</option>
-                            <option{% if inputs.troop_type=='teuton_soldier4' %} selected{% endif %} value="teuton_soldier4">{{ translations.teuton_soldier4 }}</option>
-                            <option{% if inputs.troop_type=='teuton_soldier5' %} selected{% endif %} value="teuton_soldier5">{{ translations.teuton_soldier5 }}</option>
-                            <option{% if inputs.troop_type=='teuton_soldier6' %} selected{% endif %} value="teuton_soldier6">{{ translations.teuton_soldier6 }}</option>
-                        </optgroup>
-                        <optgroup label="{{ translations.egyptians }}">
-                            <option{% if inputs.troop_type=='egyptian_soldier1' %} selected{% endif %} value="egyptian_soldier1">{{ translations.egyptian_soldier1 }}</option>
-                            <option{% if inputs.troop_type=='egyptian_soldier2' %} selected{% endif %} value="egyptian_soldier2">{{ translations.egyptian_soldier2 }}</option>
-                            <option{% if inputs.troop_type=='egyptian_soldier3' %} selected{% endif %} value="egyptian_soldier3">{{ translations.egyptian_soldier3 }}</option>
-                            <option{% if inputs.troop_type=='egyptian_soldier4' %} selected{% endif %} value="egyptian_soldier4">{{ translations.egyptian_soldier4 }}</option>
-                            <option{% if inputs.troop_type=='egyptian_soldier5' %} selected{% endif %} value="egyptian_soldier5">{{ translations.egyptian_soldier5 }}</option>
-                            <option{% if inputs.troop_type=='egyptian_soldier6' %} selected{% endif %} value="egyptian_soldier6">{{ translations.egyptian_soldier6 }}</option>
-                        </optgroup>
-                        <optgroup label="{{ translations.huns }}">
-                            <option{% if inputs.troop_type=='hun_soldier1' %} selected{% endif %} value="hun_soldier1">{{ translations.hun_soldier1 }}</option>
-                            <option{% if inputs.troop_type=='hun_soldier2' %} selected{% endif %} value="hun_soldier2">{{ translations.hun_soldier2 }}</option>
-                            <option{% if inputs.troop_type=='hun_soldier3' %} selected{% endif %} value="hun_soldier3">{{ translations.hun_soldier3 }}</option>
-                            <option{% if inputs.troop_type=='hun_soldier4' %} selected{% endif %} value="hun_soldier4">{{ translations.hun_soldier4 }}</option>
-                            <option{% if inputs.troop_type=='hun_soldier5' %} selected{% endif %} value="hun_soldier5">{{ translations.hun_soldier5 }}</option>
-                            <option{% if inputs.troop_type=='hun_soldier6' %} selected{% endif %} value="hun_soldier6">{{ translations.hun_soldier6 }}</option>
-                        </optgroup>
-                    </select></label>
-                <label>{{ translations.arrival }}<input required name="date" type="date" value="{{ target.arrival|slice(0, 10) }}"/><input required name="time" step="1" type="time" value="{{ target.arrival|slice(11, 8) }}"/></label>
-                <input type="submit"/>
-            </fieldset>
-        </form>
-    {% else %}
-        <form method="post">
-            <fieldset>
-                <legend>{{ translations.main }}</legend>
-                <label>{{ translations.account }}<input required name="account" value="{{ target.alliance.player }}" type="string"/></label>
-                <label>{{ translations.scouts }}<input required name="scouts" type="number" min="0"/></label>
-                <label>{{ translations.troops }}<input required name="troops" type="number" min="0"/></label>
-                <label>{{ translations.hero }}<input required name="hero" type="number" min="0" max="1"/></label>
-                <label>{{ translations.arrival }}<input required name="date" type="date" value="{{ target.arrival|slice(0, 10) }}"/><input required name="time" step="1" type="time" value="{{ target.arrival|slice(11, 8) }}"/></label>
-                <input type="submit"/>
-            </fieldset>
-        </form>
-    {% endif %}
+{% if now < strtotime(target.arrival) %}
+    <form method="post">
+        <fieldset>
+            <legend>{{ translations.main }}</legend>
+            <label>{{ translations.account }}<input required name="account" value="{{ target.alliance.player }}" type="string"/></label>
+            <label>{{ translations.amount }}<input required name="amount" type="number" min="1"/></label>
+            <label>{{ translations.troop_type }}<select required name="troop_type">
+                    <optgroup label="{{ translations.hero }}">
+                        <option{% if inputs.troop_type=='hero' %} selected{% endif %} value="hero">{{ translations.hero }}</option>
+                    </optgroup>
+                    <optgroup label="{{ translations.romans }}">
+                        <option{% if inputs.troop_type=='roman_soldier1' %} selected{% endif %} value="roman_soldier1">{{ translations.roman_soldier1 }}</option>
+                        <option{% if inputs.troop_type=='roman_soldier2' %} selected{% endif %} value="roman_soldier2">{{ translations.roman_soldier2 }}</option>
+                        <option{% if inputs.troop_type=='roman_soldier3' %} selected{% endif %} value="roman_soldier3">{{ translations.roman_soldier3 }}</option>
+                        <option{% if inputs.troop_type=='roman_soldier4' %} selected{% endif %} value="roman_soldier4">{{ translations.roman_soldier4 }}</option>
+                        <option{% if inputs.troop_type=='roman_soldier5' %} selected{% endif %} value="roman_soldier5">{{ translations.roman_soldier5 }}</option>
+                        <option{% if inputs.troop_type=='roman_soldier6' %} selected{% endif %} value="roman_soldier6">{{ translations.roman_soldier6 }}</option>
+                    </optgroup>
+                    <optgroup label="{{ translations.gauls }}">
+                        <option{% if inputs.troop_type=='gaul_soldier1' %} selected{% endif %} value="gaul_soldier1">{{ translations.gaul_soldier1 }}</option>
+                        <option{% if inputs.troop_type=='gaul_soldier2' %} selected{% endif %} value="gaul_soldier2">{{ translations.gaul_soldier2 }}</option>
+                        <option{% if inputs.troop_type=='gaul_soldier3' %} selected{% endif %} value="gaul_soldier3">{{ translations.gaul_soldier3 }}</option>
+                        <option{% if inputs.troop_type=='gaul_soldier4' %} selected{% endif %} value="gaul_soldier4">{{ translations.gaul_soldier4 }}</option>
+                        <option{% if inputs.troop_type=='gaul_soldier5' %} selected{% endif %} value="gaul_soldier5">{{ translations.gaul_soldier5 }}</option>
+                        <option{% if inputs.troop_type=='gaul_soldier6' %} selected{% endif %} value="gaul_soldier6">{{ translations.gaul_soldier6 }}</option>
+                    </optgroup>
+                    <optgroup label="{{ translations.teutons }}">
+                        <option{% if inputs.troop_type=='teuton_soldier1' %} selected{% endif %} value="teuton_soldier1">{{ translations.teuton_soldier1 }}</option>
+                        <option{% if inputs.troop_type=='teuton_soldier2' %} selected{% endif %} value="teuton_soldier2">{{ translations.teuton_soldier2 }}</option>
+                        <option{% if inputs.troop_type=='teuton_soldier3' %} selected{% endif %} value="teuton_soldier3">{{ translations.teuton_soldier3 }}</option>
+                        <option{% if inputs.troop_type=='teuton_soldier4' %} selected{% endif %} value="teuton_soldier4">{{ translations.teuton_soldier4 }}</option>
+                        <option{% if inputs.troop_type=='teuton_soldier5' %} selected{% endif %} value="teuton_soldier5">{{ translations.teuton_soldier5 }}</option>
+                        <option{% if inputs.troop_type=='teuton_soldier6' %} selected{% endif %} value="teuton_soldier6">{{ translations.teuton_soldier6 }}</option>
+                    </optgroup>
+                    <optgroup label="{{ translations.egyptians }}">
+                        <option{% if inputs.troop_type=='egyptian_soldier1' %} selected{% endif %} value="egyptian_soldier1">{{ translations.egyptian_soldier1 }}</option>
+                        <option{% if inputs.troop_type=='egyptian_soldier2' %} selected{% endif %} value="egyptian_soldier2">{{ translations.egyptian_soldier2 }}</option>
+                        <option{% if inputs.troop_type=='egyptian_soldier3' %} selected{% endif %} value="egyptian_soldier3">{{ translations.egyptian_soldier3 }}</option>
+                        <option{% if inputs.troop_type=='egyptian_soldier4' %} selected{% endif %} value="egyptian_soldier4">{{ translations.egyptian_soldier4 }}</option>
+                        <option{% if inputs.troop_type=='egyptian_soldier5' %} selected{% endif %} value="egyptian_soldier5">{{ translations.egyptian_soldier5 }}</option>
+                        <option{% if inputs.troop_type=='egyptian_soldier6' %} selected{% endif %} value="egyptian_soldier6">{{ translations.egyptian_soldier6 }}</option>
+                    </optgroup>
+                    <optgroup label="{{ translations.huns }}">
+                        <option{% if inputs.troop_type=='hun_soldier1' %} selected{% endif %} value="hun_soldier1">{{ translations.hun_soldier1 }}</option>
+                        <option{% if inputs.troop_type=='hun_soldier2' %} selected{% endif %} value="hun_soldier2">{{ translations.hun_soldier2 }}</option>
+                        <option{% if inputs.troop_type=='hun_soldier3' %} selected{% endif %} value="hun_soldier3">{{ translations.hun_soldier3 }}</option>
+                        <option{% if inputs.troop_type=='hun_soldier4' %} selected{% endif %} value="hun_soldier4">{{ translations.hun_soldier4 }}</option>
+                        <option{% if inputs.troop_type=='hun_soldier5' %} selected{% endif %} value="hun_soldier5">{{ translations.hun_soldier5 }}</option>
+                        <option{% if inputs.troop_type=='hun_soldier6' %} selected{% endif %} value="hun_soldier6">{{ translations.hun_soldier6 }}</option>
+                    </optgroup>
+                </select></label>
+            <label>{{ translations.arrival }}<input required name="date" type="date" value="{{ target.arrival|slice(0, 10) }}"/><input required name="time" step="1" type="time" value="{{ target.arrival|slice(11, 8) }}"/></label>
+            <input type="submit"/>
+        </fieldset>
+    </form>
 {% endif %}
 {% include 'footer.twig' %}
