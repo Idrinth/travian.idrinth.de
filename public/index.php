@@ -56,4 +56,5 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->post('/troop-tool', TroopTool::class)
     ->get('/troop-tool', TroopTool::class)
     ->get('/deff-call-overview', DeffCallOverview::class)
+    ->get('/deff-call-overview/{world:ts[0-9]+\.x[0-9]+\.[a-z]+\.travian\.com}', DeffCallOverview::class)
     ->run();
