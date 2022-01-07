@@ -2,7 +2,8 @@
 <html lang="{{ lang }}">
     <head>
         <meta charset="UTF-8">
-        <title>{{ translations.title }}</title>
+        <title>{{ translations.title }} (alpha)</title>
+        <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width">
         <link rel="stylesheet" href="/styles.css"/>
         <script>
             const zeropad = (string) => {
@@ -29,7 +30,7 @@
             <a class="invisible" href="/">
                 <img src="/logo.png" alt=""/>
             </a>
-            <h1>Travian Tools for v4.6 (alpha)</h1>
+            <h1>{{ translations.title }} (alpha)</h1>
             <select style="width: auto; display: inline;" onchange="document.cookie='lang=' + this.value;location.reload();">
                 <option{% if lang=='en' %} selected{% endif %} value="en">English</option>
                 <option{% if lang=='de' %} selected{% endif %} value="de">Deutsch</option>
