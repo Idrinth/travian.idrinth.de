@@ -13,14 +13,16 @@ class Router
 {
     private $routes=[];
     private $singletons=[];
-    
+    private const LIFETIME=86400;
     public function __construct()
     {
         Dotenv::createImmutable(dirname(__DIR__))->load();
         date_default_timezone_set('UTC');
+        ini_set('session.gc_maxlifetime', self::LIFETIME);
+        session_set_cookie_params(self::LIFETIME, '/', 'travian.idrinth.de', true, true);
         session_start();
-        setcookie('lang', $_COOKIE['lang']??'en', 0, '/', 'travian.idrinth.de', true, false);
-        setcookie('style', $_COOKIE['style']??'light', 0, '/', 'travian.idrinth.de', true, false);
+        setcookie('lang', $_COOKIE['lang']??'en', time() +self::LIFETIME, '/', 'travian.idrinth.de', true, false);
+        setcookie('style', $_COOKIE['style']??'light', time() +self::LIFETIME, '/', 'travian.idrinth.de', true, false);
     }
 
     public function register(object $singleton): self
