@@ -87,11 +87,13 @@
     <tr>
         <th>{{ translations.world }}</th>
         <th>{{ translations.position }}</th>
+        <th>{{ translations.arrival }}</th>
     </tr>
 {% for deff_call in deff_calls %}
     <tr>
         <th>{{ deff_call.world }}</th>
         <td><a href="/deff-call/{{ deff_call.id }}{% if mayInvite %}/{{ deff_call.key }}{% endif %}">{{ deff_call.player }} ({{ deff_call.x }}|{{ deff_call.x }})</a></td>
+        <th>{{ deff_call.arrival }}</th>
     </tr>
 {% endfor %}
 </table>

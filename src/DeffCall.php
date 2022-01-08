@@ -111,7 +111,17 @@ class DeffCall
             ]);
             $data['added'] = true;
         } elseif (isset($post['amount']) && $post['amount'] >= 0 && isset($post['time']) && isset($post['date']) && isset($post['account']) && time() < strtotime($data['target']['arrival'])) {
-            $stmt = $this->database->prepare("INSERT INTO deff_call_supports (creator, amount, troop_type, arrival, deff_call, account) VALUES(:creator, :amount, :troop_type, :arrival, :deff_call, :account)");
+            $troops=0;
+            $scouts=0;
+            $heroes=0;
+            if ($post['troop_type'] === 'hero') {
+                $heroes++;
+            } elseif (in_array($post['troop_type'], ['roman_soldier4', 'gaul_soldier3', 'teuton_soldier4', 'hun_soldier3', 'egyptian_soldier4'], true)) {
+                $scouts+= $post['amount'];
+            } else {
+                $troops = $post['amount'] * self::$corn[$post['troop_type']];
+            }            
+            $stmt = $this->database->prepare("INSERT INTO deff_call_supports (hero, scouts, troops,creator, amount, troop_type, arrival, deff_call, account) VALUES(:hero, :scouts, :troops,:creator, :amount, :troop_type, :arrival, :deff_call, :account)");
             $stmt->execute([
                 ':account' => $post['account'],
                 ':creator' => $_SESSION['id'] ?? 0,
@@ -119,6 +129,9 @@ class DeffCall
                 ':deff_call' => $data['target']['aid'],
                 ':troop_type' => $post['troop_type'],
                 ':amount' => $post['amount'],
+                ':hero' => $heroes,
+                ':troops' => $troops,
+                ':scouts' => $scouts,
             ]);
             $data['added'] = true;
         }
@@ -159,7 +172,7 @@ class DeffCall
             'egyptian_soldier6' => 0,
         ];
         foreach ($data['supports'] as $support) {
-            if (intval($support['amount'], 10) > 0 && $support['arrival'] < $data['target']['arrival']) {
+            if (intval($support['amount'], 10) > 0 && $support['arrival'] <= $data['target']['arrival']) {
                 $data['troops'][$support['troop_type']] += intval($support['amount'], 10);
             }
         }

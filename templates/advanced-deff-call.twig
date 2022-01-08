@@ -3,18 +3,22 @@
 <h3>{{ translations.status }}</h3>
 <div class="split2">
     {% set totalTroops=0 %}
+    {% set totalHeroes=0 %}
+    {% set totalScouts=0 %}
     <table>
         <tr><th>{{ translations.account }}</th><th>{{ translations.troops }}</th><th>{{ translations.arrival }}</th></tr>
                 {% for support in supports %}
                     {% if (key==target.key and key is not empty) or (session.id == support.creator and session.id > 0 ) %}
-                <tr{% if strtotime(support.arrival) >= strtotime(target.arrival) %} class="late"{% endif %}>
+                <tr{% if strtotime(support.arrival) > strtotime(target.arrival) %} class="late"{% endif %}>
                     <th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th>
                     <td>{{ support.amount }} {{ translations[support.troop_type] }}</td>
                     <td title="{{ translations.created }} {{ support.created }}">{{ support.arrival }}</td>
                 </tr>
             {% endif %}
-            {% if strtotime(support.arrival) < strtotime(target.arrival) %}
-                {% set totalTroops=totalTroops+support.amount*corn[support.troop_type] %}
+            {% if strtotime(support.arrival) <= strtotime(target.arrival) %}
+                {% set totalTroops=totalTroops+support.troops %}
+                {% set totalHeroes=totalTroops+support.hero %}
+                {% set totalScouts=totalTroops+support.scouts %}
             {% endif %}
         {% endfor %}
     </table>
@@ -23,6 +27,8 @@
         {% if target.alliance.id is not empty %}<t0r><th>{{ translations.alliance }}</th><td><a href="/alliance/{{ target.alliance.id }}">{{ target.alliance.name }}</a></td></tr>{% endif %}
         <tr><th>{{ translations.village }}</th><td><a href="https://{{ target.world }}/position_details.php?x={{ target.x }}&y={{ target.y }}" target="_blank">{{ target.player }} ({{ target.x }}|{{ target.y }})</a></td></tr>
         <tr><th>{{ translations.troops }}</th><td>{{totalTroops }}/{{ target.troops }}</td></tr>
+        <tr><th>{{ translations.scouts }}</th><td>{{totalScouts }}/{{ target.scouts }}</td></tr>
+        <tr><th>{{ translations.heroes }}</th><td>{{totalHeroes }}/{{ target.heroes }}</td></tr>
         {% for troop,amount in troops %}
             {% if amount > 0 %}
                 <tr><th>{{ translations[troop] }}</th><td>{{ amount }}</td></tr>
