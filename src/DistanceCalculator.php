@@ -22,7 +22,7 @@ class DistanceCalculator
         ];
         $results=[];
         foreach ($possibleTos as $t) {
-            $results[] = sqrt(($from->x - $to->x) * ($from->x - $to->x) + ($from->y - $to->y) * ($from->y - $to->y));
+            $results[] = sqrt(($from->x - $t->x) * ($from->x - $t->x) + ($from->y - $t->y) * ($from->y - $t->y));
         }
         return min($results);
     }

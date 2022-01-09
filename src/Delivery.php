@@ -35,7 +35,7 @@ class Delivery {
         'great' => [29700, 33250, 32000, 6700]
     ];
     private static $tribes = [
-        'vid_1' => [16, 'roman'],
+        'vid_1' => [16, 'romans'],
         'vid_2' => [12, 'teutons'],
         'vid_3' => [24, 'gauls'],
         'vid_7' => [20, 'huns'],
@@ -143,10 +143,8 @@ class Delivery {
         }
         throw new UnexpectedValueException('No Village found');
     }
-    private function calculateVillageResult(DOMDocument $doc, array $rootVillage, array $village, int $requiredTraders, array $inputs): array
+    private function calculateVillageResult(array $mapSize, bool $mayTravelOverWorldEdge, array $rootVillage, array $village, int $requiredTraders, array $inputs): array
     {
-        $mapSize = $this->getMapSize($doc);
-        $mayTravelOverWorldEdge = $this->mayTravelOverMapBorder($doc);
         $data['village'] = $village;
         $data['distance'] = $this->distance->distance(new Point($rootVillage['x'], $rootVillage['y']), new Point($village['x'], $village['y']), $mapSize['width'], $mapSize['height'], $mayTravelOverWorldEdge);
         $data['travelTime'] = ceil(3600 * $data['distance'] / $inputs['speed'] / $inputs['worldspeed']);
@@ -154,7 +152,7 @@ class Delivery {
         do {
             $data['traders']++;
             $total = $requiredTraders * (ceil(2 * $data['travelTime'] / 60) * 60) / $data['traders'];
-        } while ($total > 3600);
+        } while ($total > 3600 && $data['traders']<20);
         $data['minBetweenTrades'] = ceil(60 / $requiredTraders * $data['traders']);
         $data['lumber'] = $inputs['lumber'] > 0 ? floor($inputs['lumber'] / $requiredTraders * $data['traders']) : 0;
         $data['clay'] = $inputs['clay'] > 0 ? floor($inputs['clay'] / $requiredTraders * $data['traders']) : 0;
@@ -218,9 +216,11 @@ class Delivery {
                         'y' => $data['inputs']['y']
                     ];
                 }
+                $mapSize = $this->getMapSize($doc);
+                $mayTravelOverWorldEdge = $this->mayTravelOverMapBorder($doc);
                 $data['results'] = [];
                 foreach ($villages as $pos => $village) {
-                    $data['results'][$pos] = $this->calculateVillageResult($doc, $data['calculatedInputs']['village'], $village, $requiredTraders, $data['calculatedInputs']);
+                    $data['results'][$pos] = $this->calculateVillageResult($mapSize, $mayTravelOverWorldEdge, $data['calculatedInputs']['village'], $village, $requiredTraders, $data['calculatedInputs']);
                 }
                 if (count($villages) === 0) {
                     $data['results'] = ['error' => 'Only a single village entered, can\'t send to itself.'];
