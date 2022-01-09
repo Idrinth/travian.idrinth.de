@@ -155,7 +155,7 @@ class DeffCall
             foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $village) {
                 $distance = $this->distance->distance(
                     new Point($village['x'], $village['y']),
-                    new Point($data['target']['x'], $data['target'['y']]),
+                    new Point($data['target']['x'], $data['target']['y']),
                     401,
                     401,
                     true
