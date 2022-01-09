@@ -90,7 +90,7 @@ class DeffCall
             } elseif (in_array($post['troop_type'], ['roman_soldier4', 'gaul_soldier3', 'teuton_soldier4', 'hun_soldier3', 'egyptian_soldier4'], true)) {
                 $scouts+= $post['amount'];
             } else {
-                $troops = $post['amount'] * self::$corn[$post['troop_type']];
+                $troops = $post['amount'] * Troops::CORN[$post['troop_type']];
             }            
             $stmt = $this->database->prepare("INSERT INTO deff_call_supports (hero, scouts, troops,creator, amount, troop_type, arrival, deff_call, account) VALUES(:hero, :scouts, :troops,:creator, :amount, :troop_type, :arrival, :deff_call, :account)");
             $stmt->execute([

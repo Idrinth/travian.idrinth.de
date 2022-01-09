@@ -2,9 +2,66 @@
 <h2>{{ translations.deff_call }} {{ target.player }} ({{ target.x }}|{{ target.y }})</h2>
 <h3>{{ translations.status }}</h3>
 <div class="split2">
-{% set totalScouts=0 %}
-{% set totalTroops=0 %}
-{% set totalHeroes=0 %}
+    {% set totalScouts=0 %}
+    {% set totalTroops=0 %}
+    {% set totalHeroes=0 %}
+    {% for support in supports %}
+        {% if strtotime(support.arrival) <= strtotime(target.arrival) %}
+            {% set totalScouts=totalScouts+support.scouts %}
+            {% set totalTroops=totalTroops+support.troops %}
+            {% set totalHeroes=totalHeroes+support.hero %}
+        {% endif %}
+    {% endfor %}
+    <div>
+        {% if added %}
+            <p>{{ translations.added }}</p>
+        {% endif %}
+        {% if key!=target.key or key is not empty %}
+            <p>{{ translation.hidden_details }}</p>
+        {% endif %}
+        {% if strtotime(now) < strtotime(target.arrival) %}
+            {% if session.id > 0 %}
+                <h3>{{ translations.in_range }}</h3>
+                <ul>
+                    {% for village,troops in own %}
+                        <li>{{ village }}<ul>
+                                {% for troop,amount in troops %}
+                                    <li>{{ amount }} {{ translations[troop] }}</li>
+                                    {% endfor %}
+                            </ul>
+                        {% else %}
+                        <li>{{ translations.nothing_in_range }}</li>
+                        {% endfor %}
+                </ul>
+            {% endif %}
+            <form method="post">
+                <fieldset>
+                    <legend>{{ translations.main }}</legend>
+                    <label>{{ translations.account }}<input required name="account" value="{{ target.alliance.player }}" type="string"/></label>
+                    <label>{{ translations.scouts }}<input required name="scouts" type="number" min="0"/></label>
+                    <label>{{ translations.troops }}<input required name="troops" type="number" min="0"/></label>
+                    <label>{{ translations.hero }}<input required name="hero" type="number" min="0" max="1"/></label>
+                    <label>{{ translations.arrival }}<input required name="date" type="date" value="{{ target.arrival|slice(0, 10) }}"/><input required name="time" step="1" type="time" value="{{ target.arrival|slice(11, 8) }}"/></label>
+                    <input type="submit"/>
+                </fieldset>
+            </form>
+        {% endif %}
+    </div>
+    <table>
+        {% if target.alliance.id is empty %}<tr><th>{{ translations.world }}</th><td>{{ target.world }}</td></tr>{% endif %}
+        {% if target.alliance.id is not empty %}<t0r><th>{{ translations.alliance }}</th><td><a href="/alliance/{{ target.alliance.id }}">{{ target.world }}: {{ target.alliance.name }}</a></td></tr>{% endif %}
+            <tr><th>{{ translations.village }}</th><td><a href="https://{{ target.world }}/position_details.php?x={{ target.x }}&y={{ target.y }}" target="_blank">{{ target.player }} ({{ target.x }}|{{ target.y }})</a></td></tr>
+            <tr><th>{{ translations.scouts }}</th><td>{{totalScouts }}/{{ target.scouts }}</td></tr>
+            <tr><th>{{ translations.troops }}</th><td>{{totalTroops }}/{{ target.troops }}</td></tr>
+            <tr><th>{{ translations.heroes }}</th><td>{{totalHeroes }}/{{ target.heroes }}</td></tr>
+            <tr><th>{{ translations.arrival }}</th><td>{{ target.arrival }}</tr>
+            <tr><th>{{ translations.share }}</th><td><a href="https://travian.idrinth.de/deff-call/{{ id }}">https://travian.idrinth.de/deff-call/{{ id }}</a></tr>
+                    {% if key==target.key and key is not empty %}
+                <tr><th>{{ translations.share_full }}</th><td><a href="https://travian.idrinth.de/deff-call/{{ id }}/{{ key }}">https://travian.idrinth.de/deff-call/{{ id }}/{{ key }}</a></tr>
+                    {% endif %}
+    </table>
+</div>
+<h3>{{ translations.troops_sent }}</h3>
 <table>
     <tr><th>{{ translations.account }}</th><th>{{ translations.troops }}</th><th>{{ translations.arrival }}</th></tr>
             {% for support in supports %}
@@ -15,58 +72,6 @@
                 <td title="{{ translations.created }} {{ support.created }}">{{ support.arrival }}</td>
             </tr>
         {% endif %}
-        {% if strtotime(support.arrival) <= strtotime(target.arrival) %}
-            {% set totalScouts=totalScouts+support.scouts %}
-            {% set totalTroops=totalTroops+support.troops %}
-            {% set totalHeroes=totalHeroes+support.hero %}
-        {% endif %}
     {% endfor %}
 </table>
-<table>
-    <tr><th>{{ translations.world }}</th><td>{{ target.world }}</td></tr>
-    {% if target.alliance.id is not empty %}<t0r><th>{{ translations.alliance }}</th><td><a href="/alliance/{{ target.alliance.id }}">{{ target.alliance.name }}</a></td></tr>{% endif %}
-    <tr><th>{{ translations.village }}</th><td><a href="https://{{ target.world }}/position_details.php?x={{ target.x }}&y={{ target.y }}" target="_blank">{{ target.player }} ({{ target.x }}|{{ target.y }})</a></td></tr>
-    <tr><th>{{ translations.scouts }}</th><td>{{totalScouts }}/{{ target.scouts }}</td></tr>
-    <tr><th>{{ translations.troops }}</th><td>{{totalTroops }}/{{ target.troops }}</td></tr>
-    <tr><th>{{ translations.heroes }}</th><td>{{totalHeroes }}/{{ target.heroes }}</td></tr>
-    <tr><th>{{ translations.arrival }}</th><td>{{ target.arrival }}</tr>
-    <tr><th>{{ translations.share }}</th><td><a href="https://travian.idrinth.de/deff-call/{{ id }}">https://travian.idrinth.de/deff-call/{{ id }}</a></tr>
-    {% if key==target.key and key is not empty %}
-        <tr><th>{{ translations.share_full }}</th><td><a href="https://travian.idrinth.de/deff-call/{{ id }}/{{ key }}">https://travian.idrinth.de/deff-call/{{ id }}/{{ key }}</a></tr>
-    {% endif %}
-</table>
-</div>
-{% if added %}
-    <p>{{ translations.added }}</p>
-{% endif %}
-{% if key!=target.key or key is not empty %}
-    <p>{{ translation.hidden_details }}</p>
-{% endif %}
-{% if strtotime(now) < strtotime(target.arrival) %}
-{% if session.id > 0 %}
-    <h3>{{ translations.in_range }}</h3>
-    <ul>
-    {% for village,troops in own %}
-        <li>{{ village }}<ul>
-            {% for troop,amount in troops %}
-                <li>{{ amount }} {{ translations[troop] }}</li>
-            {% endfor %}
-       </ul>
-    {% else %}
-        <li>{{ translations.nothing_in_range }}</li>
-    {% endfor %}
-     </ul>
-{% endif %}
-<form method="post">
-    <fieldset>
-        <legend>{{ translations.main }}</legend>
-        <label>{{ translations.account }}<input required name="account" value="{{ target.alliance.player }}" type="string"/></label>
-        <label>{{ translations.scouts }}<input required name="scouts" type="number" min="0"/></label>
-        <label>{{ translations.troops }}<input required name="troops" type="number" min="0"/></label>
-        <label>{{ translations.hero }}<input required name="hero" type="number" min="0" max="1"/></label>
-        <label>{{ translations.arrival }}<input required name="date" type="date" value="{{ target.arrival|slice(0, 10) }}"/><input required name="time" step="1" type="time" value="{{ target.arrival|slice(11, 8) }}"/></label>
-        <input type="submit"/>
-    </fieldset>
-</form>
-{% endif %}
 {% include 'footer.twig' %}

@@ -63,6 +63,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->get('/troop-tool/{id:int}', TroopTool::class)
     ->get('/deff-call-overview', DeffCallOverview::class)
     ->get('/deff-call-overview/{world:world}', DeffCallOverview::class)
-    #->get('/attack-parser', AttackParser::class)
-    #->post('/attack-parser', AttackParser::class)
+    ->get('/attack-parser', AttackParser::class)
+    ->post('/attack-parser', AttackParser::class)
     ->run();

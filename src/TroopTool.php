@@ -144,7 +144,7 @@ ORDER BY troops.tribe DESC, troops.name ASC");
                         }
                     }
                     $this->database
-                        ->prepare("UPDATE troops SET soldier1=:soldier1,soldier2=:soldier2,soldier3=:soldier3,soldier5=:soldier4,soldier5=:soldier5,soldier6=:soldier6,settler=:settler,chief=:chief,hero=:hero,ram=:ram,catapult=:catapult,name=:name WHERE user=:user AND world=:world AND x=:x AND y=:y")
+                        ->prepare("UPDATE troops SET soldier1=:soldier1,soldier2=:soldier2,soldier3=:soldier3,soldier4=:soldier4,soldier5=:soldier5,soldier6=:soldier6,settler=:settler,chief=:chief,hero=:hero,ram=:ram,catapult=:catapult,name=:name WHERE user=:user AND world=:world AND x=:x AND y=:y")
                         ->execute([
                             ':user' => $_SESSION['id'],
                             ':world' => $post['world'],
