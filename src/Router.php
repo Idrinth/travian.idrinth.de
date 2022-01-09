@@ -71,10 +71,12 @@ class Router
         switch ($routeInfo[0]) {
             case Dispatcher::NOT_FOUND:
                 header('', true, 404);
+                echo "404 NOT FOUND";
                 break;
             case Dispatcher::METHOD_NOT_ALLOWED:
                 $allowedMethods = $routeInfo[1];
                 header('', true, 405);
+                echo "405 METHOD NOT ALLOWED";
                 break;
             case Dispatcher::FOUND:
                 $handler = $routeInfo[1];
