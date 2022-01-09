@@ -9,43 +9,14 @@ class DeffCall
 {
     private $database;
     private $twig;
-    private static $corn= [
-        'hero' => 6,
-        'roman_soldier1' => 1,
-        'roman_soldier2' => 1,
-        'roman_soldier3' => 1,
-        'roman_soldier4' => 2,
-        'roman_soldier5' => 3,
-        'roman_soldier6' => 4,
-        'gaul_soldier1' => 1,
-        'gaul_soldier2' => 1,
-        'gaul_soldier3' => 2,
-        'gaul_soldier4' => 2,
-        'gaul_soldier5' => 2,
-        'gaul_soldier6' => 3,
-        'teuton_soldier1' => 1,
-        'teuton_soldier2' => 1,
-        'teuton_soldier3' => 1,
-        'teuton_soldier4' => 1,
-        'teuton_soldier5' => 2,
-        'teuton_soldier6' => 3,
-        'hun_soldier1' => 1,
-        'hun_soldier2' => 1,
-        'hun_soldier3' => 2,
-        'hun_soldier4' => 2,
-        'hun_soldier5' => 2,
-        'hun_soldier6' => 3,
-        'egyptian_soldier1' => 1,
-        'egyptian_soldier2' => 1,
-        'egyptian_soldier3' => 1,
-        'egyptian_soldier4' => 2,
-        'egyptian_soldier5' => 2,
-        'egyptian_soldier6' => 3,
-    ];
-    public function __construct(PDO $database, Twig $twig)
+    private $time;
+    private $distance;
+    public function __construct(PDO $database, Twig $twig, TravelTime $time, DistanceCalculator $distance)
     {
         $this->database = $database;
         $this->twig = $twig;
+        $this->time = $time;
+        $this->distance = $distance;
     }
     public function run(array $post, $id, $key=''): void
     {
@@ -176,7 +147,28 @@ class DeffCall
                 $data['troops'][$support['troop_type']] += intval($support['amount'], 10);
             }
         }
-        $data['corn'] = self::$corn;
+        if (($_SESSION['id']??0) > 0) {
+            $remaining = strtotime($data['target']['arrival']) - time();
+            $stmt = $this->database->prepare("SELECT * FROM troops WHERE user=:id AND world=:world");
+            $stmt->execute([':id' => $_SESSION['id'], ':world' => $data['target']['world']]);
+            $data['own'] = [];
+            foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $village) {
+                $distance = $this->distance->distance(
+                    new Point($village['x'], $village['y']),
+                    new Point($data['target']['x'], $data['target'['y']]),
+                    401,
+                    401,
+                    true
+                );
+                for ($i=1;$i<7;$i++) {
+                    if (intval($village['soldier' . $i], 10) > 0 && $this->time->time($distance, Troops::SPEED[$village['tribe'] . '_soldier' . $i], 0, $village['tournament_square'], 0, 0)[0] < $remaining) {
+                        $data['own'][$village['name']] = $data['own'][$village['name']] ?? [];
+                        $data['own'][$village['name']][$village['tribe'] . '_soldier' . $i] = intval($village['soldier' . $i], 10);
+                    }
+                }
+            }
+        }
+        $data['corn'] = Troops::CORN;
         $this->twig->display($data['target']['advanced_troop_data'] ? 'advanced-deff-call.twig' : 'deff-call.twig', $data);
     }
 }

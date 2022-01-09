@@ -5,6 +5,7 @@ namespace De\Idrinth\Travian;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFunction;
+use voku\helper\HtmlMin;
 
 class Twig extends Environment
 {
@@ -24,6 +25,6 @@ class Twig extends Environment
         $context['style'] = $_COOKIE['style'] ?? 'light';
         $context['translations'] = Translations::get($_COOKIE['lang'] ?? 'en');
         $context['session'] = $_SESSION;
-        parent::display($name, $context);
+        echo (new HtmlMin())->minify(parent::render($name, $context));
     }
 }

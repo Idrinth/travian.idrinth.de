@@ -350,3 +350,6 @@ advanced_troop_data: Advanced Troop Data
 amount: Amount
 deff_call_overview: Deff Call Overview
 all_worlds: All Worlds(unfiltered)
+plus_troop_overview: Plus Troop Overview window
+in_range: In Range
+nothing_in_range: No troops in your troop tool are in range.

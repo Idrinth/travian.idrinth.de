@@ -7,6 +7,7 @@ use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use ReflectionClass;
 use ReflectionMethod;
+use Throwable;
 use function FastRoute\simpleDispatcher;
 
 class Router
@@ -33,15 +34,20 @@ class Router
 
     public function get(string $path, string $class): self
     {
-        $this->routes[$path] = $this->routes[$path] ?? [];
-        $this->routes[$path]['GET'] = $class;
-        return $this;
+        return $this->add('GET', $path, $class);
     }
 
     public function post(string $path, string $class): self
     {
+        return $this->add('POST', $path, $class);
+    }
+    private function add(string $method, string $path, string $class): self
+    {
+        $path = str_replace(':int}', ':[0-9]+}', $path);
+        $path = str_replace(':uuid}', ':[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}}', $path);
+        $path = str_replace(':world}', ':ts[0-9]+\.x[0-9]+\.[a-z]+\.travian\.com}', $path);
         $this->routes[$path] = $this->routes[$path] ?? [];
-        $this->routes[$path]['POST'] = $class;
+        $this->routes[$path][$method] = $class;
         return $this;
     }
 
@@ -84,7 +90,7 @@ class Router
                 $obj = new $handler(...$args);
                 try {
                     $obj->run($_POST, ...array_values($vars));
-                } catch (\Throwable $t) {
+                } catch (Throwable $t) {
                     header('', true, 500);
                     echo "Failed with {$t->getMessage()}";
                 }

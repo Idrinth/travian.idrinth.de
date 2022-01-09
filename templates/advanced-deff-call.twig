@@ -17,8 +17,8 @@
             {% endif %}
             {% if strtotime(support.arrival) <= strtotime(target.arrival) %}
                 {% set totalTroops=totalTroops+support.troops %}
-                {% set totalHeroes=totalTroops+support.hero %}
-                {% set totalScouts=totalTroops+support.scouts %}
+                {% set totalHeroes=totalHeroes+support.hero %}
+                {% set totalScouts=totalScouts+support.scouts %}
             {% endif %}
         {% endfor %}
     </table>
@@ -47,7 +47,21 @@
 {% if key!=target.key or key is not empty %}
     <p>{{ translation.hidden_details }}</p>
 {% endif %}
-{% if now < strtotime(target.arrival) %}
+{% if strtotime(now) < strtotime(target.arrival) %}
+{% if session.id > 0 %}
+    <h3>{{ translations.in_range }}</h3>
+    <ul>
+    {% for village,troops in own %}
+        <li>{{ village }}<ul>
+            {% for troop,amount in troops %}
+                <li>{{ amount }} {{ translations[troop] }}</li>
+            {% endfor %}
+       </ul>
+    {% else %}
+        <li>{{ translations.nothing_in_range }}</li>
+    {% endfor %}
+     </ul>
+{% endif %}
     <form method="post">
         <fieldset>
             <legend>{{ translations.main }}</legend>

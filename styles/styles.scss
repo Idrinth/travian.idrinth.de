@@ -189,6 +189,12 @@ body.dark  {
     display: grid;
     grid-template-columns: 50% 50%;
 }
+.collapsed-table {
+    tr {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    }
+}
 @media screen and (max-width:900px) {
     nav > ul {
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
