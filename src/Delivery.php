@@ -42,9 +42,11 @@ class Delivery {
         'vid_6' => [16, 'egyptians'],
     ];
     private $twig;
-    public function __construct(Twig $twig)
+    private $distance;
+    public function __construct(Twig $twig, DistanceCalculator $distance)
     {
         $this->twig = $twig;
+        $this->distance = $distance;
     }
     private function getTribe(string $tribeInput, DOMDocument $doc): array
     {
@@ -71,6 +73,30 @@ class Delivery {
             }
         }
         throw new UnexpectedValueException('Couldn\'t find world speed');
+    }
+    private function getMapSize(\DOMDocument $doc): array
+    {
+        $scripts = $doc->getElementsByTagName('script');
+        for ($i = 0; $i < $scripts->length; $i++) {
+            if (preg_match('/window.TravianDefaults\s+=/', $scripts->item($i)->textContent)) {
+                preg_match('/"width":([\-0-9]+),"height":([\-0-9]+)/', $scripts->item($i)->textContent, $matches);
+                return [
+                    'width' => intval($matches[1], 10),
+                    'height' => intval($matches[2], 10),
+                ];
+            }
+        }
+        throw new UnexpectedValueException('Couldn\'t find map size');
+    }
+    private function mayTravelOverMapBorder(\DOMDocument $doc): bool
+    {
+        $scripts = $doc->getElementsByTagName('script');
+        for ($i = 0; $i < $scripts->length; $i++) {
+            if (preg_match('/"travelOverTheWorldEdge":true/', $scripts->item($i)->textContent)) {
+                return true;
+            }
+        }
+        return false;
     }
     private function getProduction(\DOMDocument $doc): array
     {
@@ -117,10 +143,12 @@ class Delivery {
         }
         throw new UnexpectedValueException('No Village found');
     }
-    private function calculateVillageResult(array $rootVillage, array $village, int $requiredTraders, array $inputs): array
+    private function calculateVillageResult(DOMDocument $doc, array $rootVillage, array $village, int $requiredTraders, array $inputs): array
     {
+        $mapSize = $this->getMapSize($doc);
+        $mayTravelOverWorldEdge = $this->mayTravelOverMapBorder($doc);
         $data['village'] = $village;
-        $data['distance'] = round(sqrt(($village['x'] - $rootVillage['x'])*($village['x'] - $rootVillage['x']) + ($village['y'] - $rootVillage['y'])*($village['y'] - $rootVillage['y'])) * 10) / 10; 
+        $data['distance'] = $this->distance->distance(new Point($rootVillage['x'], $rootVillage['y']), new Point($village['x'], $village['y']), $mapSize['width'], $mapSize['height'], $mayTravelOverWorldEdge);
         $data['travelTime'] = ceil(3600 * $data['distance'] / $inputs['speed'] / $inputs['worldspeed']);
         $data['traders'] = 0;
         do {
@@ -192,7 +220,7 @@ class Delivery {
                 }
                 $data['results'] = [];
                 foreach ($villages as $pos => $village) {
-                    $data['results'][$pos] = $this->calculateVillageResult($data['calculatedInputs']['village'], $village, $requiredTraders, $data['calculatedInputs']);
+                    $data['results'][$pos] = $this->calculateVillageResult($doc, $data['calculatedInputs']['village'], $village, $requiredTraders, $data['calculatedInputs']);
                 }
                 if (count($villages) === 0) {
                     $data['results'] = ['error' => 'Only a single village entered, can\'t send to itself.'];
@@ -204,3 +232,4 @@ class Delivery {
         $this->twig->display('delivery.twig', $data);
     }
 }
+ 

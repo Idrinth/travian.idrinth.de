@@ -5,6 +5,7 @@ use De\Idrinth\Travian\DeffCall;
 use De\Idrinth\Travian\DeffCallCreation;
 use De\Idrinth\Travian\DeffCallOverview;
 use De\Idrinth\Travian\Delivery;
+use De\Idrinth\Travian\DistanceCalculator;
 use De\Idrinth\Travian\HeroRecogniser;
 use De\Idrinth\Travian\Home;
 use De\Idrinth\Travian\Imprint;
@@ -29,6 +30,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
         ]
     ))
     ->register(new Twig())
+    ->register(new DistanceCalculator())
     ->get('/', Home::class)
     ->get('/imprint', Imprint::class)
     ->get('/delivery', Delivery::class)
