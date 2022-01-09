@@ -56,7 +56,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->get('/alliance', Alliance::class)
     ->post('/alliance', Alliance::class)
     ->get('/alliance/{id:uuid}', Alliance::class)
-    ->post('/alliance/{id:uuid', Alliance::class)
+    ->post('/alliance/{id:uuid}', Alliance::class)
     ->get('/alliance/{id:uuid}/{key:uuid}', Alliance::class)
     ->post('/troop-tool', TroopTool::class)
     ->get('/troop-tool', TroopTool::class)
