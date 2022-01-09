@@ -1,0 +1,48 @@
+{% include 'header.twig' %}
+<h2>{{ translations.troop_tool }}</h2>
+{% set lastWorld='' %}
+{% for world,tribes in troops %}
+    <h3>{{ world }}</h3>
+    {% for tribe,villages in tribes %}
+        <h4>{{ translations[tribe ~ 's'] }}</h4>
+        <form method="post">
+            <table class="collapsed-table">
+                <tr>
+                    <th>Village</th>
+                    <th>{{ translations[tribe ~ '_soldier1'] }}</th>
+                    <th>{{ translations[tribe ~ '_soldier2'] }}</th>
+                    <th>{{ translations[tribe ~ '_soldier3'] }}</th>
+                    <th>{{ translations[tribe ~ '_soldier4'] }}</th>
+                    <th>{{ translations[tribe ~ '_soldier5'] }}</th>
+                    <th>{{ translations[tribe ~ '_soldier6'] }}</th>
+                    <th>{{ translations.ram }}</th>
+                    <th>{{ translations.catapult }}</th>
+                    <th>{{ translations.settler }}</th>
+                    <th>{{ translations.chief }}</th>
+                    <th>{{ translations.hero }}</th>
+                    <th>{{ translations.tournament_square }}</th>
+                </tr>
+                {% for village in villages %}
+                    <tr>
+                        <th><a href="https://{{ village.world }}/position_details.php?x={{ village.x }}&y={{ village.y }}" target="_blank">{{ village.name }} ({{ village.x }}|{{ village.y }})</a></th>
+                        <td>{{ village.soldier1 }}</td>
+                        <td>{{ village.soldier2 }}</td>
+                        <td>{{ village.soldier3 }}</td>
+                        <td>{{ village.soldier4 }}</td>
+                        <td>{{ village.soldier5 }}</td>
+                        <td>{{ village.soldier6 }}</td>
+                        <td>{{ village.ram }}</td>
+                        <td>{{ village.catapult }}</td>
+                        <td>{{ village.settler }}</td>
+                        <td>{{ village.chief }}</td>
+                        <td>{{ village.hero }}</td>
+                        <td>{{ village.tournament_square }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </form>
+    {% endfor %}
+{% else %}
+    <p>{{ translations.no_data }}</p>
+{% endfor %}
+{% include 'footer.twig' %}

@@ -24,14 +24,33 @@ class TroopTool
         $this->database = $database;
         $this->twig = $twig;
     }
-    public function run(array $post): void
+    public function run(array $post, $id = 0): void
     {
         if (($_SESSION['id'] ?? 0) === 0) {
             header('Location: /login', true, 303);
             $_SESSION['redirect'] = $_SERVER['REQUEST_URI'];
             return;
         }
-        if (isset($post['aid']) && isset($post['type']) && $post['type']==='delete') {
+        if ($id) {
+            $stmt = $this->database->prepare("SELECT DISTINCT troops.*, user_alliance.user
+FROM user_alliance
+INNER JOIN alliances ON user_alliance.alliance=alliances.aid
+INNER JOIN troops ON troops.world=alliances.world
+INNER JOIN user_alliance AS ua2 ON ua2.alliance=user_alliance.alliance AND troops.user=ua2.user
+WHERE troops.user=:id AND user_alliance.rank IN('High Council', 'Creator') AND user_alliance.user=:id2
+ORDER BY troops.tribe DESC, troops.name ASC");
+            $stmt->execute([':id' => $id, ':id2' => $_SESSION['id']]);
+            $troopsData = [];
+            foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+                $troopsData[$row['world']] = $troopsData[$row['world']] ?? [];
+                $troopsData[$row['world']][$row['tribe']] = $troopsData[$row['world']][$row['tribe']] ?? [];
+                $troopsData[$row['world']][$row['tribe']][] = $row;
+            }
+            $this->twig->display('troop-tool-view.twig', [
+                'troops' => $troopsData,
+            ]);
+            return;
+        } elseif (isset($post['aid']) && isset($post['type']) && $post['type']==='delete') {
             $this->database
                 ->prepare("DELETE FROM troops WHERE user=:id AND aid=:aid")
                 ->execute([':id' => $_SESSION['id'], ':aid' => $post['aid']]);
