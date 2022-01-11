@@ -27,8 +27,8 @@ class DeffCallCreation
             try {
                 $uuid = Uuid::uuid6();
                 $stmt = $this->database->prepare(
-                    "INSERT INTO deff_calls (heroes, player, id, `key`, scouts, troops, `x`, `y`, world, creator, arrival, alliance,advanced_troop_data) "
-                    . "VALUES (:heroes, :player, :id, :key, :scouts, :troops, :x, :y, :world, :creator, :arrival, :alliance,:advanced_troop_data)"
+                    "INSERT INTO deff_calls (world_width,world_height,heroes, player, id, `key`, scouts, troops, `x`, `y`, world, creator, arrival, alliance,advanced_troop_data) "
+                    . "VALUES (:world_width,:world_height,:heroes, :player, :id, :key, :scouts, :troops, :x, :y, :world, :creator, :arrival, :alliance,:advanced_troop_data)"
                 );
                 if (strpos($post['world'], 'https://') === 0) {
                     $post['world'] = substr($post['world'], 8);
@@ -55,6 +55,8 @@ class DeffCallCreation
                     ':alliance' => intval($post['alliance_lock'], 10),
                     ':player' => $post['player'] ?? '',
                     ':advanced_troop_data' => $post['advanced_troop_data'] ?? 0,
+                    ':world_width' => $post['world_width'] ?? 401,
+                    ':world_height' => $post['world_height'] ?? 401,
                 ]);
                 header('Location: /deff-call/' . $uuid . '/' . $key, true, 303);
                 return;

@@ -156,8 +156,8 @@ class DeffCall
                 $distance = $this->distance->distance(
                     new Point($village['x'], $village['y']),
                     new Point($data['target']['x'], $data['target']['y']),
-                    401,
-                    401,
+                    intval($data['target']['world_width'], 10),
+                    intval($data['target']['world_height'], 10),
                     true
                 );
                 for ($i=1;$i<7;$i++) {

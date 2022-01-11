@@ -373,3 +373,5 @@ troops_sent: Troops already sent
 blind_time: Blind Time
 time: Time
 attack_parser: Attack Parser
+world_width: World Width (max x=200 -> 401)
+world_height: World Height (max y=200 -> 401)

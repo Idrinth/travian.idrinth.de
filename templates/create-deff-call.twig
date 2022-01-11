@@ -14,6 +14,9 @@
         <label>{{ translations.desired_troops }}<input required value="{{ inputs.troops }}" name="troops" type="number" min="0"/></label>
         <label>{{ translations.desired_scouts }}<input required value="{{ inputs.scouts }}" name="scouts" type="number" min="0"/></label>
         <label>{{ translations.desired_heroes }}<input required value="{{ inputs.heroes }}" name="heroes" type="number" min="0"/></label>
+    </fieldset>
+    <fieldset>
+        <legend>{{ translations.advanced }}</legend>
         <label>{{ translations.alliance_lock }}<select name="alliance_lock">
             <option value="0">{{ translations.none }}</option>
             {% for alliance in alliances %}
@@ -21,6 +24,8 @@
             {% endfor %}
             </select></label>
         <label>{{ translations.advanced_troop_data }}<input name="advanced_troop_data" type="hidden" value="1"/><input name="advanced_troop_data" type="checkbox" value="1"/></label>
+        <label>{{ translations.world_width }}<input required value="401" name="world_width" type="number" min="1"/></label>
+        <label>{{ translations.world_height }}<input required value="401" name="world_height" type="number" min="1"/></label>
         <input type="submit"/>
     </fieldset>
 </form>
