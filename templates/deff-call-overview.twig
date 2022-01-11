@@ -9,13 +9,14 @@
     <div>
         <h3>{{ deff_call.player }} ({{ deff_call.x }}|{{ deff_call.y }})</h3>
         <table>
-            <tr><th>{{ translations.world }}</th><td>{{ deff_call.world }}</td></tr>
+            {% if deff_call.alliance.id is empty %}<tr><th>{{ translations.world }}</th><td>{{ deff_call.world }}</td></tr>{% endif %}
+            {% if deff_call.alliance.id is not empty %}<tr><th>{{ translations.alliance }}</th><td><a href="/alliance/{{ deff_call.alliance.id }}">{{ deff_call.world }}: {{ deff_call.alliance.name }}</a></td></tr>{% endif %}
             <tr><th>{{ translations.village }}</th><td><a href="https://{{ deff_call.world }}/position_details.php?x={{ deff_call.x }}&y={{ deff_call.y }}" target="_blank">{{ deff_call.player }} ({{ deff_call.x }}|{{ deff_call.y }})</a></td></tr>
             <tr><th>{{ translations.troops }}</th><td>{{deff_call.troops }}/{{ deff_call.desiredTroops }}</td></tr>
             <tr><th>{{ translations.scouts }}</th><td>{{deff_call.scouts }}/{{ deff_call.desiredScouts }}</td></tr>
             <tr><th>{{ translations.heroes }}</th><td>{{deff_call.heroes }}/{{ deff_call.desiredHeroes }}</td></tr>
             <tr><th>{{ translations.arrival }}</th><td>{{ deff_call.arrival }}</tr>
-            <tr><th>{{ translations.share }}</th><td><a href="https://travian.idrinth.de/deff-call/{{ deff_call.id }}">https://travian.idrinth.de/deff-call/{{ deff_call.id }}</a></tr>
+            <tr><th>{{ translations.share }}</th><td><a class="not-highlighted" href="https://travian.idrinth.de/deff-call/{{ deff_call.id }}">https://travian.idrinth.de/deff-call/{{ deff_call.id }}</a></tr>
         </table>
     </div>
 {% else %}

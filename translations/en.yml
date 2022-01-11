@@ -306,35 +306,51 @@ hero_share: Share with Alliance
 player: Player
 desired_heroes: Desired Heroes
 troop_tool: Troop Tool
-chief: Chief
 hero: Hero
-settler: Settlers
-ram: Ram
-catapult: Catapult
+roman_chief: Senator
+roman_settler: Roman Settler
+roman_ram: Roman Ram
+roman_catapult: Roman Catapult
 roman_soldier1: Legionaire
 roman_soldier2: Praetorian
 roman_soldier3: Imperian
 roman_soldier4: Equites Legati
 roman_soldier5: Equites Imperatis
 roman_soldier6: Equites Caesaris
+gaul_chief: Gaul Chief
+gaul_settler: Gaul Settler
+gaul_ram: Gaul Ram
+gaul_catapult: Gaul Catapult
 gaul_soldier1: Phalanx
 gaul_soldier2: Swordman
 gaul_soldier3: Pathfinder
 gaul_soldier4: Theutates Thunder
 gaul_soldier5: Druidrider
 gaul_soldier6: Haeduan
+teuton_chief: Teuton Chief
+teuton_settler: Teuton Settler
+teuton_ram: Teuton Ram
+teuton_catapult: Teuton Catapult
 teuton_soldier1: Clubswinger
 teuton_soldier2: Spearman
 teuton_soldier3: Axeman
 teuton_soldier4: Scout
 teuton_soldier5: Paladin
 teuton_soldier6: Teutonic Knight
+hun_chief: Hun Chief
+hun_settler: Hun Settler
+hun_ram: Hun Ram
+hun_catapult: Hun Catapult
 hun_soldier1: Mercenary
 hun_soldier2: Bowman
 hun_soldier3: Spotter
 hun_soldier4: Steppe Rider
 hun_soldier5: Marksman
 hun_soldier6: Marauder
+egyptian_chief: Egyptian Chief
+egyptian_settler: Egyptian Settler
+egyptian_ram: Egyptian Ram
+egyptian_catapult: Egyptian Catapult
 egyptian_soldier1: Slave Militia
 egyptian_soldier2: Ash Warden
 egyptian_soldier3: Khopesh Warrior
@@ -353,4 +369,7 @@ all_worlds: All Worlds(unfiltered)
 plus_troop_overview: Plus Troop Overview window
 in_range: In Range
 nothing_in_range: No troops in your troop tool are in range.
-troops_sent:  Troops already sent
+troops_sent: Troops already sent
+blind_time: Blind Time
+time: Time
+attack_parser: Attack Parser

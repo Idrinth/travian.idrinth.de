@@ -24,6 +24,9 @@ label {
 a, a:visited, a:hover, a:focus, a:active {
     color: red;
 }
+a.not-highlighted, a.not-highlighted:visited, a.not-highlighted:hover, a.not-highlighted:focus, a.not-highlighted:active {
+    color: #333;
+}
 a.invisible {
     text-decoration: none;
 }
@@ -183,7 +186,10 @@ body.dark  {
     textarea, input, select {
         color: #eee;
         background: #333;
-    }    
+    }
+    a.not-highlighted, a.not-highlighted:visited, a.not-highlighted:hover, a.not-highlighted:focus, a.not-highlighted:active {
+        color: #eee;
+    }
 }
 .grid2 {
     display: grid;

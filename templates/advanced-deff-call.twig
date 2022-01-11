@@ -12,27 +12,7 @@
 {% endfor %}
 <div class="split2">
     <div>
-        {% if added %}
-            <p>{{ translations.added }}</p>
-        {% endif %}
-        {% if key!=target.key or key is not empty %}
-            <p>{{ translation.hidden_details }}</p>
-        {% endif %}
         {% if strtotime(now) < strtotime(target.arrival) %}
-            {% if session.id > 0 %}
-                <h3>{{ translations.in_range }}</h3>
-                <ul>
-                    {% for village,troops in own %}
-                        <li>{{ village }}<ul>
-                                {% for troop,amount in troops %}
-                                    <li>{{ amount }} {{ translations[troop] }}</li>
-                                    {% endfor %}
-                            </ul>
-                        {% else %}
-                        <li>{{ translations.nothing_in_range }}</li>
-                        {% endfor %}
-                </ul>
-            {% endif %}
             <form method="post">
                 <fieldset>
                     <legend>{{ translations.main }}</legend>
@@ -87,6 +67,23 @@
                     <input type="submit"/>
                 </fieldset>
             </form>
+            {% if session.id > 0 %}
+                <h3>{{ translations.in_range }}</h3>
+                <ul>
+                    {% for village,troops in own %}
+                        <li>{{ village }}<ul>
+                                {% for troop,amount in troops %}
+                                    <li>{{ amount }} {{ translations[troop] }}</li>
+                                    {% endfor %}
+                            </ul>
+                        {% else %}
+                        <li>{{ translations.nothing_in_range }}</li>
+                        {% endfor %}
+                </ul>
+            {% endif %}
+        {% endif %}
+        {% if added %}
+            <p>{{ translations.added }}</p>
         {% endif %}
     </div>
     <div>
@@ -104,9 +101,9 @@
                             {% endif %}
                         {% endfor %}
                 <tr><th>{{ translations.arrival }}</th><td>{{ target.arrival }}</tr>
-                <tr><th>{{ translations.share }}</th><td><a href="https://travian.idrinth.de/deff-call/{{ id }}">https://travian.idrinth.de/deff-call/{{ id }}</a></tr>
+                <tr><th>{{ translations.share }}</th><td><a class="not-highlighted" href="https://travian.idrinth.de/deff-call/{{ id }}">https://travian.idrinth.de/deff-call/{{ id }}</a></tr>
                         {% if key==target.key and key is not empty %}
-                    <tr><th>{{ translations.share_full }}</th><td><a href="https://travian.idrinth.de/deff-call/{{ id }}/{{ key }}">https://travian.idrinth.de/deff-call/{{ id }}/{{ key }}</a></tr>
+                    <tr><th>{{ translations.share_full }}</th><td><a class="not-highlighted" href="https://travian.idrinth.de/deff-call/{{ id }}/{{ key }}">https://travian.idrinth.de/deff-call/{{ id }}/{{ key }}</a></tr>
                         {% endif %}
         </table>
     </div>
