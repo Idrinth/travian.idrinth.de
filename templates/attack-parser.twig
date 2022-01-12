@@ -27,7 +27,7 @@
                         <option{% if inputs.alliance_lock==alliance.aid %} selected{% endif %} value="{{ alliance.aid }}">{{ alliance.world }}: {{ alliance.name }}</option>
                     {% endfor %}
                     </select></label>
-                <label>{{ translations.advanced_troop_data }}<input name="advanced_troop_data" type="hidden" value="1"/><input name="advanced_troop_data" type="checkbox" value="1"/></label>
+                <label>{{ translations.advanced_troop_data }}<input name="advanced_troop_data" type="hidden" value="0"/><input name="advanced_troop_data" type="checkbox" value="1"/></label>
                 <input value="401" name="world_width" value="{{ size.width }}" type="hidden"/>
                 <input value="401" name="world_height" value="{{ size.height }}" type="hidden"/>
                 <input type="submit"/>
