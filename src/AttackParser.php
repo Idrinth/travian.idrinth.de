@@ -3,18 +3,22 @@
 namespace De\Idrinth\Travian;
 
 use DOMDocument;
+use DOMElement;
+use PDO;
 use UnexpectedValueException;
 
 class AttackParser
 {
     private $twig;
     private $time;
+    private $database;
     private $distance;
-    public function __construct(Twig $twig, TravelTime $time, DistanceCalculator $distance)
+    public function __construct(PDO $database, Twig $twig, TravelTime $time, DistanceCalculator $distance)
     {
         $this->twig = $twig;
         $this->time = $time;
         $this->distance = $distance;
+        $this->database = $database;
     }
     private function getMapSize(DOMDocument $doc): array
     {
@@ -60,7 +64,7 @@ class AttackParser
         }
         throw new UnexpectedValueException('No Village found');
     }
-    private function getCoords(\DOMElement $table): array
+    private function getCoords(DOMElement $table): array
     {
         for ($j = 0; $j < $table->childNodes->length; $j++) {
             $tbody = $table->childNodes->item($j);
@@ -83,7 +87,7 @@ class AttackParser
             }
         }
     }
-    private function getDuration(\DOMElement $table): int
+    private function getDuration(DOMElement $table): int
     {
         for ($j = 0; $j < $table->childNodes->length; $j++) {
             $tbody = $table->childNodes->item($j);
@@ -121,14 +125,14 @@ class AttackParser
             $blindTime = explode(':', $post['blind_time']);
             $blindTime = $blindTime[0]*3600 + $blindTime[1]*60 + $blindTime[2];
             $mayTravelOverBorder = $this->mayTravelOverMapBorder($doc);
-            $size = $this->getMapSize($doc);
+            $data['size'] = $this->getMapSize($doc);
             $village = $this->getVillage($doc);
             $tables = $doc->getElementsByTagName('table');
             for ($i = 0; $i < $tables->length; $i++) {
                 if (in_array('inAttack', explode(' ', $tables->item($i)->attributes->getNamedItem('class')->textContent))) {
                     $coords = $this->getCoords($tables->item($i));
                     $duration = $this->getDuration($tables->item($i));
-                    $distance = $this->distance->distance(new Point($coords[0], $coords[1]), new Point($village['x'], $village['y']), $size['width'], $size['height'], $mayTravelOverBorder);
+                    $distance = $this->distance->distance(new Point($coords[0], $coords[1]), new Point($village['x'], $village['y']), $data['size']['width'], $data['size']['height'], $mayTravelOverBorder);
                     $row = $this->time->find($distance, 0, 0, $duration, $blindTime);
                     $data['attacks'][] = [
                         'from' => [
@@ -138,10 +142,22 @@ class AttackParser
                         'to' => $village,
                         'distance' => $distance,
                         'units' => $row,
+                        'date' => date('Y-m-d', time()+$duration -1),
+                        'time' => date('H:i:s', time()+$duration -1),
                     ];
                 }
             }
+            $nodes = $doc->getElementById('villageName')->parentNode->childNodes;
+            for ($i = 0; $i < $nodes->length; $i++) {
+                if ($nodes->item($i)->localName === 'div') {
+                    $data['player'] = $nodes->item($i)->textContent;
+                    break;
+                }
+            }
         }
+        $stmt = $this->database->prepare("SELECT alliances.* FROM user_alliance INNER JOIN alliances ON alliances.aid=user_alliance.alliance AND user_alliance.user=:user");
+        $stmt->execute([':user' => $_SESSION['id'] ?? 0]);
+        $data['alliances'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $this->twig->display('attack-parser.twig', $data);
     }
 }

@@ -6,6 +6,33 @@
     <tr>
         <th>{{ translations.distance }}</th>
         <td>{{ attack.distance }}</td>
+        <td rowspan="2"><form method="post" target="_blank" action="/deff-call">
+            <fieldset>
+                <legend>{{ translations.main }}</legend>
+                <label title="ts9.x1.europe.travian.com">{{ translations.world }}*<input value="{{ inputs.world }}" required name="world"/></label>
+                <input required name="x" value="{{ attack.to.x }}" type="hidden"/>
+                <input required name="y" value="{{ attack.to.y }}" type="hidden"/>
+                <input type="hidden" value="{{ player }}" name="player"/>
+                <label>{{ translations.arrival }}<input name="date" value="{{ attack.date }}" type="date"/>
+                    <input required value="{{ attack.time }}" name="time" type="time"/></label>
+                <label>{{ translations.desired_troops }}<input required value="0" name="troops" type="number" min="0"/></label>
+                <label>{{ translations.desired_scouts }}<input required value="0" name="scouts" type="number" min="0"/></label>
+                <label>{{ translations.desired_heroes }}<input required value="0" name="heroes" type="number" min="0"/></label>
+            </fieldset>
+            <fieldset>
+                <legend>{{ translations.advanced }}</legend>
+                <label>{{ translations.alliance_lock }}<select name="alliance_lock">
+                    <option value="0">{{ translations.none }}</option>
+                    {% for alliance in alliances %}
+                        <option{% if inputs.alliance_lock==alliance.aid %} selected{% endif %} value="{{ alliance.aid }}">{{ alliance.world }}: {{ alliance.name }}</option>
+                    {% endfor %}
+                    </select></label>
+                <label>{{ translations.advanced_troop_data }}<input name="advanced_troop_data" type="hidden" value="1"/><input name="advanced_troop_data" type="checkbox" value="1"/></label>
+                <input value="401" name="world_width" value="{{ size.width }}" type="hidden"/>
+                <input value="401" name="world_height" value="{{ size.height }}" type="hidden"/>
+                <input type="submit"/>
+            </fieldset>
+        </form></td>
     </tr>
     <tr>
         <th>{{ translations.troops }}</th>
