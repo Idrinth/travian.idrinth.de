@@ -162,19 +162,32 @@ class DeffCall
                 );
                 $boots = 0;
                 $standard=0;
-                if ($village['hero'] === '1') {
+                if ($village['hero'] == 1) {
                     $stmt2 = $this->database->prepare('SELECT boot_bonus,standard_bonus FROM my_hero WHERE user=:user AND world=:world');
                     $stmt2->execute([':user' => $_SESSION['id'], ':world' => $village['world']]);
-                    list($boots, $standard) = $stmt2->fetch(PDO::FETCH_NUM) ?: [0,0];
+                    list($boots, $standard) = $stmt2->fetch(PDO::FETCH_NUM);
                     $boots = intval($boots, 10);
-                    $standard=intval($sdtandard, 10);
-                    $data['own'][$village['name']]['hero'] = 1;
+                    $standard = intval($sdtandard, 10);
+                    $data['own'][$village['name']]['hero'] = [
+                        'troops' => 1,
+                        'boots' => $boots,
+                        'standard' => $standard,
+                    ];
                 }
+                $found = false;
                 for ($i=1;$i<7;$i++) {
-                    if (intval($village['soldier' . $i], 10) > 0 && $this->time->time($distance, Troops::SPEED[$village['tribe'] . '_soldier' . $i], $standard/100, $village['tournament_square'], $boots/100, 0)[0] < $remaining) {
+                    $time = $this->time->time($distance, Troops::SPEED[$village['tribe'] . '_soldier' . $i], $standard/100, $village['tournament_square'], $boots/100, 0)[0];
+                    if (intval($village['soldier' . $i], 10) > 0 && $time < $remaining) {
                         $data['own'][$village['name']] = $data['own'][$village['name']] ?? [];
-                        $data['own'][$village['name']][$village['tribe'] . '_soldier' . $i] = intval($village['soldier' . $i], 10);
+                        $data['own'][$village['name']][$village['tribe'] . '_soldier' . $i] = [
+                            'troops' => intval($village['soldier' . $i], 10),
+                            'duration' => $time,
+                        ];
+                        $found = true;
                     }
+                }
+                if (!$found) {
+                    unset($data['own'][$village['name']]);
                 }
             }
         }
