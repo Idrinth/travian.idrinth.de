@@ -51,7 +51,8 @@
             options: {
               scales: {
                 y: {
-                  stacked: true
+                  stacked: true,
+                  show: true,
                 },
                 x: {
                   type: 'timeseries',
@@ -68,21 +69,28 @@
                 data: {{ charts[world].offence|json_encode()|raw }},
                 fill: true,
                 borderColor: 'rgb(192, 75, 75)',
-                backgroundColor: 'rgb(192, 75, 75)',
+                backgroundColor: 'rgba(192, 75, 75, 0.5)',
+                tension: 0.1
+              },{
+                label: 'Multifunctional',
+                data: {{ charts[world].multi|json_encode()|raw }},
+                fill: true,
+                borderColor: 'rgb(192, 75, 192)',
+                backgroundColor: 'rgb(192, 75, 192, 0.5)',
                 tension: 0.1
               },{
                 label: 'Defence',
                 data: {{ charts[world].defence|json_encode()|raw }},
                 fill: true,
                 borderColor: 'rgb(75, 75, 192)',
-                backgroundColor: 'rgb(75, 75, 192)',
+                backgroundColor: 'rgb(75, 75, 192, 0.5)',
                 tension: 0.1
               },{
                 label: 'Scouts',
                 data: {{ charts[world].scouts|json_encode()|raw }},
                 fill: true,
                 borderColor: 'rgb(75, 192, 75)',
-                backgroundColor: 'rgb(75, 192, 75)',
+                backgroundColor: 'rgb(75, 192, 75, 0.5)',
                 tension: 0.1
               },]
             }

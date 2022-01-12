@@ -41,10 +41,11 @@
             {% for act in activity %}
                 {% if act.user == player.aid %}
                     <td title="{{ act.deffCalls }} Deff Calls
-{{ act.troops }} Troops
-{{ act.scouts }}Scouts
-{{ act.heroesDeff }} Hero Deff
-{{ act.heroes }} Hero Updates">{{ act.activity }}</td>
+{{ act.troops }} Deff Call: Troops
+{{ act.scouts }} Deff Call: Scouts
+{{ act.heroesDeff }} Deff Call: Hero
+{{ act.heroes }} Hero Updates
+{{ act.troopUpdate }} Troop Tool Updates">{{ act.activity }}</td>
                     {% set found=true %}
                 {% endif %}
             {% endfor %}

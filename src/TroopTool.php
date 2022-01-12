@@ -31,6 +31,7 @@ class TroopTool
         $worlds = [];
         $deff = [];
         $off = [];
+        $multi = [];
         $scouts = [];
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as  $row) {
             $worlds[$row['world']] = $row['world'];
@@ -43,8 +44,7 @@ class TroopTool
                 $off[$row['world']] += $row['soldier3'] * Troops::CORN['roman_soldier3'];
                 $scouts[$row['world']] += $row['soldier4'] * Troops::CORN['roman_soldier4'];
                 $off[$row['world']] += $row['soldier5'] * Troops::CORN['roman_soldier5'];
-                $deff[$row['world']] += $row['soldier6'] * Troops::CORN['roman_soldier6'];
-                $off[$row['world']] += $row['soldier6'] * Troops::CORN['roman_soldier6'];
+                $multi[$row['world']] += $row['soldier6'] * Troops::CORN['roman_soldier6'];
                 $off[$row['world']] += $row['ram'] * Troops::CORN['roman_ram'];
                 $off[$row['world']] += $row['catapult'] * Troops::CORN['roman_catapult'];
             } elseif ($row['tribe'] === 'gaul') {
@@ -53,8 +53,7 @@ class TroopTool
                 $scouts[$row['world']] += $row['soldier3'] * Troops::CORN['gaul_soldier3'];
                 $off[$row['world']] += $row['soldier4'] * Troops::CORN['gaul_soldier4'];
                 $deff[$row['world']] += $row['soldier5'] * Troops::CORN['gaul_soldier5'];
-                $deff[$row['world']] += $row['soldier6'] * Troops::CORN['gaul_soldier6'];
-                $off[$row['world']] += $row['soldier6'] * Troops::CORN['gaul_soldier6'];
+                $multi[$row['world']] += $row['soldier6'] * Troops::CORN['gaul_soldier6'];
                 $off[$row['world']] += $row['ram'] * Troops::CORN['gaul_ram'];
                 $off[$row['world']] += $row['catapult'] * Troops::CORN['gaul_catapult'];
             } elseif ($row['tribe'] === 'teuton') {
@@ -72,18 +71,15 @@ class TroopTool
                 $off[$row['world']] += $row['soldier3'] * Troops::CORN['egyptian_soldier3'];
                 $scouts[$row['world']] += $row['soldier4'] * Troops::CORN['egyptian_soldier4'];
                 $deff[$row['world']] += $row['soldier5'] * Troops::CORN['egyptian_soldier5'];
-                $deff[$row['world']] += $row['soldier6'] * Troops::CORN['egyptian_soldier6'];
-                $off[$row['world']] += $row['soldier6'] * Troops::CORN['egyptian_soldier6'];
+                $multi[$row['world']] += $row['soldier6'] * Troops::CORN['egyptian_soldier6'];
                 $off[$row['world']] += $row['ram'] * Troops::CORN['egyptian_ram'];
                 $off[$row['world']] += $row['catapult'] * Troops::CORN['egyptian_catapult'];
             } elseif ($row['tribe'] === 'hun') {
-                $off[$row['world']] += $row['soldier1'] * Troops::CORN['hun_soldier1'];
-                $deff[$row['world']] += $row['soldier1'] * Troops::CORN['hun_soldier1'];
+                $multi[$row['world']] += $row['soldier1'] * Troops::CORN['hun_soldier1'];
                 $off[$row['world']] += $row['soldier2'] * Troops::CORN['hun_soldier2'];
                 $scouts[$row['world']] += $row['soldier3'] * Troops::CORN['hun_soldier3'];
                 $off[$row['world']] += $row['soldier4'] * Troops::CORN['hun_soldier4'];
-                $deff[$row['world']] += $row['soldier5'] * Troops::CORN['hun_soldier5'];
-                $off[$row['world']] += $row['soldier5'] * Troops::CORN['hun_soldier5'];
+                $multi[$row['world']] += $row['soldier5'] * Troops::CORN['hun_soldier5'];
                 $off[$row['world']] += $row['soldier6'] * Troops::CORN['hun_soldier6'];
                 $off[$row['world']] += $row['ram'] * Troops::CORN['hun_ram'];
                 $off[$row['world']] += $row['catapult'] * Troops::CORN['hun_catapult'];
@@ -94,15 +90,15 @@ class TroopTool
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
             if (isset($worlds[$row['world']])) {
                 $this->database
-                    ->prepare('UPDATE troop_updates SET offensive=:off, defensive=:deff, scouts=:scouts WHERE aid=:aid')
-                    ->execute([':aid' => $row['aid'], ':off' => $off[$row['world']], ':deff' => $deff[$row['world']], ':scouts' => $scouts[$row['world']]]);
+                    ->prepare('UPDATE troop_updates SET offensive=:off,multipurpose=:multi, defensive=:deff, scouts=:scouts WHERE aid=:aid')
+                    ->execute([':aid' => $row['aid'], ':off' => $off[$row['world']], ':multi' => $multi[$row['world']], ':deff' => $deff[$row['world']], ':scouts' => $scouts[$row['world']]]);
                 unset($worlds[$row['world']]);
             }
         }
         foreach ($worlds as $world) {
             $this->database
-                ->prepare('INSERT INTO troop_updates (user, world, offensive, defensive, scouts, `date`) VALUES (:id, :world, :off, :deff, :scouts, :date)')
-                ->execute([':date' => date('Y-m-d'),':id' => $_SESSION['id'], ':world' => $world, ':off' => $off[$world], ':deff' => $deff[$world], ':scouts' => $scouts[$world]]);
+                ->prepare('INSERT INTO troop_updates (multipurpose,user, world, offensive, defensive, scouts, `date`) VALUES (:multi, :id, :world, :off, :deff, :scouts, :date)')
+                ->execute([':date' => date('Y-m-d'),':id' => $_SESSION['id'], ':world' => $world, ':multi' => $multi[$world], ':off' => $off[$world], ':deff' => $deff[$world], ':scouts' => $scouts[$world]]);
         }
     }
     public function run(array $post, $id = 0): void
@@ -134,11 +130,13 @@ ORDER BY troops.tribe DESC, troops.name ASC");
                 $charts[$row['world']] = $charts[$row['world']] ?? [
                     'offence' => [],
                     'defence' => [],
+                    'multi' => [],
                     'scouts' => [],
                     'labels' => [],
                 ];
                 $charts[$row['world']]['offence'][] = intval($row['offensive'], 10);
                 $charts[$row['world']]['defence'][] = intval($row['defensive'], 10);
+                $charts[$row['world']]['multi'][] = intval($row['multipurpose'], 10);
                 $charts[$row['world']]['scouts'][] = intval($row['scouts'], 10);
                 $charts[$row['world']]['labels'][] = $row['date'];
             }
@@ -279,12 +277,14 @@ ORDER BY troops.tribe DESC, troops.name ASC");
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
             $charts[$row['world']] = $charts[$row['world']] ?? [
                 'offence' => [],
+                'multi' => [],
                 'defence' => [],
                 'scouts' => [],
                 'labels' => [],
             ];
             $charts[$row['world']]['offence'][] = intval($row['offensive'], 10);
             $charts[$row['world']]['defence'][] = intval($row['defensive'], 10);
+            $charts[$row['world']]['multi'][] = intval($row['multipurpose'], 10);
             $charts[$row['world']]['scouts'][] = intval($row['scouts'], 10);
             $charts[$row['world']]['labels'][] = $row['date'];
         }
