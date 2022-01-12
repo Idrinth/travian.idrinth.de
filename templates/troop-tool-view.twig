@@ -1,4 +1,6 @@
 {% include 'header.twig' %}
+<script type="text/javascript" src="/chart.min.js"></script>
+<script type="text/javascript" src="/chartjs-adapter-date-fns.bundle.min.js"></script>
 <h2>{{ translations.troop_tool }}</h2>
 {% set lastWorld='' %}
 {% for world,tribes in troops %}
@@ -41,6 +43,50 @@
                 {% endfor %}
             </table>
         </form>
+        <canvas id="chart-{{ world|replace({'.': '-'}) }}"></canvas>
+        <script>
+          new Chart('chart-{{ world|replace({'.': '-'}) }}', {
+            type: 'line',
+            options: {
+              scales: {
+                y: {
+                  stacked: true
+                },
+                x: {
+                  type: 'timeseries',
+                  time: {
+                    unit: 'day'
+                  }
+                },
+              }
+            },
+            data: {
+              labels: {{ charts[world].labels|json_encode()|raw }},
+              datasets: [{
+                label: 'Offence',
+                data: {{ charts[world].offence|json_encode()|raw }},
+                fill: true,
+                borderColor: 'rgb(192, 75, 75)',
+                backgroundColor: 'rgb(192, 75, 75)',
+                tension: 0.1
+              },{
+                label: 'Defence',
+                data: {{ charts[world].defence|json_encode()|raw }},
+                fill: true,
+                borderColor: 'rgb(75, 75, 192)',
+                backgroundColor: 'rgb(75, 75, 192)',
+                tension: 0.1
+              },{
+                label: 'Scouts',
+                data: {{ charts[world].scouts|json_encode()|raw }},
+                fill: true,
+                borderColor: 'rgb(75, 192, 75)',
+                backgroundColor: 'rgb(75, 192, 75)',
+                tension: 0.1
+              },]
+            }
+          });
+        </script>
     {% endfor %}
 {% else %}
     <p>{{ translations.no_data }}</p>

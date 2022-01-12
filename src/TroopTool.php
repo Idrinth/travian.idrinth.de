@@ -24,6 +24,87 @@ class TroopTool
         $this->database = $database;
         $this->twig = $twig;
     }
+    private function updateStatistics()
+    {        
+        $stmt = $this->database->prepare("SELECT * FROM troops WHERE user=:user");
+        $stmt->execute([':user' => $_SESSION['id']]);
+        $worlds = [];
+        $deff = [];
+        $off = [];
+        $scouts = [];
+        foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as  $row) {
+            $worlds[$row['world']] = $row['world'];
+            $deff[$row['world']] = $deff[$row['world']] ?? 0;
+            $off[$row['world']] = $off[$row['world']] ?? 0;
+            $scouts[$row['world']] = $scouts[$row['world']] ?? 0;
+            if ($row['tribe'] === 'roman') {
+                $deff[$row['world']] += $row['soldier1'] * Troops::CORN['roman_soldier1'];
+                $deff[$row['world']] += $row['soldier2'] * Troops::CORN['roman_soldier2'];
+                $off[$row['world']] += $row['soldier3'] * Troops::CORN['roman_soldier3'];
+                $scouts[$row['world']] += $row['soldier4'] * Troops::CORN['roman_soldier4'];
+                $off[$row['world']] += $row['soldier5'] * Troops::CORN['roman_soldier5'];
+                $deff[$row['world']] += $row['soldier6'] * Troops::CORN['roman_soldier6'];
+                $off[$row['world']] += $row['soldier6'] * Troops::CORN['roman_soldier6'];
+                $off[$row['world']] += $row['ram'] * Troops::CORN['roman_ram'];
+                $off[$row['world']] += $row['catapult'] * Troops::CORN['roman_catapult'];
+            } elseif ($row['tribe'] === 'gaul') {
+                $deff[$row['world']] += $row['soldier1'] * Troops::CORN['gaul_soldier1'];
+                $off[$row['world']] += $row['soldier2'] * Troops::CORN['gaul_soldier2'];
+                $scouts[$row['world']] += $row['soldier3'] * Troops::CORN['gaul_soldier3'];
+                $off[$row['world']] += $row['soldier4'] * Troops::CORN['gaul_soldier4'];
+                $deff[$row['world']] += $row['soldier5'] * Troops::CORN['gaul_soldier5'];
+                $deff[$row['world']] += $row['soldier6'] * Troops::CORN['gaul_soldier6'];
+                $off[$row['world']] += $row['soldier6'] * Troops::CORN['gaul_soldier6'];
+                $off[$row['world']] += $row['ram'] * Troops::CORN['gaul_ram'];
+                $off[$row['world']] += $row['catapult'] * Troops::CORN['gaul_catapult'];
+            } elseif ($row['tribe'] === 'teuton') {
+                $off[$row['world']] += $row['soldier1'] * Troops::CORN['teuton_soldier1'];
+                $deff[$row['world']] += $row['soldier2'] * Troops::CORN['teuton_soldier2'];
+                $off[$row['world']] += $row['soldier3'] * Troops::CORN['teuton_soldier3'];
+                $scouts[$row['world']] += $row['soldier4'] * Troops::CORN['teuton_soldier4'];
+                $deff[$row['world']] += $row['soldier5'] * Troops::CORN['teuton_soldier5'];
+                $off[$row['world']] += $row['soldier6'] * Troops::CORN['teuton_soldier6'];
+                $off[$row['world']] += $row['ram'] * Troops::CORN['teuton_ram'];
+                $off[$row['world']] += $row['catapult'] * Troops::CORN['teuton_catapult'];
+            } elseif ($row['tribe'] === 'egyptian') {
+                $deff[$row['world']] += $row['soldier1'] * Troops::CORN['egyptian_soldier1'];
+                $deff[$row['world']] += $row['soldier2'] * Troops::CORN['egyptian_soldier2'];
+                $off[$row['world']] += $row['soldier3'] * Troops::CORN['egyptian_soldier3'];
+                $scouts[$row['world']] += $row['soldier4'] * Troops::CORN['egyptian_soldier4'];
+                $deff[$row['world']] += $row['soldier5'] * Troops::CORN['egyptian_soldier5'];
+                $deff[$row['world']] += $row['soldier6'] * Troops::CORN['egyptian_soldier6'];
+                $off[$row['world']] += $row['soldier6'] * Troops::CORN['egyptian_soldier6'];
+                $off[$row['world']] += $row['ram'] * Troops::CORN['egyptian_ram'];
+                $off[$row['world']] += $row['catapult'] * Troops::CORN['egyptian_catapult'];
+            } elseif ($row['tribe'] === 'hun') {
+                $off[$row['world']] += $row['soldier1'] * Troops::CORN['hun_soldier1'];
+                $deff[$row['world']] += $row['soldier1'] * Troops::CORN['hun_soldier1'];
+                $off[$row['world']] += $row['soldier2'] * Troops::CORN['hun_soldier2'];
+                $scouts[$row['world']] += $row['soldier3'] * Troops::CORN['hun_soldier3'];
+                $off[$row['world']] += $row['soldier4'] * Troops::CORN['hun_soldier4'];
+                $deff[$row['world']] += $row['soldier5'] * Troops::CORN['hun_soldier5'];
+                $off[$row['world']] += $row['soldier5'] * Troops::CORN['hun_soldier5'];
+                $off[$row['world']] += $row['soldier6'] * Troops::CORN['hun_soldier6'];
+                $off[$row['world']] += $row['ram'] * Troops::CORN['hun_ram'];
+                $off[$row['world']] += $row['catapult'] * Troops::CORN['hun_catapult'];
+            }
+        }
+        $stmt = $this->database->prepare("SELECT aid,world FROM troop_updates WHERE user=:user AND date=:today");
+        $stmt->execute([':user' => $_SESSION['id'], ':today' => date('Y-m-d')]);
+        foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+            if (isset($worlds[$row['world']])) {
+                $this->database
+                    ->prepare('UPDATE troop_updates SET offensive=:off, defensive=:deff, scouts=:scouts WHERE aid=:aid')
+                    ->execute([':aid' => $row['aid'], ':off' => $off[$row['world']], ':deff' => $deff[$row['world']], ':scouts' => $scouts[$row['world']]]);
+                unset($worlds[$row['world']]);
+            }
+        }
+        foreach ($worlds as $world) {
+            $this->database
+                ->prepare('INSERT INTO troop_updates (user, world, offensive, defensive, scouts, `date`) VALUES (:id, :world, :off, :deff, :scouts, :date)')
+                ->execute([':date' => date('Y-m-d'),':id' => $_SESSION['id'], ':world' => $world, ':off' => $off[$world], ':deff' => $deff[$world], ':scouts' => $scouts[$world]]);
+        }
+    }
     public function run(array $post, $id = 0): void
     {
         if (($_SESSION['id'] ?? 0) === 0) {
@@ -46,8 +127,24 @@ ORDER BY troops.tribe DESC, troops.name ASC");
                 $troopsData[$row['world']][$row['tribe']] = $troopsData[$row['world']][$row['tribe']] ?? [];
                 $troopsData[$row['world']][$row['tribe']][] = $row;
             }
+            $stmt = $this->database->prepare("SELECT * FROM troop_updates WHERE user=:id ORDER BY world DESC, `date` ASC");
+            $stmt->execute([':id' => $_SESSION['id']]);
+            $charts = [];
+            foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+                $charts[$row['world']] = $charts[$row['world']] ?? [
+                    'offence' => [],
+                    'defence' => [],
+                    'scouts' => [],
+                    'labels' => [],
+                ];
+                $charts[$row['world']]['offence'][] = intval($row['offensive'], 10);
+                $charts[$row['world']]['defence'][] = intval($row['defensive'], 10);
+                $charts[$row['world']]['scouts'][] = intval($row['scouts'], 10);
+                $charts[$row['world']]['labels'][] = $row['date'];
+            }
             $this->twig->display('troop-tool-view.twig', [
                 'troops' => $troopsData,
+                'charts' => $charts
             ]);
             return;
         } elseif (isset($post['aid']) && isset($post['type']) && $post['type']==='delete') {
@@ -102,6 +199,7 @@ ORDER BY troops.tribe DESC, troops.name ASC");
                         ':tournament_square' => $post['tournament_square'][$aid] ?? 0,
                     ]);
             }
+            $this->updateStatistics();
         } elseif (isset($post['source']) && $post['source']) {
             $doc = new DOMDocument();
             $doc->loadHTML($post['source']);
@@ -165,6 +263,7 @@ ORDER BY troops.tribe DESC, troops.name ASC");
                         ]);
                 }
             }
+            $this->updateStatistics();
         }
         $stmt = $this->database->prepare("SELECT * FROM troops WHERE user=:id ORDER BY world DESC, tribe DESC, name ASC");
         $stmt->execute([':id' => $_SESSION['id']]);
@@ -174,8 +273,24 @@ ORDER BY troops.tribe DESC, troops.name ASC");
             $troopsData[$row['world']][$row['tribe']] = $troopsData[$row['world']][$row['tribe']] ?? [];
             $troopsData[$row['world']][$row['tribe']][] = $row;
         }
+        $stmt = $this->database->prepare("SELECT * FROM troop_updates WHERE user=:id ORDER BY world DESC, `date` ASC");
+        $stmt->execute([':id' => $_SESSION['id']]);
+        $charts = [];
+        foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+            $charts[$row['world']] = $charts[$row['world']] ?? [
+                'offence' => [],
+                'defence' => [],
+                'scouts' => [],
+                'labels' => [],
+            ];
+            $charts[$row['world']]['offence'][] = intval($row['offensive'], 10);
+            $charts[$row['world']]['defence'][] = intval($row['defensive'], 10);
+            $charts[$row['world']]['scouts'][] = intval($row['scouts'], 10);
+            $charts[$row['world']]['labels'][] = $row['date'];
+        }
         $this->twig->display('troop-tool.twig', [
             'troops' => $troopsData,
+            'charts' => $charts,
         ]);
     }
     private function getVillages(DOMDocument $doc): array
