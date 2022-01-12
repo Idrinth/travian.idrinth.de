@@ -16,7 +16,14 @@
             <tr><th>{{ translations.scouts }}</th><td>{{deff_call.scouts }}/{{ deff_call.desiredScouts }}</td></tr>
             <tr><th>{{ translations.heroes }}</th><td>{{deff_call.heroes }}/{{ deff_call.desiredHeroes }}</td></tr>
             <tr><th>{{ translations.arrival }}</th><td>{{ deff_call.arrival }}</tr>
-            <tr><th>{{ translations.share }}</th><td><a class="not-highlighted" href="https://travian.idrinth.de/deff-call/{{ deff_call.id }}">https://travian.idrinth.de/deff-call/{{ deff_call.id }}</a></tr>
+            <tr>
+                <th>{{ translations.to_details }}</th>
+                <td>
+                    <a class="not-highlighted" href="https://travian.idrinth.de/deff-call/{{ deff_call.id }}{% if deff_call.advanced==1 %}/{{ deff_call.key }}{% endif %}">
+                        https://travian.idrinth.de/deff-call/{{ deff_call.id }}{% if deff_call.advanced==1 %}/{{ deff_call.key }}{% endif %}
+                    </a>
+                </td>
+            </tr>
         </table>
     </div>
 {% else %}

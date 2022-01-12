@@ -27,7 +27,7 @@ WHERE user_deff_call.user=:user AND deff_calls.arrival >= :date');
         $stmt2->execute([':user' => $_SESSION['id'], ':date' => date('Y-m-d H:i:s', time() - 3600)]);
         $worlds = $stmt2->fetchAll(PDO::FETCH_ASSOC);
         if ($world) {
-            $stmt = $this->database->prepare('SELECT deff_calls.player,deff_calls.troops AS desiredTroops,deff_calls.scouts AS desiredScouts,deff_calls.heroes AS desiredHeroes, deff_calls.x,deff_calls.y,deff_calls.world,deff_calls.arrival, deff_calls.id,IFNULL(SUM(deff_call_supports.troops), 0) AS troops, IFNULL(SUM(deff_call_supports.scouts), 0) AS scouts, IFNULL(SUM(deff_call_supports.hero), 0) AS heroes
+            $stmt = $this->database->prepare('SELECT user_deff_call.advanced, deff_calls.key, deff_calls.player,deff_calls.troops AS desiredTroops,deff_calls.scouts AS desiredScouts,deff_calls.heroes AS desiredHeroes, deff_calls.x,deff_calls.y,deff_calls.world,deff_calls.arrival, deff_calls.id,IFNULL(SUM(deff_call_supports.troops), 0) AS troops, IFNULL(SUM(deff_call_supports.scouts), 0) AS scouts, IFNULL(SUM(deff_call_supports.hero), 0) AS heroes
     FROM user_deff_call
     INNER JOIN deff_calls ON user_deff_call.deff_call=deff_calls.aid
     LEFT JOIN deff_call_supports ON deff_call_supports.deff_call AND deff_call_supports.arrival < deff_calls.arrival
@@ -40,7 +40,7 @@ WHERE user_deff_call.user=:user AND deff_calls.arrival >= :date');
                 'worlds' => $worlds,
             ];
         } else {
-            $stmt = $this->database->prepare('SELECT deff_calls.player,deff_calls.troops AS desiredTroops,deff_calls.scouts AS desiredScouts,deff_calls.heroes AS desiredHeroes, deff_calls.x,deff_calls.y,deff_calls.world,deff_calls.arrival, deff_calls.id,IFNULL(SUM(deff_call_supports.troops), 0) AS troops, IFNULL(SUM(deff_call_supports.scouts), 0) AS scouts, IFNULL(SUM(deff_call_supports.hero), 0) AS heroes
+            $stmt = $this->database->prepare('SELECT user_deff_call.advanced, deff_calls.key, deff_calls.player,deff_calls.troops AS desiredTroops,deff_calls.scouts AS desiredScouts,deff_calls.heroes AS desiredHeroes, deff_calls.x,deff_calls.y,deff_calls.world,deff_calls.arrival, deff_calls.id,IFNULL(SUM(deff_call_supports.troops), 0) AS troops, IFNULL(SUM(deff_call_supports.scouts), 0) AS scouts, IFNULL(SUM(deff_call_supports.hero), 0) AS heroes
     FROM user_deff_call
     INNER JOIN deff_calls ON user_deff_call.deff_call=deff_calls.aid
     LEFT JOIN deff_call_supports ON deff_call_supports.deff_call AND deff_call_supports.arrival < deff_calls.arrival
