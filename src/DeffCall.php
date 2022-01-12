@@ -40,8 +40,8 @@ class DeffCall
         if ($data['target']['alliance'] == '0') {
             $data['target']['alliance'] = '';
         } else {
-            $stmt = $this->database->prepare('SELECT alliances.name, alliances.id, user_alliance.name as player FROM user_alliance INNER JOIN alliances ON alliances.aid=user_alliance.alliance AND user_alliance.user=:user');
-            $stmt->execute([':user' => $_SESSION['id'] ?? 0]);
+            $stmt = $this->database->prepare('SELECT alliances.name, alliances.id, user_alliance.name as player FROM user_alliance INNER JOIN alliances ON alliances.aid=user_alliance.alliance AND user_alliance.user=:user AND user_alliance.alliance=:alliance');
+            $stmt->execute([':user' => $_SESSION['id'] ?? 0, ':alliance' => $data['target']['alliance']]);
             $data['target']['alliance'] = $stmt->fetch(PDO::FETCH_ASSOC);
             if (false === $data['target']['alliance']) {
                 if ($_SESSION['id'] ?? 0 === 0) {
@@ -106,7 +106,7 @@ class DeffCall
             ]);
             $data['added'] = true;
         }
-        $stmt = $this->database->prepare("SELECT deff_call_supports.*,users.name,users.discriminator FROM deff_call_supports LEFT JOIN users ON deff_call_supports.creator=users.aid WHERE deff_call=:id");
+        $stmt = $this->database->prepare("SELECT deff_call_supports.*,users.name,users.discriminator FROM deff_call_supports LEFT JOIN users ON deff_call_supports.creator=users.aid WHERE deff_call=:id ORDER BY deff_call_supports.arrival ASC");
         $stmt->execute([':id' => $data['target']['aid']]);
         $data['supports'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $data['troops'] = [
