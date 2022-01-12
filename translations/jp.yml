@@ -346,3 +346,15 @@ new_village: 新村
 tournament_square: トーナメント広場
 advanced_troop_data: アドバンストトループデータ
 amount: 金額
+deff_call_overview: デフコールの概要
+all_worlds: オールワールド(アンフィルタード)
+plus_troop_overview: プラス・トループ・オーバービュー・ウィンドウ
+in_range: 範囲内
+nothing_in_range: 自分の部隊ツールの部隊が範囲内にいない。
+troops_sent: すでに派遣された軍隊
+blind_time: ブラインドタイム
+time: 時間
+attack_parser: アタックパーサー
+world_width: ワールドワイド（最大x=200→401）
+world_height: ワールドハイト（最大y=200→401）
+to_details: 詳細を見る
