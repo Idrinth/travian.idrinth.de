@@ -69,8 +69,12 @@ class Alliance
                         ->execute([':alliance' => $alliance['aid'], ':user' => $post['user'], ':rank' => $post['rank']]);
                 }
             }
-            $stmt = $this->database->prepare("SELECT user_alliance.*, users.aid, users.name as discord, users.discriminator FROM user_alliance INNER JOIN users ON users.aid=user_alliance.user WHERE alliance=:alliance");
-            $stmt->execute([':alliance' => $alliance['aid']]);
+            $stmt = $this->database->prepare('SELECT user_alliance.*,my_hero.resources,my_hero.off_bonus,my_hero.deff_bonus,my_hero.fighting_strength, users.aid, users.name as discord, users.discriminator
+FROM user_alliance
+INNER JOIN users ON users.aid=user_alliance.user
+LEFT JOIN my_hero ON my_hero.user=user_alliance.user AND my_hero.world=:world
+WHERE alliance=:alliance');
+            $stmt->execute([':alliance' => $alliance['aid'], ':world' => $alliance['world']]);
             $stmt2 = $this->database->prepare("SELECT deff_calls.player, deff_calls.id, deff_calls.arrival, deff_calls.world, deff_calls.x, deff_calls.y, deff_calls.key FROM deff_calls WHERE alliance=:alliance");
             $stmt2->execute([':alliance' => $alliance['aid']]);
             $stmt3 = $this->database->prepare("SELECT * FROM hero WHERE alliance=:alliance");

@@ -1,0 +1,68 @@
+{% include 'header.twig' %}
+<h2>{{ translations.my_hero }}</h2>
+<div class="split2">
+    {% for hero in heroes %}
+        <div>
+            <h3>{{ hero.world }}</h3>
+            <h4>{{ translations.attributes }}</h4>
+            <form method="post">
+                <input name="aid" value="{{ hero.aid }}" type="hidden"/>
+            <table>
+                <tr>
+                    <th>{{ translations.hero_fighting_strength }}</th>
+                    <td><input name="fighting_strength" value="{{ hero.fighting_strength }}" max=100 min=0 type="number"/></td>
+                </tr>
+                <tr>
+                    <th>{{ translations.hero_off_bonus }}</th>
+                    <td><input name="off_bonus" value="{{ hero.off_bonus }}" max=100 min=0 type="number"/></td>
+                </tr>
+                <tr>
+                    <th>{{ translations.hero_def_bonus }}</th>
+                    <td><input name="def_bonus" value="{{ hero.deff_bonus }}" max=100 min=0 type="number"/></td>
+                </tr>
+                <tr>
+                    <th>{{ translations.hero_resources }}</th>
+                    <td><input name="resources" value="{{ hero.resources }}" max=100 min=0 type="number"/></td>
+                </tr>
+                <tr>
+                    <th>{{ translations.hero_boot_bonus }}</th>
+                    <td><select name="boot_bonus">
+                            <option value="0">0%</option>
+                            <option{% if hero.boot_bonus==25 %} selected{% endif %} value="25">25%</option>
+                            <option{% if hero.boot_bonus==50 %} selected{% endif %} value="50">50%</option>
+                            <option{% if hero.boot_bonus==75 %} selected{% endif %} value="75">75%</option>
+                        </select></td>
+                </tr>
+                <tr>
+                    <th>{{ translations.hero_standard_bonus }}</th>
+                    <td><select name="standard_bonus">
+                            <option value="0">0%</option>
+                            <option{% if hero.standard_bonus==15 %} selected{% endif %} value="15">15%</option>
+                            <option{% if hero.standard_bonus==20 %} selected{% endif %} value="20">20%</option>
+                            <option{% if hero.standard_bonus==2s5 %} selected{% endif %} value="25">25%</option>
+                        </select></td>
+                </tr>
+            </table>
+                <input type="submit"/>
+            </form>
+            <form method="post">
+                <input name="delete" value="{{ hero.aid }}" type="hidden"/>
+                <input type="submit" value="DELETE"/>
+            </form>
+            {% for item in hero.items %}
+                <h4>{{ translations[item] }}</h4>
+                <p>{{ translations[item ~ '_effect'] }}</p>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+<h3>{{ translations.import }}</h3>
+<form method="post">
+    <fieldset>
+        <legend>{{ translations.main }}</legend>
+        <label title="ts1.x1.europe.travian.com">{{ translations.world }}*<input type="text" name="world"/></label>
+        <!--<label title="{{ translations.hero_overview }}">{{ translations.source }}*<textarea name="source"></textarea></label>-->
+        <input type="submit"/>
+    </fieldset>
+</form>
+{% include 'footer.twig' %}

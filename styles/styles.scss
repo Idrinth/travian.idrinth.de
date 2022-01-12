@@ -27,6 +27,10 @@ a, a:visited, a:hover, a:focus, a:active {
 a.not-highlighted, a.not-highlighted:visited, a.not-highlighted:hover, a.not-highlighted:focus, a.not-highlighted:active {
     color: #333;
 }
+a.inactive, a.inactive:visited, a.inactive:hover, a.inactive:focus, a.inactive:active {
+    color: darkred;
+    text-decoration: none;
+}
 a.invisible {
     text-decoration: none;
 }
@@ -126,10 +130,8 @@ p {
     color: #eee;
 }
 .split2 {
-    display: flex;
-}
-.split2 > table {
-    flex: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 table {
     width: 100%;

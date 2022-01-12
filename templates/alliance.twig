@@ -23,6 +23,7 @@
             <th>{{ translations.activity }}</th>
             <th>{{ translations.troops }}</th>
         {% endif %}
+        <th>{{ translations.hero }}</th>
     </tr>
 {% for player in players %}
     <tr>
@@ -71,6 +72,12 @@
                 <td></td>
             {% endif %}
         {% endif %}
+        <td>
+            {% if player.fighting_strength %}<div>{{ player.fighting_strength }} Fighting Strength</div>{% endif %}
+            {% if player.off_bonus %}<div>{{ player.off_bonus }} Off-Bonus</div>{% endif %}
+            {% if player.deff_bonus %}<div>{{ player.deff_bonus }} Def-Bonus</div>{% endif %}
+            {% if player.resources %}<div>{{ player.resources }} Resources</div>{% endif %}
+        </td>
     </tr>
 {% endfor %}
 </table>

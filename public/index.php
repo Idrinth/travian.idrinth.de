@@ -11,6 +11,7 @@ use De\Idrinth\Travian\HeroRecogniser;
 use De\Idrinth\Travian\Home;
 use De\Idrinth\Travian\Imprint;
 use De\Idrinth\Travian\Login;
+use De\Idrinth\Travian\MyHero;
 use De\Idrinth\Travian\Ping;
 use De\Idrinth\Travian\Profile;
 use De\Idrinth\Travian\Router;
@@ -65,4 +66,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->get('/deff-call-overview/{world:world}', DeffCallOverview::class)
     ->get('/attack-parser', AttackParser::class)
     ->post('/attack-parser', AttackParser::class)
+    ->get('/my-hero', MyHero::class)
+    ->post('/my-hero', MyHero::class)
     ->run();

@@ -376,3 +376,13 @@ attack_parser: Attack Parser
 world_width: World Width (max x=200 -> 401)
 world_height: World Height (max y=200 -> 401)
 to_details: See Details
+hero_overview: Hero Overview Page
+import: Import
+hero_fighting_strength:  Fighting Strength Points
+hero_off_bonus: Off-Bonus Points
+hero_def_bonus: Def-Bonus Points
+hero_resources: Resource Production Points
+attributes: Attributes
+my_hero: My Hero
+hero_standard_bonus: Standard Bonus
+hero_boot_bonus: Boot Bonus

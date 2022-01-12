@@ -160,8 +160,18 @@ class DeffCall
                     intval($data['target']['world_height'], 10),
                     true
                 );
+                $boots = 0;
+                $standard=0;
+                if ($village['hero'] === '1') {
+                    $stmt2 = $this->database->prepare('SELECT boot_bonus,standard_bonus FROM my_hero WHERE user=:user AND world=:world');
+                    $stmt2->execute([':user' => $_SESSION['id'], ':world' => $village['world']]);
+                    list($boots, $standard) = $stmt2->fetch(PDO::FETCH_NUM) ?: [0,0];
+                    $boots = intval($boots, 10);
+                    $standard=intval($sdtandard, 10);
+                    $data['own'][$village['name']]['hero'] = 1;
+                }
                 for ($i=1;$i<7;$i++) {
-                    if (intval($village['soldier' . $i], 10) > 0 && $this->time->time($distance, Troops::SPEED[$village['tribe'] . '_soldier' . $i], 0, $village['tournament_square'], 0, 0)[0] < $remaining) {
+                    if (intval($village['soldier' . $i], 10) > 0 && $this->time->time($distance, Troops::SPEED[$village['tribe'] . '_soldier' . $i], $standard/100, $village['tournament_square'], $boots/100, 0)[0] < $remaining) {
                         $data['own'][$village['name']] = $data['own'][$village['name']] ?? [];
                         $data['own'][$village['name']][$village['tribe'] . '_soldier' . $i] = intval($village['soldier' . $i], 10);
                     }

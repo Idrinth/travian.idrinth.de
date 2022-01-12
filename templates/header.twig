@@ -63,22 +63,23 @@
                     <a href="/hero-check">{{ translations.hero_check }}</a>
                 </li>
                 <li>
+                    <a href="/my-hero">{{ translations.my_hero }}</a>
+                </li>
+                <li>
                     <a href="/deff-call">{{ translations.deff_call }}</a>
+                </li>
+                <li>
+                    <a{% if session.id is empty %} class="inactive"{% endif %} href="/deff-call-overview">{{ translations.deff_call_overview }}</a>
                 </li>
                 <li>
                     <a href="/soldier-cost">{{ translations.soldier_cost }}</a>
                 </li>
-                {% if session.user is not empty %}
-                    <li>
-                        <a href="/alliance">{{ translations.alliance }}</a>
-                    </li>
-                    <li>
-                        <a href="/troop-tool">{{ translations.troop_tool }}</a>
-                    </li>
-                    <li>
-                        <a href="/deff-call-overview">{{ translations.deff_call_overview }}</a>
-                    </li>
-                {% endif %}
+                <li>
+                    <a{% if session.id is empty %} class="inactive"{% endif %} href="/alliance">{{ translations.alliance }}</a>
+                </li>
+                <li>
+                    <a{% if session.id is empty %} class="inactive"{% endif %} href="/troop-tool">{{ translations.troop_tool }}</a>
+                </li>
                 <li>
                     <a href="/attack-parser">{{ translations.attack_parser }}</a>
                 </li>
