@@ -27,8 +27,8 @@ class DeffCallCreation
             try {
                 $uuid = Uuid::uuid6();
                 $stmt = $this->database->prepare(
-                    "INSERT INTO deff_calls (world_width,world_height,heroes, player, id, `key`, scouts, troops, `x`, `y`, world, creator, arrival, alliance,advanced_troop_data) "
-                    . "VALUES (:world_width,:world_height,:heroes, :player, :id, :key, :scouts, :troops, :x, :y, :world, :creator, :arrival, :alliance,:advanced_troop_data)"
+                    "INSERT INTO deff_calls (grain,grain_storage,world_width,world_height,heroes, player, id, `key`, scouts, troops, `x`, `y`, world, creator, arrival, alliance,advanced_troop_data) "
+                    . "VALUES (:grain,:grain_storage,:world_width,:world_height,:heroes, :player, :id, :key, :scouts, :troops, :x, :y, :world, :creator, :arrival, :alliance,:advanced_troop_data)"
                 );
                 if (strpos($post['world'], 'https://') === 0) {
                     $post['world'] = substr($post['world'], 8);
@@ -57,6 +57,8 @@ class DeffCallCreation
                     ':advanced_troop_data' => $post['advanced_troop_data'] ?? 0,
                     ':world_width' => $post['world_width'] ?? 401,
                     ':world_height' => $post['world_height'] ?? 401,
+                    ':grain' => $post['grain'] ?? 0,
+                    ':grain_storage' => $post['grain_storage'] ?? 800,
                 ]);
                 header('Location: /deff-call/' . $uuid . '/' . $key, true, 303);
                 return;

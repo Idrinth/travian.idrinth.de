@@ -60,16 +60,18 @@
         <label>{{ translations.hero_image_url }}<input required name="url" type="url" value="{{ inputs.url }}"/></label>
         <input type="submit"/>
     </fieldset>
-    <fieldset>
-        <legend>{{ translations.advanced }}</legend>
-        <label>{{ translations.hero_share }}<select name="hero_share">
-            <option value="0">{{ translations.none }}</option>
-            {% for alliance in alliances %}
-                <option{% if inputs.hero_share==alliance.aid %} selected{% endif %} value="{{ alliance.aid }}">{{ alliance.world }}: {{ alliance.name }}</option>
-            {% endfor %}
-            </select></label>
-        <label>{{ translations.player }}<input name="name" value="{{ inputs.name }}"/></label>
-        <label>{{ translations.player_id }}<input type="number" name="player_id" value="{{ inputs.player_id }}" min="0"/></label>
-    </fieldset>
+    {% if session.id > 0 %}
+        <fieldset>
+            <legend>{{ translations.advanced }}</legend>
+            <label>{{ translations.hero_share }}<select name="hero_share">
+                <option value="0">{{ translations.none }}</option>
+                {% for alliance in alliances %}
+                    <option{% if inputs.hero_share==alliance.aid %} selected{% endif %} value="{{ alliance.aid }}">{{ alliance.world }}: {{ alliance.name }}</option>
+                {% endfor %}
+                </select></label>
+            <label>{{ translations.player }}<input name="name" value="{{ inputs.name }}"/></label>
+            <label>{{ translations.player_id }}<input type="number" name="player_id" value="{{ inputs.player_id }}" min="0"/></label>
+        </fieldset>
+    {% endif %}
 </form>
 {% include 'footer.twig' %}

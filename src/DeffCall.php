@@ -117,6 +117,12 @@ class DeffCall
                 ->execute([':aid' => $post['delete'], ':creator' => $_SESSION['id'], ':min' => date('Y-m-d H:i:s', time() - 600)]);
             header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);
             return;
+        } elseif(isset($post['grain'])) {
+            $this->database
+                ->prepare('INSERT INTO deff_call_supplies (account, user, deff_call, grain, arrival) VALUES (:account, :creator, :deff_call, :grain, :arrival)')
+                ->execute([':account' => $post['account'], ':creator' => $_SESSION['id'], ':deff_call' => $data['target']['aid'], ':grain' => $post['grain'], ':arrival' => $post['date'] . ' ' . $post['time']]);
+            header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);
+            return;
         }
         $stmt = $this->database->prepare("SELECT deff_call_supports.*,users.name,users.discriminator FROM deff_call_supports LEFT JOIN users ON deff_call_supports.creator=users.aid WHERE deff_call=:id ORDER BY deff_call_supports.arrival ASC");
         $stmt->execute([':id' => $data['target']['aid']]);
@@ -202,6 +208,31 @@ class DeffCall
                     unset($data['own'][$village['name']]);
                 }
             }
+        }
+        $data['charts'] = [
+            'labels' => [$data['target']['created']],
+            'data' => [$data['target']['grain']],
+            'max' => [$data['target']['grain_storage']]
+        ];
+        $stmt3 = $this->database->prepare('SELECT * FROM deff_call_supplies WHERE deff_call=:dc');
+        $stmt3->execute([':dc' => $data['target']['aid']]);
+        $supplies = $stmt3->fetchAll(PDO::FETCH_ASSOC);
+        for($i = strtotime($data['target']['created']) + 600; $i <= strtotime($data['target']['arrival']) + 7200; $i += 600) {
+            $troops = 0;
+            foreach ($data['supports'] as $support) {
+                if (strtotime($support['arrival']) < $i) {
+                    $troops += $support['troops'] + 6*$support['hero']+2*$support['scouts'];
+                }
+            }
+            $corn = 0;
+            foreach ($supplies as $supply) {
+                if (strtotime($supply['arrival']) < $i && strtotime($supply['arrival']) >= $i - 600) {
+                    $corn += $supply['grain'];
+                }
+            }
+            $data['charts']['labels'][] = date('Y-m-d H:i:s', $i);
+            $data['charts']['data'][] = max(0, min($data['target']['grain_storage'], floor($data['charts']['data'][count($data['charts']['data']) - 1] - 0.1 * $troops + $corn)));
+            $data['charts']['max'][] = $data['target']['grain_storage'];
         }
         $data['corn'] = Troops::CORN;
         $this->twig->display($data['target']['advanced_troop_data'] ? 'advanced-deff-call.twig' : 'deff-call.twig', $data);
