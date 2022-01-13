@@ -69,7 +69,7 @@
             {% endfor %}
             </select></label>
         <label>{{ translations.player }}<input name="name" value="{{ inputs.name }}"/></label>
-        <label>{{ translations.player_id }}<input type="number" name="player_id" value="{{ inputs.player_id }}" min="1"/></label>
+        <label>{{ translations.player_id }}<input type="number" name="player_id" value="{{ inputs.player_id }}" min="0"/></label>
     </fieldset>
 </form>
 {% include 'footer.twig' %}
