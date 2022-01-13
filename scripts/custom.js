@@ -20,7 +20,8 @@ window.setInterval(() => {
         if (target < date) {
             elements[i].innerHTML = '00:00:00';
         } else if (target - date > 86400000) {
-            elements[i].innerHTML = '>24h';
+            const diff = new Date(target - date);
+            elements[i].innerHTML = Math.floor(diff/86400000) + 'd ' + zeropad(diff.getUTCHours()) + ':' + zeropad(diff.getUTCMinutes()) + ':' + zeropad(diff.getUTCSeconds());
         } else {
             const diff = new Date(target - date);
             elements[i].innerHTML = zeropad(diff.getUTCHours()) + ':' + zeropad(diff.getUTCMinutes()) + ':' + zeropad(diff.getUTCSeconds());
