@@ -5,25 +5,7 @@
         <title>{{ translations.title }} (alpha)</title>
         <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width">
         <link rel="stylesheet" href="/styles.css"/>
-        <script>
-            const zeropad = (string) => {
-                string = '' + string;
-                if (string.length < 1) {
-                    return '00';
-                }
-                if (string.length < 2) {
-                    return '0' + string;;
-                }
-                return string;
-            };
-            window.setInterval(() => {
-                const date = new Date();
-                document.getElementById('time').innerHTML = zeropad(date.getUTCHours()) + ':' + zeropad(date.getUTCMinutes()) + ':' + zeropad(date.getUTCSeconds());
-            }, 100);
-            window.setInterval(() => {
-                fetch('/ping');
-            }, 10000);
-        </script>
+        <script type="text/javascript" src="/scripts.js"></script>
     </head>
     <body class="{{ style }}">
         <div id="header">

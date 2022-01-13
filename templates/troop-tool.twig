@@ -1,6 +1,4 @@
 {% include 'header.twig' %}
-<script type="text/javascript" src="/chart.min.js"></script>
-<script type="text/javascript" src="/chartjs-adapter-date-fns.bundle.min.js"></script>
 <h2>{{ translations.troop_tool }}</h2>
 {% set lastWorld='' %}
 {% for world,tribes in troops %}
@@ -100,6 +98,15 @@
 {% else %}
     <p>{{ translations.no_data }}</p>
 {% endfor %}
+<h3>{{ translations.plus_import }}</h3>
+<form method="post">
+    <fieldset>
+        <legend>{{ translations.main }}</legend>
+        <label title="ts1.x1.europe.travian.com">{{ translations.world }}*<input type="text" name="world"/></label>
+        <label title="{{ translations.plus_troop_overview }}">{{ translations.source }}*<textarea name="source"></textarea></label>
+        <input type="submit"/>
+    </fieldset>
+</form>
 {% if troops is not empty %}
     <h3>{{ translations.delete_village }}</h3>
     <form method="post">
@@ -131,15 +138,6 @@
                 <option value="hun">{{ translations.huns }}</option>
                 <option value="egyptian">{{ translations.egyptians }}</option>
             </select></label>
-        <input type="submit"/>
-    </fieldset>
-</form>
-<h3>{{ translations.plus_import }}</h3>
-<form method="post">
-    <fieldset>
-        <legend>{{ translations.main }}</legend>
-        <label title="ts1.x1.europe.travian.com">{{ translations.world }}*<input type="text" name="world"/></label>
-        <label title="{{ translations.plus_troop_overview }}">{{ translations.source }}*<textarea name="source"></textarea></label>
         <input type="submit"/>
     </fieldset>
 </form>

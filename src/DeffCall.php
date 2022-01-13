@@ -37,6 +37,10 @@ class DeffCall
             header('Location: /deff-call', true, 303);
             return;
         }
+        if ($key && $key !== $data['target']['key']) {
+            header('Location: /deff-call/' . $id, true, 303);
+            return;
+        }
         if ($data['target']['alliance'] == '0') {
             $data['target']['alliance'] = '';
         } else {
@@ -80,7 +84,8 @@ class DeffCall
                 ':arrival' => $post['date'] . ' ' . $post['time'],
                 ':deff_call' => $data['target']['aid'],
             ]);
-            $data['added'] = true;
+            header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);
+            return;
         } elseif (isset($post['amount']) && $post['amount'] >= 0 && isset($post['time']) && isset($post['date']) && isset($post['account']) && time() < strtotime($data['target']['arrival'])) {
             $troops=0;
             $scouts=0;
@@ -104,7 +109,14 @@ class DeffCall
                 ':troops' => $troops,
                 ':scouts' => $scouts,
             ]);
-            $data['added'] = true;
+            header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);
+            return;
+        } elseif(isset($post['delete'])) {
+            $this->database
+                ->prepare('DELETE FROM deff_call_supports WHERE aid=:aid AND creator=:creator AND created>:min')
+                ->execute([':aid' => $post['delete'], ':creator' => $_SESSION['id'], ':min' => date('Y-m-d H:i:s', time() - 600)]);
+            header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);
+            return;
         }
         $stmt = $this->database->prepare("SELECT deff_call_supports.*,users.name,users.discriminator FROM deff_call_supports LEFT JOIN users ON deff_call_supports.creator=users.aid WHERE deff_call=:id ORDER BY deff_call_supports.arrival ASC");
         $stmt->execute([':id' => $data['target']['aid']]);
@@ -167,7 +179,7 @@ class DeffCall
                     $stmt2->execute([':user' => $_SESSION['id'], ':world' => $village['world']]);
                     list($boots, $standard) = $stmt2->fetch(PDO::FETCH_NUM);
                     $boots = intval($boots, 10);
-                    $standard = intval($sdtandard, 10);
+                    $standard = intval($standard, 10);
                     $data['own'][$village['name']]['hero'] = [
                         'troops' => 1,
                         'boots' => $boots,

@@ -15,7 +15,7 @@
         {% if strtotime(now) < strtotime(target.arrival) %}
             <form method="post">
                 <fieldset>
-                    <legend>{{ translations.main }}</legend>
+                    <legend>{{ translations.legend_troops_send }}</legend>
                     <label>{{ translations.account }}<input required name="account" value="{{ target.alliance.player }}" type="string"/></label>
                     <label>{{ translations.scouts }}<input required name="scouts" type="number" min="0"/></label>
                     <label>{{ translations.troops }}<input required name="troops" type="number" min="0"/></label>
@@ -24,9 +24,6 @@
                     <input type="submit"/>
                 </fieldset>
             </form>
-        {% endif %}
-        {% if added %}
-            <p>{{ translations.added }}</p>
         {% endif %}
     </div>
     <div>
@@ -37,7 +34,7 @@
                 <tr><th>{{ translations.scouts }}</th><td>{{totalScouts }}/{{ target.scouts }}</td></tr>
                 <tr><th>{{ translations.troops }}</th><td>{{totalTroops }}/{{ target.troops }}</td></tr>
                 <tr><th>{{ translations.heroes }}</th><td>{{totalHeroes }}/{{ target.heroes }}</td></tr>
-                <tr><th>{{ translations.arrival }}</th><td>{{ target.arrival }}</tr>
+                <tr><th>{{ translations.arrival }}</th><td>{{ target.arrival }} (<span class="countdown" data-countdown="{{ target.arrival }}"></span>)</tr>
                 <tr><th>{{ translations.share }}</th><td><a class="not-highlighted" href="https://travian.idrinth.de/deff-call/{{ id }}">https://travian.idrinth.de/deff-call/{{ id }}</a></tr>
                         {% if key==target.key and key is not empty %}
                     <tr><th>{{ translations.share_full }}</th><td><a class="not-highlighted" href="https://travian.idrinth.de/deff-call/{{ id }}/{{ key }}">https://travian.idrinth.de/deff-call/{{ id }}/{{ key }}</a></tr>
@@ -65,13 +62,14 @@
 {% endif %}
 <h3>{{ translations.troops_sent }}</h3>
 <table>
-    <tr><th>{{ translations.account }}</th><th>{{ translations.troops }}</th><th>{{ translations.arrival }}</th></tr>
+    <tr><th>{{ translations.account }}</th><th>{{ translations.troops }}</th><th>{{ translations.arrival }}</th><th></th></tr>
             {% for support in supports %}
                 {% if (key==target.key and key is not empty) or (session.id == support.creator and session.id > 0 ) %}
             <tr{% if strtotime(support.arrival) > strtotime(target.arrival) %} class="late"{% endif %}>
                 <th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th>
                 <td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}<br/>{{ support.hero }}{{ translations.heroes }}</td>
                 <td title="{{ translations.created }} {{ support.created }}">{{ support.arrival }}</td>
+                <td>{% if strtotime(now) < strtotime(support.created)+600 and support.creator==session.id %}<form method="post"><input type="hidden" name="delete" value="{{ support.aid }}"/><input type="submit" value="DELETE"/></form>{% endif %}</td>
             </tr>
         {% endif %}
     {% endfor %}

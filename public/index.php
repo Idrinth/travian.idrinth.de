@@ -15,6 +15,7 @@ use De\Idrinth\Travian\MyHero;
 use De\Idrinth\Travian\Ping;
 use De\Idrinth\Travian\Profile;
 use De\Idrinth\Travian\Router;
+use De\Idrinth\Travian\Scripts;
 use De\Idrinth\Travian\SoldierCost;
 use De\Idrinth\Travian\Styles;
 use De\Idrinth\Travian\TravelTime;
@@ -68,4 +69,5 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->post('/attack-parser', AttackParser::class)
     ->get('/my-hero', MyHero::class)
     ->post('/my-hero', MyHero::class)
+    ->get('/scripts.js', Scripts::class)
     ->run();

@@ -107,7 +107,7 @@ LEFT JOIN troop_updates ON troop_updates.user=user_alliance.user AND troop_updat
 WHERE user_alliance.alliance=:alliance
 
 GROUP BY user_alliance.`user`");
-            $stmt4->execute([':alliance' => $alliance['aid'], ':cutoffDate' => date('Y-m-d', date('Y-m-d', time() - 86400 * 7))]);
+            $stmt4->execute([':alliance' => $alliance['aid'], ':cutoffDate' => date('Y-m-d', time() - 86400 * 7)]);
             $stmt5 = $this->database->prepare("SELECT
 	user_alliance.user,
 	SUM(troops.soldier1+troops.soldier2+troops.soldier3+troops.soldier4+troops.soldier5+troops.soldier6) AS troops,

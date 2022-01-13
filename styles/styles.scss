@@ -106,17 +106,20 @@ nav > ul > li {
 h2 {
     margin: 0;
     text-align: center;
-    padding: 0.5em;
+    padding: 1em;
+    padding-bottom: 1.5em;
 }
 h3 {
     margin: 0;
     text-align: center;
-    padding: 0.375em;
+    padding: 0.75em;
+    padding-bottom: 1em;
 }
 h4 {
     margin: 0;
     text-align: center;
     padding: 0.25em;
+    padding-bottom: 0.5em;
 }
 p {
     margin: 0;
@@ -128,10 +131,6 @@ p {
 .late {
     background: red;
     color: #eee;
-}
-.split2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
 }
 table {
     width: 100%;
@@ -193,9 +192,10 @@ body.dark  {
         color: #eee;
     }
 }
-.grid2 {
+.grid2,
+.split2 {
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 1fr 1fr;
 }
 .collapsed-table {
     tr {
@@ -241,6 +241,10 @@ body.dark  {
     body {
         padding-top: 0.7em;
         padding-bottom: 0.7em;
+    }
+    .grid2,
+    .split2 {
+        display: block;
     }
 }
 @media screen and (max-width:600px) {
