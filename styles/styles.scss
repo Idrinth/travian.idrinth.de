@@ -203,6 +203,76 @@ body.dark  {
       grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     }
 }
+.troops > td > .icon {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+}
+.troops > td > input,
+.troops > td > .icon  {
+    background-size: auto 100%;
+    background-position: center left;
+    background-repeat: no-repeat;
+    background-clip: content-box;
+}
+.troops > td.soldier1 > .icon {
+    background-position: 0px center;
+}
+.troops > td.soldier2 > .icon {
+    background-position: -20px center;
+}
+.troops > td.soldier3 > .icon {
+    background-position: -38px center;
+}
+.troops > td.soldier4 > .icon {
+    background-position: -57px center;
+}
+.troops > td.soldier5 > .icon {
+    background-position: -76px center;
+}
+.troops > td.soldier6 > .icon {
+    background-position: -95px center;
+}
+.troops > td.ram > .icon {
+    background-position: -112px center;
+}
+.troops > td.catapult > .icon {
+    background-position: -132px center;
+}
+.troops > td.settler > .icon {
+    background-position: -172px center;
+}
+.troops > td.chief > .icon {
+    background-position: -152px center;
+}
+.troops > td.hero > .icon {
+    background-position: -40px center;
+}
+.troops > td.tournament-square > .icon {
+    background-position: -57px center;
+}
+.egyptian > td > .icon  {
+    background-image: url('/egyptian.png');
+}
+.gaul > td > .icon {
+    background-image: url('/gaul.png');
+}
+.hun > td > .icon  {
+    background-image: url('/hun.png');
+}
+.roman > td > .icon  {
+    background-image: url('/roman.png');
+}
+.teuton > td > .icon {
+    background-image: url('/teuton.png');
+}
+.troops > td:nth-of-type(11) > .icon,
+.troops > td:nth-of-type(12) > .icon  {
+    background-image: url('/specials.gif');
+}
+.troops > td > .icon {
+    display: none;
+} 
 @media screen and (max-width:900px) {
     nav > ul {
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -223,7 +293,15 @@ body.dark  {
           grid-row-start: 1;
           grid-row-end: 3;
         }
+        .troops > td > .icon {
+            display: inline-block;
+        } 
+        .troops > td > input {
+            width: calc(100% - 16px);
+            display: inline;
+        }
     }
+
 }
 @media screen and (max-width:800px) {
     nav > ul {

@@ -11,9 +11,6 @@ const zeropad = (string) => {
 window.setInterval(() => {
     const date = new Date();
     document.getElementById('time').innerHTML = zeropad(date.getUTCHours()) + ':' + zeropad(date.getUTCMinutes()) + ':' + zeropad(date.getUTCSeconds());
-}, 100);
-window.setInterval(() => {
-    const date = new Date();
     const elements = document.getElementsByClassName('countdown');
     for (let i = 0; i < elements.length; i++) {
         const target = new Date(elements[i].getAttribute('data-countdown'));

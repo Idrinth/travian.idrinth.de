@@ -23,20 +23,20 @@
                     <th>{{ translations.tournament_square }}</th>
                 </tr>
                 {% for village in villages %}
-                    <tr>
+                    <tr class="{{ tribe }} troops">
                         <th><a href="https://{{ village.world }}/position_details.php?x={{ village.x }}&y={{ village.y }}" target="_blank">{{ village.name }} ({{ village.x }}|{{ village.y }})</a></th>
-                        <td>{{ village.soldier1 }}</td>
-                        <td>{{ village.soldier2 }}</td>
-                        <td>{{ village.soldier3 }}</td>
-                        <td>{{ village.soldier4 }}</td>
-                        <td>{{ village.soldier5 }}</td>
-                        <td>{{ village.soldier6 }}</td>
-                        <td>{{ village.ram }}</td>
-                        <td>{{ village.catapult }}</td>
-                        <td>{{ village.settler }}</td>
-                        <td>{{ village.chief }}</td>
-                        <td>{{ village.hero }}</td>
-                        <td>{{ village.tournament_square }}</td>
+                        <td title="{{ translations[tribe ~ '_soldier1'] }}" class="soldier1">{{ village.soldier1 }}<span class="icon"></span></td>
+                        <td title="{{ translations[tribe ~ '_soldier2'] }}" class="soldier2">{{ village.soldier2 }}<span class="icon"></span></td>
+                        <td title="{{ translations[tribe ~ '_soldier3'] }}" class="soldier3">{{ village.soldier3 }}<span class="icon"></span></td>
+                        <td title="{{ translations[tribe ~ '_soldier4'] }}" class="soldier4">{{ village.soldier4 }}<span class="icon"></span></td>
+                        <td title="{{ translations[tribe ~ '_soldier5'] }}" class="soldier5">{{ village.soldier5 }}<span class="icon"></span></td>
+                        <td title="{{ translations[tribe ~ '_soldier6'] }}" class="soldier6">{{ village.soldier6 }}<span class="icon"></span></td>
+                        <td title="{{ translations[tribe ~ '_ram'] }}" class="ram">{{ village.ram }}<span class="icon"></span></td>
+                        <td title="{{ translations[tribe ~ '_catapult'] }}" class="catapult">{{ village.catapult }}<span class="icon"></span></td>
+                        <td title="{{ translations[tribe ~ '_settler'] }}" class="settler">{{ village.settler }}<span class="icon"></span></td>
+                        <td title="{{ translations[tribe ~ '_chief'] }}" class="chief">{{ village.chief }}<span class="icon"></span></td>
+                        <td title="{{ translations.hero }}" class="hero">{{ village.hero }}<span class="icon"></span></td>
+                        <td title="{{ translations.tournament_square }}" class="tournament-square">{{ village.tournament_square }}<span class="icon"></span></td>
                     </tr>
                 {% endfor %}
             </table>

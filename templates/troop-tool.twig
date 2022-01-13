@@ -23,20 +23,20 @@
                     <th>{{ translations.tournament_square }}</th>
                 </tr>
                 {% for village in villages %}
-                    <tr>
+                    <tr class="{{ tribe }} troops">
                         <th><a href="https://{{ village.world }}/position_details.php?x={{ village.x }}&y={{ village.y }}" target="_blank">{{ village.name }} ({{ village.x }}|{{ village.y }})</a></th>
-                        <td><input title="{{ translations[tribe ~ '_soldier1'] }}" name="soldier1[{{ village.aid }}]" type="number" value="{{ village.soldier1 }}" min="0" /></td>
-                        <td><input title="{{ translations[tribe ~ '_soldier2'] }}" name="soldier2[{{ village.aid }}]" type="number" value="{{ village.soldier2 }}" min="0" /></td>
-                        <td><input title="{{ translations[tribe ~ '_soldier3'] }}" name="soldier3[{{ village.aid }}]" type="number" value="{{ village.soldier3 }}" min="0" /></td>
-                        <td><input title="{{ translations[tribe ~ '_soldier4'] }}" name="soldier4[{{ village.aid }}]" type="number" value="{{ village.soldier4 }}" min="0" /></td>
-                        <td><input title="{{ translations[tribe ~ '_soldier5'] }}" name="soldier5[{{ village.aid }}]" type="number" value="{{ village.soldier5 }}" min="0" /></td>
-                        <td><input title="{{ translations[tribe ~ '_soldier6'] }}" name="soldier6[{{ village.aid }}]" type="number" value="{{ village.soldier6 }}" min="0" /></td>
-                        <td><input title="{{ translations.ram }}" name="ram[{{ village.aid }}]" type="number" value="{{ village.ram }}" min="0" /></td>
-                        <td><input title="{{ translations.catapult }}" name="catapult[{{ village.aid }}]" type="number" value="{{ village.catapult }}" min="0" /></td>
-                        <td><input title="{{ translations.settler }}" name="settler[{{ village.aid }}]" type="number" value="{{ village.settler }}" min="0" max="9" /></td>
-                        <td><input title="{{ translations.chief }}" name="chief[{{ village.aid }}]" type="number" value="{{ village.chief }}" min="0" max="3"/></td>
-                        <td><input title="{{ translations.hero }}" name="hero[{{ village.aid }}]" type="number" value="{{ village.hero }}" min="0" max="1" /></td>
-                        <td><input title="{{ translations.tournament_square }}" name="tournament_square[{{ village.aid }}]" type="number" value="{{ village.tournament_square }}" min="0" max="20" /></td>
+                        <td class="soldier1"><input title="{{ translations[tribe ~ '_soldier1'] }}" name="soldier1[{{ village.aid }}]" type="number" value="{{ village.soldier1 }}" min="0" /><span class="icon"></span></td>
+                        <td class="soldier2"><input title="{{ translations[tribe ~ '_soldier2'] }}" name="soldier2[{{ village.aid }}]" type="number" value="{{ village.soldier2 }}" min="0" /><span class="icon"></span></td>
+                        <td class="soldier3"><input title="{{ translations[tribe ~ '_soldier3'] }}" name="soldier3[{{ village.aid }}]" type="number" value="{{ village.soldier3 }}" min="0" /><span class="icon"></span></td>
+                        <td class="soldier4"><input title="{{ translations[tribe ~ '_soldier4'] }}" name="soldier4[{{ village.aid }}]" type="number" value="{{ village.soldier4 }}" min="0" /><span class="icon"></span></td>
+                        <td class="soldier5"><input title="{{ translations[tribe ~ '_soldier5'] }}" name="soldier5[{{ village.aid }}]" type="number" value="{{ village.soldier5 }}" min="0" /><span class="icon"></span></td>
+                        <td class="soldier6"><input title="{{ translations[tribe ~ '_soldier6'] }}" name="soldier6[{{ village.aid }}]" type="number" value="{{ village.soldier6 }}" min="0" /><span class="icon"></span></td>
+                        <td class="ram"><input title="{{ translations.ram }}" name="ram[{{ village.aid }}]" type="number" value="{{ village.ram }}" min="0" /><span class="icon"></span></td>
+                        <td class="catapult"><input title="{{ translations.catapult }}" name="catapult[{{ village.aid }}]" type="number" value="{{ village.catapult }}" min="0" /><span class="icon"></span></td>
+                        <td class="settler"><input title="{{ translations.settler }}" name="settler[{{ village.aid }}]" type="number" value="{{ village.settler }}" min="0" max="9" /><span class="icon"></span></td>
+                        <td class="chief"><input title="{{ translations.chief }}" name="chief[{{ village.aid }}]" type="number" value="{{ village.chief }}" min="0" max="3"/><span class="icon"></span></td>
+                        <td class="hero"><input title="{{ translations.hero }}" name="hero[{{ village.aid }}]" type="number" value="{{ village.hero }}" min="0" max="1" /><span class="icon"></span></td>
+                        <td class="tournament-square"><input title="{{ translations.tournament_square }}" name="tournament_square[{{ village.aid }}]" type="number" value="{{ village.tournament_square }}" min="0" max="20" /><span class="icon"></span></td>
                     </tr>
                 {% endfor %}
             </table>
