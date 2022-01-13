@@ -26,7 +26,7 @@
             </form>
             <form method="post">
                 <fieldset>
-                    <legend>{{ translations.legend_troops_send }}</legend>
+                    <legend>{{ translations.legend_grain_send }}</legend>
                     <label>{{ translations.account }}<input required name="account" value="{{ target.alliance.player }}" type="string"/></label>
                     <label>{{ translations.grain }}<input required name="grain" type="number" min="1"/></label>
                     <label>{{ translations.arrival }}<input required name="date" type="date" value="{{ target.arrival|slice(0, 10) }}"/><input required name="time" step="1" type="time" value="{{ target.arrival|slice(11, 8) }}"/></label>

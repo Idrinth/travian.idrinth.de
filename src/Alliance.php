@@ -85,19 +85,22 @@ WHERE alliance=:alliance');
 	+ IFNULL(SUM(deff_call_supports.hero/5), 0)
 	+ COUNT(DISTINCT deff_call_supports.deff_call)*2.5
 	+ COUNT(DISTINCT hero_updates.`date`)*0.5
-	+ COUNT(DISTINCT troop_updates.date) AS activity,
+	+ COUNT(DISTINCT troop_updates.date) 
+	+ IFNULL(SUM(deff_call_supplies.grain), 0) * 0.0001 AS activity,
 	user_alliance.`user`,
 	IFNULL(SUM(deff_call_supports.troops), 0) AS troops,
 	IFNULL(SUM(deff_call_supports.scouts), 0) AS scouts,
 	COUNT(DISTINCT deff_call_supports.deff_call) AS deffCalls,
 	COUNT(DISTINCT hero_updates.`date`) AS heroes,
 	IFNULL(SUM(deff_call_supports.hero), 0) AS heroesDeff,
-	COUNT(DISTINCT troop_updates.date) AS troopUpdate
+	COUNT(DISTINCT troop_updates.date) AS troopUpdate,
+	IFNULL(SUM(deff_call_supplies.grain), 0) AS grain
 FROM user_alliance
 INNER JOIN alliances ON alliances.aid=user_alliance.alliance
 
 LEFT JOIN deff_calls ON deff_calls.alliance=:alliance AND deff_calls.arrival >= :cutoffDate
 LEFT JOIN deff_call_supports ON deff_calls.aid=deff_call_supports.deff_call AND deff_call_supports.creator=user_alliance.user
+LEFT JOIN deff_call_supplies ON deff_calls.aid=deff_call_supplies.deff_call AND deff_call_supplies.user=user_alliance.user
 
 LEFT JOIN hero ON hero.alliance=:alliance
 LEFT JOIN hero_updates ON hero.aid=hero_updates.hero AND hero_updates.user=user_alliance.user AND hero_updates.date >= :cutoffDate
