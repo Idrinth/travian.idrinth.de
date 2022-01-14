@@ -16,6 +16,13 @@
         <label>{{ translations.desired_heroes }}<input required value="{{ inputs.heroes }}" name="heroes" type="number" min="0"/></label>
     </fieldset>
     <fieldset>
+        <legend>{{ translations.grain }}</legend>
+        <label>{{ translations.grain }}<input required value="0" name="grain" type="number" min="0"/></label>
+        <label>{{ translations.grain_production }}<input required value="0" name="grain_production" type="number"/></label>
+        <label>{{ translations.grain_storage }}<input required value="0" name="grain_storage" type="number" min="0"/></label>
+        <input type="submit"/>
+    </fieldset>
+    <fieldset>
         <legend>{{ translations.advanced }}</legend>
         <label>{{ translations.alliance_lock }}<select name="alliance_lock">
             <option value="0">{{ translations.none }}</option>
@@ -26,8 +33,6 @@
         <label>{{ translations.advanced_troop_data }}<input name="advanced_troop_data" type="hidden" value="0"/><input name="advanced_troop_data" type="checkbox" value="1"/></label>
         <label>{{ translations.world_width }}<input required value="401" name="world_width" type="number" min="1"/></label>
         <label>{{ translations.world_height }}<input required value="401" name="world_height" type="number" min="1"/></label>
-        <label>{{ translations.grain }}<input required value="0" name="grain" type="number" min="0"/></label>
-        <label>{{ translations.grain_storage }}<input required value="800" name="grain_storage" type="number" min="1"/></label>
         <input type="submit"/>
     </fieldset>
 </form>

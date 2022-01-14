@@ -231,7 +231,7 @@ class DeffCall
                 }
             }
             $data['charts']['labels'][] = date('Y-m-d H:i:s', $i);
-            $data['charts']['data'][] = max(0, min($data['target']['grain_storage'], floor($data['charts']['data'][count($data['charts']['data']) - 1] - 0.1 * $troops + $corn)));
+            $data['charts']['data'][] = max(0, min($data['target']['grain_storage'], floor($data['charts']['data'][count($data['charts']['data']) - 1] - $troops/6 + $data['target']['grain_production']/6 + $corn)));
             $data['charts']['max'][] = $data['target']['grain_storage'];
         }
         $data['corn'] = Troops::CORN;
