@@ -30,7 +30,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
         $_ENV['DATABASE_USER'],
         $_ENV['DATABASE_PASSWORD'],
         [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
         ]
     ))
     ->register(new Twig())

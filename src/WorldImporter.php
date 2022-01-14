@@ -4,6 +4,7 @@ namespace De\Idrinth\Travian;
 
 use Curl\Curl;
 use Curl\MultiCurl;
+use Exception;
 use PDO;
 
 class WorldImporter
@@ -33,11 +34,19 @@ class WorldImporter
                 ->execute([':now' => date('Y-m-d H:i:s'), ':world' => $row['world']]);
             $multicurl->addGet('https://'.$row['world'].'/map.sql')->success(function(Curl $curl) use($row) {
                 $this->database->exec('TRUNCATE x_world');
+                $world = $row['world'];
                 foreach(explode("\n", $curl->response) as $row) {
                     if ($row) {
                         $this->database->exec(str_replace([',FALSE,', ',TRUE,'], [',0,', ',1,'], $row));
                     }
                 }
+                try {
+                    $this->database->exec('DROP TABLE `' . $world . '`');
+                } catch (Exception $e) {
+                    
+                }
+                $this->database->exec('CREATE TABLE `' . $world . '` LIKE x_world');
+                $this->database->exec('INSERT INTO `' . $world . '` SELECT * FROM x_world');
             });
         }
         $multicurl->start();
