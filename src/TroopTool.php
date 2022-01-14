@@ -267,6 +267,7 @@ ORDER BY troops.tribe DESC, troops.name ASC");
         $stmt->execute([':id' => $_SESSION['id']]);
         $troopsData = [];
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+            WorldImporter::register($this->database, $row['world']);
             $troopsData[$row['world']] = $troopsData[$row['world']] ?? [];
             $troopsData[$row['world']][$row['tribe']] = $troopsData[$row['world']][$row['tribe']] ?? [];
             $troopsData[$row['world']][$row['tribe']][] = $row;

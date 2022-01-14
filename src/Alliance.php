@@ -47,6 +47,7 @@ class Alliance
                 header('Location: /profile', true, 303);
                 return;
             }
+            WorldImporter::register($this->database, $alliance['world']);
             $stmt = $this->database->prepare("SELECT user_alliance.* FROM user_alliance WHERE alliance=:alliance AND user=:user");
             $stmt->execute([':alliance' => $alliance['aid'], ':user' => $_SESSION['id']]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);

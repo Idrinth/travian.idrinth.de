@@ -235,6 +235,7 @@ class DeffCall
             $data['charts']['max'][] = $data['target']['grain_storage'];
         }
         $data['corn'] = Troops::CORN;
+        WorldImporter::register($this->database, $data['target']['world']);
         $this->twig->display($data['target']['advanced_troop_data'] ? 'advanced-deff-call.twig' : 'deff-call.twig', $data);
     }
 }
