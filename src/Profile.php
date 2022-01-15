@@ -20,9 +20,38 @@ class Profile
             return;
         }
         if (isset($post['delete-alliance'])) {
-            
+            $this->database
+                ->prepare('DELETE FROM user_alliance WHERE user=:user AND alliance=:aid')
+                ->execute([':user' => $_SESSION['id'], ':aid' => $post['delete-alliance']]);
+            $stmt = $this->database->prepare("SELECT COUNT(*) FROM user_alliance WHERE rank IN('Creator', 'High Council') AND alliance=:aid");
+            $stmt->execute([':aid' => $post['delete-alliance']]);
+            if (($stmt->fetchColumn()?:0) <= 1) {
+                $this->database->prepare("UPDATE user_alliance SET rank='High Council' WHERE alliance=:aid AND rank='Member' LIMIT 1");
+                $stmt->execute([':aid' => $post['delete-alliance']]);
+                $stmt = $this->database->prepare("SELECT COUNT(*) FROM user_alliance WHERE alliance=:aid AND rank='High Council'");
+                $stmt->execute([':aid' => $post['delete-alliance']]);
+                if (($stmt->fetchColumn()?:0) < 1) {
+                    $this->database
+                        ->prepare('DELETE FROM deff_calls WHERE alliance=:alliance')
+                        ->execute([':alliance' => $post['delete-alliance']]);
+                    $this->database
+                        ->prepare('DELETE FROM hero WHERE alliance=:alliance')
+                        ->execute([':alliance' => $post['delete-alliance']]);
+                    $this->database
+                        ->prepare('DELETE FROM alliance WHERE aid=:alliance')
+                        ->execute([':alliance' => $post['delete-alliance']]);
+                    $this->database
+                        ->exec('DELETE FROM hero_updates WHERE hero NOT IN(SELECT aid FROM hero)');
+                    $this->database
+                        ->exec('DELETE FROM deff_call_supplies WHERE deff_call NOT IN(SELECT aid FROM deff_calls)');
+                    $this->database
+                        ->exec('DELETE FROM deff_call_supports WHERE deff_call NOT IN(SELECT aid FROM deff_calls)');
+                }
+            }
         } elseif (isset($post['delete-world'])) {
-            
+            $this->database
+                ->prepare('DELETE FROM user_world WHERE user=:user AND aid=:aid')
+                ->execute([':user' => $_SESSION['id'], ':aid' => $post['delete-world']]);
         } elseif(isset($post['world']) && isset($post['name'])) {
             $world = WorldImporter::toWorld($post['world']);
             $stmt = $this->database->prepare('SELECT 1 FROM user_world WHERE user=:user AND world=:world');
@@ -46,7 +75,7 @@ class Profile
             . "AND user_deff_call.user=:user"
         );
         $stmt1 = $this->database->prepare(
-            "SELECT alliances.name, alliances.world, alliances.id, user_alliance.rank "
+            "SELECT alliances.name, alliances.world, alliances.id, alliances.aid, user_alliance.rank "
             . "FROM user_alliance "
             . "INNER JOIN alliances "
             . "ON alliances.aid=user_alliance.alliance "
