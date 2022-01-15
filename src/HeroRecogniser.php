@@ -233,6 +233,7 @@ class HeroRecogniser
                         $stmt2 = $this->database->prepare("SELECT world FROM alliances WHERE aid=:aid");
                         $stmt2->execute([':aid' => $post['hero_share']]);
                         Assert::eq($stmt2->fetchColumn(), $world, 'Alliance and entered world don\'t match');
+                        WorldImporter::register($this->database, $world);
                         $now = date('Y-m-d H:i:s');
                         $stmt = $this->database->prepare("SELECT * FROM hero WHERE alliance=:alliance AND player=:player");
                         $stmt->execute(
@@ -241,8 +242,8 @@ class HeroRecogniser
                         $data['previously'] = $stmt->fetch(PDO::FETCH_ASSOC);
                         if (false === $data['previously']) {
                             $this->database
-                                ->prepare("INSERT INTO hero (player, alliance, name) VALUES (:player, :alliance, :name)")
-                                ->execute([':player' => $post['player_id'], ':alliance' => $post['hero_share'], ':name' => $post['name']??'']);
+                                ->prepare("INSERT INTO hero (player, alliance) VALUES (:player, :alliance)")
+                                ->execute([':player' => $post['player_id'], ':alliance' => $post['hero_share']]);
                             $stmt = $this->database->prepare("SELECT * FROM hero WHERE alliance=:alliance AND player=:player");
                             $stmt->execute(
                                 [':player' => $post['player_id'], ':alliance' => $post['hero_share']]
@@ -262,11 +263,13 @@ class HeroRecogniser
                         $data['previously']['shoes'] = self::$shoes[intval($data['previously']['shoes'], 10)];
                         $data['previously']['armor'] = self::$armor[intval($data['previously']['armor'], 10)];
                         $data['previously']['helmet'] = self::$helmet[intval($data['previously']['helmet'], 10)];
-                        if ($data['previously']['name'] !== $post['name']) {
+                        try {
+                            $stmt = $this->database->prepare('SELECT player_name FROM `'.$world.'` WHERE player_id=:id');
+                            $stmt->execute([':id' => $post['player_id']]);
                             $this->database
                                 ->prepare("UPDATE hero SET name=:name WHERE aid=:id")
-                                ->execute([':id' => $data['previously']['aid'], ':name' => $post['name']??'']);
-                        }
+                                ->execute([':id' => $data['previously']['aid'], ':name' => $stmt->fetchColumn()]);
+                        } catch (Exception $e) {}
                         if ($data['previously']['horse'] === $data['result']['horse']) {
                             $this->database
                                 ->prepare("UPDATE hero SET horse_last_seen=:now, last_update=:now WHERE aid=:id")

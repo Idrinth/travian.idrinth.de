@@ -392,3 +392,8 @@ grain_storage: Grain Storage
 legend_grain_send: Enter grain to send
 no_grain_info: No information about grain avaible.
 grain_production: Grain Production
+population: Population
+map_sql_data: Map.sql-Data
+items: Items
+grain_info_hours: Grain Info additional hours after impact
+here: click here

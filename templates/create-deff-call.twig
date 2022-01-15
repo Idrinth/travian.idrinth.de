@@ -20,6 +20,7 @@
         <label>{{ translations.grain }}<input required value="0" name="grain" type="number" min="0"/></label>
         <label>{{ translations.grain_production }}<input required value="0" name="grain_production" type="number"/></label>
         <label>{{ translations.grain_storage }}<input required value="0" name="grain_storage" type="number" min="0"/></label>
+        <label>{{ translations.grain_info_hours }}<input required value="1" name="grain_info_hours" type="number" min="1"/></label>
     </fieldset>
     <fieldset>
         <legend>{{ translations.advanced }}</legend>
@@ -30,8 +31,6 @@
             {% endfor %}
             </select></label>
         <label>{{ translations.advanced_troop_data }}<input name="advanced_troop_data" type="hidden" value="0"/><input name="advanced_troop_data" type="checkbox" value="1"/></label>
-        <label>{{ translations.world_width }}<input required value="401" name="world_width" type="number" min="1"/></label>
-        <label>{{ translations.world_height }}<input required value="401" name="world_height" type="number" min="1"/></label>
         <input type="submit"/>
     </fieldset>
 </form>

@@ -94,47 +94,49 @@
                             {% endif %}
                         {% endfor %}
                 <tr><th>{{ translations.arrival }}</th><td>{{ target.arrival }} (<span class="countdown" data-countdown="{{ target.arrival }}"></span>)</tr>
-                <tr><th>{{ translations.share }}</th><td><a class="not-highlighted" href="https://travian.idrinth.de/deff-call/{{ id }}">https://travian.idrinth.de/deff-call/{{ id }}</a></tr>
+                <tr><th>{{ translations.share }}</th><td><a class="not-highlighted" href="https://travian.idrinth.de/deff-call/{{ id }}">{{ translations.here }}</a></tr>
                         {% if key==target.key and key is not empty %}
-                    <tr><th>{{ translations.share_full }}</th><td><a class="not-highlighted" href="https://travian.idrinth.de/deff-call/{{ id }}/{{ key }}">https://travian.idrinth.de/deff-call/{{ id }}/{{ key }}</a></tr>
+                    <tr><th>{{ translations.share_full }}</th><td><a class="not-highlighted" href="https://travian.idrinth.de/deff-call/{{ id }}/{{ key }}">{{ translations.here }}</a></tr>
                         {% endif %}
         </table>
         {% if target.grain_storage > 0 %}
             <canvas id="chart"></canvas>
             <script>
-              new Chart('chart', {
-                type: 'line',
-                options: {
-                  elements: {
-                    point:{
-                      radius: 0
-                    }
-                  },
-                  scales: {
-                    y: {
-                      show: true,
-                    },
-                    x: {
-                      type: 'timeseries',
-                    },
-                  }
-                },
-                data: {
-                  labels: {{ charts.labels|json_encode()|raw }},
-                  datasets: [{
-                    label: 'Storage',
-                    data: {{ charts.max|json_encode()|raw }},
-                    borderColor: 'rgb(192, 75, 75)',
-                    tension: 0.1
-                  },{
-                    label: 'Grain',
-                    data: {{ charts.data|json_encode()|raw }},
-                    fill: true,
-                    borderColor: 'rgb(75, 192, 192)',
-                    backgroundColor: 'rgb(75, 192, 192, 0.5)',
-                    tension: 0.1
-                  },]
-                }
+                onExists('Chart', () => {
+                    new Chart('chart', {
+                      type: 'line',
+                      options: {
+                        elements: {
+                          point:{
+                            radius: 0
+                          }
+                        },
+                        scales: {
+                          y: {
+                            show: true,
+                          },
+                          x: {
+                            type: 'timeseries',
+                          },
+                        }
+                      },
+                      data: {
+                        labels: {{ charts.labels|json_encode()|raw }},
+                        datasets: [{
+                          label: 'Storage',
+                          data: {{ charts.max|json_encode()|raw }},
+                          borderColor: 'rgb(192, 75, 75)',
+                          tension: 0.1
+                        },{
+                          label: 'Grain',
+                          data: {{ charts.data|json_encode()|raw }},
+                          fill: true,
+                          borderColor: 'rgb(75, 192, 192)',
+                          backgroundColor: 'rgb(75, 192, 192, 0.5)',
+                          tension: 0.1
+                        },]
+                      }
+                    });
               });
             </script>
         {% else %}
@@ -142,24 +144,51 @@
         {% endif %}
     </div>
 </div>
-{% if session.id > 0 %}
-    <h3>{{ translations.in_range }}</h3>
-    <ul>
-        {% for village,troops in own %}
-            <li>{{ village }}<ul>
-                    {% for troop,amount in troops %}
-                        {% if amount.duration %}
-                            <li>{{ amount.troops }} {{ translations[troop] }}({{ amount.duration|date('H:i:s') }})</li>
-                        {% else %}
-                            <li>{{ amount.troops }} {{ translations[troop] }}({{ amount.boots }}% {{ translations.hero_boot_bonus }}, {{ amount.standard }}% {{ translations.hero_standard_bonus }})</li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-            {% else %}
-            <li>{{ translations.nothing_in_range }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
+<div class="split2">
+    <div>
+    {% if session.id > 0 %}
+        <h3>{{ translations.in_range }}</h3>
+        <ul>
+            {% for village,troops in own %}
+                <li>{{ village }}<ul>
+                        {% for troop,amount in troops %}
+                            {% if amount.duration %}
+                                <li>{{ amount.troops }} {{ translations[troop] }}({{ amount.duration|date('H:i:s') }})</li>
+                            {% else %}
+                                <li>{{ amount.troops }} {{ translations[troop] }}({{ amount.boots }}% {{ translations.hero_boot_bonus }}, {{ amount.standard }}% {{ translations.hero_standard_bonus }})</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                <li>{{ translations.nothing_in_range }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    </div>
+    <div>
+    {% if worlddata %}
+        <h3>{{ translations.map_sql_data }}</h3>
+        <table>
+            <tr>
+                <th>{{ translations.player }}</th>
+                <td><a target="_blank" href="https://{{ target.world }}/profile/{{ worlddata.player_id }}">{{ worlddata.player_name }}</a></td>
+            </tr>
+            <tr>
+                <th>{{ translations.village }}</th>
+                <td>{{ worlddata.village_name }}{% if worldata.is_capital==1 %}(Capital){% endif %}{% if worldata.is_city==1 %}(City){% endif %}</td>
+            </tr>
+            <tr>
+                <th>{{ translations.alliance }}</th>
+                <td><a target="_blank" href="https://{{ target.world }}/alliance/{{ worlddata.alliance_id }}">{{ worlddata.alliance_name }}</a></td>
+            </tr>
+            <tr>
+                <th>{{ translations.population }}</th>
+                <td>{{ worlddata.population }}</td>
+            </tr>
+        </table>
+    {% endif %}
+    </div>
+</div>
 <h3>{{ translations.troops_sent }}</h3>
 <table>
     <tr><th>{{ translations.account }}</th><th>{{ translations.troops }}</th><th>{{ translations.arrival }}</th></tr>

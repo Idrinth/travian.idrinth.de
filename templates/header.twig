@@ -5,7 +5,17 @@
         <title>{{ translations.title }} (alpha)</title>
         <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width">
         <link rel="stylesheet" href="/styles.css"/>
-        <script type="text/javascript" src="/scripts.js"></script>
+        <script type="">
+            function onExists(globalProperty, callback) {
+                if (typeof window[globalProperty] === 'undefined') {
+                    setTimeout(() => {
+                        onExists(globalProperty, callback);
+                    }, 100);
+                    return;
+                }
+                callback();
+            }
+        </script>
     </head>
     <body class="{{ style }}">
         <div id="header">

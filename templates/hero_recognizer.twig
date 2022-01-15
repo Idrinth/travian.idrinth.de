@@ -4,7 +4,7 @@
 {% if result %}
     <div class="result">
         <h3>{{ translations.items }}</h3>
-        {% if previously %}<p>{{ previously.name }}</p>{% endif %}
+        {% if previously is not empty %}<h4>{{ previously.name }}</h4>{% endif %}
         <table>
             <tr>
                 <td></td>
@@ -69,7 +69,6 @@
                     <option{% if inputs.hero_share==alliance.aid %} selected{% endif %} value="{{ alliance.aid }}">{{ alliance.world }}: {{ alliance.name }}</option>
                 {% endfor %}
                 </select></label>
-            <label>{{ translations.player }}<input name="name" value="{{ inputs.name }}"/></label>
             <label>{{ translations.player_id }}<input type="number" name="player_id" value="{{ inputs.player_id }}" min="0"/></label>
         </fieldset>
     {% endif %}

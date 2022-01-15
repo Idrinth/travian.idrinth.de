@@ -43,6 +43,7 @@
         </form>
         <canvas id="chart-{{ world|replace({'.': '-'}) }}"></canvas>
         <script>
+            onExists('Chart', () => {
           new Chart('chart-{{ world|replace({'.': '-'}) }}', {
             type: 'line',
             options: {
@@ -91,6 +92,7 @@
                 tension: 0.1
               },]
             }
+          });
           });
         </script>
     {% endfor %}

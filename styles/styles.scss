@@ -272,7 +272,16 @@ body.dark  {
 }
 .troops > td > .icon {
     display: none;
-} 
+}
+fieldset.invisible {
+    * {
+        display:none;
+    }
+    legend {
+        display: table;
+        cursor: pointer;
+    }
+}
 @media screen and (max-width:900px) {
     nav > ul {
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;

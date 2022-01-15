@@ -57,6 +57,12 @@ class DeffCall
                 return;
             }
         }
+        try {
+            $stmt2 = $this->database->prepare('SELECT * FROM `' . $data['target']['world'] . '` WHERE x=:x AND y=:y');
+            $stmt2->execute([':x' => $data['target']['x'], ':y' => $data['target']['y']]);
+            $data['worlddata'] = $stmt2->fetch(PDO::FETCH_ASSOC);
+        } catch(\Exception $e) {            
+        }
         if (isset($_SESSION['id']) && $_SESSION['id'] > 0) {
             $this->database
                 ->prepare("INSERT IGNORE INTO user_deff_call (user, deff_call) VALUES(:user, :deff_call)")
@@ -170,14 +176,27 @@ class DeffCall
             $stmt = $this->database->prepare("SELECT * FROM troops WHERE user=:id AND world=:world");
             $stmt->execute([':id' => $_SESSION['id'], ':world' => $data['target']['world']]);
             $data['own'] = [];
+            $worldWidth = 401;
+            $worldHeight= 401;
+            try {
+                list($worldWidth, $worldHeight) = $this->database
+                    ->query("SELECT MAX(x)-MIN(x)+1,MAX(y)-MIN(y)+1 FROM `{$data['target']['world']}`")
+                    ->fetch(PDO::FETCH_NUM);
+                $worldHeight = intval($worldHeight, 10);
+                $worldWidth = intval($worldWidth, 10);
+            } catch (\Exception $ex) {
+            }
             foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $village) {
                 $distance = $this->distance->distance(
                     new Point($village['x'], $village['y']),
                     new Point($data['target']['x'], $data['target']['y']),
-                    intval($data['target']['world_width'], 10),
-                    intval($data['target']['world_height'], 10),
+                    $worldWidth,
+                    $worldHeight,
                     true
                 );
+                if (intval($distance, 10) === 0) {
+                    continue;
+                }
                 $boots = 0;
                 $standard=0;
                 if ($village['hero'] == 1) {
@@ -217,7 +236,7 @@ class DeffCall
         $stmt3 = $this->database->prepare('SELECT * FROM deff_call_supplies WHERE deff_call=:dc');
         $stmt3->execute([':dc' => $data['target']['aid']]);
         $supplies = $stmt3->fetchAll(PDO::FETCH_ASSOC);
-        for($i = strtotime($data['target']['created']) + 600; $i <= strtotime($data['target']['arrival']) + 7200; $i += 600) {
+        for($i = strtotime($data['target']['created']) + 600; $i <= strtotime($data['target']['arrival']) + $data['target']['grain_info_hours']*3600; $i += 600) {
             $troops = 0;
             foreach ($data['supports'] as $support) {
                 if (strtotime($support['arrival']) < $i) {
