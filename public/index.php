@@ -21,6 +21,7 @@ use De\Idrinth\Travian\Styles;
 use De\Idrinth\Travian\TravelTime;
 use De\Idrinth\Travian\TroopTool;
 use De\Idrinth\Travian\Twig;
+use De\Idrinth\Travian\WorldExport;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -72,4 +73,5 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->get('/my-hero', MyHero::class)
     ->post('/my-hero', MyHero::class)
     ->get('/scripts.js', Scripts::class)
+    ->get('/{world:world}.csv', WorldExport::class)
     ->run();

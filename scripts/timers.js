@@ -13,7 +13,7 @@ window.setInterval(() => {
     document.getElementById('time').innerHTML = zeropad(date.getUTCHours()) + ':' + zeropad(date.getUTCMinutes()) + ':' + zeropad(date.getUTCSeconds());
     const elements = document.getElementsByClassName('countdown');
     for (let i = 0; i < elements.length; i++) {
-        const target = new Date(elements[i].getAttribute('data-countdown'));
+        const target = new Date(elements[i].getAttribute('data-countdown') + '.000+00:00');
         if (target < date) {
             elements[i].innerHTML = '00:00:00';
         } else if (target - date > 86400000) {
