@@ -51,11 +51,7 @@ class Alliance
             $stmt = $this->database->prepare("SELECT user_alliance.* FROM user_alliance WHERE alliance=:alliance AND user=:user");
             $stmt->execute([':alliance' => $alliance['aid'], ':user' => $_SESSION['id']]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            if (isset($post['ingame'])) {
-                $this->database
-                    ->prepare("UPDATE user_alliance SET `name`=:name WHERE alliance=:alliance AND user=:user")
-                    ->execute([':alliance' => $alliance['aid'], ':user' => $_SESSION['id'], ':name' => $post['ingame']]);
-            } elseif (isset($post['regen-key']) && in_array($user['rank'], ['High Council', 'Creator'], true)) {
+            if (isset($post['regen-key']) && in_array($user['rank'], ['High Council', 'Creator'], true)) {
                 $this->database
                     ->prepare("UPDATE alliances SET `key`=:key WHERE id=:id")
                     ->execute([':id' => $id, ':key' => Uuid::uuid4()]);
@@ -70,9 +66,10 @@ class Alliance
                         ->execute([':alliance' => $alliance['aid'], ':user' => $post['user'], ':rank' => $post['rank']]);
                 }
             }
-            $stmt = $this->database->prepare('SELECT user_alliance.*,my_hero.resources,my_hero.off_bonus,my_hero.deff_bonus,my_hero.fighting_strength, users.aid, users.name as discord, users.discriminator
+            $stmt = $this->database->prepare('SELECT user_world.name,user_alliance.*,my_hero.resources,my_hero.off_bonus,my_hero.deff_bonus,my_hero.fighting_strength, users.aid, users.name as discord, users.discriminator
 FROM user_alliance
 INNER JOIN users ON users.aid=user_alliance.user
+LEFT JOIN user_world ON users.aid=user_world.user AND user_world.world=:world
 LEFT JOIN my_hero ON my_hero.user=user_alliance.user AND my_hero.world=:world
 WHERE alliance=:alliance');
             $stmt->execute([':alliance' => $alliance['aid'], ':world' => $alliance['world']]);
@@ -137,18 +134,13 @@ GROUP BY user_alliance.user,alliances.aid");
             return;
         }
         if (isset($post['name']) && isset($post['world'])) {
-            if (strpos($post['world'], 'https://') === 0) {
-                $post['world'] = substr($post['world'], 8);
-            }
-            $post['world'] = explode('/', $post['world'])[0];
-            Assert::regex($post['world'], '/^ts[0-9]+\.x[0-9]+\.[a-z]+\.travian\.com$/');
             $id = Uuid::uuid6();
             $this->database
                 ->prepare("INSERT INTO alliances (id, name, world, `key`) VALUES (:id, :name, :world, :key)")
                 ->execute([
                     ':id' => $id,
                     ':name' => $post['name'],
-                    ':world' => $post['world'],
+                    ':world' => WorldImporter::toWorld($post['world']),
                     ':key' => Uuid::uuid4(),
                 ]);
             $this->database

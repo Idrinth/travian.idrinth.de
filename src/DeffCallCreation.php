@@ -30,21 +30,16 @@ class DeffCallCreation
                     "INSERT INTO deff_calls (grain_info_hours,grain_production,grain,grain_storage,heroes, player, id, `key`, scouts, troops, `x`, `y`, world, creator, arrival, alliance,advanced_troop_data) "
                     . "VALUES (:grain_info_hours,:grain_production,:grain,:grain_storage,:heroes, :player, :id, :key, :scouts, :troops, :x, :y, :world, :creator, :arrival, :alliance,:advanced_troop_data)"
                 );
-                if (strpos($post['world'], 'https://') === 0) {
-                    $post['world'] = substr($post['world'], 8);
-                }
-                $post['world'] = explode('/', $post['world'])[0];
-                Assert::regex($post['world'], '/^ts[0-9]+\.x[0-9]+\.[a-z]+\.travian\.com$/', 'World format is wrong');
                 if ($post['alliance_lock'] > 0) {
                     $stmt2 = $this->database->prepare("SELECT world FROM alliances WHERE aid=:aid");
                     $stmt2->execute([':aid' => $post['alliance_lock']]);
-                    Assert::eq($stmt2->fetchColumn(), $post['world'], 'Alliance and entered world don\'t match');
+                    Assert::eq($stmt2->fetchColumn(), WorldImporter::toWorld($post['world']), 'Alliance and entered world don\'t match');
                 }
                 $key = Uuid::uuid4();
                 $stmt->execute([
                     ':id' => $uuid,
                     ':key' => $key,
-                    ':world' => strtolower($post['world']),
+                    ':world' => WorldImporter::toWorld($post['world']),
                     ':x' => intval($post['x'], 10),
                     ':y' => intval($post['y'], 10),
                     ':scouts' => intval($post['scouts'], 10),

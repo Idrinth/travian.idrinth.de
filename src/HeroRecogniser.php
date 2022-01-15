@@ -225,11 +225,7 @@ class HeroRecogniser
                     $stmt->execute([':user' => $_SESSION['id'], ':alliance' => $post['hero_share']]);
                     $allowed = (bool) $stmt->fetchColumn();
                     if ($allowed) {
-                        $world = $data['inputs']['url'];
-                        if (strpos($world, 'https://') === 0) {
-                            $world = substr($world, 8);
-                        }
-                        $world = explode('/', $world)[0];
+                        $world = WorldImporter::toWorld($data['inputs']['url']);
                         $stmt2 = $this->database->prepare("SELECT world FROM alliances WHERE aid=:aid");
                         $stmt2->execute([':aid' => $post['hero_share']]);
                         Assert::eq($stmt2->fetchColumn(), $world, 'Alliance and entered world don\'t match');

@@ -57,6 +57,9 @@ class DeffCall
                 return;
             }
         }
+        $stmt = $this->database->prepare('SELECT name FROM user_world WHERE user_world.user=:user AND world=:world');
+        $stmt->execute([':user' => $_SESSION['id'] ?? 0, ':world' => $data['target']['world']]);
+        $data['target']['ingame'] = $stmt->fetchColumn() ?: '';
         try {
             $stmt2 = $this->database->prepare('SELECT * FROM `' . $data['target']['world'] . '` WHERE x=:x AND y=:y');
             $stmt2->execute([':x' => $data['target']['x'], ':y' => $data['target']['y']]);

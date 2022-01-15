@@ -19,6 +19,25 @@ class Profile
             header('Location: /login', true, 303);
             return;
         }
+        if (isset($post['delete-alliance'])) {
+            
+        } elseif (isset($post['delete-world'])) {
+            
+        } elseif(isset($post['world']) && isset($post['name'])) {
+            $world = WorldImporter::toWorld($post['world']);
+            $stmt = $this->database->prepare('SELECT 1 FROM user_world WHERE user=:user AND world=:world');
+            $stmt->execute([':user' => $_SESSION['id'], ':world' => $world]);
+            if ($stmt->fetchColumn() == 1) {
+                $this->database
+                    ->prepare('UPDATE user_world SET name=:name WHERE user=:user AND world=:world')
+                    ->execute([':user' => $_SESSION['id'], ':world' => $world, ':name' => $post['name']]);
+            } else {
+                $this->database
+                    ->prepare('INSERT INTO user_world (name,user,world) VALUES (:name, :user, :world)')
+                    ->execute([':user' => $_SESSION['id'], ':world' => $world, ':name' => $post['name']]);
+            }
+            WorldImporter::register($this->database, $world);
+        }
         $stmt = $this->database->prepare(
             "SELECT user_deff_call.advanced, deff_calls.arrival, deff_calls.key, deff_calls.id, deff_calls.world, deff_calls.x, deff_calls.y "
             . "FROM user_deff_call "
@@ -33,11 +52,18 @@ class Profile
             . "ON alliances.aid=user_alliance.alliance "
             . "AND user_alliance.user=:user"
         );
+        $stmt2 = $this->database->prepare(
+            "SELECT * "
+            . "FROM user_world "
+            . "WHERE user=:user"
+        );
         $stmt->execute([':user' => $_SESSION['id']]);
         $stmt1->execute([':user' => $_SESSION['id']]);
+        $stmt2->execute([':user' => $_SESSION['id']]);
         $this->twig->display('profile.twig', [
             'deff_calls' => $stmt->fetchAll(PDO::FETCH_ASSOC),
             'alliances' => $stmt1->fetchAll(PDO::FETCH_ASSOC),
+            'worlds' => $stmt2->fetchAll(PDO::FETCH_ASSOC),
         ]);
     }
 }

@@ -54,6 +54,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->post('/deff-call/{id:uuid}/{key:uuid}', DeffCall::class)
     ->get('/login', Login::class)
     ->get('/profile', Profile::class)
+    ->post('/profile', Profile::class)
     ->get('/styles.css', Styles::class)
     ->get('/ping', Ping::class)
     ->get('/alliance', Alliance::class)

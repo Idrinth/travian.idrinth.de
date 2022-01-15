@@ -1,13 +1,33 @@
 {% include 'header.twig' %}
 <h2>{{ translations.profile }}</h2>
+<h3>{{ translations.accounts }}</h3>
+<table>
+    <tr><th>{{ translations.world }}</th><th>{{ translations.name }}</th><th>{{ translations.delete }}</th></tr>
+    {% for world in worlds %}
+        <tr>
+            <th>{{ world.world }}</th>
+            <td>{{ world.name }}</td>
+            <td><form method="post"><input type="hidden" name="delete-world" value="{{ world.aid }}"/><input type="submit"/></td>
+        </tr>
+    {% endfor %}
+</table>
+<form method="post">
+    <fieldset>
+        <legend>{{ translations.main }}</legend>
+        <label>{{ translations.world }}<input required name="world"/></label>
+        <label>{{ translations.name }}<input required name="name"/></label>
+        <input type="submit"/>
+    </fieldset>
+</form>
 <h3>{{ translations.alliances }}</h3>
 <table>
-    <tr><th>{{ translations.world }}</th><th>{{ translations.name }}</th><th>{{ translations.rank }}</th></tr>
+    <tr><th>{{ translations.world }}</th><th>{{ translations.name }}</th><th>{{ translations.rank }}</th><th>{{ translations.delete }}</th></tr>
 {% for alliance in alliances %}
     <tr>
         <th>{{ alliance.world }}</th>
         <td><a href="/alliance/{{ alliance.id }}">{{ alliance.name }}</a></td>
         <td>{{ alliance.rank }}</td>
+        <td><form method="post"><input type="hidden" name="delete-alliance" value="{{ alliance.aid }}"/><input type="submit"/></td>
     </tr>
 {% endfor %}
 </table>

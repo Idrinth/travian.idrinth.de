@@ -397,3 +397,5 @@ map_sql_data: Map.sql-Data
 items: Items
 grain_info_hours: Grain Info additional hours after impact
 here: click here
+accounts: Accounts
+delete: Delete

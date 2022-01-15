@@ -6,6 +6,7 @@ use Curl\Curl;
 use Curl\MultiCurl;
 use Exception;
 use PDO;
+use Webmozart\Assert\Assert;
 
 class WorldImporter
 {
@@ -13,6 +14,16 @@ class WorldImporter
     public function __construct(PDO $database)
     {
         $this->database = $database;
+    }
+    public static function toWorld(string $input): string
+    {
+        if (strpos($input, 'https://') === 0) {
+            $input = substr($input, 8);
+        }
+        $input = explode('/', $input)[0];
+        $input = strtolower($input);
+        Assert::regex($input, '/^ts[0-9]+\.x[0-9]+\.[a-z]+\.travian\.com$/');
+        return $input;
     }
     public static function register(PDO $database, string $world): void
     {

@@ -150,15 +150,10 @@ ORDER BY troops.tribe DESC, troops.name ASC");
                 ->prepare("DELETE FROM troops WHERE user=:id AND aid=:aid")
                 ->execute([':id' => $_SESSION['id'], ':aid' => $post['aid']]);
         } elseif (isset($post['world']) && isset($post['tribe']) && isset($post['name']) && isset($post['x']) && isset($post['y'])) {
-            if (strpos($post['world'], 'https://') === 0) {
-                $post['world'] = substr($post['world'], 8);
-            }
-            $post['world'] = explode('/', $post['world'])[0];
-            Assert::regex($post['world'], '/^ts[0-9]+\.x[0-9]+\.[a-z]+\.travian\.com$/');
             $stmt = $this->database->prepare("SELECT 1 FROM troops WHERE user=:user AND world=:world AND x=:x AND y=:y");
             $stmt->execute([
                 ':user' => $_SESSION['id'],
-                ':world' => $post['world'],
+                ':world' => WorldImporter::toWorld($post['world']),
                 ':y' => $post['y'],
                 ':x' => $post['x'],
             ]);
@@ -167,7 +162,7 @@ ORDER BY troops.tribe DESC, troops.name ASC");
                     ->prepare("INSERT INTO troops(user,world,x,y,name, tribe) VALUES (:user,:world,:x,:y,:name,:tribe)")
                     ->execute([
                         ':user' => $_SESSION['id'],
-                        ':world' => $post['world'],
+                        ':world' => WorldImporter::toWorld($post['world']),
                         ':y' => $post['y'],
                         ':x' => $post['x'],
                         ':name' => $post['name'],
@@ -204,15 +199,10 @@ ORDER BY troops.tribe DESC, troops.name ASC");
             $villages = $this->getVillages($doc);
             $tribe = $this->getTribe($doc);
             foreach ($villages as $village) {
-                if (strpos($post['world'], 'https://') === 0) {
-                    $post['world'] = substr($post['world'], 8);
-                }
-                $post['world'] = explode('/', $post['world'])[0];
-                Assert::regex($post['world'], '/^ts[0-9]+\.x[0-9]+\.[a-z]+\.travian\.com$/');
                 $stmt = $this->database->prepare("SELECT 1 FROM troops WHERE user=:user AND world=:world AND x=:x AND y=:y");
                 $stmt->execute([
                     ':user' => $_SESSION['id'],
-                    ':world' => $post['world'],
+                    ':world' => WorldImporter::toWorld($post['world']),
                     ':y' => $village['y'],
                     ':x' => $village['x'],
                 ]);
@@ -221,7 +211,7 @@ ORDER BY troops.tribe DESC, troops.name ASC");
                         ->prepare("INSERT INTO troops(user,world,x,y,name, tribe) VALUES (:user,:world,:x,:y,:name,:tribe)")
                         ->execute([
                             ':user' => $_SESSION['id'],
-                            ':world' => $post['world'],
+                            ':world' => WorldImporter::toWorld($post['world']),
                             ':y' => $village['y'],
                             ':x' => $village['x'],
                             ':name' => $village['name'],
@@ -243,7 +233,7 @@ ORDER BY troops.tribe DESC, troops.name ASC");
                         ->prepare("UPDATE troops SET soldier1=:soldier1,soldier2=:soldier2,soldier3=:soldier3,soldier4=:soldier4,soldier5=:soldier5,soldier6=:soldier6,settler=:settler,chief=:chief,hero=:hero,ram=:ram,catapult=:catapult,name=:name WHERE user=:user AND world=:world AND x=:x AND y=:y")
                         ->execute([
                             ':user' => $_SESSION['id'],
-                            ':world' => $post['world'],
+                            ':world' => WorldImporter::toWorld($post['world']),
                             ':y' => $villages[$i-1]['y'],
                             ':x' => $villages[$i-1]['x'],
                             ':name' => $villages[$i-1]['name'],

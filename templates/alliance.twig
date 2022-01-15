@@ -86,13 +86,6 @@
     <a href="/alliance/{{ alliance.id }}/{{ alliance.key }}">{{ translations.invite }}</a>
     <form method="post"><input type="hidden" value="1" name="regen-key"/><input type="submit" value="Regenerate"/></form>
 {% endif %}
-<form method="post">
-    <fieldset>
-        <legend>{{ translations.main }}</legend>
-        <label title="{{ translations.ingame }}">{{ translations.name }}*<input name="ingame" type="text" value="{{ name }}" required/></label>
-        <input type="submit"/>
-    </fieldset>
-</form>
 <h4>{{ translations.deff_calls }}</h4>
 <table>
     <tr>
