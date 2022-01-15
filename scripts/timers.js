@@ -25,15 +25,3 @@ window.setInterval(() => {
         }
     }
 }, 100);
-window.setInterval(() => {
-    fetch('/ping');
-}, 10000);
-(() => {
-    const els = document.getElementsByTagName('fieldset');
-    for (let i=1; i< els.length; i++) {
-        els[i].classList.toggle('invisible');
-        els[i].getElementsByTagName('legend')[0].onclick = () => {
-            els[i].classList.toggle('invisible');
-        };
-    }
-})();
