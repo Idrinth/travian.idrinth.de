@@ -44,7 +44,7 @@ class DeffCall
         if ($data['target']['alliance'] == '0') {
             $data['target']['alliance'] = '';
         } else {
-            $stmt = $this->database->prepare('SELECT alliances.name, alliances.id, user_alliance.name as player FROM user_alliance INNER JOIN alliances ON alliances.aid=user_alliance.alliance AND user_alliance.user=:user AND user_alliance.alliance=:alliance');
+            $stmt = $this->database->prepare('SELECT alliances.name, alliances.id FROM user_alliance INNER JOIN alliances ON alliances.aid=user_alliance.alliance AND user_alliance.user=:user AND user_alliance.alliance=:alliance');
             $stmt->execute([':user' => $_SESSION['id'] ?? 0, ':alliance' => $data['target']['alliance']]);
             $data['target']['alliance'] = $stmt->fetch(PDO::FETCH_ASSOC);
             if (false === $data['target']['alliance']) {
