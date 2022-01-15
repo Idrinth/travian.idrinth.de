@@ -28,7 +28,11 @@ class Router
 
     public function register(object $singleton): self
     {
-        $this->singletons[get_class($singleton)] = $singleton;
+        $rf = new ReflectionClass($singleton);
+        $this->singletons[$rf->getName()] = $singleton;
+        while ($rf = $rf->getParentClass()) {
+            $this->singletons[$rf->getName()] = $singleton;
+        }
         return $this;
     }
 

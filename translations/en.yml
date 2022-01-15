@@ -399,3 +399,6 @@ grain_info_hours: Grain Info additional hours after impact
 here: click here
 accounts: Accounts
 delete: Delete
+attacker: Attacker
+defender: Defender
+catcher: Catcher

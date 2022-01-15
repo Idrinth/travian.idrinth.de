@@ -18,7 +18,8 @@
         "scssphp/scssphp": "^1.9",
         "voku/html-min": "^4.4",
         "matthiasmullie/minify": "^1.3",
-        "php-curl-class/php-curl-class": "^9.5"
+        "php-curl-class/php-curl-class": "^9.5",
+        "alejoluc/lazypdo": "^0.2.6"
     },
     "autoload": {
         "psr-4": {

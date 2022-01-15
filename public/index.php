@@ -1,7 +1,9 @@
 <?php
 
+use alejoluc\LazyPDO\LazyPDO;
 use De\Idrinth\Travian\Alliance;
 use De\Idrinth\Travian\AttackParser;
+use De\Idrinth\Travian\Catcher;
 use De\Idrinth\Travian\DeffCall;
 use De\Idrinth\Travian\DeffCallCreation;
 use De\Idrinth\Travian\DeffCallOverview;
@@ -26,7 +28,7 @@ use De\Idrinth\Travian\WorldExport;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 (new Router())
-    ->register(new PDO(
+    ->register(new LazyPDO(
         'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
         $_ENV['DATABASE_USER'],
         $_ENV['DATABASE_PASSWORD'],
@@ -74,4 +76,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->post('/my-hero', MyHero::class)
     ->get('/scripts.js', Scripts::class)
     ->get('/{world:world}.csv', WorldExport::class)
+    ->get('/catcher', Catcher::class)
+    ->post('/catcher', Catcher::class)
     ->run();

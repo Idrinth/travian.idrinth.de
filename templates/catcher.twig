@@ -1,0 +1,26 @@
+{% include 'header.twig' %}
+<h2>{{ translations.catcher }}</h2>
+<form method="post">
+    <fieldset>
+        <legend>{{ translations.attacker }}</legend>
+        <label>X<input required name="fromX" value="{{ inputs.fromX }}" type="number"/></label>
+        <label>Y<input required name="fromY" value="{{ inputs.fromY }}" type="number"/></label>
+        <label>{{ translations.hero_image_url }}<input required name="url" type="url" value="{{ inputs.url }}"/></label>
+    </fieldset>
+    <fieldset>
+        <legend>{{ translations.defender }}</legend>
+        <label>X<input required name="toX" value="{{ inputs.toX }}" type="number"/></label>
+        <label>Y<input required name="toY" value="{{ inputs.toY }}" type="number"/></label>
+        <label>{{ translations.arrival }}<input required name="date" value="{{ inputs.date }}" type="date"/><input required value="{{ inputs.time }}" name="time" step="1" type="time"/></label>
+        <label>{{ translations.blind_time }}<input type="time" step="1" name="blind_time"/></label>
+    </fieldset>
+    <fieldset>
+        <legend>{{ translations.catcher }}</legend>
+        <label>X<input required name="catcherX" value="{{ inputs.catcherX }}" type="number"/></label>
+        <label>Y<input required name="catcherY" value="{{ inputs.catcherY }}" type="number"/></label>
+        <label>{{ translations.speed }}<input required name="speed" value="{{ inputs.catcherSpeed }}" type="number" min="3"/></label>
+        <label>{{ translations.tournament_square }}<input required name="tournament_square" value="{{ inputs.catcherSpeed }}" type="number" max="20" min="0"/></label>
+        <input type="submit"/>
+    </fieldset>
+</form>
+{% include 'footer.twig' %}
