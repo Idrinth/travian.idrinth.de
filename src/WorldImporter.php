@@ -22,7 +22,7 @@ class WorldImporter
         }
         $input = explode('/', $input)[0];
         $input = strtolower($input);
-        Assert::regex($input, '/^ts[0-9]+\.x[0-9]+\.[a-z]+\.travian\.com$/');
+        Assert::regex($input, '/^t(s[0-9]+|oc)\.x[0-9]+\.[a-z]+\.travian\.com$/');
         return $input;
     }
     public static function register(PDO $database, string $world): void
