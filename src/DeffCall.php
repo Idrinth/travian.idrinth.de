@@ -82,7 +82,7 @@ class DeffCall
                     ]);
             }
         }
-        if (isset($post['scouts']) && $post['scouts'] >= 0 && isset($post['troops']) && $post['troops'] >= 0 && ($post['troops']+$post['scouts']+$post['hero'] > 0) && isset($post['time']) && isset($post['date']) && isset($post['account']) && time() < strtotime($data['target']['arrival'])) {
+        if ((isset($post['troops']) || isset($post['scouts']) || isset($post['hero'])) && ($post['troops']??0+$post['scouts']??0+$post['hero']??0 > 0) && isset($post['time']) && isset($post['date']) && isset($post['account']) && time() < strtotime($data['target']['arrival'])) {
             $stmt = $this->database->prepare("INSERT INTO deff_call_supports (hero, creator, scouts, troops, arrival, deff_call, account) VALUES(:hero, :creator, :scouts, :troops, :arrival, :deff_call, :account)");
             $stmt->execute([
                 ':scouts' => intval($post['scouts'], 10),
