@@ -17,7 +17,7 @@ class MissingTranslations
                 }
             }
         }
-        header('Content-Type: text/yaml');
+        header('Content-Type: text/plain');
         echo Yaml::encodeToString($data);
     }
 }
