@@ -46,6 +46,8 @@ class Profile
                         ->exec('DELETE FROM deff_call_supplies WHERE deff_call NOT IN(SELECT aid FROM deff_calls)');
                     $this->database
                         ->exec('DELETE FROM deff_call_supports WHERE deff_call NOT IN(SELECT aid FROM deff_calls)');
+                    $this->database
+                        ->exec('DELETE FROM user_deff_call WHERE deff_call NOT IN(SELECT aid FROM deff_calls)');
                 }
             }
         } elseif (isset($post['delete-world'])) {

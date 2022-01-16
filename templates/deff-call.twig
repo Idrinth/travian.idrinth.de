@@ -51,6 +51,12 @@
                     <tr><th>{{ translations.share_full }}</th><td><a class="not-highlighted" href="https://travian.idrinth.de/deff-call/{{ id }}/{{ key }}">{{ translations.here }}</a></tr>
                         {% endif %}
         </table>
+        {% if key==target.key and key is not empty %}
+            <form method="post">
+                <input type="hidden" name="delete" value="1"/>
+                <input type="submit" value="DELETE"/>
+            </form>
+        {% endif %}
         {% if target.grain_storage > 0 %}
             <canvas id="chart"></canvas>
             <script>

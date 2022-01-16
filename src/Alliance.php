@@ -4,7 +4,6 @@ namespace De\Idrinth\Travian;
 
 use PDO;
 use Ramsey\Uuid\Uuid;
-use Webmozart\Assert\Assert;
 
 class Alliance
 {
@@ -73,7 +72,7 @@ LEFT JOIN user_world ON users.aid=user_world.user AND user_world.world=:world
 LEFT JOIN my_hero ON my_hero.user=user_alliance.user AND my_hero.world=:world
 WHERE alliance=:alliance');
             $stmt->execute([':alliance' => $alliance['aid'], ':world' => $alliance['world']]);
-            $stmt2 = $this->database->prepare("SELECT deff_calls.player, deff_calls.id, deff_calls.arrival, deff_calls.world, deff_calls.x, deff_calls.y, deff_calls.key FROM deff_calls WHERE alliance=:alliance");
+            $stmt2 = $this->database->prepare("SELECT deff_calls.player, deff_calls.id, deff_calls.arrival, deff_calls.world, deff_calls.x, deff_calls.y, deff_calls.key FROM deff_calls WHERE deleted=0 AND alliance=:alliance");
             $stmt2->execute([':alliance' => $alliance['aid']]);
             $stmt3 = $this->database->prepare("SELECT * FROM hero WHERE alliance=:alliance");
             $stmt3->execute([':alliance' => $alliance['aid']]);

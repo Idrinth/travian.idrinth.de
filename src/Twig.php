@@ -13,6 +13,7 @@ class Twig extends Environment
     {
         parent::__construct(new FilesystemLoader(dirname(__DIR__) . '/templates'));
         $this->addFunction(new TwigFunction('floor', 'floor'));
+        $this->addFunction(new TwigFunction('round', 'round'));
         $this->addFunction(new TwigFunction('strtotime', 'strtotime'));
         $this->addFunction(new TwigFunction('num', function($value) {
             return number_format(round($value * 10)/10, 1);

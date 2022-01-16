@@ -30,7 +30,7 @@ class DeffCall
             header('Location: /deff-call', true, 303);
             return;
         }
-        $stmt = $this->database->prepare("SELECT * FROM deff_calls WHERE id=:id");
+        $stmt = $this->database->prepare("SELECT * FROM deff_calls WHERE deleted=0 AND id=:id");
         $stmt->execute([':id' => $id]);
         $data['target'] = $stmt->fetch(PDO::FETCH_ASSOC);
         if (false === $data['target']) {
@@ -82,7 +82,28 @@ class DeffCall
                     ]);
             }
         }
-        if ((isset($post['troops']) || isset($post['scouts']) || isset($post['hero'])) && ($post['troops']??0+$post['scouts']??0+$post['hero']??0 > 0) && isset($post['time']) && isset($post['date']) && isset($post['account']) && time() < strtotime($data['target']['arrival'])) {
+        if (isset($post['delete']) && $post['delete'] == 1 && $key) {
+            if ($data['target']['alliance']) {
+                $this->database
+                    ->prepare('UPDATE deff_calls SET deleted=1 WHERE aid=:aid')
+                    ->execute([':aid' => $data['target']['aid']]);
+            } else {
+                $this->database
+                    ->prepare('DELETE FROM deff_calls WHERE aid=:aid')
+                    ->execute([':aid' => $data['target']['aid']]);
+                $this->database
+                    ->prepare('DELETE FROM deff_call_supports WHERE deff_call=:aid')
+                    ->execute([':aid' => $data['target']['aid']]);
+                $this->database
+                    ->prepare('DELETE FROM deff_call_supplies WHERE deff_call=:aid')
+                    ->execute([':aid' => $data['target']['aid']]);
+                $this->database
+                    ->prepare('DELETE FROM user_deff_call WHERE deff_call=:aid')
+                    ->execute([':aid' => $data['target']['aid']]);
+            }
+            header('Location /deff-call', true, 303);
+            return;
+        } elseif ((isset($post['troops']) || isset($post['scouts']) || isset($post['hero'])) && ($post['troops']??0+$post['scouts']??0+$post['hero']??0 > 0) && isset($post['time']) && isset($post['date']) && isset($post['account']) && time() < strtotime($data['target']['arrival'])) {
             $stmt = $this->database->prepare("INSERT INTO deff_call_supports (hero, creator, scouts, troops, arrival, deff_call, account) VALUES(:hero, :creator, :scouts, :troops, :arrival, :deff_call, :account)");
             $stmt->execute([
                 ':scouts' => intval($post['scouts']??0, 10),
