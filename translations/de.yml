@@ -251,3 +251,154 @@ added: Deine Daten sind hinzugefügt .
 hidden_details: With the current link details are hidden.
 share: Link zum Teilen
 share_full: Alle Deteils zum Teilen Link
+travian_footer: „Diese Website wird in keiner Weise von Travian Legends oder der Travian GmbH unterstützt und ist lediglich als kostenloses, nicht kommerzielles Tool für Spieler gedacht. Einige Bilder wurden erstellt und sind Eigentum der Travian GmbH, und ihre Verwendung mit Genehmigung stellt ihre Rechte nicht in Frage.'
+desired_troops: 'gewünchte Truppen'
+desired_scouts: 'gewünchte Späher'
+desired_celebrations_info: 'gewünschtes Fest, um rund um die Uhr weiterzumachen'
+total_production_info: 'Gesamtproduktion pro Stunde ohne Berücksichtigung der negativen Produktion'
+crop_production_info: 'Getreide produktion pro Stunde reduziert durch Feierbedarf'
+iron_production_info: 'Eisen produktion pro Stunde reduziert durch Feierbedarf'
+clay_production_info: 'Lehm produktion pro Stunde reduziert durch Feierbedarf'
+lumber_production_info: 'Holz produktion pro Stunde reduziert durch Feierbedarf'
+trader_capacity_info: 'Kappazität eines einzelnen Händlers'
+world_speed_info: 'Geschwindigkeit deiner Welt'
+trader_speed_info: 'Geschwindigkeit deiner Händler'
+tribe_info: 'Dies wird verwendet, um einige Händlerinformationen zu berechnen'
+traders_distance_info: 'Die direkte distanz zwichen den Dörfern'
+traders_time_info: 'Die Zeit um zwichen den Dörfern zu reisen'
+traders_delivery_info: 'Wie oft musst du die Lieferung senden'
+lumber_per_trade_info: 'Holz pro Handel'
+clay_per_trade_info: 'Lehm pro Handel'
+iron_per_trade_info: 'Eisen pro Handel'
+crop_per_trade_info: 'Getreide pro Handel'
+login: 'Via Discord anmelden'
+world: Welt
+position: Position
+link: Verknüpfung
+duration: Dauer
+troop_type: 'Truppen Sorte'
+recruiting_level: 'Stufe Ausbildungsgebäude'
+great_recruiting_level: 'Stufe großes Ausbildungsgebäude'
+use_great_recruiting: 'Verwende das große Ausbildungsgebäude'
+normal_recruiting: 'Normalerweise rekrutierte Truppen'
+helmet_bonus: 'Helm Bonus'
+horse_trough_level: 'Bonus Pferdetränke'
+artefact_bonus: 'Artefakt Bonus'
+alliance_bonus: 'Allianz Bonus'
+soldier_cost: 'Truppen Kosten Kalkulator'
+deff_calls: Party aufruf
+alliances: Allianzen
+name: Name
+rank: Rang
+login_benefits: 'Melden Sie sich an, um Ihre Party-Anrufe auf Ihrer Profilseite zu speichern und Allianzen beizutreten, um erweiterte Funktionen wie Heldenverfolgung und Truppentool zu erhalten.'
+invite: Einladung
+alliance: Allianz
+effect: Wirkung
+previously: Vorher
+updated: 'letzte Aktualisierung'
+changed: 'letzte Änderung'
+alliance_lock: 'Allianz sichern'
+ingame: 'IName im Spiel'
+heroes: Helden
+gear: 'Helden Ausrüstung'
+activity: 'Aktivitäts Punktr'
+player_id: Spieler Identität
+hero_share: 'mit Allianz teilen'
+player: Spieler
+desired_heroes: 'Gewünchte Helden'
+troop_tool: 'Truppen Werkzeug'
+hero: Held
+roman_chief: Senator
+roman_settler: 'Römicher Siedler'
+roman_ram: 'Rammbock'
+roman_catapult: 'Feuerkatapult'
+roman_soldier1: Legionair
+roman_soldier2: Praetorianer
+roman_soldier3: Imperianer
+roman_soldier4: 'Equites Legati'
+roman_soldier5: 'Equites Imperatis'
+roman_soldier6: 'Equites Caesaris'
+gaul_chief: 'Häuptling'
+gaul_settler: 'Gallicher Siedler'
+gaul_ram: 'Rammholz'
+gaul_catapult: 'Kriegskatapult'
+gaul_soldier1: Phalanx
+gaul_soldier2: Schwertkämpfer
+gaul_soldier3: Späher
+gaul_soldier4: 'Theutates Blitz'
+gaul_soldier5: Druide
+gaul_soldier6: Haeduaner
+teuton_chief: 'Stammesführer'
+teuton_settler: 'Germanen Siedler'
+teuton_ram: 'Ramme'
+teuton_catapult: 'Katapult'
+teuton_soldier1: Keulenschwinger
+teuton_soldier2: Speerkämpfer
+teuton_soldier3: Axtkämpfer
+teuton_soldier4: Kundschaftler
+teuton_soldier5: Paladin
+teuton_soldier6: 'Teutonen Reiter'
+hun_chief: 'Logades'
+hun_settler: 'Hunnen Siedler'
+hun_ram: 'Ramme'
+hun_catapult: 'Katapult'
+hun_soldier1: Söldner
+hun_soldier2: Bogenschütze
+hun_soldier3: Aufklärer
+hun_soldier4: 'Steppenreiter'
+hun_soldier5: Scharfschütze
+hun_soldier6: Marauder
+egyptian_chief: 'Gaufürst'
+egyptian_settler: 'Egypticher Siedler'
+egyptian_ram: 'Ramme'
+egyptian_catapult: 'Steinkatapult'
+egyptian_soldier1: 'Sklavenmiliz'
+egyptian_soldier2: 'Asche Wächter'
+egyptian_soldier3: 'Chepesch-Krieger'
+egyptian_soldier4: 'Sopdu Entdecker'
+egyptian_soldier5: 'Anhur Wächter'
+egyptian_soldier6: 'Resheph Streitwagen'
+plus_import: Plus-Einfügen
+no_data: 'Keine Daten gezeiget'
+delete_village: 'Dorf löschen'
+new_village: 'Neues Dorf'
+tournament_square: 'Turnierplatz'
+advanced_troop_data: 'Erweiterte Truppendaten'
+amount: Höhe
+deff_call_overview: 'Def-Party Überblick'
+all_worlds: 'Alle Welten ohne Filter'
+plus_troop_overview: 'Kopieren Sie den Quellcode Ihres Plus-Truppenübersichtsfensters.'
+in_range: 'In Reichweite'
+nothing_in_range: 'Keine Truppen in deinem Truppen Werkzeug befinden sich in Reichweite'
+troops_sent: 'Truppen bereits gesendet'
+blind_time: 'Blinde Seite'
+time: Zeitk Parser
+attack_parser: 'Angriffs einrichtung'
+world_width: 'Welt Breite (max x=200 -> 401)'
+world_height: 'Welt Höhe (max y=200 -> 401)'
+to_details: 'Sihe Details'
+hero_overview: 'Helden Übersichtsseite'
+import: Einfügen
+hero_fighting_strength: 'Punkte Helden Kampfkraft'
+hero_off_bonus: 'Off-Bonus Punkte'
+hero_def_bonus: 'Def-Bonus Punkte'
+hero_resources: 'Punkte Resurcen Produktion'
+attributes: Attribute
+my_hero: 'Mein Held'
+hero_standard_bonus: 'Standarten Bonus'
+hero_boot_bonus: 'Schuh Bonus'
+legend_troops_send: 'Truppen die gesendet wurden'
+grain: Getreide
+grain_storage: 'Getreide Speicher'
+legend_grain_send: 'Zu sendendes Getreide'
+no_grain_info: 'Keine Information über verfügbares Getreide'
+grain_production: 'Getreide Produktion'
+population: Population
+map_sql_data: Map.sql-Data
+items: Items
+grain_info_hours: 'Getreide info zusätzliche Zeit nach dem Einschlag'
+accounts: Accounts
+delete: Löschen
+attacker: Angreifer
+defender: Verteidiger
+catcher: Empfänger
