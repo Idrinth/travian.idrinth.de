@@ -15,6 +15,11 @@
                 }
                 callback();
             }
+            function setCookie(name, value) {
+                let date = new Date();
+                date.setTime(date.getTime() + 86400);
+                document.cookie = name + "=" + value + "; " + date.toUTCString() + "; Max-Age=86400; path=/; domain=travian.idrinth.de; secure; SameSite=Strict";
+            }
         </script>
     </head>
     <body class="{{ style }}">
@@ -23,16 +28,16 @@
                 <img src="/logo.png" alt=""/>
             </a>
             <h1>{{ translations.title }} (alpha)</h1>
-            <select style="width: auto; display: inline;" onchange="document.cookie='lang=' + this.value;location.reload();">
-                <option{% if lang=='en' %} selected{% endif %} value="en">English</option>
-                <option{% if lang=='de' %} selected{% endif %} value="de">Deutsch</option>
-                <option{% if lang=='tr' %} selected{% endif %} value="tr">Türkçe</option>
-                <option{% if lang=='nl' %} selected{% endif %} value="nl">Nederlands</option>
-                <option{% if lang=='fi' %} selected{% endif %} value="fi">Suomi</option>
-                <option{% if lang=='fr' %} selected{% endif %} value="fr">Français</option>
-                <option{% if lang=='jp' %} selected{% endif %} value="jp">日本語</option>
+            <select style="width: auto; display: inline;" onchange="setCookie('lang', this.value);location.reload();">
+                <option{% if lang=='en' %} selected="selected"{% endif %} value="en">English</option>
+                <option{% if lang=='de' %} selected="selected{% endif %} value="de">Deutsch</option>
+                <option{% if lang=='tr' %} selected="selected{% endif %} value="tr">Türkçe</option>
+                <option{% if lang=='nl' %} selected="selected{% endif %} value="nl">Nederlands</option>
+                <option{% if lang=='fi' %} selected="selected{% endif %} value="fi">Suomi</option>
+                <option{% if lang=='fr' %} selected="selected{% endif %} value="fr">Français</option>
+                <option{% if lang=='jp' %} selected="selected{% endif %} value="jp">日本語</option>
             </select>
-            <select style="width: auto; display: inline;" onchange="document.cookie='style=' + this.value;document.body.setAttribute('class', this.value);">
+            <select style="width: auto; display: inline;" onchange="setCookie('style', this.value);document.body.setAttribute('class', this.value);">
                 <option{% if style=='light' %} selected{% endif %} value="light">&#9788;</option>
                 <option{% if style=='dark' %} selected{% endif %} value="dark">&#9789;</option>
             </select>
