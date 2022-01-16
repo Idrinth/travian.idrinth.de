@@ -85,9 +85,9 @@ class DeffCall
         if ((isset($post['troops']) || isset($post['scouts']) || isset($post['hero'])) && ($post['troops']??0+$post['scouts']??0+$post['hero']??0 > 0) && isset($post['time']) && isset($post['date']) && isset($post['account']) && time() < strtotime($data['target']['arrival'])) {
             $stmt = $this->database->prepare("INSERT INTO deff_call_supports (hero, creator, scouts, troops, arrival, deff_call, account) VALUES(:hero, :creator, :scouts, :troops, :arrival, :deff_call, :account)");
             $stmt->execute([
-                ':scouts' => intval($post['scouts'], 10),
-                ':troops' => intval($post['troops'], 10),
-                ':hero' => intval($post['hero'], 10),
+                ':scouts' => intval($post['scouts']??0, 10),
+                ':troops' => intval($post['troops']??0, 10),
+                ':hero' => intval($post['hero']??0, 10),
                 ':account' => $post['account'],
                 ':creator' => $_SESSION['id'] ?? 0,
                 ':arrival' => $post['date'] . ' ' . $post['time'],
