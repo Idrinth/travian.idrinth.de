@@ -12,7 +12,9 @@ class MissingTranslations
         $data = (array) Yaml::decodeFromFile($dir . '/en.yml');
         if (strlen($language) === 2 && $language !== 'en' && is_file($dir . '/' . $language . '.yml')) {
             foreach ((array) Yaml::decodeFromFile($dir . '/' . $language . '.yml') as $key => $value) {
-                unset($data[$key]);
+                if ($value !== $data[$key]) {
+                    unset($data[$key]);
+                }
             }
         }
         header('Content-Type: text/yaml');
