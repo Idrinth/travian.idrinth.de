@@ -101,7 +101,7 @@ class DeffCall
                     ->prepare('DELETE FROM user_deff_call WHERE deff_call=:aid')
                     ->execute([':aid' => $data['target']['aid']]);
             }
-            header('Location /deff-call', true, 303);
+            header('Location: /deff-call', true, 303);
             return;
         } elseif ((isset($post['troops']) || isset($post['scouts']) || isset($post['hero'])) && ($post['troops']??0+$post['scouts']??0+$post['hero']??0 > 0) && isset($post['time']) && isset($post['date']) && isset($post['account']) && time() < strtotime($data['target']['arrival'])) {
             $stmt = $this->database->prepare("INSERT INTO deff_call_supports (hero, creator, scouts, troops, arrival, deff_call, account) VALUES(:hero, :creator, :scouts, :troops, :arrival, :deff_call, :account)");
