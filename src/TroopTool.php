@@ -38,6 +38,7 @@ class TroopTool
             $deff[$row['world']] = $deff[$row['world']] ?? 0;
             $off[$row['world']] = $off[$row['world']] ?? 0;
             $scouts[$row['world']] = $scouts[$row['world']] ?? 0;
+            $multi[$row['world']] = $multi[$row['world']] ?? 0;
             if ($row['tribe'] === 'roman') {
                 $deff[$row['world']] += $row['soldier1'] * Troops::CORN['roman_soldier1'];
                 $deff[$row['world']] += $row['soldier2'] * Troops::CORN['roman_soldier2'];
