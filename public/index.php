@@ -13,6 +13,7 @@ use De\Idrinth\Travian\HeroRecogniser;
 use De\Idrinth\Travian\Home;
 use De\Idrinth\Travian\Imprint;
 use De\Idrinth\Travian\Login;
+use De\Idrinth\Travian\MissingTranslations;
 use De\Idrinth\Travian\MyHero;
 use De\Idrinth\Travian\Ping;
 use De\Idrinth\Travian\Profile;
@@ -78,4 +79,5 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->get('/{world:world}.csv', WorldExport::class)
     ->get('/catcher', Catcher::class)
     ->post('/catcher', Catcher::class)
+    ->get('/missing-translations/{lang:[a-z]{2}}.yml', MissingTranslations::class)
     ->run();
