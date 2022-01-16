@@ -98,7 +98,7 @@ class TroopTool
         foreach ($worlds as $world) {
             $this->database
                 ->prepare('INSERT INTO troop_updates (multipurpose,user, world, offensive, defensive, scouts, `date`) VALUES (:multi, :id, :world, :off, :deff, :scouts, :date)')
-                ->execute([':date' => date('Y-m-d'),':id' => $_SESSION['id'], ':world' => $world, ':multi' => $multi[$world], ':off' => $off[$world], ':deff' => $deff[$world], ':scouts' => $scouts[$world]]);
+                ->execute([':date' => date('Y-m-d'),':id' => $_SESSION['id'], ':world' => $world, ':multi' => $multi[$world]??0, ':off' => $off[$world]??0, ':deff' => $deff[$world]??0, ':scouts' => $scouts[$world]??0]);
         }
     }
     public function run(array $post, $id = 0): void
