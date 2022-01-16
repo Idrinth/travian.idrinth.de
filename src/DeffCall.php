@@ -101,6 +101,7 @@ class DeffCall
             $heroes=0;
             if ($post['troop_type'] === 'hero') {
                 $heroes++;
+                $post['amount']=1;
             } elseif (in_array($post['troop_type'], ['roman_soldier4', 'gaul_soldier3', 'teuton_soldier4', 'hun_soldier3', 'egyptian_soldier4'], true)) {
                 $scouts+= $post['amount'];
             } else {
