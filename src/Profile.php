@@ -74,7 +74,8 @@ class Profile
             . "FROM user_deff_call "
             . "INNER JOIN deff_calls "
             . "ON deff_calls.aid=user_deff_call.deff_call "
-            . "AND user_deff_call.user=:user"
+            . "AND user_deff_call.user=:user "
+            . "AND deff_calls.deleted=0"
         );
         $stmt1 = $this->database->prepare(
             "SELECT alliances.name, alliances.world, alliances.id, alliances.aid, user_alliance.rank "

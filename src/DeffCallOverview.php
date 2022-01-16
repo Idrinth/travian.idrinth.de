@@ -22,14 +22,14 @@ class DeffCallOverview
         }
         $stmt2 = $this->database->prepare('SELECT DISTINCT deff_calls.world
 FROM user_deff_call
-INNER JOIN deff_calls ON user_deff_call.deff_call=deff_calls.aid
+INNER JOIN deff_calls ON user_deff_call.deff_call=deff_calls.aid AND deff_calls.deleted=0
 WHERE user_deff_call.user=:user AND deff_calls.arrival >= :date');
         $stmt2->execute([':user' => $_SESSION['id'], ':date' => date('Y-m-d H:i:s', time() - 3600)]);
         $worlds = $stmt2->fetchAll(PDO::FETCH_ASSOC);
         if ($world) {
             $stmt = $this->database->prepare('SELECT user_deff_call.advanced, deff_calls.key, deff_calls.player,deff_calls.troops AS desiredTroops,deff_calls.scouts AS desiredScouts,deff_calls.heroes AS desiredHeroes, deff_calls.x,deff_calls.y,deff_calls.world,deff_calls.arrival, deff_calls.id,IFNULL(SUM(deff_call_supports.troops), 0) AS troops, IFNULL(SUM(deff_call_supports.scouts), 0) AS scouts, IFNULL(SUM(deff_call_supports.hero), 0) AS heroes
     FROM user_deff_call
-    INNER JOIN deff_calls ON user_deff_call.deff_call=deff_calls.aid AND deff_calls.arrival >= :date
+    INNER JOIN deff_calls ON user_deff_call.deff_call=deff_calls.aid AND deff_calls.arrival >= :date AND deff_calls.deleted=0
     LEFT JOIN deff_call_supports ON deff_call_supports.deff_call=deff_calls.aid AND deff_call_supports.arrival <= deff_calls.arrival
     WHERE user_deff_call.user=:id AND deff_calls.world=:world
     GROUP BY deff_calls.aid');
@@ -42,7 +42,7 @@ WHERE user_deff_call.user=:user AND deff_calls.arrival >= :date');
         } else {
             $stmt = $this->database->prepare('SELECT user_deff_call.advanced, deff_calls.key, deff_calls.player,deff_calls.troops AS desiredTroops,deff_calls.scouts AS desiredScouts,deff_calls.heroes AS desiredHeroes, deff_calls.x,deff_calls.y,deff_calls.world,deff_calls.arrival, deff_calls.id,IFNULL(SUM(deff_call_supports.troops), 0) AS troops, IFNULL(SUM(deff_call_supports.scouts), 0) AS scouts, IFNULL(SUM(deff_call_supports.hero), 0) AS heroes
     FROM user_deff_call
-    INNER JOIN deff_calls ON user_deff_call.deff_call=deff_calls.aid AND deff_calls.arrival >= :date
+    INNER JOIN deff_calls ON user_deff_call.deff_call=deff_calls.aid AND deff_calls.arrival >= :date AND deff_calls.deleted=0
     LEFT JOIN deff_call_supports ON deff_call_supports.deff_call=deff_calls.aid AND deff_call_supports.arrival <= deff_calls.arrival
     WHERE user_deff_call.user=:id
     GROUP BY deff_calls.aid');
