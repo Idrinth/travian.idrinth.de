@@ -402,3 +402,12 @@ delete: Delete
 attacker: Attacker
 defender: Defender
 catcher: Catcher
+desired_resources: Desired Resources
+details: Details
+desired_clay: Desired Clay
+desired_lumber: Desired Lumber
+desired_iron: Desired Iron
+desired_crop: Desired Crop
+resources: Resources
+resource_push: Resource-Push
+legend_resources_send: Enter resources you are sending

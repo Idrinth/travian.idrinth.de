@@ -17,6 +17,8 @@ use De\Idrinth\Travian\MissingTranslations;
 use De\Idrinth\Travian\MyHero;
 use De\Idrinth\Travian\Ping;
 use De\Idrinth\Travian\Profile;
+use De\Idrinth\Travian\ResourcePush;
+use De\Idrinth\Travian\ResourcePushCreation;
 use De\Idrinth\Travian\Router;
 use De\Idrinth\Travian\Scripts;
 use De\Idrinth\Travian\SoldierCost;
@@ -80,4 +82,10 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->get('/catcher', Catcher::class)
     ->post('/catcher', Catcher::class)
     ->get('/missing-translations/{lang:[a-z]{2}}.yml', MissingTranslations::class)
+    ->get('/resource-push', ResourcePushCreation::class)
+    ->post('/resource-push', ResourcePushCreation::class)
+    ->get('/resource-push/{id:uuid}', ResourcePush::class)
+    ->post('/resource-push/{id:uuid}', ResourcePush::class)
+    ->get('/resource-push/{id:uuid}/{key:uuid}', ResourcePush::class)
+    ->post('/resource-push/{id:uuid}/{key:uuid}', ResourcePush::class)
     ->run();

@@ -1,0 +1,97 @@
+{% include 'header.twig' %}
+<h2>{{ translations.resource_push }} {{ target.player }} ({{ target.x }}|{{ target.y }})</h2>
+{% set lumber=0 %}
+{% set clay=0 %}
+{% set iron=0 %}
+{% set crop=0 %}
+{% set resources=0 %}
+{% for supply in supplies %}
+    {% set lumber=lumber+supply.lumber %}
+    {% set clay=clay+supply.clay %}
+    {% set iron=iron+supply.iron %}
+    {% set crop=lumber+supply.crop %}
+    {% set resources=resources+supply.lumber+supply.clay+iron.lumber+supply.crop %}
+{% endfor %}
+<div class="split2">
+    <div>
+        {% if strtotime(now) < strtotime(target.arrival) %}
+            <form method="post">
+                <fieldset>
+                    <legend>{{ translations.legend_resources_send }}</legend>
+                    <label>{{ translations.account }}<input required name="account" value="{{ target.ingame }}" type="string"/></label>
+                    <label>{{ translations.lumber }}<input required name="lumber" type="number" min="0"/></label>
+                    <label>{{ translations.clay }}<input required name="clay" type="number" min="0"/></label>
+                    <label>{{ translations.iron }}<input required name="iron" type="number" min="0"/></label>
+                    <label>{{ translations.crop }}<input required name="crop" type="number" min="0"/></label>
+                    <label>{{ translations.arrival }}<input required name="date" type="date" value="{{ target.arrival|slice(0, 10) }}"/><input required name="time" step="1" type="time" value="{{ target.arrival|slice(11, 8) }}"/></label>
+                    <input type="submit"/>
+                </fieldset>
+            </form>
+        {% endif %}
+    </div>
+    <div>
+        <table>
+            {% if target.alliance.id is empty %}<tr><th>{{ translations.world }}</th><td>{{ target.world }}</td></tr>{% endif %}
+            {% if target.alliance.id is not empty %}<tr><th>{{ translations.alliance }}</th><td><a href="/alliance/{{ target.alliance.id }}">{{ target.world }}: {{ target.alliance.name }}</a></td></tr>{% endif %}
+                <tr><th>{{ translations.village }}</th><td><a href="https://{{ target.world }}/position_details.php?x={{ target.x }}&y={{ target.y }}" target="_blank">{{ target.player }} ({{ target.x }}|{{ target.y }})</a></td></tr>
+                <tr><th>{{ translations.arrival }}</th><td>{{ target.arrival }} (<span class="countdown" data-countdown="{{ target.arrival }}"></span>)</tr>
+                {% if target.resources > 0 %}<tr><th>{{translations.resources }}</th><td>{{resources}}/{{target.resources}}</td></tr>{% endif %}
+                {% if target.lumber > 0 %}<tr><th>{{translations.lumber }}</th><td>{{lumber}}/{{target.lumber}}</td></tr>{% endif %}
+                {% if target.clay > 0 %}<tr><th>{{translations.clay }}</th><td>{{clay}}/{{target.clay}}</td></tr>{% endif %}
+                {% if target.iron > 0 %}<tr><th>{{translations.iron }}</th><td>{{iron}}/{{target.iron}}</td></tr>{% endif %}
+                {% if target.crop > 0 %}<tr><th>{{translations.crop }}</th><td>{{resources}}/{{target.crop}}</td></tr>{% endif %}
+                <tr><th>{{ translations.share }}</th><td><a class="not-highlighted" href="https://travian.idrinth.de/deff-call/{{ id }}">{{ translations.here }}</a></tr>
+                        {% if key==target.key and key is not empty %}
+                    <tr><th>{{ translations.share_full }}</th><td><a class="not-highlighted" href="https://travian.idrinth.de/deff-call/{{ id }}/{{ key }}">{{ translations.here }}</a></tr>
+                        {% endif %}
+        </table>
+        {% if key==target.key and key is not empty %}
+            <form method="post">
+                <input type="hidden" name="delete" value="resource-push"/>
+                <input type="submit" value="DELETE"/>
+            </form>
+        {% endif %}
+    </div>
+</div>
+<div class="split2">
+    <div>
+    </div>
+    <div>
+    {% if worlddata %}
+        <h3>{{ translations.map_sql_data }}</h3>
+        <table>
+            <tr>
+                <th>{{ translations.player }}</th>
+                <td><a target="_blank" href="https://{{ target.world }}/profile/{{ worlddata.player_id }}">{{ worlddata.player_name }}</a></td>
+            </tr>
+            <tr>
+                <th>{{ translations.village }}</th>
+                <td>{{ worlddata.village_name }}{% if worldata.is_capital==1 %}(Capital){% endif %}{% if worldata.is_city==1 %}(City){% endif %}</td>
+            </tr>
+            <tr>
+                <th>{{ translations.alliance }}</th>
+                <td><a target="_blank" href="https://{{ target.world }}/alliance/{{ worlddata.alliance_id }}">{{ worlddata.alliance_name }}</a></td>
+            </tr>
+            <tr>
+                <th>{{ translations.population }}</th>
+                <td>{{ worlddata.population }}</td>
+            </tr>
+        </table>
+    {% endif %}
+    </div>
+</div>
+<h3>{{ translations.resources_sent }}</h3>
+<table>
+    <tr><th>{{ translations.account }}</th><th>{{ translations.resources }}</th><th>{{ translations.arrival }}</th><th></th></tr>
+            {% for supply in supplies %}
+                {% if (key==target.key and key is not empty) or (session.id == supply.creator and session.id > 0 ) %}
+            <tr{% if strtotime(supply.arrival) > strtotime(supply.arrival) %} class="late"{% endif %}>
+                <th{% if supply.name is not empty %} title="{{ supply.name ~ '#' ~ supply.discriminator }}"{% endif %}>{{ supply.account }}</th>
+                <td>{{ supply.lumber }}{{ translations.lumber }}<br/>{{ supply.clay }}{{ translations.clay }}<br/>{{ supply.iron }}{{ translations.iron }}<br/>{{ supply.crop }}{{ translations.crop }}</td>
+                <td title="{{ translations.created }} {{ supply.created }}">{{ supply.arrival }}</td>
+                <td>{% if strtotime(now) < strtotime(supply.created)+600 and supply.creator==session.id %}<form method="post"><input type="hidden" name="delete" value="{{ supply.aid }}"/><input type="submit" value="DELETE"/></form>{% endif %}</td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+</table>
+{% include 'footer.twig' %}

@@ -1,0 +1,31 @@
+{% include 'header.twig' %}
+<h2>Create Resource-Push</h2>
+{% if error %}
+    <p class="error">{{ error }}</p>
+{% endif %}
+<form method="post">
+    <fieldset>
+        <legend>{{ translations.main }}</legend>
+        <label title="ts9.x1.europe.travian.com">{{ translations.world }}*<input value="{{ inputs.world }}" required name="world"/></label>
+        <label>X<input required name="x" value="{{ inputs.x }}" type="number"/></label>
+        <label>Y<input required name="y" value="{{ inputs.y }}" type="number"/></label>
+        <label>{{ translations.player }}<input required name="player"/></label>
+        <label>{{ translations.arrival }}<input required name="date" value="{{ inputs.date }}" type="date"/><input required value="{{ inputs.time }}" name="time" step="1" type="time"/></label>
+        <label>{{ translations.desired_resources }}<input required value="{{ inputs.resources }}" name="resources" type="number" min="0"/></label>
+        <input type="submit"/>
+    </fieldset>
+    <fieldset>
+        <legend>{{ translations.details }}</legend>
+        <label>{{ translations.desired_lumber }}<input required value="{{ inputs.lumber }}" name="lumber" type="number" min="0"/></label>
+        <label>{{ translations.desired_clay }}<input required value="{{ inputs.clay }}" name="clay" type="number" min="0"/></label>
+        <label>{{ translations.desired_iron }}<input required value="{{ inputs.iron }}" name="iron" type="number" min="0"/></label>
+        <label>{{ translations.desired_crop }}<input required value="{{ inputs.grain }}" name="grain" type="number" min="0"/></label>
+        <label>{{ translations.alliance_lock }}<select name="alliance_lock">
+            <option value="0">{{ translations.none }}</option>
+            {% for alliance in alliances %}
+                <option{% if inputs.alliance_lock==alliance.aid %} selected{% endif %} value="{{ alliance.aid }}">{{ alliance.world }}: {{ alliance.name }}</option>
+            {% endfor %}
+            </select></label>
+    </fieldset>
+</form>
+{% include 'footer.twig' %}
