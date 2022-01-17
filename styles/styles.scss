@@ -281,6 +281,9 @@ fieldset.invisible {
         cursor: pointer;
     }
 }
+.hidden .details {
+    display: none;
+}
 @media screen and (max-width:900px) {
     nav > ul {
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
