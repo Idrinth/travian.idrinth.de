@@ -17,7 +17,7 @@ class WorldExport
         $stmt = $this->database->query("SELECT * FROM `$world`");
         header('Content-Type: text/csv');
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
-            echo '"' . implode('","', $row) . '"';
+            echo '"' . implode('","', $row) . '"' . "\n";
         }
     }
 }
