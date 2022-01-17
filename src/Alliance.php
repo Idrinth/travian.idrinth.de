@@ -85,7 +85,7 @@ WHERE alliance=:alliance');
 	+ COUNT(DISTINCT troop_updates.date) 
 	+ IFNULL(SUM(deff_call_supplies.grain), 0) * 0.0001
 	+ COUNT(DISTINCT resource_pushes.aid) * 0.5
-	+ (IFNULL(SUM(resource_push_supplies.lumber), 0)+IFNULL(SUM(resource_push_supplies.clay), 0)+IFNULL(SUM(resource_push_supplies.iron), 0)+IFNULL(SUM(resource_push_supplies.crop), 0)) * 0.002
+	+ (IFNULL(SUM(resource_push_supplies.lumber), 0)+IFNULL(SUM(resource_push_supplies.clay), 0)+IFNULL(SUM(resource_push_supplies.iron), 0)+IFNULL(SUM(resource_push_supplies.crop), 0)) * 0.001
 	 AS activity,
 	user_alliance.`user`,
 	IFNULL(SUM(deff_call_supports.troops), 0) AS troops,
@@ -130,6 +130,11 @@ INNER JOIN troops ON user_alliance.user=troops.user AND alliances.world=troops.w
 WHERE alliances.aid=:aid
 GROUP BY user_alliance.user,alliances.aid");
             $stmt5->execute([':aid' => $alliance['aid']]);
+            $stmt6 = $this->database->prepare("SELECT resource_pushes.id,resource_pushes.key,resource_pushes.arrival,resource_pushes.x,resource_pushes.y,resource_pushes.player
+FROM resource_pushes
+WHERE alliance=:aid
+AND deleted=0");
+            $stmt6->execute([':aid' => $alliance['aid']]);
             $this->twig->display('alliance.twig', [
                 'alliance' => $alliance,
                 'players' => $stmt->fetchAll(PDO::FETCH_ASSOC),
@@ -137,6 +142,7 @@ GROUP BY user_alliance.user,alliances.aid");
                 'heroes' => $stmt3->fetchAll(PDO::FETCH_ASSOC),
                 'activity' => $stmt4->fetchAll(PDO::FETCH_ASSOC),
                 'troops' => $stmt5->fetchAll(PDO::FETCH_ASSOC),
+                'pushes' => $stmt6->fetchAll(PDO::FETCH_ASSOC),
             ]);
             return;
         }

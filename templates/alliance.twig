@@ -103,6 +103,21 @@
     </tr>
 {% endfor %}
 </table>
+<h4>{{ translations.resource_push }}</h4>
+<table>
+    <tr>
+        <th>{{ translations.world }}</th>
+        <th>{{ translations.position }}</th>
+        <th>{{ translations.arrival }}</th>
+    </tr>
+{% for push in pushes %}
+    <tr>
+        <th>{{ push.world }}</th>
+        <td><a href="/resource-push/{{ push.id }}{% if mayInvite %}/{{ push.key }}{% endif %}">{{ push.player }} ({{ push.x }}|{{ push.x }})</a></td>
+        <th>{{ push.arrival }}</th>
+    </tr>
+{% endfor %}
+</table>
 <h4>{{ translations.heroes }}</h4>
 <table>
     <tr>
