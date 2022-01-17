@@ -16,6 +16,7 @@ class WorldExport
         WorldImporter::register($this->database, $world);
         $stmt = $this->database->query("SELECT * FROM `$world`");
         header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename="' . $world . '.csv"');
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
             echo '"' . implode('","', $row) . '"' . "\n";
         }
