@@ -82,7 +82,7 @@ class DeffCall
                     ]);
             }
         }
-        if (isset($post['delete']) && $post['delete'] == 1 && $key) {
+        if (isset($post['delete']) && $post['delete'] == 'deff-call' && $key) {
             if (is_array($data['target']['alliance'])) {
                 $this->database
                     ->prepare('UPDATE deff_calls SET deleted=1 WHERE aid=:aid')
