@@ -83,7 +83,9 @@ WHERE alliance=:alliance');
 	+ COUNT(DISTINCT deff_call_supports.deff_call)*2.5
 	+ COUNT(DISTINCT hero_updates.`date`)*0.5
 	+ COUNT(DISTINCT troop_updates.date) 
-	+ IFNULL(SUM(deff_call_supplies.grain), 0) * 0.0001 AS activity,
+	+ IFNULL(SUM(deff_call_supplies.grain), 0) * 0.0001
+	+ (IFNULL(SUM(resource_push_supplies.lumber), 0)+IFNULL(SUM(resource_push_supplies.clay), 0)+IFNULL(SUM(resource_push_supplies.iron), 0)+IFNULL(SUM(resource_push_supplies.crop), 0)) * 0.002
+	 AS activity,
 	user_alliance.`user`,
 	IFNULL(SUM(deff_call_supports.troops), 0) AS troops,
 	IFNULL(SUM(deff_call_supports.scouts), 0) AS scouts,
@@ -91,7 +93,8 @@ WHERE alliance=:alliance');
 	COUNT(DISTINCT hero_updates.`date`) AS heroes,
 	IFNULL(SUM(deff_call_supports.hero), 0) AS heroesDeff,
 	COUNT(DISTINCT troop_updates.date) AS troopUpdate,
-	IFNULL(SUM(deff_call_supplies.grain), 0) AS grain
+	IFNULL(SUM(deff_call_supplies.grain), 0) AS grain,
+	IFNULL(SUM(resource_push_supplies.lumber), 0)+IFNULL(SUM(resource_push_supplies.clay), 0)+IFNULL(SUM(resource_push_supplies.iron), 0)+IFNULL(SUM(resource_push_supplies.crop), 0) AS resources
 FROM user_alliance
 INNER JOIN alliances ON alliances.aid=user_alliance.alliance
 
@@ -103,6 +106,9 @@ LEFT JOIN hero ON hero.alliance=:alliance
 LEFT JOIN hero_updates ON hero.aid=hero_updates.hero AND hero_updates.user=user_alliance.user AND hero_updates.date >= :cutoffDate
 
 LEFT JOIN troop_updates ON troop_updates.user=user_alliance.user AND troop_updates.date >= :cutoffDate AND troop_updates.world=alliances.world
+
+LEFT JOIN resource_pushes ON resource_pushes.alliance=alliances.aid AND resource_pushes.arrival >= :cutoffDate
+LEFT JOIN resource_push_supplies ON resource_push_supplies.resource_push=resource_pushes.aid AND resource_push_supplies.creator=user_alliance.user
 
 WHERE user_alliance.alliance=:alliance
 
