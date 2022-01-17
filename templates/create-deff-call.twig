@@ -14,6 +14,7 @@
         <label>{{ translations.desired_troops }}<input required value="{{ inputs.troops }}" name="troops" type="number" min="0"/></label>
         <label>{{ translations.desired_scouts }}<input required value="{{ inputs.scouts }}" name="scouts" type="number" min="0"/></label>
         <label>{{ translations.desired_heroes }}<input required value="{{ inputs.heroes }}" name="heroes" type="number" min="0"/></label>
+        <input type="submit"/>
     </fieldset>
     <fieldset>
         <legend>{{ translations.grain }}</legend>
@@ -31,7 +32,6 @@
             {% endfor %}
             </select></label>
         <label>{{ translations.advanced_troop_data }}<input name="advanced_troop_data" type="hidden" value="0"/><input name="advanced_troop_data" type="checkbox" value="1"/></label>
-        <input type="submit"/>
     </fieldset>
 </form>
 {% include 'footer.twig' %}
