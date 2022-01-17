@@ -34,7 +34,7 @@
             {% if target.alliance.id is empty %}<tr><th>{{ translations.world }}</th><td>{{ target.world }}</td></tr>{% endif %}
             {% if target.alliance.id is not empty %}<tr><th>{{ translations.alliance }}</th><td><a href="/alliance/{{ target.alliance.id }}">{{ target.world }}: {{ target.alliance.name }}</a></td></tr>{% endif %}
                 <tr><th>{{ translations.village }}</th><td><a href="https://{{ target.world }}/position_details.php?x={{ target.x }}&y={{ target.y }}" target="_blank">{{ target.player }} ({{ target.x }}|{{ target.y }})</a></td></tr>
-                <tr><th>{{ translations.arrival }}</th><td>{{ target.arrival }} (<span class="countdown" data-countdown="{{ target.arrival }}"></span>)</tr>
+                <tr><th>{{ translations.until }}</th><td>{{ target.arrival }} (<span class="countdown" data-countdown="{{ target.arrival }}"></span>)</tr>
                 {% if target.resources > 0 %}<tr><th>{{translations.resources }}</th><td>{{resources}}/{{target.resources}}</td></tr>{% endif %}
                 {% if target.lumber > 0 %}<tr><th>{{translations.lumber }}</th><td>{{lumber}}/{{target.lumber}}</td></tr>{% endif %}
                 {% if target.clay > 0 %}<tr><th>{{translations.clay }}</th><td>{{clay}}/{{target.clay}}</td></tr>{% endif %}
