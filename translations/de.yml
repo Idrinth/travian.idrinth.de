@@ -376,7 +376,7 @@ time: Zeitk Parser
 attack_parser: Angriffs einrichtung
 world_width: Welt Breite (max x=200 -> 401)
 world_height: Welt Höhe (max y=200 -> 401)
-to_details: Sihe Details
+to_details: Siehe Details
 hero_overview: Helden Übersichtsseite
 import: Einfügen
 hero_fighting_strength: Punkte Helden Kampfkraft
