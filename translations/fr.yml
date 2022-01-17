@@ -1,9 +1,229 @@
 source: Code Source
 celebration: Fête
 celebrations: Fêtes
-automatically: Automatique
-additional_target: Cibles additionnelles
-town_hall_level: Niveau de l'Hôtel de Ville
-tribe: Peuple
+title: Travian Calculateurs
+home: Home
+delivery: Calculateur de livraison
+imprint: Imprimer
+travian_footer: ce site est en aucun cas reconnu par Travian Legends ou Travian GmbH et est simplement mise a disposition comme un outil pour les joueurs.
+welcome_header: Bienvenu!
+welcome_text: Choisissez un calculateur du menu ci dessus.
+delivery_calculator: Calculateur de livraison
+inputs: Donnée d'entrée
+tribe: Tribu
+speed: Vitesse
+world_speed: Vitesse du server
+capacity: Capacité
+lumber: Bois
+clay: Argile
+iron: Fer
+crop: Céréale
+total: Total
+travel_time: Temps de trajet
+distance: Distance
+main: Main
+source_title: Entrer le code source de la place du marchée dans la fenêtre.
+help: Vous voulez aider pour coder ou à traduire?
+none: Rien
+small: Petite
+great: Grande
+automatically: Automatiquement
+romans: Romains
+teutons: Teutons
+gauls: Gaulois
+egyptians: Egyptiens
+huns: Huns
+additional_target: Cible Additionelle
+additional_target_title: 0|0 sera ignoré
+only_crop: Céréal seulement
+town_hall_level: Niveau de l'hôtel de ville
+tribe_title: Seulement selectionné si c'est mal détecté
 advanced: Avancé
-none: Aucune
+gelding: Hongre
+gelding_effect: la vitesse de votre héro est porté à 14 cases par heure
+thoroughbred: pur-sang
+thoroughbred_effect: la vitesse de votre héro est porté à 17 cases par heure
+warhorse: Cheval de bataille
+warhorse_effect: la vitesse de votre héro est porté à 20 cases par heure
+empty: Vide
+hero_image_url: URL de l'image du héro
+helmet: Casque
+armor: Armure
+right_hand: Main droite
+left_hand: Main gauche
+shoes: Chaussure
+horse: Cheval
+small_map: Petite carte
+small_map_effect: Vitesse de retour au village de votre hero et des troupes qui l'accompagnent augmentée de 30%
+medium_map: Carte
+medium_map_effect: Vitesse de retour au village de votre hero et des troupes qui l'accompagnent augmentée de 40%
+great_map: Grande carte
+great_map_effect: Vitesse de retour au village de votre hero et des troupes qui l'accompagnent augmentée de 50%
+small_people_banner: Petit fanion
+small_people_banner_effect: Troupes 30% plus rapide entre vos propres villages.
+medium_people_banner: Fanion
+medium_people_banner_effect: Troupes 40% plus rapide entre vos propres villages.
+great_people_banner: Grand fanion
+great_people_banner_effect: Troupes 50% plus rapide entre vos propres villages.
+small_alliance_banner: Petite bannière
+small_alliance_banner_effect: Troupes 15% plus rapide entre les membres de votre coalition. 
+medium_alliance_banner: Bannière
+medium_alliance_banner_effect: Troupes 20% plus rapide entre les membres de votre coalition. 
+great_alliance_banner: Grande bannière
+great_alliance_banner_effect: Troupes 25% plus rapide entre les membres de votre coalition.  
+small_thief: Pochette du voleur
+small_thief_effect: +10% de bonus pillage dans les cachettes
+medium_thief: Sachet du voleur
+medium_thief_effect: +15% de bonus pillage dans les cachettes
+great_thief: Sac du voleur
+great_thief_effect: +20% de bonus pillage dans les cachettes
+small_shield: Petit bouclier
+small_shield_effect: +250 force pour le Héros.
+medium_shield: Bouclier
+medium_shield_effect: +1000 force pour le Héros.
+great_shield: Bouclier large
+great_shield_effect: +4000 force pour le Héros.
+small_natars: Petit cor Natar
+small_natars_effect: +20% attaque contre les Natars ( pour le héros et les troupes qui l'accompagnent)
+medium_natars: Cor Natar
+medium_natars_effect: +25% attaque contre les Natars ( pour le héros et les troupes qui l'accompagnent)
+great_natars: Grand cor Natar
+great_natars_effect: +30% attaque contre les Natars ( pour le héros et les troupes qui l'accompagnent)
+small_regen_shoes: Bottes de Régénération
+small_regen_shoes_effect: +10 point de vie/jour
+medium_regen_shoes: Bottes de Santé
+medium_regen_shoes_effect: +15 point de vie/jour
+great_regen_shoes: Bottes de Guérison
+great_regen_shoes_effect: +20 point de vie/jour
+small_speed_shoes: Bottes du mercenaire
+small_speed_shoes_effect: +25% de vitesse pour les distances supérieures à 20 cases.
+medium_speed_shoes: Bottes du guerrier
+medium_speed_shoes_effect: +50% de vitesse pour les distances supérieures à 20 cases.
+great_speed_shoes: Bottes de l'archer
+great_speed_shoes_effect: +75% de vitesse pour les distances supérieures à 20 cases.
+small_horse_shoes: Petits éperons
+small_horse_shoes_effect: +3 cases par heure
+medium_horse_shoes: Éperons
+medium_horse_shoes_effect: +4 cases par heure
+great_horse_shoes: Éperons maléfiques
+great_horse_shoes_effect: +5 cases par heure
+small_xp_helmet: Casque de Sensibilisation
+small_xp_helmet_effect: +15% d'experience
+medium_xp_helmet: Casque de Lumière
+medium_xp_helmet_effect: +20% d'experience
+great_xp_helmet: Casque de Sagesse
+great_xp_helmet_effect: +25% d'experience
+small_regen_helmet: Casque de Régénération
+small_regen_helme_effectt: +10 point de vie/jour
+medium_regen_helmet: Casque de Santé
+medium_regen_helme_effectt: +15 point de vie/jour
+great_regen_helmet: Casque de Guérison
+great_regen_helme_effectt: +20 point de vie/jour
+small_cp_helmet: Casque du Gladiateur
+small_cp_helmet_effect: +100 points de culture par jour
+medium_cp_helmet: Casque du Tribun
+medium_cp_helmet_effect: +400 points de culture par jour
+great_cp_helmet: Casque du Consul
+great_cp_helmet_effect: +1600 points de culture par jour
+small_cavalry_helmet: Casque du Cavalier
+small_cavalry_helmet_effect: -10% du temps d'entrainement dans l'écurie.
+medium_cavalry_helmet: Casque de la Cavalerie
+medium_cavalry_helmet_effect: -15% du temps d'entrainement dans l'écurie
+great_cavalry_helmet: Casque de la Cavalerie lourde
+great_cavalry_helmet_effect: -20% du temps d'entrainement dans l'écurie.
+small_infantry_helmet: Casque du Mercenaire
+small_infantry_helmet_effect: -10% du temps d'entrainement dans la caserne
+medium_infantry_helmet: Casque du Guerrier
+medium_infantry_helmet_effect: -15% du temps d'entrainement dans la caserne.
+great_infantry_helmet: Casque de l'Archer
+great_infantry_helmet_effect: -20% du temps d'entrainement dans la caserne.
+small_regen_armor: Armure de régénération
+small_regen_armor_effect: +20 points de vie par jour.
+medium_regen_armor: Armure de santé
+medium_regen_armor_effect: +30 points de vie par jour.
+great_regen_armor: Armure de guérison
+great_regen_armor_effect: +40 points de vie par jour.
+small_scales_armor: Armure légère d'écaille
+small_scales_armor_effect: Dégats réduits de 4 points  + 10 points de vie / jour.
+medium_scales_armor: Armure d'écaille
+medium_scales_armor_effect: Dégats réduits de 6 points  + 15 points de vie / jour.
+great_scales_armor: Armure lourde d'écaille
+great_scales_armor_effect: Dégats réduits de 8 points  + 20 points de vie / jour.
+small_chest_armor: Cuirasse légère
+small_chest_armor_effect: +250 force pour le héros.
+medium_chest_armor: Cuirasse
+medium_chest_armor_effect: +1000 force pour le héros.
+great_chest_armor: Cuirasse lourde
+great_chest_armor_effect: +4000 force pour le héros.
+small_chain_armor: Armure segmentée légère
+small_chain_armor_effect: Dégats réduits de 3 +125 force pour le héros.
+medium_chain_armor: Armure segmentée
+medium_chain_armor_effect: Dégats réduits de 4 +500 force pour le héros.
+great_chain_armor: Armure segmentée lourde
+great_chain_armor_effect: Dégats réduits de 5 +2000  force pour le héros.
+hero_check: Suivi des héros
+deff_call: Deff Call
+account: Compte
+troops: Troupes
+scouts: éclaireurs
+desired_troops: Troupes désirées
+desired_scouts: éclaireurs désirées
+arrival: Arrivée
+created: Ajouté
+village: Village
+status: Status
+added: Vos unitées ont été ajoutées
+hidden_details: Avec ce lien, les details sont cachés
+share: Lien partagé
+share_full: Détail du lien partagé
+desired_celebrations_info: Fête desiré pour continuer 24/7
+total_production_info: totale de production par heure en ignorant la prodcution négative
+crop_production_info: production de céréale par heure réduite par les céréales nécessaires pour les fêtes
+iron_production_info: production de fer par heure réduite par les céréales nécessaires pour les fêtes
+clay_production_info: production de argile par heure réduite par les céréales nécessaires pour les fêtes
+lumber_production_info: production de bois par heure réduite par les céréales nécessaires pour les fêtes
+trader_capacity_info: Capacité d'un seul marchand
+world_speed_info: Vitesse du serveur
+trader_speed_info: Vitesse du marchand
+tribe_info: Calculation des informations du marchand
+traders_distance_info: Distance entre deux villages
+traders_time_info: Temps de voyage entre deux villages
+traders_delivery_info: Combien de fois vous avez besoin de faire un convoi
+lumber_per_trade_info: bois par convoi
+clay_per_trade_info: argile par convoi
+iron_per_trade_info: fer par convoi
+crop_per_trade_info: céréale par convoi
+login: Connection via Discord
+world: Serveur
+position: Position
+link: Lien
+duration: Durée
+troop_type: Type de troupe
+recruiting_level: Niveau du batiment de recrutement
+great_recruiting_level: Niveau du grand batiment de recrutement
+use_great_recruiting: Utilisation du grand batiment de recrutement
+normal_recruiting: Troupes normalement recruté
+helmet_bonus: Bonus du casque
+horse_trough_level: Niveau de l'abrevoir
+artefact_bonus: Bonus d'artefact
+alliance_bonus: Bonus d'alliance 
+soldier_cost: Calculateur du cout des soldats
+deff_calls: Deff-Calls
+alliances: Alliances
+name: Nom
+rank: Rang
+login_benefits: Connecter vous pour sauvegarder vos DefCall dans votre page de profil et rejoindre l'alliance.
+invite: inviter
+alliance: Alliance
+effect: Effet
+previously: Precedent
+updated: Dernier mise à jour
+changed: Dernier changement
+alliance_lock: Accessible uniquement par l'alliance
+ingame:  Nom dans le jeu
+heroes: Héros
+gear: Armure de l'héro
+activity: Score d'activité
+player_id: ID du joueur
+hero_share: Partager avec l'Alliance
+player: Joueur
