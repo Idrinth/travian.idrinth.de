@@ -227,3 +227,5 @@ activity: Score d'activité
 player_id: ID du joueur
 hero_share: Partager avec l'Alliance
 player: Joueur
+trade_every: un convoi marchand tout les
+traders_per_trade: Nombre de marchand par convoi
