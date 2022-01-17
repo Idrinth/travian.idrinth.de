@@ -130,7 +130,7 @@ INNER JOIN troops ON user_alliance.user=troops.user AND alliances.world=troops.w
 WHERE alliances.aid=:aid
 GROUP BY user_alliance.user,alliances.aid");
             $stmt5->execute([':aid' => $alliance['aid']]);
-            $stmt6 = $this->database->prepare("SELECT resource_pushes.id,resource_pushes.key,resource_pushes.arrival,resource_pushes.x,resource_pushes.y,resource_pushes.player
+            $stmt6 = $this->database->prepare("SELECT *
 FROM resource_pushes
 WHERE alliance=:aid
 AND deleted=0");
