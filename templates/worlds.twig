@@ -1,0 +1,23 @@
+{% include 'header.twig' %}
+<h3>{{ translations.worlds }}</h3>
+<table>
+    <tr>
+        <th>{{ translations.world }}</th>
+        <th>{{ translations.updated }}</th>
+        <th>{{ translations.last_used }}</th>
+        <th>{{ translations.players }}</th>
+        <th>{{ translations.villages }}</th>
+        <th>{{ translations.alliances }}</th>
+    </tr>
+    {% for world in worlds %}
+        <tr>
+            <th>{{ world.world }}</th>
+            <td>{{ world.updated }}</td>
+            <td>{{ world.lastUsed }}</td>
+            <td>{{ world.players }}</td>
+            <td>{{ world.villages }}</td>
+            <td>{{ world.alliances }}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% include 'footer.twig' %}

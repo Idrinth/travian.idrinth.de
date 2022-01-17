@@ -412,3 +412,7 @@ resources: Resources
 resource_push: Resource-Push
 legend_resources_send: Enter resources you are sending
 until: Until
+last_used: Last Used
+players: Players
+villages: Villages
+worlds: Game-Worlds
