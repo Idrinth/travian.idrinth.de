@@ -145,6 +145,12 @@
                           borderColor: 'rgb(192, 75, 75)',
                           tension: 0.1
                         },{
+                          label: 'Impact',
+                          data: {{ charts.impact|json_encode()|raw }},
+                          borderColor: 'rgb(75, 75, 75)',
+                          indexAxis: 'y',
+                          tension: 0.1
+                        },{
                           label: 'Grain',
                           data: {{ charts.data|json_encode()|raw }},
                           fill: true,

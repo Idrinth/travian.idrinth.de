@@ -281,6 +281,8 @@ class DeffCall
             $data['charts']['data'][] = max(0, min($data['target']['grain_storage'], floor($data['charts']['data'][count($data['charts']['data']) - 1] - $troops/6 + $data['target']['grain_production']/6 + $corn)));
             $data['charts']['max'][] = $data['target']['grain_storage'];
         }
+        $data['charts']['impact'][] = [$data['target']['arrival'], 0];
+        $data['charts']['impact'][] = [$data['target']['arrival'], $data['target']['grain_storage']];
         foreach ($data['supports'] as $support) {
             if ($support['troop_type']) {
                 $data['totalPower'] += Troops::INFANTRY_DEFF[$support['troop_type']] + Troops::CAVALRY_DEFF[$support['troop_type']];
