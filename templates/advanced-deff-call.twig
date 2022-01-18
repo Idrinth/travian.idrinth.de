@@ -84,7 +84,7 @@
         <table id="shortinfo">
             <tr><th>{{ translations.village }}</th><td><a href="https://{{ target.world }}/position_details.php?x={{ target.x }}&y={{ target.y }}" target="_blank">{{ target.player }} ({{ target.x }}|{{ target.y }})</a></td></tr>
                 <tr><th>{{ translations.arrival }}</th><td>{{ target.arrival }} (<span class="countdown" data-countdown="{{ target.arrival }}"></span>)</tr>
-                {% if target.troops > 0 %}<tr><th>{{ translations.troops }}</th><td>{{totalTroops }}/{{ target.troops }} <button onclick="document.getElementById('shortinfo').classList.toggle('hidden')">{{ translations.toggle_details }}</button></td></tr>{% endif %}
+                {% if target.troops > 0 %}<tr><th>{{ translations.troops }}</th><td>{{totalTroops }}/{{ target.troops }} <button style="margin-left: 1em;background: transparent;" onclick="document.getElementById('shortinfo').classList.toggle('hidden')">{{ translations.toggle_details }}</button></td></tr>{% endif %}
                 {% if target.scouts > 0 %}<tr><th>{{ translations.scouts }}</th><td>{{totalScouts }}/{{ target.scouts }}</td></tr>{% endif %}
                 {% if target.heroes > 0 %}<tr><th>{{ translations.heroes }}</th><td>{{totalHeroes }}/{{ target.heroes }}</td></tr>{% endif %}
                 <tr><th>{{ translations.troop_ratio }}</th><td></td></tr>
