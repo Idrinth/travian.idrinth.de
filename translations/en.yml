@@ -417,3 +417,7 @@ players: Players
 villages: Villages
 worlds: Game-Worlds
 toggle_details: Toggle Details
+percent_infantry_deff: Percent Infantry/Cavalry Deff
+infantry: Infantry
+cavalry: Cavalry
+missplaced: Missplaced

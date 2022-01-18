@@ -81,6 +81,11 @@
     {% endif %}
     </div>
     <div>
+        <div class="bar" style="grid-template-columns: {{ infantryPercent }}%  {{ overflowPercent }}%  {{ cavalryPercent }}%">
+            <div class="left" title="{{ floor(infantryPower/totalPower*100) }}% {{ translations.infantry }}"></div>
+            <div class="middle" title="{{ overflowPercent }}% {{ translations.missplaced }}"></div>
+            <div class="right" title="{{ floor(cavalryPower/totalPower*100) }}% {{ translations.cavalry }}"></div>
+        </div>
         <table id="shortinfo">
             {% if target.alliance.id is empty %}<tr><th>{{ translations.world }}</th><td>{{ target.world }}</td></tr>{% endif %}
             {% if target.alliance.id is not empty %}<tr><th>{{ translations.alliance }}</th><td><a href="/alliance/{{ target.alliance.id }}">{{ target.world }}: {{ target.alliance.name }}</a></td></tr>{% endif %}

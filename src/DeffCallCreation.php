@@ -27,8 +27,8 @@ class DeffCallCreation
             try {
                 $uuid = Uuid::uuid6();
                 $stmt = $this->database->prepare(
-                    "INSERT INTO deff_calls (grain_info_hours,grain_production,grain,grain_storage,heroes, player, id, `key`, scouts, troops, `x`, `y`, world, creator, arrival, alliance,advanced_troop_data) "
-                    . "VALUES (:grain_info_hours,:grain_production,:grain,:grain_storage,:heroes, :player, :id, :key, :scouts, :troops, :x, :y, :world, :creator, :arrival, :alliance,:advanced_troop_data)"
+                    "INSERT INTO deff_calls (anti,grain_info_hours,grain_production,grain,grain_storage,heroes, player, id, `key`, scouts, troops, `x`, `y`, world, creator, arrival, alliance,advanced_troop_data) "
+                    . "VALUES (:anti,:grain_info_hours,:grain_production,:grain,:grain_storage,:heroes, :player, :id, :key, :scouts, :troops, :x, :y, :world, :creator, :arrival, :alliance,:advanced_troop_data)"
                 );
                 if ($post['alliance_lock'] > 0) {
                     $stmt2 = $this->database->prepare("SELECT world FROM alliances WHERE aid=:aid");
@@ -54,6 +54,7 @@ class DeffCallCreation
                     ':grain_storage' => $post['grain_storage'] ?? 0,
                     ':grain_production' => $post['grain_production'] ?? 0,
                     ':grain_info_hours' => $post['grain_info_hours'] ?? 0,
+                    ':anti' => $post['anti'] ?? 0,
                 ]);
                 header('Location: /deff-call/' . $uuid . '/' . $key, true, 303);
                 return;

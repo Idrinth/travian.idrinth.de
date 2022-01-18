@@ -32,6 +32,7 @@
             {% endfor %}
             </select></label>
         <label>{{ translations.advanced_troop_data }}<input name="advanced_troop_data" type="hidden" value="0"/><input name="advanced_troop_data" type="checkbox" value="1"/></label>
+        <label>{{ translations.percent_infantry_deff }}<input name="anti" type="number" value="50" min="0" max="100"/></label>
     </fieldset>
 </form>
 {% include 'footer.twig' %}

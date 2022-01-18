@@ -25,6 +25,9 @@ class DeffCall
             'key' => $key,
             'now' => date('Y-m-d H:i:s'),
             'added' => false,
+            'infantryPower' => 0,
+            'cavalryPower' => 0,
+            'totalPower' => 0,
         ];
         if (!Uuid::isValid($id)) {
             header('Location: /deff-call', true, 303);
@@ -278,6 +281,29 @@ class DeffCall
             $data['charts']['data'][] = max(0, min($data['target']['grain_storage'], floor($data['charts']['data'][count($data['charts']['data']) - 1] - $troops/6 + $data['target']['grain_production']/6 + $corn)));
             $data['charts']['max'][] = $data['target']['grain_storage'];
         }
+        foreach ($data['supports'] as $support) {
+            if ($support['troop_type']) {
+                $data['totalPower'] += Troops::INFANTRY_DEFF[$support['troop_type']] + Troops::CAVALRY_DEFF[$support['troop_type']];
+                $data['infantryPower'] += Troops::INFANTRY_DEFF[$support['troop_type']];
+                $data['cavalryPower'] += Troops::CAVALRY_DEFF[$support['troop_type']];
+            }
+        }
+        if ($data['totalPower'] === 0) {
+            $data['totalPower'] = 0;
+            $data['infantryPower'] = 0;
+            $data['cavalryPower'] = 0;
+            $data['infantryPercent'] = 0;
+            $data['cavalryPercent'] = 0;
+        } else {
+            $data['infantryPercent'] = floor($data['infantryPower']/$data['totalPower'] * 100);
+            $data['cavalryPercent'] = floor($data['cavalryPower']/$data['totalPower'] * 100);
+            if ($data['infantryPercent'] > $data['target']['anti']) {
+                $data['infantryPercent'] = $data['target']['anti'];
+            } elseif($data['cavalryPercent'] > 100 - $data['target']['anti']) {
+                $data['cavalryPercent'] = 100 - $data['target']['anti'];
+            }
+        }
+        $data['overflowPercent'] = 100 - $data['cavalryPercent'] - $data['infantryPercent'];
         $data['corn'] = Troops::CORN;
         WorldImporter::register($this->database, $data['target']['world']);
         $this->twig->display($data['target']['advanced_troop_data'] ? 'advanced-deff-call.twig' : 'deff-call.twig', $data);

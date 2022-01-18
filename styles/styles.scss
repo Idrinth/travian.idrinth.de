@@ -284,6 +284,26 @@ fieldset.invisible {
 .hidden .details {
     display: none;
 }
+.bar {
+    display: grid;
+    height: 1em;
+    border-radius: 0.5em;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.2), rgba(0,0,0,0.1));
+    .left {
+        background-color: blue;
+        border-radius: 0.5em 0 0 0.5em;
+        background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.2), rgba(0,0,0,0.1));
+    }
+    .middle {
+        background-color: red;
+        background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.2), rgba(0,0,0,0.1));
+    }
+    .right {
+        background-color: green;
+        border-radius: 0 0.5em 0.5em 0;
+        background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.2), rgba(0,0,0,0.1));
+    }
+}
 @media screen and (max-width:900px) {
     nav > ul {
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
