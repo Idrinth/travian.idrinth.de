@@ -418,6 +418,7 @@ villages: Villages
 worlds: Game-Worlds
 toggle_details: Toggle Details
 percent_infantry_deff: Percent Infantry/Cavalry Deff
-infantry: Infantry
-cavalry: Cavalry
+infantry: Anti-Infantry
+cavalry: Anti-Cavalry
 missplaced: Missplaced
+troop_ratio: Troop Ratio
