@@ -27,14 +27,15 @@ class DeffCallCreation
             try {
                 $uuid = Uuid::uuid6();
                 $stmt = $this->database->prepare(
-                    "INSERT INTO deff_calls (anti,grain_info_hours,grain_production,grain,grain_storage,heroes, player, id, `key`, scouts, troops, `x`, `y`, world, creator, arrival, alliance,advanced_troop_data) "
-                    . "VALUES (:anti,:grain_info_hours,:grain_production,:grain,:grain_storage,:heroes, :player, :id, :key, :scouts, :troops, :x, :y, :world, :creator, :arrival, :alliance,:advanced_troop_data)"
+                    "INSERT INTO deff_calls (created,anti,grain_info_hours,grain_production,grain,grain_storage,heroes, player, id, `key`, scouts, troops, `x`, `y`, world, creator, arrival, alliance,advanced_troop_data) "
+                    . "VALUES (:created,:anti,:grain_info_hours,:grain_production,:grain,:grain_storage,:heroes, :player, :id, :key, :scouts, :troops, :x, :y, :world, :creator, :arrival, :alliance,:advanced_troop_data)"
                 );
                 if ($post['alliance_lock'] > 0) {
                     $stmt2 = $this->database->prepare("SELECT world FROM alliances WHERE aid=:aid");
                     $stmt2->execute([':aid' => $post['alliance_lock']]);
                     Assert::eq($stmt2->fetchColumn(), WorldImporter::toWorld($post['world']), 'Alliance and entered world don\'t match');
                 }
+                Assert::greaterThan(time() + 3600, strtotime($post['date'] . ' ' . $post['time']), 'Defence is in the past or within the next hour.');
                 $key = Uuid::uuid4();
                 $stmt->execute([
                     ':id' => $uuid,
@@ -46,6 +47,7 @@ class DeffCallCreation
                     ':troops' => intval($post['troops'], 10),
                     ':heroes' => intval($post['heroes'], 10),
                     ':arrival' => date('Y-m-d H:i:s', strtotime($post['date'] . ' ' . $post['time'])),
+                    ':created' => date('Y-m-d H:i:s'),
                     ':creator' => $_SESSION['id'] ?? 0,
                     ':alliance' => intval($post['alliance_lock'], 10),
                     ':player' => $post['player'] ?? '',
