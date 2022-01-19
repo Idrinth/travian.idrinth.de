@@ -35,7 +35,7 @@ class DeffCallCreation
                     $stmt2->execute([':aid' => $post['alliance_lock']]);
                     Assert::eq($stmt2->fetchColumn(), WorldImporter::toWorld($post['world']), 'Alliance and entered world don\'t match');
                 }
-                Assert::greaterThan(time() + 3600, strtotime($post['date'] . ' ' . $post['time']), 'Defence is in the past or within the next hour.');
+                Assert::greaterThan(strtotime($post['date'] . ' ' . $post['time']), time() + 3600, 'Defence is in the past or within the next hour.');
                 $key = Uuid::uuid4();
                 $stmt->execute([
                     ':id' => $uuid,
