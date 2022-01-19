@@ -238,8 +238,8 @@ medium_chain_armor: Segmenteret panser
 medium_chain_armor_effect: Skader reduceret med 4 og +500 kampstyrke for helten.
 great_chain_armor: Tung segmenteret panser
 great_chain_armor_effect: Skader reduceret med 5 og +2000 kampstyrke for helten.
-hero_check: Helt genstande tjekker
-deff_call: Deff Call
+hero_check: Heltens genstande
+deff_call: Deff-Call
 account: Konto
 troops: Tropper
 scouts: Spejdere
@@ -364,7 +364,7 @@ new_village: Ny landsby
 tournament_square: Turneringsplads
 advanced_troop_data: Avancerede troppedata
 amount: Mængde
-deff_call_overview: Deff-call oversigt
+deff_call_overview: Deff-Call oversigt
 all_worlds: Alle verdener (ufiltreret)
 plus_troop_overview: Kopier kildekoden til dit plus troppeoversigtsvindue.
 in_range: Inden for rækkevidde
