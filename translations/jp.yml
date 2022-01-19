@@ -358,3 +358,51 @@ attack_parser: アタックパーサー
 world_width: ワールドワイド（最大x=200→401）
 world_height: ワールドハイト（最大y=200→401）
 to_details: 詳細を見る
+travian_footer: このウェブサイトはTravian LegendsまたはTravian GmbHが保証するものではなく、単にプレイヤーのための無料、非商用ツールを意図しています。一部の画像はTravian GmbHが作成、所有しており、許可を得て使用してもその権利を侵害するものではありません。
+desired_troops: 希望する兵種
+desired_scouts: 希望するスカウト
+roman_chief: 議員
+roman_settler: ローマンセトラー
+roman_ram: バッテリング・ラム 
+roman_catapult: ファイヤ・カタパルト 
+gaul_chief: Gaul Chief
+gaul_settler: Gaul Settler
+gaul_ram: Gaul  バッテリング・ラム
+gaul_catapult: Gaul Catapult
+teuton_chief: チュートン チーフ
+teuton_settler: チュートン入植者
+teuton_ram: 兵士 - ラム
+teuton_catapult: Teuton Catapult
+hun_chief: Hun Chief
+hun_settler: Hun Settler
+hun_ram: Hun  バッテリング・ラム
+hun_catapult: Hun Catapult
+egyptian_chief: エジプト人チーフ
+egyptian_settler: エジプト人入植者
+egyptian_ram: Egyptian  バッテリング・ラム
+egyptian_catapult: エジプト・カタパルト
+hero_overview: ヒーロー概要ページ
+import: 輸入
+hero_fighting_strength: ストレングス・ポイントとの戦い
+hero_off_bonus: オフボーナスポイント
+hero_def_bonus: Def-Bonus Points
+hero_resources: 資源生産ポイント
+attributes: 属性
+my_hero: マイヒーロー
+hero_standard_bonus: スタンダードボーナス
+hero_boot_bonus: ブートボーナス
+legend_troops_send: 送信する部隊を入力する
+grain: 穀物
+grain_storage: 穀物保管庫
+legend_grain_send: 送信する穀物を入力する
+no_grain_info: 穀物に関する情報はありません。
+grain_production: 穀物生産量
+population: 人口
+map_sql_data: Map.sql-Data（地図データ
+items: アイテム
+grain_info_hours: 穀物情報 衝撃からさらに1時間
+accounts: アカウント
+delete: 削除
+attacker: アタッカー
+defender: ディフェンダー
+catcher: キャッチャー
