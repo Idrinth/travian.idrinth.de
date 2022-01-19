@@ -58,6 +58,7 @@ class WorldImporter
                 }
                 $this->database->exec('CREATE TABLE `' . $world . '` LIKE x_world');
                 $this->database->exec('INSERT INTO `' . $world . '` SELECT * FROM x_world');
+                $this->database->exec('TRUNCATE x_world');
             });
         }
         $multicurl->start();
