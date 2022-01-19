@@ -14,9 +14,9 @@
             <th>{{ world.world }}</th>
             <td>{{ world.updated }}</td>
             <td>{{ world.lastUsed }}</td>
-            <td>{{ world.players }}</td>
+            <td><a href="/worlds/{{ world.world }}/players">{{ world.players }}</a></td>
             <td>{{ world.villages }}</td>
-            <td>{{ world.alliances }}</td>
+            <td><a href="/worlds/{{ world.world }}/alliances">{{ world.alliances }}</a></td>
         </tr>
     {% endfor %}
 </table>

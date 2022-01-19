@@ -26,7 +26,9 @@ use De\Idrinth\Travian\Styles;
 use De\Idrinth\Travian\TravelTime;
 use De\Idrinth\Travian\TroopTool;
 use De\Idrinth\Travian\Twig;
+use De\Idrinth\Travian\WorldAlliances;
 use De\Idrinth\Travian\WorldExport;
+use De\Idrinth\Travian\WorldPlayers;
 use De\Idrinth\Travian\Worlds;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -91,4 +93,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->post('/resource-push/{id:uuid}/{key:uuid}', ResourcePush::class)
     ->get('/worlds', Worlds::class)
     ->post('/worlds', Worlds::class)
+    ->get('/worlds/{world:world}/players', WorldPlayers::class)
+    ->get('/worlds/{world:world}/alliances', WorldAlliances::class)
     ->run();

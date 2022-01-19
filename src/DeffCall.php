@@ -284,7 +284,7 @@ class DeffCall
         $data['charts']['impact'][] = [$data['target']['arrival'], 0];
         $data['charts']['impact'][] = [$data['target']['arrival'], $data['target']['grain_storage']];
         foreach ($data['supports'] as $support) {
-            if ($support['troop_type']) {
+            if ($support['troop_type'] && $support['troop_type'] !== 'hero') {
                 $data['totalPower'] += Troops::INFANTRY_DEFF[$support['troop_type']] + Troops::CAVALRY_DEFF[$support['troop_type']];
                 $data['infantryPower'] += Troops::INFANTRY_DEFF[$support['troop_type']];
                 $data['cavalryPower'] += Troops::CAVALRY_DEFF[$support['troop_type']];

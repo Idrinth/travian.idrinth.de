@@ -1,0 +1,17 @@
+{% include 'header.twig' %}
+<h3>{{ world }}: {{ translations.players }}</h3>
+<table>
+    <tr>
+        <th>{{ translations.name }}</th>
+        <th>{{ translations.population }}</th>
+        <th>{{ translations.villages }}</th>
+    </tr>
+    {% for player in players %}
+        <tr>
+            <th><a target="_blank" href="https://{{ world }}/profile/{{ player.id }}">{{ player.name }}</a></th>
+            <td>{{ player.population }}</td>
+            <td>{{ player.villages }}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% include 'footer.twig' %}

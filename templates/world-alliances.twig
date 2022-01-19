@@ -1,0 +1,19 @@
+{% include 'header.twig' %}
+<h3>{{ world }}: {{ translations.alliances }}</h3>
+<table>
+    <tr>
+        <th>{{ translations.name }}</th>
+        <th>{{ translations.players }}</th>
+        <th>{{ translations.population }}</th>
+        <th>{{ translations.villages }}</th>
+    </tr>
+    {% for alliance in alliances %}
+        <tr>
+            <th><a target="_blank" href="https://{{ world }}/alliance/{{ alliance.id }}">{{ alliance.name }}</a></th>
+            <td>{{ alliance.players }}</td>
+            <td>{{ alliance.population }}</td>
+            <td>{{ alliance.villages }}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% include 'footer.twig' %}
