@@ -6,7 +6,6 @@ use Curl\Curl;
 use Curl\MultiCurl;
 use Exception;
 use PDO;
-use Webmozart\Assert\Assert;
 
 class WorldImporter
 {
