@@ -36,6 +36,8 @@
                 <option{% if lang=='fi' %} selected="selected{% endif %} value="fi">Suomi</option>
                 <option{% if lang=='fr' %} selected="selected{% endif %} value="fr">Français</option>
                 <option{% if lang=='jp' %} selected="selected{% endif %} value="jp">日本語</option>
+                <option{% if lang=='da' %} selected="selected{% endif %} value="da">Dansk</option>
+
             </select>
             <select style="width: auto; display: inline;" onchange="setCookie('style', this.value);document.body.setAttribute('class', this.value);">
                 <option{% if style=='light' %} selected{% endif %} value="light">&#9788;</option>

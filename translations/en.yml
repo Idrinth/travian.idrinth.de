@@ -78,7 +78,7 @@ small_thief_effect: 10% plunder bonus
 medium_thief: Bag of the thief
 medium_thief_effect: 15% plunder bonus
 great_thief: Sack of the thief
-great_thief_effect: 15% plunder bonus
+great_thief_effect: 20% plunder bonus
 small_shield: Small Shield
 small_shield_effect: +250 fighting strength for Hero.
 medium_shield: Shield

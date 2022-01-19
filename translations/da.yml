@@ -1,0 +1,426 @@
+title: Travian regnemaskiner
+home: hjem
+delivery: Leveringsberegner
+imprint: Aftryk
+travian_footer: Denne hjemmeside er på ingen måde godkendt af Travian Legends eller Travian GmbH og er kun ment som et gratis, ikke-kommercielt værktøj for spillere. Nogle billeder er oprettet og ejet af Travian GmbH, og deres brug med tilladelse anfægter ikke deres rettigheder.
+welcome_header: Velkommen!
+welcome_text: Vælg en beregner fra menuen ovenfor.
+delivery_calculator: Leveringsberegner
+inputs: Input
+tribe: Stamme
+speed: hastighed
+world_speed: Server hastighed
+capacity: Kapacitet
+lumber: Tømmer
+clay: Ler
+iron: Jern
+crop: Korn
+total: Total
+celebration: Fest
+trade_every: En handel hver
+traders_per_trade: Købmænd pr. handel
+travel_time: Rejsetid
+distance: Distance
+main: Primær
+source: Source kode
+source_title: Indtast source koden til markedspladsens sendevindue.
+celebrations: Fester
+help: Vil du hjælpe med kode eller oversættelser?
+none: Ingen
+small: Lille
+great: Stor
+automatically: Automatisk
+romans: Romere
+teutons: Germanere
+gauls: Gallere
+egyptians: Egyptere
+huns: Hunner
+additional_target: Yderligere mål
+additional_target_title: 0|0 vil blive ignoreret
+only_crop: Kun korn
+town_hall_level: Rådhus niveau
+tribe_title: Vælg kun, hvis det er forkert registreret
+advanced: Avanceret
+gelding: Vallak
+gelding_effect: Din helts hastighed hæves til 14 felter i timen
+thoroughbred: Fuldblod
+thoroughbred_effect: Din helts hastighed hæves til 17 felter i timen
+warhorse: Krigshest
+warhorse_effect: Din helts hastighed hæves til 20 felter i timen
+empty: Tom
+hero_image_url: Helt billede URL
+helmet: Hjelm
+armor: rustning
+right_hand: Højre hånd Hand
+left_hand: Venstre hånd
+shoes: Sko
+horse: Hest
+small_map: Lille kort
+small_map_effect: +30% returhastighed
+medium_map: Kort
+medium_map_effect: +40% returhastighed
+great_map: Stort kort
+great_map_effect: +50% returhastighed
+small_people_banner: Lille vimpel
+small_people_banner_effect: 30% hurtigere tropper mellem egne landsbyer.
+medium_people_banner: Vimpel
+medium_people_banner_effect: 40% hurtigere tropper mellem egne landsbyer.
+great_people_banner: Stort vimpel
+great_people_banner_effect: 50% hurtigere tropper mellem egne landsbyer.
+small_alliance_banner: Lille standard
+small_alliance_banner_effect: 15% hurtigere tropper mellem alliancens medlemmer. 
+medium_alliance_banner: Standard
+medium_alliance_banner_effect: 20% hurtigere tropper mellem alliancens medlemmer.  
+great_alliance_banner: Stor standard
+great_alliance_banner_effect: 35% hurtigere tropper mellem alliancens medlemmer.  
+small_thief: Tyvens pose
+small_thief_effect: 10% plyndrebonus
+medium_thief: Tyvens taske
+medium_thief_effect: 15% plyndrebonus
+great_thief: Tyvens sæk
+great_thief_effect: 20% plyndrebonus
+small_shield: Lille skjold 
+small_shield_effect: +250 kampstyrke for helten.
+medium_shield: Skjold
+medium_shield_effect: +1000 kampstyrke for helten.
+great_shield: Stort skjold 
+great_shield_effect: +4000 kampstyrke for helten.
+small_natars: Natarens lille horn
+small_natars_effect: +20% angrebsstyrke mod Natarer (tæller for helten såvel som de tropper, der angriber sammen med ham)
+medium_natars: Natarens Horn
+medium_natars_effect: +25% angrebsstyrke mod Natarer (tæller for helten såvel som de tropper, der angriber sammen med ham)
+great_natars: Natarens kæmpe horn
+great_natars_effect: +30% angrebsstyrke mod Natarer (tæller for helten såvel som de tropper, der angriber sammen med ham)
+small_legionaire: Lille legionær
+medium_legionaire: Legionær
+great_legionaire: Stor legionær
+small_praetorian: Lille prætorianer
+medium_praetorian: Prætorianer
+great_praetorian: Stor prætorianer
+small_imperian: Lille imperianer
+medium_imperian: Imperianer
+great_imperian: Stor imperianer
+small_imperatoris: Lille imperatoris
+medium_imperatoris: Imperatoris
+great_imperatoris: Stor imperatoris
+small_caesaris: Lille caesaris
+medium_caesaris: Caesaris
+great_caesaris: Stor caesaris
+small_phalanx: Lille falanks
+medium_phalanx: Falanks
+great_phalanx: Stor falanks
+small_sword: Lille sværdkæmper
+medium_sword: Sværdkæmper
+great_sword: Stor sværdkæmper
+small_theutates: Lille theutaterlyn
+medium_theutates: Theutaterlyn
+great_theutates: Stor theutaterlyn
+small_druid: Lille druiderytter
+medium_druid: Druiderytter
+great_druid: Stor druiderytter
+small_haeduaner: Lille Haeduaner
+medium_haeduaner: Haeduaner
+great_haeduaner: Stor Haeduaner
+small_club: Lille køllesvinger
+medium_club: Køllesvinger
+great_club: Stor køllesvinger
+small_speer: Lile spydkæmper
+medium_speer: Spydkæmper
+great_speer: Stor spydkæmper
+small_axe: Lille øksekæmper 
+medium_axe: Øksekæmper
+great_axe: Stor øksekæmper
+small_knight: Lille paladin
+medium_knight: Paladin
+great_knight: Stor paladin
+small_teuton: Lille teutonrytter
+medium_teuton: Teutonrytter
+great_tueton: Stor teutonrytter
+small_slave: Lille slavemilits
+medium_slave: Slavemilits
+great_slave: Stor slavemilits
+small_ash: Lille askevagt
+medium_ash: Askevagt
+great_ash: Stor askevagt
+small_warrior: Lille khopesh-kriger
+medium_warrior: Khopesh-kriger
+great_warrior: Stor khopesh-kriger
+small_anhor: Lille anhur-vagt
+medium_anhor: Anhur-vagt
+great_anhor: Stor anhur-vagt
+small_resheph: Lille resheph-stridsvogn
+medium_resheph: Resheph-stridsvogn
+great_resheph: Stor resheph-stridsvogn
+small_mercenary: Lille lejesoldat 
+medium_mercenary: Lejesoldat
+great_mercenary: Stor lejesoldat
+small_bownmen: Lille bueskytte
+medium_bowmen: Bueskytte
+great_bowmen: Stor bueskytte
+small_steppe: Lille stepperytter
+medium_steppe: Stepperytter
+great_steppe: Stor stepperytter
+small_marksman: Lille skarpskytte
+medium_marksman: Skarpskytte
+great_marksman: Stor skarpskytte
+small_marauder: Lille plyndrer
+medium_marauder: Plyndrer
+great_marauder: Stor plyndrer
+small_regen_shoes: Regenerationsstøvler
+small_regen_shoes_effect: +10 liv/dag
+medium_regen_shoes: Sundhedsstøvler
+medium_regen_shoes_effect: +15 liv/dag
+great_regen_shoes: Healingsstøvler
+great_regen_shoes_effect: +20 liv/dag
+small_speed_shoes: Lejesoldatens støvler
+small_speed_shoes_effect: +25% hastighed på hærens basishastighed for afstande > 20 felter
+medium_speed_shoes: Krigerens støvler
+medium_speed_shoes_effect: +50% hastighed på hærens basishastighed for afstande > 20 felter
+great_speed_shoes: Archons støvler
+great_speed_shoes_effect: +75% hastighed på hærens basishastighed for afstande > 20 felter
+small_horse_shoes: Små sporer
+small_horse_shoes_effect: +3 felter i timen
+medium_horse_shoes: Sporer
+medium_horse_shoes_effect: +4 felter i timen
+great_horse_shoes: Onde sporer
+great_horse_shoes_effect: +5 felter i timen
+small_xp_helmet: Bevidsthedens hjelm
+small_xp_helmet_effect: +15% erfaring
+medium_xp_helmet: Oplysningens hjelm
+medium_xp_helmet_effect: +20% erfaring
+great_xp_helmet: Visdommens hjelm
+great_xp_helmet_effect: +25% erfaring
+small_regen_helmet: Regenerationshjelm
+small_regen_helme_effectt: +10 liv/dag
+medium_regen_helmet: Sundhedshjelm
+medium_regen_helme_effectt: +15 liv/dag
+great_regen_helmet: Healingshjelm
+great_regen_helme_effectt: +20 liv/dag
+small_cp_helmet: Gladiatorens hjelm
+small_cp_helmet_effect: +100 kulturpoint pr. dag
+medium_cp_helmet: Tribunens hjelm
+medium_cp_helmet_effect: +400 kulturpoint pr. dag
+great_cp_helmet: Konsulens hjelm
+great_cp_helmet_effect: +1600 kulturpoint pr. dag
+small_cavalry_helmet: Rytterens hjelm
+small_cavalry_helmet_effect: Træningstiden i stald reduceret med 10%.
+medium_cavalry_helmet: Kavaleriets hjelm
+medium_cavalry_helmet_effect: Træningstiden i stald reduceret med 15%.
+great_cavalry_helmet: Kavaleriets tunge hjelm
+great_cavalry_helmet_effect: Træningstiden i stald reduceret med 20%.
+small_infantry_helmet: Lejesoldatens hjelm
+small_infantry_helmet_effect: Træningstiden i kaserne reduceret med 10%.
+medium_infantry_helmet: Krigerens hjelm
+medium_infantry_helmet_effect: Træningstiden i kaserne reduceret med 15%.
+great_infantry_helmet: Archonens hjelm
+great_infantry_helmet_effect: Træningstiden i kaserne reduceret med 20%.
+small_regen_armor: Regenerationsrustning
+small_regen_armor_effect: +20 liv regenerering om dagen.
+medium_regen_armor: Sundhedsrustning
+medium_regen_armor_effect: +30 liv regenerering om dagen.
+great_regen_armor: Healingsrustning
+great_regen_armor_effect: +40 liv regenerering om dagen.
+small_scales_armor: Let panser
+small_scales_armor_effect: Skader reduceret med 4 sundhedspoint +10 liv regenerering.
+medium_scales_armor: Panser
+medium_scales_armor_effect: Skader reduceret med 6 sundhedspoint +15 liv regenerering.
+great_scales_armor: Tung panser
+great_scales_armor_effect: Skader reduceret med 8 sundhedspoint +20 liv regenerering.
+small_chest_armor: Let brystplade
+small_chest_armor_effect: +250 kampstyrke for helten.
+medium_chest_armor: Brystplade
+medium_chest_armor_effect: +1000 kampstyrke for helten.
+great_chest_armor: Tung brystplade
+great_chest_armor_effect: +4000 kampstyrke for helten.
+small_chain_armor: Let segmenteret panser
+small_chain_armor_effect: Skader reduceret med 3 og +125 kampstyrke for helten.
+medium_chain_armor: Segmenteret panser
+medium_chain_armor_effect: Skader reduceret med 4 og +500 kampstyrke for helten.
+great_chain_armor: Tung segmenteret panser
+great_chain_armor_effect: Skader reduceret med 5 og +2000 kampstyrke for helten.
+hero_check: Helt genstande tjekker
+deff_call: Deff Call
+account: Konto
+troops: Tropper
+scouts: Spejdere
+desired_troops: Ønskede tropper
+desired_scouts: Ønskede spejdere
+arrival: Ankomst
+created: Tilføjet
+village: Landsby
+status: Status
+added: Dine data blev tilføjet.
+hidden_details: Med det aktuelle link er detaljer skjult.
+share: Del link
+share_full: Detaljer del link
+desired_celebrations_info: ønskede fester for at fortsætte 24/7
+total_production_info: samlet produktion pr. time, der ignorerer negativ produktion
+crop_production_info: kornproduktion i timen reduceret af festbehov
+iron_production_info: jernproduktion i timen reduceret af festbehov
+clay_production_info: lerproduktion i timen reduceret af festbehov
+lumber_production_info: tømmerproduktion i timen reduceret af festbehov
+trader_capacity_info: En enkelt købmands kapacitet
+world_speed_info: Din verdens hastighed
+trader_speed_info: Din købmands hastighed
+tribe_info: Dette bruges til at beregne nogle købmands oplysninger
+traders_distance_info: Den direkte afstand mellem landsbyerne
+traders_time_info: Rejsetiden mellem landsbyerne
+traders_delivery_info: Hvor ofte ville du foretage en levering
+lumber_per_trade_info: tømmer pr. handel
+clay_per_trade_info: ler pr. handel
+iron_per_trade_info: jern pr. handel
+crop_per_trade_info: korn pr. handel
+login: Log ind via Discord
+world: verden
+position: Position
+link: Link
+duration: Varighed
+troop_type: Type af trop
+recruiting_level: Niveau af rekrutteringsbygning
+great_recruiting_level: Niveau af stor rekrutteringsbygning
+use_great_recruiting: Brug stor rekrutteringsbygning
+normal_recruiting: Normalt rekrutterede tropper
+helmet_bonus: Hjelm bonus
+horse_trough_level: Niveau af hestens drikketrug
+artefact_bonus: Artifakt bonus 
+alliance_bonus: Alliance bonus
+soldier_cost: Omkostning af tropper beregner
+deff_calls: Deff-Calls
+alliances: Alliancer
+name: Navn
+rank: Rang
+login_benefits: Log ind for at gemme dine deff-calls på din profilside og slutte dig til alliancer for avancerede funktioner som heltesporing og troppeværktøj.
+invite: Invitér
+alliance: Alliance
+effect: Effekt
+previously: Tidligere
+updated: Sidst opdateret
+changed: Sidst ændret
+alliance_lock: Lås til Alliance
+ingame:  Navn i spillet
+heroes: Helte
+gear: Helte udstyr
+activity: Aktivitets score
+player_id: Player-ID
+hero_share: Del med alliance
+player: Spiller
+desired_heroes: Ønskede helte
+troop_tool: Troppeværktøj
+hero: Helt
+roman_chief: Senator
+roman_settler: Romersk bosætter
+roman_ram: Romersk rambuk
+roman_catapult: Brandkatapult
+roman_soldier1: Legionær
+roman_soldier2: Prætorianer
+roman_soldier3: Imperianer
+roman_soldier4: Equites Legati
+roman_soldier5: Equites Imperatis
+roman_soldier6: Equites Caesaris
+gaul_chief: Høvding
+gaul_settler: Gallersk bosætter
+gaul_ram: Gallersk rambuk
+gaul_catapult: Krigskatapult
+gaul_soldier1: Falanks
+gaul_soldier2: Sværdkæmper
+gaul_soldier3: Stifinder
+gaul_soldier4: Theutaterlyn
+gaul_soldier5: Druiderytter
+gaul_soldier6: Haeduaner
+teuton_chief: Stammefører
+teuton_settler: Germansk bosætter
+teuton_ram: Germansk rambuk
+teuton_catapult: Katapult
+teuton_soldier1: Køllesvinger
+teuton_soldier2: Spydkæmper
+teuton_soldier3: Øksekæmper
+teuton_soldier4: Spejder
+teuton_soldier5: Paladin
+teuton_soldier6: Teutonrytter
+hun_chief: Logades
+hun_settler: Hunnersk bosætter
+hun_ram: Hunnersk rambuk
+hun_catapult: Hunnersk katapult
+hun_soldier1: Lejesoldat
+hun_soldier2: Bueskytte
+hun_soldier3: Spotter
+hun_soldier4: Stepperytter
+hun_soldier5: Skarpskytte
+hun_soldier6: Plyndrer
+egyptian_chief: Nomarch
+egyptian_settler: Egyptisk bosætter
+egyptian_ram: Egyptisk rambuk
+egyptian_catapult: Stenkatapult
+egyptian_soldier1: Slavemilits
+egyptian_soldier2: Askevagten
+egyptian_soldier3: Khopesh-kriger
+egyptian_soldier4: Sopdu-udforsker
+egyptian_soldier5: Anhur-vagt
+egyptian_soldier6: Resheph-stridsvogn
+plus_import: Plus-import
+no_data: Ingen data at vise!
+delete_village: Slet landsby
+new_village: Ny landsby
+tournament_square: Turneringsplads
+advanced_troop_data: Avancerede troppedata
+amount: Mængde
+deff_call_overview: Deff-call oversigt
+all_worlds: Alle verdener (ufiltreret)
+plus_troop_overview: Kopier kildekoden til dit plus troppeoversigtsvindue.
+in_range: Inden for rækkevidde
+nothing_in_range: Ingen tropper i dit troppeværktøj er inden for rækkevidde.
+troops_sent: Tropper allerede sendt
+blind_time: Blind tid
+time: Tid
+attack_parser: Angrebsparser
+world_width: Verdensbredde (maks. x=200 -> 401)
+world_height: Verdenshøjde (maks. y=200 -> 401)
+to_details: Se detaljer
+hero_overview: Helteoversigtsside
+import: Importér
+hero_fighting_strength:  Kampstyrke
+hero_off_bonus: Off-Bonus Points
+hero_def_bonus: Def-Bonus Points
+hero_resources: Ressourceproduktion
+attributes: Egenskaber
+my_hero: Min helt
+hero_standard_bonus: Standard bonus
+hero_boot_bonus: Støvler bonus
+legend_troops_send: Indtast de tropper, du sender
+grain: Korn
+grain_storage: Kornkammer
+legend_grain_send: Indtast korn for at sende
+no_grain_info: Ingen information om korn tilgængelig.
+grain_production: Kornproduktion
+population: Befolkning
+map_sql_data: Map.sql-Data
+items: Genstande
+grain_info_hours: Korninfo yderligere timer efter påvirkning
+here: click here
+accounts: Kontoer
+delete: Slet
+attacker: Angriber
+defender: Forsvarer
+catcher: Fanger
+desired_resources: Ønskede ressourcer
+details: Detaljer
+desired_clay: Ønsket ler
+desired_lumber: Ønsket tømmer
+desired_iron: Ønsket jern
+desired_crop: Ønsket korn
+resources: Ressourcer
+resource_push: Ressource-skub
+legend_resources_send: Indtast de ressourcer, du sender
+until: Indtil
+last_used: Sidst anvendt
+players: Spillere
+villages: Landsbyer
+worlds: Spilverdener
+toggle_details: Vis detaljer
+percent_infantry_deff: Procent infanteri/kavaleri deff
+infantry: Anti-infanteri
+cavalry: Anti-kavaleri
+missplaced: Malplaceret
+troop_ratio: Troppeforhold
+add_world: Tilføj spilverden manuelt
+world_update_info: Opdateringer hænder dagligt (24 timer efter sidste opdatering).
