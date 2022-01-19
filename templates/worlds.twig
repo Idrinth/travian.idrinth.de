@@ -20,4 +20,12 @@
         </tr>
     {% endfor %}
 </table>
+<h3>{{ translations.add_world }}</h3>
+<form method="post">
+    <fieldset>
+        <legend>{{ translations.main }}</legend>
+        <label>{{ translations.world }}*<input type="text" name="world"/></label>
+        <input type="submit"/>
+    </fieldset>
+</form>
 {% include 'footer.twig' %}

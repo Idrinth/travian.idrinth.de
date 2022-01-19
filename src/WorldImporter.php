@@ -27,6 +27,7 @@ class WorldImporter
     }
     public static function register(PDO $database, string $world): void
     {
+        $world = self::toWorld($world);
         $database
             ->prepare("INSERT IGNORE INTO world_updates (world) VALUES (:world)")
             ->execute([':world' => $world]);

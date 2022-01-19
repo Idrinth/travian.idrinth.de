@@ -422,3 +422,4 @@ infantry: Anti-Infantry
 cavalry: Anti-Cavalry
 missplaced: Missplaced
 troop_ratio: Troop Ratio
+add_world: Manually add World

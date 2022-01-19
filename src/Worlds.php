@@ -16,6 +16,9 @@ class Worlds
     }
     public function run($post): void
     {
+        if (isset($post['world'])) {
+            WorldImporter::register($this->database, $post['world']);
+        }
         $stmt = $this->database->query('SELECT * FROM world_updates');
         $context['worlds'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach ($context['worlds'] as &$world) {

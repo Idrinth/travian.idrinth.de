@@ -90,4 +90,5 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->get('/resource-push/{id:uuid}/{key:uuid}', ResourcePush::class)
     ->post('/resource-push/{id:uuid}/{key:uuid}', ResourcePush::class)
     ->get('/worlds', Worlds::class)
+    ->post('/worlds', Worlds::class)
     ->run();
