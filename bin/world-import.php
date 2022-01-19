@@ -1,6 +1,6 @@
 <?php
 
-use De\Idrinth\Travian\WorldImporter;
+use De\Idrinth\Travian\Command\WorldImporter;
 use Dotenv\Dotenv;
 
 require_once __DIR__ . '/../vendor/autoload.php';

@@ -1,7 +1,10 @@
 <?php
 
-namespace De\Idrinth\Travian;
+namespace De\Idrinth\Travian\Page;
 
+use De\Idrinth\Travian\Twig;
+use De\Idrinth\Travian\World;
+use Exception;
 use PDO;
 use Ramsey\Uuid\Uuid;
 
@@ -96,12 +99,12 @@ class ResourcePush
             $stmt2 = $this->database->prepare('SELECT * FROM `' . $data['target']['world'] . '` WHERE x=:x AND y=:y');
             $stmt2->execute([':x' => $data['target']['x'], ':y' => $data['target']['y']]);
             $data['worlddata'] = $stmt2->fetch(PDO::FETCH_ASSOC);
-        } catch(\Exception $e) {            
+        } catch(Exception $e) {            
         }
         $stmt = $this->database->prepare('SELECT * FROM resource_push_supplies WHERE resource_push=:rp');
         $stmt->execute([':rp' => $data['target']['aid']]);
         $data['supplies'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        WorldImporter::register($this->database, $data['target']['world']);
+        World::register($this->database, $data['target']['world']);
         $this->twig->display('res-push.twig', $data);
     }
 }

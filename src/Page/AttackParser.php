@@ -1,10 +1,14 @@
 <?php
 
-namespace De\Idrinth\Travian;
+namespace De\Idrinth\Travian\Page;
 
+use De\Idrinth\Travian\DistanceCalculator;
+use De\Idrinth\Travian\TravelTime;
+use De\Idrinth\Travian\Twig;
 use DOMDocument;
 use DOMElement;
 use PDO;
+use UI\Point;
 use UnexpectedValueException;
 
 class AttackParser

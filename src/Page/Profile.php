@@ -1,7 +1,9 @@
 <?php
 
-namespace De\Idrinth\Travian;
+namespace De\Idrinth\Travian\Page;
 
+use De\Idrinth\Travian\Twig;
+use De\Idrinth\Travian\World;
 use PDO;
 
 class Profile
@@ -55,7 +57,7 @@ class Profile
                 ->prepare('DELETE FROM user_world WHERE user=:user AND aid=:aid')
                 ->execute([':user' => $_SESSION['id'], ':aid' => $post['delete-world']]);
         } elseif(isset($post['world']) && isset($post['name'])) {
-            $world = WorldImporter::toWorld($post['world']);
+            $world = World::toWorld($post['world']);
             $stmt = $this->database->prepare('SELECT 1 FROM user_world WHERE user=:user AND world=:world');
             $stmt->execute([':user' => $_SESSION['id'], ':world' => $world]);
             if ($stmt->fetchColumn() == 1) {
@@ -67,7 +69,7 @@ class Profile
                     ->prepare('INSERT INTO user_world (name,user,world) VALUES (:name, :user, :world)')
                     ->execute([':user' => $_SESSION['id'], ':world' => $world, ':name' => $post['name']]);
             }
-            WorldImporter::register($this->database, $world);
+            World::register($this->database, $world);
         }
         $stmt = $this->database->prepare(
             "SELECT user_deff_call.advanced, deff_calls.arrival, deff_calls.key, deff_calls.id, deff_calls.world, deff_calls.x, deff_calls.y "

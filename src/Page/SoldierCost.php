@@ -1,10 +1,8 @@
 <?php
 
-namespace De\Idrinth\Travian;
+namespace De\Idrinth\Travian\Page;
 
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
-use Twig\TwigFunction;
+use De\Idrinth\Travian\Twig;
 
 class SoldierCost
 {

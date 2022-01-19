@@ -1,6 +1,6 @@
 <?php
 
-namespace De\Idrinth\Travian;
+namespace De\Idrinth\Travian\Resource;
 
 use De\Idrinth\Yaml\Yaml;
 
@@ -8,7 +8,7 @@ class MissingTranslations
 {
     public function run($post, $language): void
     {
-        $dir = dirname(__DIR__) . '/translations';
+        $dir = dirname(__DIR__, 2) . '/translations';
         $data = (array) Yaml::decodeFromFile($dir . '/en.yml');
         if (strlen($language) === 2 && $language !== 'en' && is_file($dir . '/' . $language . '.yml')) {
             foreach ((array) Yaml::decodeFromFile($dir . '/' . $language . '.yml') as $key => $value) {

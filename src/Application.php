@@ -10,7 +10,7 @@ use ReflectionMethod;
 use Throwable;
 use function FastRoute\simpleDispatcher;
 
-class Router
+class Application
 {
     private $routes=[];
     private $singletons=[];

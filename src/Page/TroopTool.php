@@ -1,7 +1,10 @@
 <?php
 
-namespace De\Idrinth\Travian;
+namespace De\Idrinth\Travian\Page;
 
+use De\Idrinth\Travian\Troops;
+use De\Idrinth\Travian\Twig;
+use De\Idrinth\Travian\World;
 use DOMDocument;
 use PDO;
 use UnexpectedValueException;
@@ -154,7 +157,7 @@ ORDER BY troops.tribe DESC, troops.name ASC");
             $stmt = $this->database->prepare("SELECT 1 FROM troops WHERE user=:user AND world=:world AND x=:x AND y=:y");
             $stmt->execute([
                 ':user' => $_SESSION['id'],
-                ':world' => WorldImporter::toWorld($post['world']),
+                ':world' => World::toWorld($post['world']),
                 ':y' => $post['y'],
                 ':x' => $post['x'],
             ]);
@@ -163,7 +166,7 @@ ORDER BY troops.tribe DESC, troops.name ASC");
                     ->prepare("INSERT INTO troops(user,world,x,y,name, tribe) VALUES (:user,:world,:x,:y,:name,:tribe)")
                     ->execute([
                         ':user' => $_SESSION['id'],
-                        ':world' => WorldImporter::toWorld($post['world']),
+                        ':world' => World::toWorld($post['world']),
                         ':y' => $post['y'],
                         ':x' => $post['x'],
                         ':name' => $post['name'],
@@ -203,7 +206,7 @@ ORDER BY troops.tribe DESC, troops.name ASC");
                 $stmt = $this->database->prepare("SELECT 1 FROM troops WHERE user=:user AND world=:world AND x=:x AND y=:y");
                 $stmt->execute([
                     ':user' => $_SESSION['id'],
-                    ':world' => WorldImporter::toWorld($post['world']),
+                    ':world' => World::toWorld($post['world']),
                     ':y' => $village['y'],
                     ':x' => $village['x'],
                 ]);
@@ -212,7 +215,7 @@ ORDER BY troops.tribe DESC, troops.name ASC");
                         ->prepare("INSERT INTO troops(user,world,x,y,name, tribe) VALUES (:user,:world,:x,:y,:name,:tribe)")
                         ->execute([
                             ':user' => $_SESSION['id'],
-                            ':world' => WorldImporter::toWorld($post['world']),
+                            ':world' => World::toWorld($post['world']),
                             ':y' => $village['y'],
                             ':x' => $village['x'],
                             ':name' => $village['name'],
@@ -234,7 +237,7 @@ ORDER BY troops.tribe DESC, troops.name ASC");
                         ->prepare("UPDATE troops SET soldier1=:soldier1,soldier2=:soldier2,soldier3=:soldier3,soldier4=:soldier4,soldier5=:soldier5,soldier6=:soldier6,settler=:settler,chief=:chief,hero=:hero,ram=:ram,catapult=:catapult,name=:name WHERE user=:user AND world=:world AND x=:x AND y=:y")
                         ->execute([
                             ':user' => $_SESSION['id'],
-                            ':world' => WorldImporter::toWorld($post['world']),
+                            ':world' => World::toWorld($post['world']),
                             ':y' => $villages[$i-1]['y'],
                             ':x' => $villages[$i-1]['x'],
                             ':name' => $villages[$i-1]['name'],
@@ -258,7 +261,7 @@ ORDER BY troops.tribe DESC, troops.name ASC");
         $stmt->execute([':id' => $_SESSION['id']]);
         $troopsData = [];
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
-            WorldImporter::register($this->database, $row['world']);
+            World::register($this->database, $row['world']);
             $troopsData[$row['world']] = $troopsData[$row['world']] ?? [];
             $troopsData[$row['world']][$row['tribe']] = $troopsData[$row['world']][$row['tribe']] ?? [];
             $troopsData[$row['world']][$row['tribe']][] = $row;

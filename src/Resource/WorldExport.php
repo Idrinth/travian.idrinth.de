@@ -1,7 +1,8 @@
 <?php
 
-namespace De\Idrinth\Travian;
+namespace De\Idrinth\Travian\Resource;
 
+use De\Idrinth\Travian\World;
 use PDO;
 
 class WorldExport
@@ -13,7 +14,7 @@ class WorldExport
     }
     public function run($post, $world): void
     {
-        WorldImporter::register($this->database, $world);
+        World::register($this->database, $world);
         $stmt = $this->database->query("SELECT * FROM `$world`");
         header('Content-Type: text/csv');
         header('Content-Disposition: attachment; filename="' . $world . '.csv"');

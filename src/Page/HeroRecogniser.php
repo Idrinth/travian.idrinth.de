@@ -1,7 +1,9 @@
 <?php
 
-namespace De\Idrinth\Travian;
+namespace De\Idrinth\Travian\Page;
 
+use De\Idrinth\Travian\Twig;
+use De\Idrinth\Travian\World;
 use Exception;
 use PDO;
 use Webmozart\Assert\Assert;
@@ -225,11 +227,11 @@ class HeroRecogniser
                     $stmt->execute([':user' => $_SESSION['id'], ':alliance' => $post['hero_share']]);
                     $allowed = (bool) $stmt->fetchColumn();
                     if ($allowed) {
-                        $world = WorldImporter::toWorld($data['inputs']['url']);
+                        $world = World::toWorld($data['inputs']['url']);
                         $stmt2 = $this->database->prepare("SELECT world FROM alliances WHERE aid=:aid");
                         $stmt2->execute([':aid' => $post['hero_share']]);
                         Assert::eq($stmt2->fetchColumn(), $world, 'Alliance and entered world don\'t match');
-                        WorldImporter::register($this->database, $world);
+                        World::register($this->database, $world);
                         $now = date('Y-m-d H:i:s');
                         $stmt = $this->database->prepare("SELECT * FROM hero WHERE alliance=:alliance AND player=:player");
                         $stmt->execute(

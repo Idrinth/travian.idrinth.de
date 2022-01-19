@@ -1,6 +1,6 @@
 <?php
 
-namespace De\Idrinth\Travian;
+namespace De\Idrinth\Travian\Resource;
 
 class Ping
 {
