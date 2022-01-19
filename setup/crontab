@@ -1,0 +1,1 @@
+1 * * * * php /var/travian.idrinth.de/bin/world-import.php
