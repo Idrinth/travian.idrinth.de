@@ -63,9 +63,17 @@ class Application
     {
         $path = str_replace(':int}', ':[0-9]+}', $path);
         $path = str_replace(':uuid}', ':[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}}', $path);
-        $path = str_replace(':world}', ':ts[0-9]+\.x[0-9]+\.[a-z]+\.travian\.com}', $path);
-        $this->routes[$path] = $this->routes[$path] ?? [];
-        $this->routes[$path][$method] = $class;
+        if (false === strpos($path, ':world}')) {
+            $this->routes[$path] = $this->routes[$path] ?? [];
+            $this->routes[$path][$method] = $class;
+            return $this;
+        }
+        $path1 = str_replace(':world}', ':ts[0-9]+\.x[0-9]+\.[a-z]+\.travian\.com}', $path);
+        $this->routes[$path1] = $this->routes[$path1] ?? [];
+        $this->routes[$path1][$method] = $class;
+        $path2 = str_replace(':world}', ':toc\.x[0-9]+\.[a-z]+\.travian\.com}', $path);
+        $this->routes[$path2] = $this->routes[$path2] ?? [];
+        $this->routes[$path2][$method] = $class;
         return $this;
     }
 
