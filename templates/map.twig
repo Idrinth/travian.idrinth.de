@@ -9,7 +9,7 @@
 </div>
 <script type="text/javascript">
     onExists('Konva', () => {
-        const stage = new Konva.Stage({container: 'map',width: 802,height: 802});
+        const stage = new Konva.Stage({container: 'map',width: 802,height: 802,draggable:true});
         const background = new Konva.Layer();
         background.add(new Konva.Rect({
             x: 0,
