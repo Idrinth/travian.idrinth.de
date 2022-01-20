@@ -29,14 +29,15 @@
             </a>
             <h1>{{ translations.title }} (alpha)</h1>
             <select style="width: auto; display: inline;" onchange="setCookie('lang', this.value);location.reload();">
-                <option{% if lang=='en' %} selected="selected"{% endif %} value="en">English</option>
+                <option{% if lang=='da' %} selected="selected{% endif %} value="da">Dansk</option>
                 <option{% if lang=='de' %} selected="selected{% endif %} value="de">Deutsch</option>
-                <option{% if lang=='tr' %} selected="selected{% endif %} value="tr">Türkçe</option>
+                <option{% if lang=='en' %} selected="selected"{% endif %} value="en">English</option>
+                <option{% if lang=='fr' %} selected="selected{% endif %} value="fr">Français</option>
                 <option{% if lang=='nl' %} selected="selected{% endif %} value="nl">Nederlands</option>
                 <option{% if lang=='fi' %} selected="selected{% endif %} value="fi">Suomi</option>
-                <option{% if lang=='fr' %} selected="selected{% endif %} value="fr">Français</option>
+                <option{% if lang=='tr' %} selected="selected{% endif %} value="tr">Türkçe</option>
                 <option{% if lang=='jp' %} selected="selected{% endif %} value="jp">日本語</option>
-                <option{% if lang=='da' %} selected="selected{% endif %} value="da">Dansk</option>
+                
 
             </select>
             <select style="width: auto; display: inline;" onchange="setCookie('style', this.value);document.body.setAttribute('class', this.value);">
