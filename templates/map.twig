@@ -68,8 +68,8 @@
             }
             stage.scale({ x: newScale, y: newScale });
             stage.position({
-                x: pointer.x - mousePointTo.x * newScale,
-                y: pointer.y - mousePointTo.y * newScale,
+                x: newScale === 1 ? 0 : pointer.x - mousePointTo.x * newScale,
+                y: newScale === 1 ? 0 : pointer.y - mousePointTo.y * newScale,
             });
         });
     });
