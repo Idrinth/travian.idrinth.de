@@ -1,0 +1,77 @@
+{% include 'header.twig' %}
+<div class="split2"><div id="map"></div><pre id="output"></pre></div>
+<script type="text/javascript">
+    onExists('Konva', () => {
+        const stage = new Konva.Stage({container: 'map',width: 802,height: 802});
+        const background = new Konva.Layer();
+        background.add(new Konva.Rect({
+            x: 0,
+            width: stage.width(),
+            y: 0,
+            height: stage.height(),
+            fill: 'green',
+        }));
+        stage.add(background);
+        background.draw();
+        const villages = new Konva.Layer();
+        for (const village of {{ villages|json_encode()|raw }}) {
+            const circle = new Konva.Circle({
+                x: 2 * (village.x +201),
+                y: village.y <0 ? 2 * (201 - village.y) : 2 * (201 - village.y),
+                radius: 1,
+                fill: 'black',
+                player: village.player,
+                alliance: village.alliance,
+            });
+            circle.on('mouseover', function () {
+                for (const circle of villages.children) {
+                    if (circle.attrs.player === village.player) {
+                        circle.fill('orange');
+                        circle.radius(2);
+                    } else if (circle.attrs.alliance === village.alliance && village.alliance !== '') {
+                        circle.fill('blue');
+                        circle.radius(2);
+                    }
+                }
+                document.getElementById('output').innerHTML = village.x + '|' + village.y + "\nVillage: " + village.village + "\nPlayer: " + village.player + (village.alliance ? "\nAlliance: " + village.alliance : '');
+            });
+            circle.on('mouseout', function () {
+                document.getElementById('output').innerHTML = '';
+                for (const circle of villages.children) {
+                    circle.fill('black');
+                    circle.radius(1);
+                }
+            });
+            villages.add(circle);
+        }
+        villages.draw();
+        stage.add(villages);
+        stage.on('wheel', (e) => {
+            e.evt.preventDefault();
+
+            const oldScale = stage.scaleX();
+            const pointer = stage.getPointerPosition();
+
+            const mousePointTo = {
+                x: (pointer.x - stage.x()) / oldScale,
+                y: (pointer.y - stage.y()) / oldScale,
+            };
+            let direction = e.evt.deltaY > 0 ? 1 : -1;
+            if (e.evt.ctrlKey) {
+                direction = -direction;
+            }
+            let newScale = direction > 0 ? oldScale / 1.1 : oldScale * 1.1;
+            if (newScale > 16) {
+                newScale = 16;
+            } else if (newScale < 1) {
+                newScale = 1;
+            }
+            stage.scale({ x: newScale, y: newScale });
+            stage.position({
+                x: newScale === 1 ? 0 : pointer.x - mousePointTo.x * newScale,
+                y: newScale === 1 ? 0 : pointer.y - mousePointTo.y * newScale,
+            });
+        });
+    });
+</script>
+{% include 'footer.twig' %}

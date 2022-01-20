@@ -1,39 +1,41 @@
 <?php
 
 use alejoluc\LazyPDO\LazyPDO;
-use De\Idrinth\Travian\Alliance;
-use De\Idrinth\Travian\AttackParser;
-use De\Idrinth\Travian\Catcher;
-use De\Idrinth\Travian\DeffCall;
-use De\Idrinth\Travian\DeffCallCreation;
-use De\Idrinth\Travian\DeffCallOverview;
-use De\Idrinth\Travian\Delivery;
+use De\Idrinth\Travian\Application;
 use De\Idrinth\Travian\DistanceCalculator;
-use De\Idrinth\Travian\HeroRecogniser;
-use De\Idrinth\Travian\Home;
-use De\Idrinth\Travian\Imprint;
-use De\Idrinth\Travian\Login;
-use De\Idrinth\Travian\MissingTranslations;
-use De\Idrinth\Travian\MyHero;
-use De\Idrinth\Travian\Ping;
-use De\Idrinth\Travian\Profile;
-use De\Idrinth\Travian\ResourcePush;
-use De\Idrinth\Travian\ResourcePushCreation;
-use De\Idrinth\Travian\Router;
-use De\Idrinth\Travian\Scripts;
-use De\Idrinth\Travian\SoldierCost;
-use De\Idrinth\Travian\Styles;
+use De\Idrinth\Travian\Page\Alliance;
+use De\Idrinth\Travian\Page\AttackParser;
+use De\Idrinth\Travian\Page\Catcher;
+use De\Idrinth\Travian\Page\DeffCall;
+use De\Idrinth\Travian\Page\DeffCallCreation;
+use De\Idrinth\Travian\Page\DeffCallOverview;
+use De\Idrinth\Travian\Page\Delivery;
+use De\Idrinth\Travian\Page\HeroRecogniser;
+use De\Idrinth\Travian\Page\Home;
+use De\Idrinth\Travian\Page\Imprint;
+use De\Idrinth\Travian\Page\Login;
+use De\Idrinth\Travian\Page\Map;
+use De\Idrinth\Travian\Page\MyHero;
+use De\Idrinth\Travian\Page\Profile;
+use De\Idrinth\Travian\Page\ResourcePush;
+use De\Idrinth\Travian\Page\ResourcePushCreation;
+use De\Idrinth\Travian\Page\SoldierCost;
+use De\Idrinth\Travian\Page\TroopTool;
+use De\Idrinth\Travian\Page\WorldAlliances;
+use De\Idrinth\Travian\Page\WorldPlayers;
+use De\Idrinth\Travian\Page\Worlds;
+use De\Idrinth\Travian\Resource\Bot;
+use De\Idrinth\Travian\Resource\MissingTranslations;
+use De\Idrinth\Travian\Resource\Ping;
+use De\Idrinth\Travian\Resource\Scripts;
+use De\Idrinth\Travian\Resource\Styles;
+use De\Idrinth\Travian\Resource\WorldExport;
 use De\Idrinth\Travian\TravelTime;
-use De\Idrinth\Travian\TroopTool;
 use De\Idrinth\Travian\Twig;
-use De\Idrinth\Travian\WorldAlliances;
-use De\Idrinth\Travian\WorldExport;
-use De\Idrinth\Travian\WorldPlayers;
-use De\Idrinth\Travian\Worlds;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-(new Router())
+(new Application())
     ->register(new LazyPDO(
         'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
         $_ENV['DATABASE_USER'],
@@ -95,4 +97,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->post('/worlds', Worlds::class)
     ->get('/worlds/{world:world}/players', WorldPlayers::class)
     ->get('/worlds/{world:world}/alliances', WorldAlliances::class)
+    ->get('/bot-hunt/{world:world}.{villages:[0-9]+}.{population:[0-9]+}.txt', Bot::class)
+    ->get('/worlds/{world:world}/map', Map::class)
     ->run();

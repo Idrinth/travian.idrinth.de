@@ -1,7 +1,14 @@
 <?php
 
-namespace De\Idrinth\Travian;
+namespace De\Idrinth\Travian\Page;
 
+use De\Idrinth\Travian\DistanceCalculator;
+use De\Idrinth\Travian\Point;
+use De\Idrinth\Travian\TravelTime;
+use De\Idrinth\Travian\Troops;
+use De\Idrinth\Travian\Twig;
+use De\Idrinth\Travian\World;
+use Exception;
 use PDO;
 use Ramsey\Uuid\Uuid;
 
@@ -67,7 +74,7 @@ class DeffCall
             $stmt2 = $this->database->prepare('SELECT * FROM `' . $data['target']['world'] . '` WHERE x=:x AND y=:y');
             $stmt2->execute([':x' => $data['target']['x'], ':y' => $data['target']['y']]);
             $data['worlddata'] = $stmt2->fetch(PDO::FETCH_ASSOC);
-        } catch(\Exception $e) {            
+        } catch(Exception $e) {            
         }
         if (isset($_SESSION['id']) && $_SESSION['id'] > 0) {
             $this->database
@@ -212,7 +219,7 @@ class DeffCall
                     ->fetch(PDO::FETCH_NUM);
                 $worldHeight = intval($worldHeight, 10);
                 $worldWidth = intval($worldWidth, 10);
-            } catch (\Exception $ex) {
+            } catch (Exception $ex) {
             }
             foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $village) {
                 $distance = $this->distance->distance(
@@ -307,7 +314,7 @@ class DeffCall
         }
         $data['overflowPercent'] = 100 - $data['cavalryPercent'] - $data['infantryPercent'];
         $data['corn'] = Troops::CORN;
-        WorldImporter::register($this->database, $data['target']['world']);
+        World::register($this->database, $data['target']['world']);
         $this->twig->display($data['target']['advanced_troop_data'] ? 'advanced-deff-call.twig' : 'deff-call.twig', $data);
     }
 }

@@ -258,6 +258,47 @@ CREATE TABLE IF NOT EXISTS `x_world` (
   `points` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
+CREATE TABLE IF NOT EXISTS `world_alliances` (
+  `aid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
+  `world` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '',
+  `name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '',
+  `from` date NOT NULL,
+  `until` date NOT NULL,
+  UNIQUE KEY `aid` (`aid`),
+  KEY `id` (`id`,`world`(191)),
+  KEY `name` (`name`(191))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+CREATE TABLE IF NOT EXISTS `world_players` (
+  `aid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `from` date NOT NULL,
+  `until` date NOT NULL,
+  `alliance` int(10) unsigned NOT NULL DEFAULT '0',
+  `world` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  PRIMARY KEY (`aid`),
+  KEY `name` (`name`(191)),
+  KEY `id` (`id`,`world`(191)) USING BTREE,
+  KEY `alliance` (`world`(191),`alliance`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+CREATE TABLE IF NOT EXISTS `world_villages` (
+  `aid` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL,
+  `x` smallint(6) NOT NULL DEFAULT '0',
+  `y` smallint(6) NOT NULL DEFAULT '0',
+  `world` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '',
+  `name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '',
+  `player` int(10) unsigned NOT NULL DEFAULT '0',
+  `day` date NOT NULL,
+  `population` int(10) unsigned NOT NULL,
+  `tribe` enum('roman','gaul','egyptian','teuton','hun') COLLATE utf8mb4_bin NOT NULL,
+  PRIMARY KEY (`aid`),
+  KEY `world_player` (`world`(191),`player`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

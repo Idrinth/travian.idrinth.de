@@ -1,7 +1,9 @@
 <?php
 
-namespace De\Idrinth\Travian;
+namespace De\Idrinth\Travian\Page;
 
+use De\Idrinth\Travian\Twig;
+use De\Idrinth\Travian\World;
 use PDO;
 
 class MyHero
@@ -30,7 +32,7 @@ class MyHero
                 ->execute([':sb' => $post['standard_bonus'],':bb' => $post['boot_bonus'],':user' =>$_SESSION['id'], ':aid' => $post['aid'], ':fs' => $post['fighting_strength'], ':ob' => $post['off_bonus'], ':db' => $post['def_bonus'], ':r' => $post['resources']]);
         } elseif (isset($post['world'])) {
             $stmt = $this->database->prepare('SELECT * FROM my_hero WHERE `user`=:user AND world=:world');
-            $stmt->execute([':user' =>$_SESSION['id'], ':world' => WorldImporter::toWorld($post['world'])]);
+            $stmt->execute([':user' =>$_SESSION['id'], ':world' => World::toWorld($post['world'])]);
             if (false === $stmt->fetchColumn()) {
                 $this->database
                     ->prepare('INSERT INTO my_hero (user, world, fighting_strength, off_bonus, deff_bonus, resources) VALUES (:user, :world, 0,0,0,4)')

@@ -1,7 +1,8 @@
 <?php
 
-namespace De\Idrinth\Travian;
+namespace De\Idrinth\Travian\Page;
 
+use De\Idrinth\Travian\Twig;
 use PDO;
 
 class Catcher
@@ -15,7 +16,6 @@ class Catcher
     }
     public function run(array $post): void
     {
-        
         $this->twig->display('catcher.twig', ['inputs' => $post]);
     }
 }

@@ -1,8 +1,11 @@
 <?php
 
-namespace De\Idrinth\Travian;
+namespace De\Idrinth\Travian\Page;
 
-class Home {
+use De\Idrinth\Travian\Twig;
+
+class Home
+{
     private $twig;
     public function __construct(Twig $twig)
     {
@@ -12,5 +15,4 @@ class Home {
     {
         $this->twig->display('home.twig');
     }
-
 }

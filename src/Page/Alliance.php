@@ -1,7 +1,9 @@
 <?php
 
-namespace De\Idrinth\Travian;
+namespace De\Idrinth\Travian\Page;
 
+use De\Idrinth\Travian\Twig;
+use De\Idrinth\Travian\World;
 use PDO;
 use Ramsey\Uuid\Uuid;
 
@@ -46,7 +48,7 @@ class Alliance
                 header('Location: /profile', true, 303);
                 return;
             }
-            WorldImporter::register($this->database, $alliance['world']);
+            World::register($this->database, $alliance['world']);
             $stmt = $this->database->prepare("SELECT user_alliance.* FROM user_alliance WHERE alliance=:alliance AND user=:user");
             $stmt->execute([':alliance' => $alliance['aid'], ':user' => $_SESSION['id']]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -153,7 +155,7 @@ AND deleted=0");
                 ->execute([
                     ':id' => $id,
                     ':name' => $post['name'],
-                    ':world' => WorldImporter::toWorld($post['world']),
+                    ':world' => World::toWorld($post['world']),
                     ':key' => Uuid::uuid4(),
                 ]);
             $this->database

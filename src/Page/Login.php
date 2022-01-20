@@ -1,6 +1,6 @@
 <?php
 
-namespace De\Idrinth\Travian;
+namespace De\Idrinth\Travian\Page;
 
 use PDO;
 use Wohali\OAuth2\Client\Provider\Discord;

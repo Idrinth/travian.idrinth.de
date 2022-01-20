@@ -1,13 +1,17 @@
 <?php
 
-namespace De\Idrinth\Travian;
+namespace De\Idrinth\Travian\Page;
 
+use De\Idrinth\Travian\DistanceCalculator;
+use De\Idrinth\Travian\Point;
+use De\Idrinth\Travian\Twig;
 use DOMDocument;
 use Throwable;
 use UnexpectedValueException;
 use Webmozart\Assert\Assert;
 
-class Delivery {
+class Delivery
+{
     private static $townHall = [
         [24*3600],
         [23*3600 + 8*60 + 10],

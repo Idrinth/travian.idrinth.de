@@ -1,7 +1,9 @@
 <?php
 
-namespace De\Idrinth\Travian;
+namespace De\Idrinth\Travian\Page;
 
+use De\Idrinth\Travian\Twig;
+use De\Idrinth\Travian\World;
 use Exception;
 use PDO;
 use Ramsey\Uuid\Uuid;
@@ -33,14 +35,14 @@ class DeffCallCreation
                 if ($post['alliance_lock'] > 0) {
                     $stmt2 = $this->database->prepare("SELECT world FROM alliances WHERE aid=:aid");
                     $stmt2->execute([':aid' => $post['alliance_lock']]);
-                    Assert::eq($stmt2->fetchColumn(), WorldImporter::toWorld($post['world']), 'Alliance and entered world don\'t match');
+                    Assert::eq($stmt2->fetchColumn(), World::toWorld($post['world']), 'Alliance and entered world don\'t match');
                 }
                 Assert::greaterThan(strtotime($post['date'] . ' ' . $post['time']), time() + 3600, 'Defence is in the past or within the next hour.');
                 $key = Uuid::uuid4();
                 $stmt->execute([
                     ':id' => $uuid,
                     ':key' => $key,
-                    ':world' => WorldImporter::toWorld($post['world']),
+                    ':world' => World::toWorld($post['world']),
                     ':x' => intval($post['x'], 10),
                     ':y' => intval($post['y'], 10),
                     ':scouts' => intval($post['scouts'], 10),

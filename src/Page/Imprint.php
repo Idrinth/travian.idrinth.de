@@ -1,6 +1,8 @@
 <?php
 
-namespace De\Idrinth\Travian;
+namespace De\Idrinth\Travian\Page;
+
+use De\Idrinth\Travian\Twig;
 
 class Imprint
 {

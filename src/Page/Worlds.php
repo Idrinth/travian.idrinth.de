@@ -1,7 +1,9 @@
 <?php
 
-namespace De\Idrinth\Travian;
+namespace De\Idrinth\Travian\Page;
 
+use De\Idrinth\Travian\Twig;
+use De\Idrinth\Travian\World;
 use Exception;
 use PDO;
 
@@ -17,7 +19,7 @@ class Worlds
     public function run($post): void
     {
         if (isset($post['world'])) {
-            WorldImporter::register($this->database, $post['world']);
+            World::register($this->database, $post['world']);
         }
         $stmt = $this->database->query('SELECT * FROM world_updates');
         $context['worlds'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
