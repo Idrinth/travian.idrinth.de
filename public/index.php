@@ -14,6 +14,7 @@ use De\Idrinth\Travian\Page\HeroRecogniser;
 use De\Idrinth\Travian\Page\Home;
 use De\Idrinth\Travian\Page\Imprint;
 use De\Idrinth\Travian\Page\Login;
+use De\Idrinth\Travian\Page\Map;
 use De\Idrinth\Travian\Page\MyHero;
 use De\Idrinth\Travian\Page\Profile;
 use De\Idrinth\Travian\Page\ResourcePush;
@@ -97,4 +98,5 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->get('/worlds/{world:world}/players', WorldPlayers::class)
     ->get('/worlds/{world:world}/alliances', WorldAlliances::class)
     ->get('/bot-hunt/{world:world}.{villages:[0-9]+}.{population:[0-9]+}.txt', Bot::class)
+    ->get('/worlds/{world:world}/map', Map::class)
     ->run();

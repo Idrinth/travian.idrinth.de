@@ -12,11 +12,11 @@ class Scripts
         $out = [];
         foreach (array_diff(scandir(dirname(__DIR__, 2) . '/scripts'), ['.', '..']) as $script) {
             if (substr($script, -7) === '.min.js') {
-                $out[] = file_get_contents(dirname(__DIR__) . '/scripts/' . $script);
+                $out[] = file_get_contents(dirname(__DIR__, 2) . '/scripts/' . $script);
             } else {
                 $out[] = (new JS())->add(file_get_contents(dirname(__DIR__, 2) . '/scripts/' . $script))->minify();
             }
         }
-        echo implode("\n", $out);
+        echo implode("\n\n", $out);
     }
 }

@@ -8,6 +8,7 @@
         <th>{{ translations.players }}</th>
         <th>{{ translations.villages }}</th>
         <th>{{ translations.alliances }}</th>
+        <th>{{ translations.map }}</th>
     </tr>
     {% for world in worlds %}
         <tr>
@@ -17,6 +18,7 @@
             <td><a href="/worlds/{{ world.world }}/players">{{ world.players }}</a></td>
             <td>{{ world.villages }}</td>
             <td><a href="/worlds/{{ world.world }}/alliances">{{ world.alliances }}</a></td>
+            <td><a href="/worlds/{{ world.world }}/map">{{ translations.map }}</a></td>
         </tr>
     {% endfor %}
 </table>
