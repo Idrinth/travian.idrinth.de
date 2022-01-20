@@ -48,7 +48,7 @@
                         circle.radius(2);
                     }
                 }
-                document.getElementById('output').innerHTML = village.x + '|' + village.y + "\nVillage: " + village.village + "\nPlayer: " + village.player + (village.alliance ? "\nAlliance: " + village.alliance : '');
+                document.getElementById('output').innerHTML = village.x + '|' + village.y + "<br/>Village: " + village.village + "<br/>Player: " + village.player + (village.alliance ? "<br/>Alliance: " + village.alliance : '');
             });
             circle.on('mouseout', function () {
                 document.getElementById('output').innerHTML = '';
