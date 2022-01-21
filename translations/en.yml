@@ -432,3 +432,8 @@ attack_parser_explanation: This tool parses all attacks on you, returning inform
 soldier_cost_explanation: This tool will calculate your build times and costs for a given number of soldiers. It's meant to help planning for Off-Building.
 hero_check_explanation: This tool parses the image URL of a hero, returning the exact items (s)he is wearing at the moment.
 delivery_explanation: This tool calculates the amount of traders, frequency of trades and send resources to optimize trade routes.
+background_color: Background Color
+player_color: Player Color
+player_hover_color: Player Mouse-Over Color
+alliance_color: Alliance Color
+alliance_hover_color: Alliance Mouse-Over Color

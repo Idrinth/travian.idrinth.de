@@ -4,11 +4,48 @@
     <div>
         <label title="name1,name2">{{ translations.names }}*<input id="names" type="text"/></label>
         <label title="alliance1,alliance2">{{ translations.alliances }}*<input id="alliances" type="text"/></label>
+        <label>{{ translations.background_color }}<input id="background" value="#008000" type="color"/></label>
+        <label>{{ translations.player_hover_color }}<input id="player_hover" value="#400080" type="color"/></label>
+        <label>{{ translations.alliance_hover_color }}<input id="alliance_hover" value="#0000FF" type="color"/></label>
+        <label>{{ translations.player_color }}<input id="player" value="#FFFF00" type="color"/></label>
+        <label>{{ translations.alliance_color }}<input id="alliance" value="#FF8040" type="color"/></label>
         <div id="output"></div>
     </div>
 </div>
 <script type="text/javascript">
     onExists('Konva', () => {
+        const equal = (first, second) => {
+            first = first.replace(/^ +| +$/, '');
+            second = second.replace(/^ +| +$/, '');
+            if (first === '') {
+                return false;
+            }
+            if (second === '') {
+                return false;
+            }
+            if (first === second) {
+                return true;
+            }
+            if (first.toLowerCase() === second.toLowerCase()) {
+                return true;
+            }
+            return false;
+        };
+        const includes = (list, value) => {
+            value = value.replace(/^ +| +$/, '');
+            if (value === '') {
+                return false;
+            }
+            if (list.includes(value)) {
+                return true;
+            }
+            for (const val of list) {
+                if (equal(val, value)) {
+                    return true;
+                }
+            }
+            return false;
+        };
         const stage = new Konva.Stage({container: 'map',width: 802,height: 802,draggable:true});
         const background = new Konva.Layer();
         background.add(new Konva.Rect({
@@ -16,10 +53,23 @@
             width: stage.width(),
             y: 0,
             height: stage.height(),
-            fill: 'green',
+            fill: document.getElementById('background').value,
         }));
         stage.add(background);
         background.draw();
+        let playerHoverColor = document.getElementById('player_hover').value;
+        let allianceHoverColor = document.getElementById('alliance_hover').value;
+        let playerColor = document.getElementById('player').value;
+        let allianceColor = document.getElementById('alliance').value;
+        document.getElementById('background').onchange = () => {
+            background.children[0].fill(document.getElementById('background').value);
+        };
+        document.getElementById('player_hover').onchange = () => {
+            playerHoverColor = document.getElementById('player_hover').value;
+        };
+        document.getElementById('alliance_hover').onchange = () => {
+            allianceHoverColor = document.getElementById('alliance_hover').value;
+        };
         const villages = new Konva.Layer();
         for (const village of {{ villages|json_encode()|raw }}) {
             const circle = new Konva.Circle({
@@ -29,59 +79,74 @@
                 fill: 'black',
                 player: village.player,
                 alliance: village.alliance,
+                isCapital: village.isCapital,
             });
             circle.on('mouseover', function () {
                 const names = document.getElementById('names').value.split(',');
                 const alliances = document.getElementById('alliances').value.split(',');
                 for (const circle of villages.children) {
-                    if (circle.attrs.player === village.player) {
-                        circle.fill('orange');
-                        circle.radius(2);
-                    } else if (circle.attrs.alliance === village.alliance && village.alliance !== '') {
-                        circle.fill('blue');
-                        circle.radius(2);
-                    } else if (names.includes(circle.attrs.player)) {
-                        circle.fill('yellow');
-                        circle.radius(2);
-                    } else if (alliances.includes(circle.attrs.alliance) && circle.attrs.alliance !== '') {
-                        circle.fill('purple');
-                        circle.radius(2);
+                    if (equal(circle.attrs.player, village.player)) {
+                        circle.fill(playerHoverColor);
+                    } else if (equal(circle.attrs.alliance, village.alliance)) {
+                        circle.fill(allianceHoverColor);
+                    } else if (includes(names, circle.attrs.player)) {
+                        circle.fill(playerColor);
+                    } else if (includes(alliances, circle.attrs.alliance)) {
+                        circle.fill(allianceColor);
                     }
                 }
-                document.getElementById('output').innerHTML = village.x + '|' + village.y + "<br/>Village: " + village.village + "<br/>Player: " + village.player + (village.alliance ? "<br/>Alliance: " + village.alliance : '');
+                document.getElementById('output').innerHTML = village.x + '|' + village.y + "<br/>Village: " + village.village + (village.isCapital ? '(Capital)' : '') + "<br/>Player: " + village.player + (village.alliance ? "<br/>Alliance: " + village.alliance : '');
             });
             circle.on('mouseout', function () {
                 document.getElementById('output').innerHTML = '';
                 const names = document.getElementById('names').value.split(',');
                 const alliances = document.getElementById('alliances').value.split(',');
                 for (const circle of villages.children) {
-                    if (names.includes(circle.attrs.player)) {
-                        circle.fill('yellow');
-                        circle.radius(2);
-                    } else if (alliances.includes(circle.attrs.alliance)) {
-                        circle.fill('purple');
-                        circle.radius(2);
+                    if (includes(names, circle.attrs.player)) {
+                        circle.fill(playerColor);
+                    } else if (includes(alliances, circle.attrs.alliance)) {
+                        circle.fill(allianceColor);
                     } else {
                         circle.fill('black');
-                        circle.radius(1);
                     }
                 }
             });
             villages.add(circle);
         }
+        document.getElementById('player').onchange = () => {
+            const names = document.getElementById('names').value.split(',');
+            const alliances = document.getElementById('alliances').value.split(',');
+            playerColor = document.getElementById('player').value;
+            for (const circle of villages.children) {
+                if (includes(names, circle.attrs.player)) {
+                    circle.fill(playerColor);
+                } else if (includes(alliances, circle.attrs.alliance)) {
+                    circle.fill(allianceColor);
+                }
+            }
+        };
+        document.getElementById('alliance').onchange = () => {
+            const names = document.getElementById('names').value.split(',');
+            const alliances = document.getElementById('alliances').value.split(',');
+            allianceColor = document.getElementById('alliance').value;
+            for (const circle of villages.children) {
+                if (includes(names, circle.attrs.player)) {
+                    circle.fill(playerColor);
+                } else if (includes(alliances, circle.attrs.alliance)) {
+                    circle.fill(allianceColor);
+                }
+            }
+        };
         document.getElementById('names').onkeyup = () => {
             const names = document.getElementById('names').value.split(',');
             const alliances = document.getElementById('alliances').value.split(',');
             for (const circle of villages.children) {
-                if (names.includes(circle.attrs.player)) {
-                    circle.fill('yellow');
-                    circle.radius(2);
-                } else if (alliances.includes(circle.attrs.alliance) && circle.attrs.alliance !== '') {
-                    circle.fill('purple');
-                    circle.radius(2);
+                if (includes(names, circle.attrs.player)) {
+                    circle.fill(playerColor);
+                } else if (includes(alliances, circle.attrs.alliance)) {
+                    circle.fill(allianceColor);
                 } else {
                     circle.fill('black');
-                    circle.radius(1);
                 }
             }
         };
@@ -89,15 +154,12 @@
             const names = document.getElementById('names').value.split(',');
             const alliances = document.getElementById('alliances').value.split(',');
             for (const circle of villages.children) {
-                if (names.includes(circle.attrs.player)) {
-                    circle.fill('yellow');
-                    circle.radius(2);
-                } else if (alliances.includes(circle.attrs.alliance) && circle.attrs.alliance !== '') {
-                    circle.fill('purple');
-                    circle.radius(2);
+                if (includes(names, circle.attrs.player)) {
+                    circle.fill(playerColor);
+                } else if (includes(alliances, circle.attrs.alliance)) {
+                    circle.fill(allianceColor);
                 } else {
                     circle.fill('black');
-                    circle.radius(1);
                 }
             }
         };
@@ -129,6 +191,7 @@
                 y: newScale === 1 ? 0 : pointer.y - mousePointTo.y * newScale,
             });
         });
+        document.getElementById('alliances').onkeyup();
     });
 </script>
 {% include 'footer.twig' %}
