@@ -87,14 +87,22 @@
                 {% if target.troops > 0 %}<tr><th>{{ translations.troops }}</th><td>{{totalTroops }}/{{ target.troops }} <button style="margin-left: 1em;background: transparent;" onclick="document.getElementById('shortinfo').classList.toggle('hidden')">{{ translations.toggle_details }}</button></td></tr>{% endif %}
                 {% if target.scouts > 0 %}<tr><th>{{ translations.scouts }}</th><td>{{totalScouts }}/{{ target.scouts }}</td></tr>{% endif %}
                 {% if target.heroes > 0 %}<tr><th>{{ translations.heroes }}</th><td>{{totalHeroes }}/{{ target.heroes }}</td></tr>{% endif %}
-                <tr><th>{{ translations.troop_ratio }}</th><td></td></tr>
-                <tr><td colspan="2">
-                    <div class="bar" style="grid-template-columns: {{ infantryPercent }}%  {{ overflowPercent }}%  {{ cavalryPercent }}%">
-                        <div class="left" title="{{ floor(infantryPower/totalPower*100) }}% {{ translations.infantry }}">{{ translations.infantry }}</div>
-                        <div class="middle" title="{{ overflowPercent }}% {{ translations.missplaced }}"></div>
-                        <div class="right" title="{{ floor(cavalryPower/totalPower*100) }}% {{ translations.cavalry }}">{{ translations.cavalry }}</div>
-                    </div>
-                </td></tr>
+                <tr>
+                    <th>{{ translations.troop_ratio }}</th>
+                    <td>
+                        <div class="bar">
+                            <div class="target" style="grid-template-columns: {{ infantryPercent + overflowPercent-0.5 }}% 1% {{ cavalryPercent-0.5 }}%">
+                                <div></div>
+                                <div class="middle"></div>
+                                <div></div>
+                            </div>
+                            <div class="current" style="grid-template-columns: {{ floor(infantryPower/totalPower*100) }}%  {{ floor(cavalryPower/totalPower*100) }}%">
+                                <div class="left" title="{{ floor(infantryPower/totalPower*100) }}% {{ translations.infantry }}">{{ translations.infantry }}</div>
+                                <div class="right" title="{{ floor(cavalryPower/totalPower*100) }}% {{ translations.cavalry }}">{{ translations.cavalry }}</div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
                 {% for troop,amount in troops %}
                     {% if amount > 0 %}
                 <tr class="details"><th>{{ translations[troop] }}</th><td>{{ amount }}</td></tr>
