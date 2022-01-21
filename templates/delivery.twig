@@ -32,6 +32,8 @@
             </div>
         {% endfor %}
     {% endif %}
+{% else %}
+    <p>{{ translations.delivery_explanation }}</p>
 {% endif %}
 <form method="post">
     <fieldset>

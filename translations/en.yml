@@ -423,7 +423,12 @@ cavalry: Anti-Cavalry
 missplaced: Missplaced
 troop_ratio: Troop Ratio
 add_world: Manually add World
-world_update_info: Updates happen daily, 24h after the last update on the full hour.
+world_update_info: Updates happen daily, 24h after the last update on the next third of an hour.
 map: Map
 names: Names
 res_push_creation: Create Resource-Push
+faq: FAQ
+attack_parser_explanation: This tool parses all attacks on you, returning information about what troops could be in the given attack. Creating a deff-call from the info is made easier by automatically take the data avaible.
+soldier_cost_explanation: This tool will calculate your build times and costs for a given number of soldiers. It's meant to help planning for Off-Building.
+hero_check_explanation: This tool parses the image URL of a hero, returning the exact items (s)he is wearing at the moment.
+delivery_explanation: This tool calculates the amount of traders, frequency of trades and send resources to optimize trade routes.

@@ -31,6 +31,8 @@
             <td>{{ result.normal_recruiting }}</td>
         </tr>
     </table>
+{% else %}
+    <p>{{ translations.soldier_cost_explanation }}</p>
 {% endif %}
 <form method="post">
     <fieldset>

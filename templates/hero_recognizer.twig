@@ -50,6 +50,8 @@
             </tr>
         </table>
     </div>
+{% else %}
+    <p>{{ translations.hero_check_explanation }}</p>
 {% endif %}
 {% if error %}
     <p class="error">{{ error }}</p>

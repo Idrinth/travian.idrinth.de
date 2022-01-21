@@ -41,6 +41,8 @@
         {% endfor %}</ul></td>
     </tr>
 </table>
+{% else %}
+    <p>{{ translations.attack_parser_explanation }}</p>
 {% endfor %}
 <form method="post">
     <fieldset>
