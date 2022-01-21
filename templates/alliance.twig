@@ -19,8 +19,8 @@
         <th>Discord</th>
         <th>{{ translations.name }}</th>
         <th>{{ translations.rank }}</th>
+        <th>{{ translations.activity }}</th>
         {% if mayInvite %}
-            <th>{{ translations.activity }}</th>
             <th>{{ translations.troops }}</th>
         {% endif %}
         <th>{{ translations.hero }}</th>
@@ -37,7 +37,7 @@
                     <option{% if player.rank=='Member' %} selected{% endif %}>Member</option>
                     <option{% if player.rank=='High Council' %} selected{% endif %}>High Council</option>
                 </select><input type="submit"/></form>{% else %}{{ player.rank }}{% endif %}</td>
-        {% if mayInvite %}
+        {% if mayInvite or player.aid==session.id %}
             {% set found=false %}
             {% for act in activity %}
                 {% if act.user == player.aid %}
@@ -56,6 +56,10 @@
             {% if not found %}
                 <td>0</td>
             {% endif %}
+        {% else %}
+            <td></td>
+        {% endif %}
+        {% if mayInvite %}
             {% set found=false %}
             {% for act in troops %}
                 {% if act.user == player.aid %}
