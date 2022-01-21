@@ -17,6 +17,6 @@ class Scripts
                 $out[] = (new JS())->add(file_get_contents(dirname(__DIR__, 2) . '/scripts/' . $script))->minify();
             }
         }
-        echo implode("\n\n", $out);
+        echo 'try{' . implode("\n} catch(e) {console.log(e)}\ntry{", $out) . "\n} catch(e) {console.log(e)}";
     }
 }
