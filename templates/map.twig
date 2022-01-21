@@ -11,6 +11,8 @@
         <label>{{ translations.player_color }}<input id="player" value="#FFFF00" type="color"/></label>
         <label>{{ translations.alliance_color1 }}<input id="alliance1" value="#FF8040" type="color"/></label>
         <label>{{ translations.alliance_color2 }}<input id="alliance2" value="#00FF40" type="color"/></label>
+        <label>{{ translations.base_color }}<input id="base" value="#000000" type="color"/></label>
+        <label>{{ translations.capitol_color }}<input id="capitol" value="#000000" type="color"/></label>
         <label>{{ translations.show_grid }}<input id="grid" type="checkbox"/></label>
         <label>{{ translations.scale }}<input id="scale" type="number" value="1" min="1" max="16"/></label>
         <div id="output"></div>
@@ -93,6 +95,8 @@
         let playerColor = document.getElementById('player').value;
         let allianceColor = document.getElementById('alliance1').value;
         let allianceColor2 = document.getElementById('alliance2').value;
+        let baseColor = document.getElementById('base').value;
+        let baseCapitolColor = document.getElementById('capitol').value;
         document.getElementById('background').onchange = () => {
             background.children[0].fill(document.getElementById('background').value);
         };
@@ -115,8 +119,10 @@
                     circle.fill(allianceColor);
                 } else if (includes(alliances2, circle.attrs.alliance)) {
                     circle.fill(allianceColor2);
+                } else if (circle.attrs.isCapital) {
+                    circle.fill(baseCapitolColor);
                 } else {
-                    circle.fill('black');
+                    circle.fill(baseColor);
                 }
             }
         };
@@ -126,7 +132,7 @@
                 y: village.y <0 ? 2 * (201 - village.y) : 2 * (201 - village.y),
                 width: 2,
                 height: 2,
-                fill: 'black',
+                fill: 'red',
                 player: village.player,
                 alliance: village.alliance,
                 isCapital: village.isCapital,
@@ -171,6 +177,14 @@
         };
         document.getElementById('alliance2').onchange = () => {
             allianceColor2 = document.getElementById('alliance2').value;
+            paint();
+        };
+        document.getElementById('base').onchange = () => {
+            baseColor = document.getElementById('base').value;
+            paint();
+        };
+        document.getElementById('capitol').onchange = () => {
+            baseCapitolColor = document.getElementById('capitol').value;
             paint();
         };
         document.getElementById('names').onkeyup = paint;

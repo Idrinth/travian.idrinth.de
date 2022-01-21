@@ -442,3 +442,5 @@ alliance_group2: Alliance Group 2
 alliance_hover_color: Alliance Mouse-Over Color
 show_grid: Show Map-Grid
 scale: Scale
+base_color: Base Village Color
+capitol_color: Base Capitol Color
