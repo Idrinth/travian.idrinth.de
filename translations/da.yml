@@ -424,3 +424,9 @@ missplaced: Malplaceret
 troop_ratio: Troppeforhold
 add_world: Tilføj spilverden manuelt
 world_update_info: Opdateringer hænder dagligt (24 timer efter sidste opdatering).
+res_push_creation: Opret ressource-push
+faq: FAQ
+attack_parser_explanation: Dette værktøj analyserer alle angreb på dig og returnerer information om, hvilke tropper der kunne være i det givne angreb. Oprettelse af et deff-call ud fra infoen gøres lettere ved automatisk at tage de tilgængelige data.
+soldier_cost_explanation: Dette værktøj vil beregne dine byggetider og omkostninger for et givet antal soldater. Det er beregnet til at hjælpe med at planlægge off-bygning.
+hero_check_explanation: Dette værktøj analyserer billed-URL'en for en helt og returnerer de nøjagtige genstande, han har på i øjeblikket.
+delivery_explanation: Dette værktøj beregner mængden af købmænd, hyppigheden af ​​handler og sender ressourcer for at optimere handelsruter.
