@@ -112,7 +112,7 @@
                 }
                 document.getElementById('output').innerHTML = village.x + '|' + village.y + "<br/>Village: " + village.village + (village.isCapital ? '(Capital)' : '') + "<br/>Player: " + village.player + (village.alliance ? "<br/>Alliance: " + village.alliance : '');
             });
-            circle.on('mouseout touchend', function () {
+            const paint = () => {
                 document.getElementById('output').innerHTML = '';
                 const names = document.getElementById('names').value.split(',');
                 const alliances = document.getElementById('alliances').value.split(',');
@@ -128,102 +128,25 @@
                         circle.fill('black');
                     }
                 }
-            });
+            };
+            circle.on('mouseout touchend', paint);
             villages.add(circle);
         }
         document.getElementById('player').onchange = () => {
-            const names = document.getElementById('names').value.split(',');
-            const alliances = document.getElementById('alliances').value.split(',');
-            const alliances2 = document.getElementById('alliances2').value.split(',');
             playerColor = document.getElementById('player').value;
-            for (const circle of villages.children) {
-                if (includes(names, circle.attrs.player)) {
-                    circle.fill(playerColor);
-                } else if (includes(alliances, circle.attrs.alliance)) {
-                    circle.fill(allianceColor);
-                } else if (includes(alliances2, circle.attrs.alliance)) {
-                    circle.fill(allianceColor2);
-                }
-            }
+            paint();
         };
         document.getElementById('alliance1').onchange = () => {
-            const names = document.getElementById('names').value.split(',');
-            const alliances = document.getElementById('alliances').value.split(',');
-            const alliances2 = document.getElementById('alliances2').value.split(',');
             allianceColor = document.getElementById('alliance1').value;
-            for (const circle of villages.children) {
-                if (includes(names, circle.attrs.player)) {
-                    circle.fill(playerColor);
-                } else if (includes(alliances, circle.attrs.alliance)) {
-                    circle.fill(allianceColor);
-                } else if (includes(alliances2, circle.attrs.alliance)) {
-                    circle.fill(allianceColor2);
-                }
-            }
+            paint();
         };
         document.getElementById('alliance2').onchange = () => {
-            const names = document.getElementById('names').value.split(',');
-            const alliances = document.getElementById('alliances').value.split(',');
-            const alliances2 = document.getElementById('alliances2').value.split(',');
             allianceColor2 = document.getElementById('alliance2').value;
-            for (const circle of villages.children) {
-                if (includes(names, circle.attrs.player)) {
-                    circle.fill(playerColor);
-                } else if (includes(alliances, circle.attrs.alliance)) {
-                    circle.fill(allianceColor);
-                } else if (includes(alliances2, circle.attrs.alliance)) {
-                    circle.fill(allianceColor2);
-                }
-            }
+            paint();
         };
-        document.getElementById('names').onkeyup = () => {
-            const names = document.getElementById('names').value.split(',');
-            const alliances = document.getElementById('alliances').value.split(',');
-            const alliances2 = document.getElementById('alliances2').value.split(',');
-            for (const circle of villages.children) {
-                if (includes(names, circle.attrs.player)) {
-                    circle.fill(playerColor);
-                } else if (includes(alliances, circle.attrs.alliance)) {
-                    circle.fill(allianceColor);
-                } else if (includes(alliances2, circle.attrs.alliance)) {
-                    circle.fill(allianceColor2);
-                } else {
-                    circle.fill('black');
-                }
-            }
-        };
-        document.getElementById('alliances').onkeyup = () => {
-            const names = document.getElementById('names').value.split(',');
-            const alliances = document.getElementById('alliances').value.split(',');
-            const alliances2 = document.getElementById('alliances2').value.split(',');
-            for (const circle of villages.children) {
-                if (includes(names, circle.attrs.player)) {
-                    circle.fill(playerColor);
-                } else if (includes(alliances, circle.attrs.alliance)) {
-                    circle.fill(allianceColor);
-                } else if (includes(alliances2, circle.attrs.alliance)) {
-                    circle.fill(allianceColor2);
-                } else {
-                    circle.fill('black');
-                }
-            }
-        };
-        document.getElementById('alliances2').onkeyup = () => {
-            const names = document.getElementById('names').value.split(',');
-            const alliances = document.getElementById('alliances').value.split(',');
-            const alliances2 = document.getElementById('alliances2').value.split(',');
-            for (const circle of villages.children) {
-                if (includes(names, circle.attrs.player)) {
-                    circle.fill(playerColor);
-                } else if (includes(alliances, circle.attrs.alliance)) {
-                    circle.fill(allianceColor);
-                } else if (includes(alliances2, circle.attrs.alliance)) {
-                    circle.fill(allianceColor2);
-                } else {
-                    circle.fill('black');
-                }
-            }
-        };
+        document.getElementById('names').onkeyup = paint;
+        document.getElementById('alliances').onkeyup = paint;
+        document.getElementById('alliances2').onkeyup = paint;
         villages.draw();
         stage.add(villages);
         stage.on('wheel', (e) => {
