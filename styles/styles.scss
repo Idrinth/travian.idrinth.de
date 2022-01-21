@@ -99,8 +99,11 @@ nav > ul > li {
     box-shadow: 3px 3px 5px #000;
     margin: 5px;
 }
-.result.hidden > table {
+.result.hidden > * {
     display: none;
+}
+.result.hidden > h3 {
+    display: block;
 }
 h2 {
     margin: 0;
