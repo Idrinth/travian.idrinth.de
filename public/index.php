@@ -10,6 +10,7 @@ use De\Idrinth\Travian\Page\DeffCall;
 use De\Idrinth\Travian\Page\DeffCallCreation;
 use De\Idrinth\Travian\Page\DeffCallOverview;
 use De\Idrinth\Travian\Page\Delivery;
+use De\Idrinth\Travian\Page\FAQ;
 use De\Idrinth\Travian\Page\HeroRecogniser;
 use De\Idrinth\Travian\Page\Home;
 use De\Idrinth\Travian\Page\Imprint;
@@ -99,4 +100,5 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->get('/worlds/{world:world}/alliances', WorldAlliances::class)
     ->get('/bot-hunt/{world:world}.{villages:[0-9]+}.{population:[0-9]+}.txt', Bot::class)
     ->get('/worlds/{world:world}/map', Map::class)
+    ->get('/faq', FAQ::class)
     ->run();

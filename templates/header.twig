@@ -37,8 +37,6 @@
                 <option{% if lang=='fi' %} selected="selected{% endif %} value="fi">Suomi</option>
                 <option{% if lang=='tr' %} selected="selected{% endif %} value="tr">Türkçe</option>
                 <option{% if lang=='jp' %} selected="selected{% endif %} value="jp">日本語</option>
-                
-
             </select>
             <select style="width: auto; display: inline;" onchange="setCookie('style', this.value);document.body.setAttribute('class', this.value);">
                 <option{% if style=='light' %} selected{% endif %} value="light">&#9788;</option>
@@ -88,6 +86,9 @@
                 </li>
                 <li>
                     <a href="/worlds">{{ translations.worlds }}</a>
+                </li>
+                <li>
+                    <a href="/faq">{{ translations.faq }}</a>
                 </li>
                 <li>
                     <a href="https://discord.gg/WH7RWw7FqP" target="_blank">Discord-Server</a>
