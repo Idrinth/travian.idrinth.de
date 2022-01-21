@@ -11,6 +11,8 @@
         <label>{{ translations.player_color }}<input id="player" value="#FFFF00" type="color"/></label>
         <label>{{ translations.alliance_color1 }}<input id="alliance1" value="#FF8040" type="color"/></label>
         <label>{{ translations.alliance_color2 }}<input id="alliance2" value="#00FF40" type="color"/></label>
+        <label>{{ translations.show_grid }}<input id="grid" type="checkbox"/></label>
+        <label>{{ translations.scale }}<input id="scale" type="number" value="1" min="1" max="16"/></label>
         <div id="output"></div>
     </div>
 </div>
@@ -59,6 +61,33 @@
         }));
         stage.add(background);
         background.draw();
+        const grid = new Konva.Layer();
+        for (let i = 21; i<802; i += 20) {
+            grid.add(new Konva.Line({
+                x: 0,
+                y: i,
+                stroke: 'rgba(0,0,0,0.25)',
+                tension: 1,
+                points: [0, i, 802, i]
+            }));
+            grid.add(new Konva.Line({
+                x: i,
+                y: 0,
+                stroke: 'rgba(0,0,0,0.25)',
+                tension: 1,
+                points: [i, 0, i, 802]
+            }));
+        }
+        stage.add(grid);
+        grid.draw();
+        const gridchange = () => {
+            const show = document.getElementById('grid').checked;
+            for (const child of grid.children) {
+                child.stroke(show ? 'rgba(0,0,0,0.25)' : 'rgba(0,0,0,0)')
+            }
+        }
+        document.getElementById('grid').onchange = gridchange;
+        gridchange();
         let playerHoverColor = document.getElementById('player_hover').value;
         let allianceHoverColor = document.getElementById('alliance_hover').value;
         let playerColor = document.getElementById('player').value;
@@ -112,7 +141,7 @@
             });
             circle.on('mouseover touchstart', function () {
                 const names = document.getElementById('names').value.split(',');
-                const alliances = document.getElementById('alliances1').value.split(',');
+                const alliances = document.getElementById('alliances').value.split(',');
                 const alliances2 = document.getElementById('alliances2').value.split(',');
                 for (const circle of villages.children) {
                     if (equal(circle.attrs.player, village.player)) {
@@ -175,6 +204,18 @@
                 y: newScale === 1 ? 0 : pointer.y - mousePointTo.y * newScale,
             });
         });
+        const scale = () => {
+            newScale = Number.parseInt(document.getElementById('scale').value);
+            stage.scale({ x: newScale, y: newScale });
+            if (newScale === 1) {                
+                stage.position({
+                    x: 0,
+                    y: 0,
+                });
+            }
+        };
+        document.getElementById('scale').onchange = scale;
+        scale();
         paint();
     });
 </script>

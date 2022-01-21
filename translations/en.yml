@@ -440,3 +440,5 @@ alliance_color2: Alliance Group 2 Color
 alliance_group1: Alliance Group 1
 alliance_group2: Alliance Group 2
 alliance_hover_color: Alliance Mouse-Over Color
+show_grid: Show Map-Grid
+scale: Scale
