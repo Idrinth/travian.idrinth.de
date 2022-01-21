@@ -3,12 +3,14 @@
     <div id="map"></div>
     <div>
         <label title="name1,name2">{{ translations.names }}*<input id="names" type="text"/></label>
-        <label title="alliance1,alliance2">{{ translations.alliances }}*<input id="alliances" type="text"/></label>
+        <label title="alliance1,alliance2">{{ translations.alliance_group1 }}*<input id="alliances" type="text"/></label>
+        <label title="alliance1,alliance2">{{ translations.alliance_group2 }}*<input id="alliances2" type="text"/></label>
         <label>{{ translations.background_color }}<input id="background" value="#008000" type="color"/></label>
         <label>{{ translations.player_hover_color }}<input id="player_hover" value="#400080" type="color"/></label>
         <label>{{ translations.alliance_hover_color }}<input id="alliance_hover" value="#0000FF" type="color"/></label>
         <label>{{ translations.player_color }}<input id="player" value="#FFFF00" type="color"/></label>
-        <label>{{ translations.alliance_color }}<input id="alliance" value="#FF8040" type="color"/></label>
+        <label>{{ translations.alliance_color1 }}<input id="alliance1" value="#FF8040" type="color"/></label>
+        <label>{{ translations.alliance_color2 }}<input id="alliance2" value="#00FF40" type="color"/></label>
         <div id="output"></div>
     </div>
 </div>
@@ -60,7 +62,8 @@
         let playerHoverColor = document.getElementById('player_hover').value;
         let allianceHoverColor = document.getElementById('alliance_hover').value;
         let playerColor = document.getElementById('player').value;
-        let allianceColor = document.getElementById('alliance').value;
+        let allianceColor = document.getElementById('alliance1').value;
+        let allianceColor2 = document.getElementById('alliance2').value;
         document.getElementById('background').onchange = () => {
             background.children[0].fill(document.getElementById('background').value);
         };
@@ -72,7 +75,16 @@
         };
         const villages = new Konva.Layer();
         for (const village of {{ villages|json_encode()|raw }}) {
-            const circle = new Konva.Circle({
+            const circle = village.isCapital ? new Konva.Rect({
+                x: 2 * (village.x +201),
+                y: village.y <0 ? 2 * (201 - village.y) : 2 * (201 - village.y),
+                width: 2,
+                height: 2,
+                fill: 'black',
+                player: village.player,
+                alliance: village.alliance,
+                isCapital: village.isCapital,
+            }) : new Konva.Circle({
                 x: 2 * (village.x +201),
                 y: village.y <0 ? 2 * (201 - village.y) : 2 * (201 - village.y),
                 radius: 1,
@@ -81,9 +93,10 @@
                 alliance: village.alliance,
                 isCapital: village.isCapital,
             });
-            circle.on('mouseover', function () {
+            circle.on('mouseover touchstart', function () {
                 const names = document.getElementById('names').value.split(',');
-                const alliances = document.getElementById('alliances').value.split(',');
+                const alliances = document.getElementById('alliances1').value.split(',');
+                const alliances2 = document.getElementById('alliances2').value.split(',');
                 for (const circle of villages.children) {
                     if (equal(circle.attrs.player, village.player)) {
                         circle.fill(playerHoverColor);
@@ -93,19 +106,24 @@
                         circle.fill(playerColor);
                     } else if (includes(alliances, circle.attrs.alliance)) {
                         circle.fill(allianceColor);
+                    } else if (includes(alliances2, circle.attrs.alliance)) {
+                        circle.fill(allianceColor2);
                     }
                 }
                 document.getElementById('output').innerHTML = village.x + '|' + village.y + "<br/>Village: " + village.village + (village.isCapital ? '(Capital)' : '') + "<br/>Player: " + village.player + (village.alliance ? "<br/>Alliance: " + village.alliance : '');
             });
-            circle.on('mouseout', function () {
+            circle.on('mouseout touchend', function () {
                 document.getElementById('output').innerHTML = '';
                 const names = document.getElementById('names').value.split(',');
                 const alliances = document.getElementById('alliances').value.split(',');
+                const alliances2 = document.getElementById('alliances2').value.split(',');
                 for (const circle of villages.children) {
                     if (includes(names, circle.attrs.player)) {
                         circle.fill(playerColor);
                     } else if (includes(alliances, circle.attrs.alliance)) {
                         circle.fill(allianceColor);
+                    } else if (includes(alliances2, circle.attrs.alliance)) {
+                        circle.fill(allianceColor2);
                     } else {
                         circle.fill('black');
                     }
@@ -116,35 +134,59 @@
         document.getElementById('player').onchange = () => {
             const names = document.getElementById('names').value.split(',');
             const alliances = document.getElementById('alliances').value.split(',');
+            const alliances2 = document.getElementById('alliances2').value.split(',');
             playerColor = document.getElementById('player').value;
             for (const circle of villages.children) {
                 if (includes(names, circle.attrs.player)) {
                     circle.fill(playerColor);
                 } else if (includes(alliances, circle.attrs.alliance)) {
                     circle.fill(allianceColor);
+                } else if (includes(alliances2, circle.attrs.alliance)) {
+                    circle.fill(allianceColor2);
                 }
             }
         };
-        document.getElementById('alliance').onchange = () => {
+        document.getElementById('alliance1').onchange = () => {
             const names = document.getElementById('names').value.split(',');
             const alliances = document.getElementById('alliances').value.split(',');
-            allianceColor = document.getElementById('alliance').value;
+            const alliances2 = document.getElementById('alliances2').value.split(',');
+            allianceColor = document.getElementById('alliance1').value;
             for (const circle of villages.children) {
                 if (includes(names, circle.attrs.player)) {
                     circle.fill(playerColor);
                 } else if (includes(alliances, circle.attrs.alliance)) {
                     circle.fill(allianceColor);
+                } else if (includes(alliances2, circle.attrs.alliance)) {
+                    circle.fill(allianceColor2);
+                }
+            }
+        };
+        document.getElementById('alliance2').onchange = () => {
+            const names = document.getElementById('names').value.split(',');
+            const alliances = document.getElementById('alliances').value.split(',');
+            const alliances2 = document.getElementById('alliances2').value.split(',');
+            allianceColor2 = document.getElementById('alliance2').value;
+            for (const circle of villages.children) {
+                if (includes(names, circle.attrs.player)) {
+                    circle.fill(playerColor);
+                } else if (includes(alliances, circle.attrs.alliance)) {
+                    circle.fill(allianceColor);
+                } else if (includes(alliances2, circle.attrs.alliance)) {
+                    circle.fill(allianceColor2);
                 }
             }
         };
         document.getElementById('names').onkeyup = () => {
             const names = document.getElementById('names').value.split(',');
             const alliances = document.getElementById('alliances').value.split(',');
+            const alliances2 = document.getElementById('alliances2').value.split(',');
             for (const circle of villages.children) {
                 if (includes(names, circle.attrs.player)) {
                     circle.fill(playerColor);
                 } else if (includes(alliances, circle.attrs.alliance)) {
                     circle.fill(allianceColor);
+                } else if (includes(alliances2, circle.attrs.alliance)) {
+                    circle.fill(allianceColor2);
                 } else {
                     circle.fill('black');
                 }
@@ -153,11 +195,30 @@
         document.getElementById('alliances').onkeyup = () => {
             const names = document.getElementById('names').value.split(',');
             const alliances = document.getElementById('alliances').value.split(',');
+            const alliances2 = document.getElementById('alliances2').value.split(',');
             for (const circle of villages.children) {
                 if (includes(names, circle.attrs.player)) {
                     circle.fill(playerColor);
                 } else if (includes(alliances, circle.attrs.alliance)) {
                     circle.fill(allianceColor);
+                } else if (includes(alliances2, circle.attrs.alliance)) {
+                    circle.fill(allianceColor2);
+                } else {
+                    circle.fill('black');
+                }
+            }
+        };
+        document.getElementById('alliances2').onkeyup = () => {
+            const names = document.getElementById('names').value.split(',');
+            const alliances = document.getElementById('alliances').value.split(',');
+            const alliances2 = document.getElementById('alliances2').value.split(',');
+            for (const circle of villages.children) {
+                if (includes(names, circle.attrs.player)) {
+                    circle.fill(playerColor);
+                } else if (includes(alliances, circle.attrs.alliance)) {
+                    circle.fill(allianceColor);
+                } else if (includes(alliances2, circle.attrs.alliance)) {
+                    circle.fill(allianceColor2);
                 } else {
                     circle.fill('black');
                 }
