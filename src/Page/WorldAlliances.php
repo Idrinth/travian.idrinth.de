@@ -3,6 +3,7 @@
 namespace De\Idrinth\Travian\Page;
 
 use De\Idrinth\Travian\Twig;
+use De\Idrinth\Travian\World;
 use PDO;
 
 class WorldAlliances
@@ -16,6 +17,7 @@ class WorldAlliances
     }
     public function run($post, $world): void
     {
+        World::register($this->database, $world);
         $stmt = $this->database->query("SELECT alliance_id AS id,alliance_name AS name,COUNT(DISTINCT player_id) AS players, SUM(population) AS population, COUNT(DISTINCT village_id) AS villages
 FROM `$world`
 WHERE alliance_id <> 0

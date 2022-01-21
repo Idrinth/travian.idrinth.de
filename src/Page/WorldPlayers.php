@@ -3,6 +3,7 @@
 namespace De\Idrinth\Travian\Page;
 
 use De\Idrinth\Travian\Twig;
+use De\Idrinth\Travian\World;
 use PDO;
 
 class WorldPlayers
@@ -16,6 +17,7 @@ class WorldPlayers
     }
     public function run($post, $world): void
     {
+        World::register($this->database, $world);
         $stmt = $this->database->query("SELECT player_id AS id,player_name AS name, SUM(population) AS population, COUNT(DISTINCT village_id) AS villages
 FROM `$world`
 WHERE player_id NOT IN (1, 0)
