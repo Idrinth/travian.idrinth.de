@@ -74,6 +74,23 @@
             allianceHoverColor = document.getElementById('alliance_hover').value;
         };
         const villages = new Konva.Layer();
+        const paint = () => {
+            document.getElementById('output').innerHTML = '';
+            const names = document.getElementById('names').value.split(',');
+            const alliances = document.getElementById('alliances').value.split(',');
+            const alliances2 = document.getElementById('alliances2').value.split(',');
+            for (const circle of villages.children) {
+                if (includes(names, circle.attrs.player)) {
+                    circle.fill(playerColor);
+                } else if (includes(alliances, circle.attrs.alliance)) {
+                    circle.fill(allianceColor);
+                } else if (includes(alliances2, circle.attrs.alliance)) {
+                    circle.fill(allianceColor2);
+                } else {
+                    circle.fill('black');
+                }
+            }
+        };
         for (const village of {{ villages|json_encode()|raw }}) {
             const circle = village.isCapital ? new Konva.Rect({
                 x: 2 * (village.x +201),
@@ -112,23 +129,6 @@
                 }
                 document.getElementById('output').innerHTML = village.x + '|' + village.y + "<br/>Village: " + village.village + (village.isCapital ? '(Capital)' : '') + "<br/>Player: " + village.player + (village.alliance ? "<br/>Alliance: " + village.alliance : '');
             });
-            const paint = () => {
-                document.getElementById('output').innerHTML = '';
-                const names = document.getElementById('names').value.split(',');
-                const alliances = document.getElementById('alliances').value.split(',');
-                const alliances2 = document.getElementById('alliances2').value.split(',');
-                for (const circle of villages.children) {
-                    if (includes(names, circle.attrs.player)) {
-                        circle.fill(playerColor);
-                    } else if (includes(alliances, circle.attrs.alliance)) {
-                        circle.fill(allianceColor);
-                    } else if (includes(alliances2, circle.attrs.alliance)) {
-                        circle.fill(allianceColor2);
-                    } else {
-                        circle.fill('black');
-                    }
-                }
-            };
             circle.on('mouseout touchend', paint);
             villages.add(circle);
         }
@@ -175,7 +175,7 @@
                 y: newScale === 1 ? 0 : pointer.y - mousePointTo.y * newScale,
             });
         });
-        document.getElementById('alliances').onkeyup();
+        paint();
     });
 </script>
 {% include 'footer.twig' %}
