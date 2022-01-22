@@ -28,14 +28,21 @@ class WorldPlayers
             foreach ($stmt2->fetchAll(PDO::FETCH_ASSOC) as $village) {
                 $villages[$village['id']] = $villages[$village['id']] ?? $village;
                 $villages[$village['id']]['name'] = $village['name'];
-                $villages[$village['id']]['days'][] = $village['population'];
+                $villages[$village['id']]['days'][$village['day']] = $village['population'];
                 $population[$village['day']] = ($population[$village['day']]??0) + $village['population'];
+            }
+            foreach ($villages as &$village) {
+                $data = [];
+                foreach ($population as $day => $amount) {
+                    $data[$day] = $village['days'][$day] ?? 0;
+                }
+                $village['days'] = array_values($data);
             }
             $this->twig->display('world-player.twig', [
                 'world' => $world,
                 'player' => $stmt->fetch(PDO::FETCH_ASSOC),
                 'villages' => $villages,
-                'population' => $population,
+                'population' => array_values($population),
                 'days' => array_keys($population),
             ]);
             return;
