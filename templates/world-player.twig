@@ -1,0 +1,76 @@
+{% include 'header.twig' %}
+<h3>{{ world }}: {{ player.name }}</h3>
+<canvas id="population"></canvas>
+<script type="text/javascript">
+        onExists('Chart', () => {
+      new Chart('population', {
+        type: 'line',
+        options: {
+          scales: {
+            y: {
+              stacked: false,
+              show: true,
+              min: 0,
+            },
+            x: {
+              type: 'timeseries',
+              time: {
+                unit: 'day'
+              }
+            },
+          }
+        },
+        data: {
+          labels: {{ days|json_encode()|raw }},
+          datasets: [{
+            label: 'Population',
+            data: {{ population|json_encode()|raw }},
+            fill: true,
+            borderColor: 'rgb(192, 192, 75)',
+            backgroundColor: 'rgba(192, 192, 75, 0.5)',
+            tension: 0.1
+          },]
+        }
+      });
+      });
+</script>
+{% for village in villages %}
+<div class="result">
+    <h3 onclick="this.parentNode.classList.toggle('hidden');">{{ village.name }}</h3>
+    <canvas id="village-{{ village.id }}"></canvas>
+    <script type="text/javascript">
+            onExists('Chart', () => {
+          new Chart('village-{{ village.id }}', {
+            type: 'line',
+            options: {
+              scales: {
+                y: {
+                  stacked: false,
+                  show: true,
+                  min: 0,
+                },
+                x: {
+                  type: 'timeseries',
+                  time: {
+                    unit: 'day'
+                  }
+                },
+              }
+            },
+            data: {
+              labels: {{ days|json_encode()|raw }},
+              datasets: [{
+                label: 'Population',
+                data: {{ village.days|json_encode()|raw }},
+                fill: true,
+                borderColor: 'rgb(192, 192, 75)',
+                backgroundColor: 'rgba(192, 192, 75, 0.5)',
+                tension: 0.1
+              },]
+            }
+          });
+          });
+    </script>
+</div>
+{% endfor %}
+{% include 'footer.twig' %}

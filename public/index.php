@@ -97,6 +97,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->get('/worlds', Worlds::class)
     ->post('/worlds', Worlds::class)
     ->get('/worlds/{world:world}/players', WorldPlayers::class)
+    ->get('/worlds/{world:world}/players/{id:[0-9]+}', WorldPlayers::class)
     ->get('/worlds/{world:world}/alliances', WorldAlliances::class)
     ->get('/bot-hunt/{world:world}.{villages:[0-9]+}.{population:[0-9]+}.txt', Bot::class)
     ->get('/worlds/{world:world}/map', Map::class)

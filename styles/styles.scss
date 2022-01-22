@@ -102,6 +102,9 @@ nav > ul > li {
 .result.hidden > * {
     display: none;
 }
+.result.hidden > canvas {
+    display: none !important;
+}
 .result.hidden > h3 {
     display: block;
 }
