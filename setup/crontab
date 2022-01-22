@@ -1,1 +1,2 @@
-1 * * * * php /var/travian.idrinth.de/bin/world-import.php
+1,21,41 * * * * php /var/travian.idrinth.de/bin/world-import.php
+17 17 * * * php /var/travian.idrinth.de/bin/world-clean.php
