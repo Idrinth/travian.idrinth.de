@@ -39,19 +39,34 @@ class Login
         $user = $provider->getResourceOwner($token);
         $_SESSION['user'] = $user->getUsername();
         $_SESSION['discriminator'] = $user->getDiscriminator();
-        $this->database
-            ->prepare("INSERT INTO users (discord_id, name, discriminator) VALUES (:discordId, :name, :discriminator) ON DUPLICATE KEY UPDATE name=name,discriminator=discriminator")
-            ->execute([
-                ':discordId' => $user->getId(),
-                ':name' => $user->getUsername(),
-                ':discriminator' => $user->getDiscriminator(),
-            ]);
-        $stmt = $this->database
-            ->prepare("SELECT aid FROM users WHERE discord_id=:discordId");
+        $stmt = $this->database->prepare('SELECT aid FROM users WHERE discord_id=:discordId');
         $stmt->execute([
-            ':discordId' => $user->getId(),
-        ]);
+                ':discordId' => $user->getId(),
+            ]);
         $_SESSION['id'] = intval($stmt->fetchColumn(), 10);
+        if ($_SESSION['id'] === 0) {
+            $this->database
+                ->prepare("INSERT INTO users (discord_id, name, discriminator) VALUES (:discordId, :name, :discriminator) ON DUPLICATE KEY UPDATE name=name,discriminator=discriminator")
+                ->execute([
+                    ':discordId' => $user->getId(),
+                    ':name' => $user->getUsername(),
+                    ':discriminator' => $user->getDiscriminator(),
+                ]);
+            $stmt = $this->database
+                ->prepare("SELECT aid FROM users WHERE discord_id=:discordId");
+            $stmt->execute([
+                ':discordId' => $user->getId(),
+            ]);
+            $_SESSION['id'] = intval($stmt->fetchColumn(), 10);
+        } else {
+            $this->database
+                ->prepare("UPDATE users SET name=:name, discriminator=:discriminator WHERE discord_id=:discordId")
+                ->execute([
+                    ':discordId' => $user->getId(),
+                    ':name' => $user->getUsername(),
+                    ':discriminator' => $user->getDiscriminator(),
+                ]);
+        }
         if (isset($_SESSION['redirect'])) {
             header('Location: ' . $_SESSION['redirect'], true, 303);
             return;
