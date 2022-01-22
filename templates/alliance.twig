@@ -3,14 +3,18 @@
 <h3>{{ alliance.name }}</h3>
 <p>on {{ alliance.world }}</p>
 {% set mayInvite=false %}
+{% set mayPlan=false %}
 {% set rank='Follower' %}
 {% set name='' %}
 {% for player in players %}
     {% if player.user == session.id %}
         {% set name=player.name %}
+        {% set rank=player.rank %}
         {% if player.rank=='Creator' or player.rank=='High Council' %}
             {% set mayInvite=true %}
-            {% set rank=player.rank %}
+            {% set mayPlan=true %}
+        {% elseif player.rank=='Planner' %}
+            {% set mayPlan=true %}
         {% endif %}
     {% endif %}
 {% endfor %}
@@ -20,7 +24,7 @@
         <th>{{ translations.name }}</th>
         <th>{{ translations.rank }}</th>
         <th>{{ translations.activity }}</th>
-        {% if mayInvite %}
+        {% if mayPlan %}
             <th>{{ translations.troops }}</th>
         {% endif %}
         <th>{{ translations.hero }}</th>
@@ -35,6 +39,7 @@
                     <option>Kick</option>
                     <option{% if player.rank=='Follower' %} selected{% endif %}>Follower</option>
                     <option{% if player.rank=='Member' %} selected{% endif %}>Member</option>
+                    <option{% if player.rank=='Planner' %} selected{% endif %}>Planner</option>
                     <option{% if player.rank=='High Council' %} selected{% endif %}>High Council</option>
                 </select><input type="submit"/></form>{% else %}{{ player.rank }}{% endif %}</td>
         {% if mayInvite or player.aid==session.id %}
@@ -59,7 +64,7 @@
         {% else %}
             <td></td>
         {% endif %}
-        {% if mayInvite %}
+        {% if mayPlan %}
             {% set found=false %}
             {% for act in troops %}
                 {% if act.user == player.aid %}
@@ -102,7 +107,7 @@
 {% for deff_call in deff_calls %}
     <tr>
         <th>{{ deff_call.world }}</th>
-        <td><a href="/deff-call/{{ deff_call.id }}{% if mayInvite %}/{{ deff_call.key }}{% endif %}">{{ deff_call.player }} ({{ deff_call.x }}|{{ deff_call.x }})</a></td>
+        <td><a href="/deff-call/{{ deff_call.id }}{% if mayPlan %}/{{ deff_call.key }}{% endif %}">{{ deff_call.player }} ({{ deff_call.x }}|{{ deff_call.x }})</a></td>
         <th>{{ deff_call.arrival }}</th>
     </tr>
 {% endfor %}
@@ -117,7 +122,7 @@
 {% for push in pushes %}
     <tr>
         <th>{{ push.world }}</th>
-        <td><a href="/resource-push/{{ push.id }}{% if mayInvite %}/{{ push.key }}{% endif %}">{{ push.player }} ({{ push.x }}|{{ push.x }})</a></td>
+        <td><a href="/resource-push/{{ push.id }}{% if mayPlan %}/{{ push.key }}{% endif %}">{{ push.player }} ({{ push.x }}|{{ push.x }})</a></td>
         <th>{{ push.arrival }}</th>
     </tr>
 {% endfor %}

@@ -213,7 +213,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 CREATE TABLE IF NOT EXISTS `user_alliance` (
   `user` int(10) unsigned NOT NULL,
   `alliance` int(10) unsigned NOT NULL,
-  `rank` enum('Follower','Member','High Council','Creator') COLLATE utf8mb4_bin NOT NULL DEFAULT 'Follower',
+  `rank` enum('Follower','Member','Planner','High Council','Creator') COLLATE utf8mb4_bin NOT NULL DEFAULT 'Follower',
   PRIMARY KEY (`user`,`alliance`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 

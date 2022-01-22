@@ -118,7 +118,7 @@ FROM user_alliance
 INNER JOIN alliances ON user_alliance.alliance=alliances.aid
 INNER JOIN troops ON troops.world=alliances.world
 INNER JOIN user_alliance AS ua2 ON ua2.alliance=user_alliance.alliance AND troops.user=ua2.user
-WHERE troops.user=:id AND user_alliance.rank IN('High Council', 'Creator') AND user_alliance.user=:id2
+WHERE troops.user=:id AND user_alliance.rank IN('High Council', 'Creator', 'Planner') AND user_alliance.user=:id2
 ORDER BY troops.tribe DESC, troops.name ASC");
             $stmt->execute([':id' => $id, ':id2' => $_SESSION['id']]);
             $troopsData = [];
