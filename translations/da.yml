@@ -409,7 +409,7 @@ desired_lumber: Ønsket tømmer
 desired_iron: Ønsket jern
 desired_crop: Ønsket korn
 resources: Ressourcer
-resource_push: Ressource-skub
+resource_push: Ressource-push
 legend_resources_send: Indtast de ressourcer, du sender
 until: Indtil
 last_used: Sidst anvendt
@@ -424,9 +424,23 @@ missplaced: Malplaceret
 troop_ratio: Troppeforhold
 add_world: Tilføj spilverden manuelt
 world_update_info: Opdateringer hænder dagligt (24 timer efter sidste opdatering).
+map: Kort
+names: Navne
 res_push_creation: Opret ressource-push
 faq: FAQ
 attack_parser_explanation: Dette værktøj analyserer alle angreb på dig og returnerer information om, hvilke tropper der kunne være i det givne angreb. Oprettelse af et deff-call ud fra infoen gøres lettere ved automatisk at tage de tilgængelige data.
 soldier_cost_explanation: Dette værktøj vil beregne dine byggetider og omkostninger for et givet antal soldater. Det er beregnet til at hjælpe med at planlægge off-bygning.
 hero_check_explanation: Dette værktøj analyserer billed-URL'en for en helt og returnerer de nøjagtige genstande, han har på i øjeblikket.
 delivery_explanation: Dette værktøj beregner mængden af købmænd, hyppigheden af ​​handler og sender ressourcer for at optimere handelsruter.
+background_color: Baggrundsfarve
+player_color: Spiller farve
+player_hover_color: Spiller mouseover farve
+alliance_color1: Alliance gruppe 1 farve
+alliance_color2: Alliance gruppe 2 farve
+alliance_group1: Alliance gruppe 1 
+alliance_group2: Alliance gruppe 2
+alliance_hover_color: Alliance mouseover farve
+show_grid: Vis kort-gitter
+scale: Størrelsesforhold
+base_color: Landsby farve
+capitol_color: Hovedlandsby farve
