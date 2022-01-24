@@ -301,7 +301,7 @@ ingame:  Navn i spillet
 heroes: Helte
 gear: Helte udstyr
 activity: Aktivitets score
-player_id: Player-ID
+player_id: Spiller-ID
 hero_share: Del med alliance
 player: Spiller
 desired_heroes: Ønskede helte
@@ -427,6 +427,7 @@ world_update_info: Opdateringer hænder dagligt (24 timer efter sidste opdaterin
 map: Kort
 names: Navne
 res_push_creation: Opret ressource-push
+deff_call_creation: Opret Deff-Call
 faq: FAQ
 attack_parser_explanation: Dette værktøj analyserer alle angreb på dig og returnerer information om, hvilke tropper der kunne være i det givne angreb. Oprettelse af et deff-call ud fra infoen gøres lettere ved automatisk at tage de tilgængelige data.
 soldier_cost_explanation: Dette værktøj vil beregne dine byggetider og omkostninger for et givet antal soldater. Det er beregnet til at hjælpe med at planlægge off-bygning.
