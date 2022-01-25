@@ -112,6 +112,18 @@
     </tr>
 {% endfor %}
 </table>
+<h4>{{ translations.attack_organizer }}</h4>
+<a href="/alliance/{{ alliance.id }}/attack-organizer">{{ translations.new }}</a>
+<table>
+    <tr>
+        <th>{{ translations.arrival }}</th>
+    </tr>
+{% for attack in attacks %}
+    <tr>
+        <td><a href="/alliance/{{ alliance.id }}/attack-organizer/{{ attack.id }}">{{ attack.arrival }}</a></td>
+    </tr>
+{% endfor %}
+</table>
 <h4>{{ translations.resource_push }}</h4>
 <table>
     <tr>

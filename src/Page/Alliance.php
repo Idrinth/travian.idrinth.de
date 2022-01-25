@@ -137,6 +137,10 @@ FROM resource_pushes
 WHERE alliance=:aid
 AND deleted=0");
             $stmt6->execute([':aid' => $alliance['aid']]);
+            $stmt7 = $this->database->prepare('SELECT *
+FROM attack_plan
+WHERE alliance=:aid');
+            $stmt7->execute([':aid' => $alliance['aid']]);
             $this->twig->display('alliance.twig', [
                 'alliance' => $alliance,
                 'players' => $stmt->fetchAll(PDO::FETCH_ASSOC),
@@ -145,6 +149,7 @@ AND deleted=0");
                 'activity' => $stmt4->fetchAll(PDO::FETCH_ASSOC),
                 'troops' => $stmt5->fetchAll(PDO::FETCH_ASSOC),
                 'pushes' => $stmt6->fetchAll(PDO::FETCH_ASSOC),
+                'attacks' => $stmt7->fetchAll(PDO::FETCH_ASSOC),
             ]);
             return;
         }

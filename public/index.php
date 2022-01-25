@@ -4,6 +4,7 @@ use alejoluc\LazyPDO\LazyPDO;
 use De\Idrinth\Travian\Application;
 use De\Idrinth\Travian\DistanceCalculator;
 use De\Idrinth\Travian\Page\Alliance;
+use De\Idrinth\Travian\Page\AttackOrganizer;
 use De\Idrinth\Travian\Page\AttackParser;
 use De\Idrinth\Travian\Page\Catcher;
 use De\Idrinth\Travian\Page\DeffCall;
@@ -73,6 +74,10 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->post('/alliance', Alliance::class)
     ->get('/alliance/{id:uuid}', Alliance::class)
     ->post('/alliance/{id:uuid}', Alliance::class)
+    ->get('/alliance/{id:uuid}/attack-organizer', AttackOrganizer::class)
+    ->post('/alliance/{id:uuid}/attack-organizer', AttackOrganizer::class)
+    ->get('/alliance/{id:uuid}/attack-organizer/{attack:uuid}', AttackOrganizer::class)
+    ->post('/alliance/{id:uuid}/attack-organizer/{attack:uuid}', AttackOrganizer::class)
     ->get('/alliance/{id:uuid}/{key:uuid}', Alliance::class)
     ->post('/troop-tool', TroopTool::class)
     ->get('/troop-tool', TroopTool::class)

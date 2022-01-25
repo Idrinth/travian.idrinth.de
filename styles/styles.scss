@@ -18,6 +18,9 @@ input[type=submit] {
     background: red;
     color: #eee;
 }
+input[disabled] {
+    color: #666;
+}
 label {
     display: block;
 }

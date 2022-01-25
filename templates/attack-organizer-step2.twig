@@ -1,0 +1,268 @@
+{% include 'header.twig' %}
+<h2>{{ translations.attack_organizer }}</h2>
+<div class="split2">
+    <div id="map"></div>
+    <div>
+        <label>{{ translations.background_color }}<input id="background" value="#008000" type="color"/></label>
+        <label>{{ translations.defenders }}<input id="alliance1" value="#FF8040" type="color"/></label>
+        <label>{{ translations.attackers }}<input id="alliance2" value="#00FF40" type="color"/></label>
+        <label>{{ translations.fakers }}<input id="alliance3" value="#00FFFF" type="color"/></label>
+        <label>{{ translations.show_grid }}<input id="grid" type="checkbox"/></label>
+        <label>{{ translations.scale }}<input id="scale" type="number" value="1" min="1" max="16"/></label>
+        <div id="output"></div>
+    </div>
+</div>
+<script type="text/javascript">
+    onExists('Konva', () => {
+        const equal = (first, second) => {
+            if (!first || !second) {
+                return false;
+            }
+            first = first.replace(/^ +| +$/, '');
+            second = second.replace(/^ +| +$/, '');
+            if (first === '') {
+                return false;
+            }
+            if (second === '') {
+                return false;
+            }
+            if (first === second) {
+                return true;
+            }
+            if (first.toLowerCase() === second.toLowerCase()) {
+                return true;
+            }
+            return false;
+        };
+        const includes = (list, value) => {
+            value = value.replace(/^ +| +$/, '');
+            if (value === '') {
+                return false;
+            }
+            if (list.includes(value)) {
+                return true;
+            }
+            for (const val of list) {
+                if (equal(val, value)) {
+                    return true;
+                }
+            }
+            return false;
+        };
+        const stage = new Konva.Stage({container: 'map',width: 802,height: 802,draggable:true});
+        const background = new Konva.Layer();
+        background.add(new Konva.Rect({
+            x: 0,
+            width: stage.width(),
+            y: 0,
+            height: stage.height(),
+            fill: document.getElementById('background').value,
+        }));
+        stage.add(background);
+        background.draw();
+        const grid = new Konva.Layer();
+        for (let i = 21; i<802; i += 20) {
+            grid.add(new Konva.Line({
+                x: 0,
+                y: i,
+                stroke: 'rgba(0,0,0,0.25)',
+                tension: 1,
+                points: [0, i, 802, i]
+            }));
+            grid.add(new Konva.Line({
+                x: i,
+                y: 0,
+                stroke: 'rgba(0,0,0,0.25)',
+                tension: 1,
+                points: [i, 0, i, 802]
+            }));
+        }
+        stage.add(grid);
+        grid.draw();
+        const gridchange = () => {
+            const show = document.getElementById('grid').checked;
+            for (const child of grid.children) {
+                child.stroke(show ? 'rgba(0,0,0,0.25)' : 'rgba(0,0,0,0)')
+            }
+        }
+        document.getElementById('grid').onchange = gridchange;
+        gridchange();
+        let allianceColor = document.getElementById('alliance1').value;
+        let allianceColor2 = document.getElementById('alliance2').value;
+        let allianceColor3 = document.getElementById('alliance3').value;
+        document.getElementById('background').onchange = () => {
+            background.children[0].fill(document.getElementById('background').value);
+        };
+        const villages = new Konva.Layer();
+        const paint = () => {
+            document.getElementById('output').innerHTML = '';
+            const alliances = ['target'];
+            const alliances3 = ['off'];
+            const alliances2 = ['fake'];
+            for (const circle of villages.children) {
+                if (includes(alliances, circle.attrs.alliance)) {
+                    circle.fill(allianceColor);
+                } else if (includes(alliances3, circle.attrs.alliance)) {
+                    circle.fill(allianceColor2);
+                } else if (includes(alliances2, circle.attrs.alliance)) {
+                    circle.fill(allianceColor3);
+                }
+            }
+        };
+        for (const village of {{ targets|json_encode()|raw }}) {
+            const circle = village.isCapital ? new Konva.Rect({
+                x: 2 * (village.x +201),
+                y: village.y <0 ? 2 * (201 - village.y) : 2 * (201 - village.y),
+                width: 2,
+                height: 2,
+                fill: allianceColor,
+                player: village.player,
+                alliance: 'target',
+                isCapital: village.isCapital,
+            }) : new Konva.Circle({
+                x: 2 * (village.x +201),
+                y: village.y <0 ? 2 * (201 - village.y) : 2 * (201 - village.y),
+                radius: 1,
+                fill: allianceColor,
+                player: village.player,
+                alliance: 'target',
+                isCapital: village.isCapital,
+            });
+            circle.on('mouseover touchstart', function () {
+                document.getElementById('output').innerHTML = village.x + '|' + village.y + "<br/>Village: " + village.name + (village.isCapital ? '(Capital)' : '') + "<br/>Player: " + village.player + (village.alliance ? "<br/>Alliance: " + village.alliance : '');
+            });
+            circle.on('mouseout touchend', paint);
+            villages.add(circle);
+        }
+        for (const village of {{ fakes|json_encode()|raw }}) {
+            const circle = village.isCapital ? new Konva.Rect({
+                x: 2 * (village.x +201),
+                y: village.y <0 ? 2 * (201 - village.y) : 2 * (201 - village.y),
+                width: 2,
+                height: 2,
+                fill: allianceColor2,
+                player: village.player,
+                alliance: 'fake',
+                isCapital: village.isCapital,
+            }) : new Konva.Circle({
+                x: 2 * (village.x +201),
+                y: village.y <0 ? 2 * (201 - village.y) : 2 * (201 - village.y),
+                radius: 1,
+                fill: allianceColor2,
+                player: village.player,
+                alliance: 'fake',
+                isCapital: village.isCapital,
+            });
+            circle.on('mouseover touchstart', function () {
+                document.getElementById('output').innerHTML = village.x + '|' + village.y + "<br/>Village: " + village.name + (village.isCapital ? '(Capital)' : '') + "<br/>Player: " + village.player + (village.alliance ? "<br/>Alliance: " + village.alliance : '');
+            });
+            circle.on('mouseout touchend', paint);
+            villages.add(circle);
+        }
+        for (const village of {{ offs|json_encode()|raw }}) {
+            const circle = village.isCapital ? new Konva.Rect({
+                x: 2 * (village.x +201),
+                y: village.y <0 ? 2 * (201 - village.y) : 2 * (201 - village.y),
+                width: 2,
+                height: 2,
+                fill: allianceColor3,
+                player: village.player,
+                alliance: 'off',
+                isCapital: village.isCapital,
+            }) : new Konva.Circle({
+                x: 2 * (village.x +201),
+                y: village.y <0 ? 2 * (201 - village.y) : 2 * (201 - village.y),
+                radius: 1,
+                fill: allianceColor3,
+                player: village.player,
+                alliance: 'off',
+                isCapital: village.isCapital,
+            });
+            circle.on('mouseover touchstart', function () {
+                document.getElementById('output').innerHTML = village.x + '|' + village.y + "<br/>Village: " + village.name + (village.isCapital ? '(Capital)' : '') + "<br/>Player: " + village.player + (village.alliance ? "<br/>Alliance: " + village.alliance : '');
+            });
+            circle.on('mouseout touchend', paint);
+            villages.add(circle);
+        }
+        document.getElementById('alliance1').onchange = () => {
+            allianceColor = document.getElementById('alliance1').value;
+            paint();
+        };
+        document.getElementById('alliance2').onchange = () => {
+            allianceColor2 = document.getElementById('alliance2').value;
+            paint();
+        };
+        document.getElementById('alliance3').onchange = () => {
+            allianceColor3 = document.getElementById('alliance3').value;
+            paint();
+        };
+        villages.draw();
+        stage.add(villages);
+        stage.on('wheel', (e) => {
+            e.evt.preventDefault();
+
+            const oldScale = stage.scaleX();
+            const pointer = stage.getPointerPosition();
+
+            const mousePointTo = {
+                x: (pointer.x - stage.x()) / oldScale,
+                y: (pointer.y - stage.y()) / oldScale,
+            };
+            let direction = e.evt.deltaY > 0 ? 1 : -1;
+            if (e.evt.ctrlKey) {
+                direction = -direction;
+            }
+            let newScale = direction > 0 ? oldScale / 1.1 : oldScale * 1.1;
+            if (newScale > 16) {
+                newScale = 16;
+            } else if (newScale < 1) {
+                newScale = 1;
+            }
+            stage.scale({ x: newScale, y: newScale });
+            stage.position({
+                x: newScale === 1 ? 0 : pointer.x - mousePointTo.x * newScale,
+                y: newScale === 1 ? 0 : pointer.y - mousePointTo.y * newScale,
+            });
+        });
+        const scale = () => {
+            newScale = Number.parseInt(document.getElementById('scale').value);
+            stage.scale({ x: newScale, y: newScale });
+            if (newScale === 1) {                
+                stage.position({
+                    x: 0,
+                    y: 0,
+                });
+            }
+        };
+        document.getElementById('scale').onchange = scale;
+        scale();
+        paint();
+    });
+</script>
+<form method="post">
+    <fieldset>
+        <legend>{{ translations.main }}</legend>
+        <label>{{ translations.off_min_catapults }}<input disabled type="number" name="off_catapults" value="{{ inputs.off_catapults }}"/></label>
+        <label>{{ translations.off_min_offence }}<input disabled type="number" name="offence" value="{{ inputs.offence }}"/></label>
+        <label>{{ translations.fake_min_catapults }}<input disabled type="number" name="fake_catapults" value="{{ inputs.fake_catapults }}"/></label>
+        <label>{{ translations.alliances_to_attack }}<input disabled type="text" name="alliances" value="{{ inputs.alliances }}"/></label>
+        <label>{{ translations.min_population }}<input disabled type="number" name="population" value="{{ inputs.population }}"/></label>
+        <input type="submit"/>
+    </fieldset>
+    {% for village in targets %}
+        <fieldset>
+            <legend>{{ village.name }}({{ village.x }}|{{ village.y }})</legend>
+            <label>{{ translations.offs }}<select name="offs[{{ village.id }}][]" multiple>
+                {% for off in offs %}
+                    <option value="{{ off.aid }}">{{ off.player }}: {{ off.name }}({{ off.x }}|{{ off.y }}) {{ off.catapult }} {{ translations.catapults }}</option>
+                {% endfor %}
+            </select></label>
+            <label>{{ translations.fakes }}<select name="fakes[{{ village.id }}][]" multiple>
+                {% for fake in fakes %}
+                    <option value="{{ fake.aid }}">{{ fake.player }}: {{ fake.name }}({{ fake.x }}|{{ fake.y }}) {{ fake.catapult }} {{ translations.catapults }}</option>
+                {% endfor %}
+            </select></label>
+        </fieldset>
+    {% endfor %}
+</form>
+{% include 'footer.twig' %}

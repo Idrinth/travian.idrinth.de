@@ -1,0 +1,45 @@
+{% include 'header.twig' %}
+<h2>{{ translations.attack_organizer }}</h2>
+<div class="split2">
+    {% for attack in attacks %}
+        <div>
+            <h3>{{ attack.origin_x}}|{{ attack.origin_y }} &rarr; {{ attack.target_x }}|{{ attack.target_y }}</h3>
+            <table>
+                <tr>
+                    <th>{{ translations.target }}</th>
+                    <td><a href="https://{{ world }}/position_details.php?x={{ attack.target_x }}&y={{ attack.target_y }}">{{ attack.waves }} {{ translations.waves }}, {{ attack.type }}</a></td>
+                </tr>
+                <tr>
+                    <th>{{ translations.arrival }}</th>
+                    <td>{{ plan.arrival }}</td>
+                </tr>
+                <tr>
+                    <th>{{ translations.start }}</th>
+                    <td>{{ attack.start }} (<span class="countdown" data-countdown="{{ attack.start }}"></span>)</td>
+                </tr>
+                <tr>
+                    <th>{{ translations.user }}</th>
+                    <td title="{{ attack.discord }}">{{ attack.ingame }}</td>
+                </tr>
+            {% if session.id==attack.user and attack.sent=='0000-00-00 00:00:00' %}
+                </table>
+                <form method="post">
+                    <fieldset>
+                        <legend>{{ translations.main }}</legend>
+                        <input type="hidden" value="{{ attack.aid }}" name="attack"/>
+                        <input type="submit" value="{{ translations.are_sent }}"/>
+                    </fieldset>
+                </form>
+            {% else %}
+                <tr>
+                    <th>{{ translations.sent }}</th>
+                    <td>{{ attack.sent }}</td>
+                </tr>
+            </table>
+            {% endif %}
+        </div>
+    {% else %}
+        <p>{{ translations.no_attacks_for_user }}</p>
+    {% endfor %}
+</div>
+{% include 'footer.twig' %}

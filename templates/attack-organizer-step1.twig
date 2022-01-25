@@ -1,0 +1,14 @@
+{% include 'header.twig' %}
+<h2>{{ translations.attack_organizer }}</h2>
+<form method="post">
+    <fieldset>
+        <legend>{{ translations.main }}</legend>
+        <label>{{ translations.off_min_catapults }}<input type="number" name="off_catapults" value="100"/></label>
+        <label>{{ translations.off_min_offence }}<input type="number" name="offence" value="10000"/></label>
+        <label>{{ translations.fake_min_catapults }}<input type="number" name="fake_catapults" value="1"/></label>
+        <label>{{ translations.alliances_to_attack }}<input type="text" name="alliances"/></label>
+        <label>{{ translations.min_population }}<input type="number" name="population" value="600"/></label>
+        <input type="submit"/>
+    </fieldset>
+</form>
+{% include 'footer.twig' %}

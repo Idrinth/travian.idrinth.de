@@ -445,3 +445,24 @@ show_grid: Show Map-Grid
 scale: Scale
 base_color: Base Village Color
 capitol_color: Base Capitol Color
+off_min_catapults: Minimum Capapults for an OFF
+off_min_offence: Minimum offence for an OFF
+fake_min_catapults: Minimum catapults for a FAKE
+alliances_to_attack: Alliances to attack or fake
+attack_organizer: Attack Organizer
+min_population: Minimum Population for targets
+offs: Offs to run on this target
+fakes: Fakes to run on this target
+catapults: Catapults
+defenders: Defenders
+attackers: Attackers
+fakers: Fakers
+impact_time: Time of Impact
+waves: Attack-Waves
+target: Target
+start: Start
+user: User
+sent: Sent
+are_sent: Mark as sent
+no_attacks_for_user: There are no attacks listed for you.
+new: Add new
