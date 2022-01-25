@@ -2,20 +2,22 @@
 <div class="split2">
     <div id="map"></div>
     <div>
+        <div id="output" style="min-height: 3em"></div>
         <label title="name1,name2">{{ translations.names }}*<input id="names" type="text"/></label>
         <label title="alliance1,alliance2">{{ translations.alliance_group1 }}*<input id="alliances" type="text"/></label>
         <label title="alliance1,alliance2">{{ translations.alliance_group2 }}*<input id="alliances2" type="text"/></label>
+        <label title="alliance1,alliance2">{{ translations.alliance_group3 }}*<input id="alliances3" type="text"/></label>
         <label>{{ translations.background_color }}<input id="background" value="#008000" type="color"/></label>
         <label>{{ translations.player_hover_color }}<input id="player_hover" value="#400080" type="color"/></label>
         <label>{{ translations.alliance_hover_color }}<input id="alliance_hover" value="#0000FF" type="color"/></label>
         <label>{{ translations.player_color }}<input id="player" value="#FFFF00" type="color"/></label>
         <label>{{ translations.alliance_color1 }}<input id="alliance1" value="#FF8040" type="color"/></label>
         <label>{{ translations.alliance_color2 }}<input id="alliance2" value="#00FF40" type="color"/></label>
+        <label>{{ translations.alliance_color3 }}<input id="alliance3" value="#8040FF" type="color"/></label>
         <label>{{ translations.base_color }}<input id="base" value="#000000" type="color"/></label>
         <label>{{ translations.capitol_color }}<input id="capitol" value="#000000" type="color"/></label>
         <label>{{ translations.show_grid }}<input id="grid" type="checkbox"/></label>
         <label>{{ translations.scale }}<input id="scale" type="number" value="1" min="1" max="16"/></label>
-        <div id="output"></div>
     </div>
 </div>
 <script type="text/javascript">
@@ -95,6 +97,7 @@
         let playerColor = document.getElementById('player').value;
         let allianceColor = document.getElementById('alliance1').value;
         let allianceColor2 = document.getElementById('alliance2').value;
+        let allianceColor3 = document.getElementById('alliance3').value;
         let baseColor = document.getElementById('base').value;
         let baseCapitolColor = document.getElementById('capitol').value;
         document.getElementById('background').onchange = () => {
@@ -112,6 +115,7 @@
             const names = document.getElementById('names').value.split(',');
             const alliances = document.getElementById('alliances').value.split(',');
             const alliances2 = document.getElementById('alliances2').value.split(',');
+            const alliances3 = document.getElementById('alliances3').value.split(',');
             for (const circle of villages.children) {
                 if (includes(names, circle.attrs.player)) {
                     circle.fill(playerColor);
@@ -119,6 +123,8 @@
                     circle.fill(allianceColor);
                 } else if (includes(alliances2, circle.attrs.alliance)) {
                     circle.fill(allianceColor2);
+                } else if (includes(alliances3, circle.attrs.alliance)) {
+                    circle.fill(allianceColor3);
                 } else if (circle.attrs.isCapital) {
                     circle.fill(baseCapitolColor);
                 } else {
@@ -149,6 +155,7 @@
                 const names = document.getElementById('names').value.split(',');
                 const alliances = document.getElementById('alliances').value.split(',');
                 const alliances2 = document.getElementById('alliances2').value.split(',');
+                const alliances3 = document.getElementById('alliances3').value.split(',');
                 for (const circle of villages.children) {
                     if (equal(circle.attrs.player, village.player)) {
                         circle.fill(playerHoverColor);
@@ -160,6 +167,8 @@
                         circle.fill(allianceColor);
                     } else if (includes(alliances2, circle.attrs.alliance)) {
                         circle.fill(allianceColor2);
+                    } else if (includes(alliances3, circle.attrs.alliance)) {
+                        circle.fill(allianceColor3);
                     }
                 }
                 document.getElementById('output').innerHTML = village.x + '|' + village.y + "<br/>Village: " + village.village + (village.isCapital ? '(Capital)' : '') + "<br/>Player: " + village.player + (village.alliance ? "<br/>Alliance: " + village.alliance : '');
@@ -177,6 +186,10 @@
         };
         document.getElementById('alliance2').onchange = () => {
             allianceColor2 = document.getElementById('alliance2').value;
+            paint();
+        };
+        document.getElementById('alliance3').onchange = () => {
+            allianceColor2 = document.getElementById('alliance3').value;
             paint();
         };
         document.getElementById('base').onchange = () => {
