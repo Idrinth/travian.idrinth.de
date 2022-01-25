@@ -5,7 +5,7 @@ title: Travian Calculateurs
 home: Home
 delivery: Calculateur de livraison
 imprint: Imprimer
-travian_footer: ce site est en aucun cas reconnu par Travian Legends ou Travian GmbH et est simplement mise a disposition comme un outil pour les joueurs.
+travian_footer: Ce site est en aucun cas reconnu par Travian Legends ou Travian GmbH et est simplement mise a disposition comme un outil pour les joueurs.
 welcome_header: Bienvenu!
 welcome_text: Choisissez un calculateur du menu ci dessus.
 delivery_calculator: Calculateur de livraison
@@ -212,7 +212,6 @@ deff_calls: Deff-Calls
 alliances: Alliances
 name: Nom
 rank: Rang
-login_benefits: Connecter vous pour sauvegarder vos DefCall dans votre page de profil et rejoindre l'alliance.
 invite: inviter
 alliance: Alliance
 effect: Effet

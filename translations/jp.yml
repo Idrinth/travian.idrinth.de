@@ -287,7 +287,6 @@ deff_calls: デフコール
 alliances: アライアンス
 name: 名称
 rank: 順位
-login_benefits: ログインするとプロフィールページにデフコールを保存でき、同盟に参加するとヒーロー追跡や部隊ツールなどの高度な機能を利用できます。
 invite: 招待状
 alliance: アライアンス
 effect: 効果
