@@ -42,6 +42,8 @@ class TroopTool
             $off[$row['world']] = $off[$row['world']] ?? 0;
             $scouts[$row['world']] = $scouts[$row['world']] ?? 0;
             $multi[$row['world']] = $multi[$row['world']] ?? 0;
+            $off = 0;
+            $deff = 0;
             if ($row['tribe'] === 'roman') {
                 $deff[$row['world']] += $row['soldier1'] * Troops::CORN['roman_soldier1'];
                 $deff[$row['world']] += $row['soldier2'] * Troops::CORN['roman_soldier2'];
@@ -51,6 +53,8 @@ class TroopTool
                 $multi[$row['world']] += $row['soldier6'] * Troops::CORN['roman_soldier6'];
                 $off[$row['world']] += $row['ram'] * Troops::CORN['roman_ram'];
                 $off[$row['world']] += $row['catapult'] * Troops::CORN['roman_catapult'];
+                $off += $row['soldier6'] * Troops::CORN['roman_soldier6'] + $row['soldier3'] * Troops::CORN['roman_soldier3'];
+                $deff += $row['soldier1'] * Troops::CORN['roman_soldier1'] + $row['soldier2'] * Troops::CORN['roman_soldier2'] + $row['soldier6'] * Troops::CORN['roman_soldier6'];
             } elseif ($row['tribe'] === 'gaul') {
                 $deff[$row['world']] += $row['soldier1'] * Troops::CORN['gaul_soldier1'];
                 $off[$row['world']] += $row['soldier2'] * Troops::CORN['gaul_soldier2'];
@@ -60,6 +64,8 @@ class TroopTool
                 $multi[$row['world']] += $row['soldier6'] * Troops::CORN['gaul_soldier6'];
                 $off[$row['world']] += $row['ram'] * Troops::CORN['gaul_ram'];
                 $off[$row['world']] += $row['catapult'] * Troops::CORN['gaul_catapult'];
+                $off += $row['soldier2'] * Troops::CORN['gaul_soldier2'] + $row['soldier4'] * Troops::CORN['gaul_soldier4'] + $row['soldier6'] * Troops::CORN['gaul_soldier6'];
+                $deff += $row['soldier1'] * Troops::CORN['gaul_soldier1'] + $row['soldier5'] * Troops::CORN['gaul_soldier5'] + $row['soldier6'] * Troops::CORN['gaul_soldier6'];
             } elseif ($row['tribe'] === 'teuton') {
                 $off[$row['world']] += $row['soldier1'] * Troops::CORN['teuton_soldier1'];
                 $deff[$row['world']] += $row['soldier2'] * Troops::CORN['teuton_soldier2'];
@@ -69,6 +75,8 @@ class TroopTool
                 $off[$row['world']] += $row['soldier6'] * Troops::CORN['teuton_soldier6'];
                 $off[$row['world']] += $row['ram'] * Troops::CORN['teuton_ram'];
                 $off[$row['world']] += $row['catapult'] * Troops::CORN['teuton_catapult'];
+                $off += $row['soldier1'] * Troops::CORN['teuton_soldier1'] + $row['soldier3'] * Troops::CORN['teuton_soldier3'] + $row['soldier6'] * Troops::CORN['teuton_soldier6'];
+                $deff += $row['soldier2'] * Troops::CORN['teuton_soldier2'] + $row['soldier5'] * Troops::CORN['teuton_soldier5'];
             } elseif ($row['tribe'] === 'egyptian') {
                 $deff[$row['world']] += $row['soldier1'] * Troops::CORN['egyptian_soldier1'];
                 $deff[$row['world']] += $row['soldier2'] * Troops::CORN['egyptian_soldier2'];
@@ -78,6 +86,8 @@ class TroopTool
                 $multi[$row['world']] += $row['soldier6'] * Troops::CORN['egyptian_soldier6'];
                 $off[$row['world']] += $row['ram'] * Troops::CORN['egyptian_ram'];
                 $off[$row['world']] += $row['catapult'] * Troops::CORN['egyptian_catapult'];
+                $deff = $row['soldier1'] * Troops::CORN['egyptian_soldier1'] + $row['soldier2'] * Troops::CORN['egyptian_soldier2'] + $row['soldier5'] * Troops::CORN['egyptian_soldier5'] + $row['soldier6'] * Troops::CORN['egyptian_soldier6'];
+                $off = $row['soldier3'] * Troops::CORN['egyptian_soldier3'] + $row['soldier6'] * Troops::CORN['egyptian_soldier6'];
             } elseif ($row['tribe'] === 'hun') {
                 $multi[$row['world']] += $row['soldier1'] * Troops::CORN['hun_soldier1'];
                 $off[$row['world']] += $row['soldier2'] * Troops::CORN['hun_soldier2'];
@@ -87,7 +97,12 @@ class TroopTool
                 $off[$row['world']] += $row['soldier6'] * Troops::CORN['hun_soldier6'];
                 $off[$row['world']] += $row['ram'] * Troops::CORN['hun_ram'];
                 $off[$row['world']] += $row['catapult'] * Troops::CORN['hun_catapult'];
+                $off += $row['soldier1'] * Troops::CORN['hun_soldier1'] + $row['soldier2'] * Troops::CORN['hun_soldier2'] + $row['soldier4'] * Troops::CORN['hun_soldier4'] + $row['soldier5'] * Troops::CORN['hun_soldier5'] + $row['soldier6'] * Troops::CORN['hun_soldier6'];
+                $deff += $row['soldier1'] * Troops::CORN['hun_soldier1'] + $row['soldier5'] * Troops::CORN['hun_soldier5'];
             }
+            $this->database
+                ->prepare('UPDATE troops SET off=:off,deff=:deff WHERE aid=:aid')
+                ->execute([':aid' => $row['aid'], ':off' => $off, ':deff' => $deff]);
         }
         $stmt = $this->database->prepare("SELECT aid,world FROM troop_updates WHERE user=:user AND date=:today");
         $stmt->execute([':user' => $_SESSION['id'], ':today' => date('Y-m-d')]);

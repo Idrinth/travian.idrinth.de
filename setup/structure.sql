@@ -18,6 +18,30 @@ CREATE TABLE IF NOT EXISTS `alliances` (
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
+CREATE TABLE IF NOT EXISTS `attack_plan` (
+  `aid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` char(36) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `alliance` int(10) unsigned NOT NULL DEFAULT '0',
+  `arrival` datetime NOT NULL,
+  PRIMARY KEY (`aid`),
+  UNIQUE KEY `id_alliance` (`id`,`alliance`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+CREATE TABLE IF NOT EXISTS `attack_plan_unit` (
+  `aid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `attack_plan` int(10) unsigned NOT NULL,
+  `user` int(10) unsigned NOT NULL,
+  `type` enum('Fake','Real') COLLATE utf8mb4_bin NOT NULL,
+  `waves` int(10) unsigned NOT NULL,
+  `target_x` int(11) NOT NULL,
+  `target_y` int(11) NOT NULL,
+  `origin_x` int(11) NOT NULL,
+  `origin_y` int(11) NOT NULL,
+  `sent` datetime NOT NULL,
+  PRIMARY KEY (`aid`),
+  KEY `attack_plan_user` (`attack_plan`,`user`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
 CREATE TABLE IF NOT EXISTS `deff_calls` (
   `aid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `id` char(36) COLLATE utf8mb4_bin NOT NULL,
@@ -183,6 +207,8 @@ CREATE TABLE IF NOT EXISTS `troops` (
   `user` int(10) unsigned NOT NULL,
   `updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `tournament_square` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `off` int(10) unsigned NOT NULL DEFAULT '0',
+  `deff` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`aid`),
   KEY `user` (`user`),
   KEY `world_user` (`world`(191),`user`)
@@ -233,31 +259,6 @@ CREATE TABLE IF NOT EXISTS `user_world` (
   KEY `user_world` (`user`,`world`(191))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
-CREATE TABLE IF NOT EXISTS `world_updates` (
-  `world` varchar(250) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
-  `updated` datetime DEFAULT NULL,
-  `lastUsed` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`world`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
-
-CREATE TABLE IF NOT EXISTS `x_world` (
-  `field_id` int(10) NOT NULL,
-  `x` int(11) NOT NULL,
-  `y` int(11) NOT NULL,
-  `tribe` int(10) NOT NULL,
-  `village_id` int(11) NOT NULL DEFAULT '0',
-  `village_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `player_id` int(11) NOT NULL DEFAULT '0',
-  `player_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
-  `alliance_id` int(11) NOT NULL DEFAULT '0',
-  `alliance_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
-  `population` int(11) NOT NULL DEFAULT '0',
-  `region` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
-  `is_capital` tinyint(4) NOT NULL,
-  `is_city` tinyint(4) DEFAULT NULL,
-  `points` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
-
 CREATE TABLE IF NOT EXISTS `world_alliances` (
   `aid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `id` int(11) NOT NULL,
@@ -284,6 +285,13 @@ CREATE TABLE IF NOT EXISTS `world_players` (
   KEY `alliance` (`world`(191),`alliance`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
+CREATE TABLE IF NOT EXISTS `world_updates` (
+  `world` varchar(250) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  `updated` datetime DEFAULT NULL,
+  `lastUsed` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`world`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
 CREATE TABLE IF NOT EXISTS `world_villages` (
   `aid` bigint(20) NOT NULL AUTO_INCREMENT,
   `id` int(10) unsigned NOT NULL,
@@ -297,6 +305,24 @@ CREATE TABLE IF NOT EXISTS `world_villages` (
   `tribe` enum('roman','gaul','egyptian','teuton','hun') COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`aid`),
   KEY `world_player` (`world`(191),`player`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+CREATE TABLE IF NOT EXISTS `x_world` (
+  `field_id` int(10) NOT NULL,
+  `x` int(11) NOT NULL,
+  `y` int(11) NOT NULL,
+  `tribe` int(10) NOT NULL,
+  `village_id` int(11) NOT NULL DEFAULT '0',
+  `village_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `player_id` int(11) NOT NULL DEFAULT '0',
+  `player_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `alliance_id` int(11) NOT NULL DEFAULT '0',
+  `alliance_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `population` int(11) NOT NULL DEFAULT '0',
+  `region` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `is_capital` tinyint(4) NOT NULL,
+  `is_city` tinyint(4) DEFAULT NULL,
+  `points` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
