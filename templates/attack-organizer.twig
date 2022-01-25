@@ -18,6 +18,10 @@
                     <td>{{ attack.start }} (<span class="countdown" data-countdown="{{ attack.start }}"></span>)</td>
                 </tr>
                 <tr>
+                    <th>{{ translations.distance }}</th>
+                    <td>{{ num(attack.distance) }}</td>
+                </tr>
+                <tr>
                     <th>{{ translations.user }}</th>
                     <td title="{{ attack.discord }}">{{ attack.ingame }}</td>
                 </tr>

@@ -71,11 +71,12 @@ AND attack_plan_unit.user=:user');
                 'world' => $alliance['world'],
                 'plan' => $plan,
                 'attacks' => array_map(function($row) use($plan) {
-                    $distance = $this->distance->distance(new Point(intval($row['origin_x'], 10), intval($row['origin_y'], 10)), new Point(intval($plan['target_x'], 10), intval($plan['target_y'], 10)), 401, 401, true);
+                    $distance = $this->distance->distance(new Point(intval($row['origin_x'], 10), intval($row['origin_y'], 10)), new Point(intval($row['target_x'], 10), intval($row['target_y'], 10)), 401, 401, true);
                     $row['start'] = date(
                         'Y-m-d H:i:s',
                         strtotime($plan['arrival']) - $this->time->time($distance, 3, 0, $row['tournament_square'], 0, 0)[0]
                     );
+                    $row['distance'] = $distance;
                     return $row;
                 }, $stmt22->fetchAll(PDO::FETCH_ASSOC)),
             ]);
