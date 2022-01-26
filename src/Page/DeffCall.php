@@ -155,13 +155,13 @@ class DeffCall
         } elseif(isset($post['delete'])) {
             $this->database
                 ->prepare('DELETE FROM deff_call_supports WHERE aid=:aid AND creator=:creator AND created>:min')
-                ->execute([':aid' => $post['delete'], ':creator' => $_SESSION['id'], ':min' => date('Y-m-d H:i:s', time() - 600)]);
+                ->execute([':aid' => $post['delete'], ':creator' => $_SESSION['id']??0, ':min' => date('Y-m-d H:i:s', time() - 600)]);
             header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);
             return;
         } elseif(isset($post['grain'])) {
             $this->database
                 ->prepare('INSERT INTO deff_call_supplies (account, user, deff_call, grain, arrival) VALUES (:account, :creator, :deff_call, :grain, :arrival)')
-                ->execute([':account' => $post['account'], ':creator' => $_SESSION['id'], ':deff_call' => $data['target']['aid'], ':grain' => $post['grain'], ':arrival' => $post['date'] . ' ' . $post['time']]);
+                ->execute([':account' => $post['account'], ':creator' => $_SESSION['id']??0, ':deff_call' => $data['target']['aid'], ':grain' => $post['grain'], ':arrival' => $post['date'] . ' ' . $post['time']]);
             header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);
             return;
         }
