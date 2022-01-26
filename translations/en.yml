@@ -245,7 +245,7 @@ troops: Troops
 scouts: Scouts
 desired_troops: Desired Troops
 desired_scouts: Desired Scouts
-arrival: Arrival
+arrival: Arrival Time
 created: Added
 village: Village
 status: Status
