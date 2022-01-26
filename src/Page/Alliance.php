@@ -87,6 +87,8 @@ WHERE alliance=:alliance');
 	+ COUNT(DISTINCT troop_updates.date) 
 	+ IFNULL(SUM(deff_call_supplies.grain), 0) * 0.0001
 	+ COUNT(DISTINCT resource_pushes.aid) * 0.5
+	+ IFNULL(SUM(IF(attack_plan_unit.`type`='Fake', attack_plan_unit.waves, attack_plan_unit.waves - 1)), 0) * 0.5
+	+ IFNULL(SUM(IF(attack_plan_unit.`type`='Real', 1, 0)), 0) * 15
 	+ (IFNULL(SUM(resource_push_supplies.lumber), 0)+IFNULL(SUM(resource_push_supplies.clay), 0)+IFNULL(SUM(resource_push_supplies.iron), 0)+IFNULL(SUM(resource_push_supplies.crop), 0)) * 0.001
 	 AS activity,
 	user_alliance.`user`,
@@ -98,13 +100,18 @@ WHERE alliance=:alliance');
 	COUNT(DISTINCT troop_updates.date) AS troopUpdate,
 	IFNULL(SUM(deff_call_supplies.grain), 0) AS grain,
 	COUNT(DISTINCT resource_pushes.aid) AS pushes,
-	IFNULL(SUM(resource_push_supplies.lumber), 0)+IFNULL(SUM(resource_push_supplies.clay), 0)+IFNULL(SUM(resource_push_supplies.iron), 0)+IFNULL(SUM(resource_push_supplies.crop), 0) AS resources
+	IFNULL(SUM(resource_push_supplies.lumber), 0)+IFNULL(SUM(resource_push_supplies.clay), 0)+IFNULL(SUM(resource_push_supplies.iron), 0)+IFNULL(SUM(resource_push_supplies.crop), 0) AS resources,
+	IFNULL(SUM(IF(attack_plan_unit.`type`='Fake', attack_plan_unit.waves, attack_plan_unit.waves - 1)), 0) AS fakes,
+	IFNULL(SUM(IF(attack_plan_unit.`type`='Real', 1, 0)), 0) AS reals
 FROM user_alliance
 INNER JOIN alliances ON alliances.aid=user_alliance.alliance
 
 LEFT JOIN deff_calls ON deff_calls.alliance=:alliance AND deff_calls.arrival >= :cutoffDate
 LEFT JOIN deff_call_supports ON deff_calls.aid=deff_call_supports.deff_call AND deff_call_supports.creator=user_alliance.user
 LEFT JOIN deff_call_supplies ON deff_calls.aid=deff_call_supplies.deff_call AND deff_call_supplies.user=user_alliance.user
+
+LEFT JOIN attack_plan ON attack_plan.alliance=user_alliance.alliance AND attack_plan.arrival >= :cutoffDate
+LEFT JOIN attack_plan_unit ON attack_plan_unit.attack_plan=attack_plan.aid AND attack_plan_unit.user=user_alliance.user
 
 LEFT JOIN hero ON hero.alliance=:alliance
 LEFT JOIN hero_updates ON hero.aid=hero_updates.hero AND hero_updates.user=user_alliance.user AND hero_updates.date >= :cutoffDate
