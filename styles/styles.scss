@@ -95,6 +95,26 @@ nav > ul > li {
     margin: 0;
     padding: 0;
     text-align: center;
+    color: red;
+}
+nav > ul > li > ul{
+    display: none;
+}
+nav > ul > li:hover {
+    color: #eee;
+}
+nav > ul > li:hover > ul{
+    display: block;
+    position: absolute;
+    margin: 0;
+    padding: 1em;
+    background: #333;
+    z-index: 1;
+}
+nav > ul > li > ul > li{
+    display: block;
+    margin: 0;
+    padding: 0;
 }
 .result {
     background: #d0d0d0;

@@ -469,3 +469,7 @@ are_sent: Mark as sent
 no_attacks_for_user: There are no attacks listed for you.
 new: Add new
 countdown: Countdown
+menu_resources: Resources
+menu_other: Other
+menu_def: Deff-Tools
+menu_account: Account

@@ -54,41 +54,56 @@
         </div>
         <nav>
             <ul>
-                <li>
-                    <a href="/delivery">{{ translations.delivery }}</a>
+                <li>{{ translations.menu_def }}<ul>
+                        <li>
+                            <a href="/deff-call">{{ translations.deff_call }}</a>
+                        </li>
+                        <li>
+                            <a{% if session.id is empty %} class="inactive"{% endif %} href="/deff-call-overview">{{ translations.deff_call_overview }}</a>
+                        </li>
+                        <li>
+                            <a href="/attack-parser">{{ translations.attack_parser }}</a>
+                        </li>
+                    </ul>
                 </li>
-                <li>
-                    <a href="/hero-check">{{ translations.hero_check }}</a>
+                <li>{{ translations.menu_account }}<ul>
+                        <li>
+                            <a{% if session.id is empty %} class="inactive"{% endif %} href="/alliance">{{ translations.alliance }}</a>
+                        </li>
+                        <li>
+                            <a{% if session.id is empty %} class="inactive"{% endif %} href="/troop-tool">{{ translations.troop_tool }}</a>
+                        </li>
+                        <li>
+                            <a href="/my-hero">{{ translations.my_hero }}</a>
+                        </li>
+                        <li>
+                            <a href="/profile">{{ translations.profile }}</a>
+                        </li>
+                    </ul>
                 </li>
-                <li>
-                    <a href="/my-hero">{{ translations.my_hero }}</a>
+                <li>{{ translations.menu_resources }}<ul>
+                        <li>
+                            <a href="/delivery">{{ translations.delivery }}</a>
+                        </li>
+                        <li>
+                            <a href="/soldier-cost">{{ translations.soldier_cost }}</a>
+                        </li>
+                        <li>
+                            <a href="/resource-push">{{ translations.resource_push }}</a>
+                        </li>
+                    </ul>
                 </li>
-                <li>
-                    <a href="/deff-call">{{ translations.deff_call }}</a>
-                </li>
-                <li>
-                    <a{% if session.id is empty %} class="inactive"{% endif %} href="/deff-call-overview">{{ translations.deff_call_overview }}</a>
-                </li>
-                <li>
-                    <a href="/soldier-cost">{{ translations.soldier_cost }}</a>
-                </li>
-                <li>
-                    <a{% if session.id is empty %} class="inactive"{% endif %} href="/alliance">{{ translations.alliance }}</a>
-                </li>
-                <li>
-                    <a{% if session.id is empty %} class="inactive"{% endif %} href="/troop-tool">{{ translations.troop_tool }}</a>
-                </li>
-                <li>
-                    <a href="/attack-parser">{{ translations.attack_parser }}</a>
-                </li>
-                <li>
-                    <a href="/resource-push">{{ translations.resource_push }}</a>
-                </li>
-                <li>
-                    <a href="/worlds">{{ translations.worlds }}</a>
-                </li>
-                <li>
-                    <a href="/faq">{{ translations.faq }}</a>
+                <li>{{ translations.menu_other }}<ul>
+                        <li>
+                            <a href="/hero-check">{{ translations.hero_check }}</a>
+                        </li>
+                        <li>
+                            <a href="/worlds">{{ translations.worlds }}</a>
+                        </li>
+                        <li>
+                            <a href="/faq">{{ translations.faq }}</a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
                     <a href="https://discord.gg/WH7RWw7FqP" target="_blank">Discord-Server</a>
