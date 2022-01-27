@@ -113,4 +113,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->post('/inactive-search', InactiveSearch::class)
     ->get('/off-picker', OffPicker::class)
     ->post('/off-picker', OffPicker::class)
+    ->get('/attack-organizer', AttackOrganizer::class)
+    ->post('/attack-organizer', AttackOrganizer::class)
     ->run();

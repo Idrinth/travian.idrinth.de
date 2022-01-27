@@ -22,15 +22,27 @@ class AttackOrganizer
         $this->distance = $distance;
         $this->time = $time;
     }
-    public function run($post, $allianceId, $id = '')
+    public function run($post, $allianceId='', $id = '')
     {
         if (($_SESSION['id']??0) === 0) {
             header('Location: /login', true, 303);
             $_SESSION['redirect'] = $_SERVER['REQUEST_URI'];
             return;
         }
-        $stmt = $this->database->prepare("SELECT alliances.*,user_alliance.rank FROM alliances INNER JOIN user_alliance ON user_alliance.alliance=alliances.aid AND user_alliance.rank IN('Planner', 'High Council', 'Creator') WHERE alliances.id=:id");
-        $stmt->execute([':id' => $allianceId]);
+        if ($allianceId === '') {
+            if (isset($post['alliance']) && $post['alliance']) {
+                header('Location: /alliance/'.$post['alliance'].'/attack-organizer', true, 303);
+                return;
+            }
+            $stmt = $this->database->prepare("SELECT alliances.*,user_alliance.rank FROM alliances INNER JOIN user_alliance ON user_alliance.alliance=alliances.aid AND user_alliance.rank IN('Planner', 'High Council', 'Creator') WHERE user_alliance.user=:id");
+            $stmt->execute([':id' => $_SESSION['id']]);
+            $this->twig->display('attack-organizer-step0.twig', [
+                'alliances' => $stmt->fetchAll(PDO::FETCH_ASSOC),
+            ]);
+            return;
+        }
+        $stmt = $this->database->prepare("SELECT alliances.*,user_alliance.rank FROM alliances INNER JOIN user_alliance ON user_alliance.alliance=alliances.aid AND user_alliance.user=:user WHERE alliances.id=:id");
+        $stmt->execute([':id' => $allianceId, ':user' => $_SESSION['id']]);
         $alliance = $stmt->fetch(PDO::FETCH_ASSOC);
         if (false === $alliance) {
             header('Location: /alliance/' . $allianceId, true, 303);
