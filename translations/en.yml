@@ -476,3 +476,6 @@ menu_account: Account
 menu_off: Off-Tools
 off_picker: Off-Picker
 inactive_search: Inactive Search
+per_days: Per number of days
+max_growth: Maximum Growth
+growth: Growth

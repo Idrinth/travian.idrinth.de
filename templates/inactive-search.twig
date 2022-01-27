@@ -1,3 +1,38 @@
 {% include 'header.twig' %}
 <h2>{{ translations.inactive_search }}</h2>
+{% for inactive in inactives %}
+    <div class="result">
+        <h3 onclick="this.parentNode.classList.toggle('hidden');">{{ inactive.x }}|{{ inactive.y }}</h3>
+        <table>
+            <tr>
+                <th>{{ translations.player }}</th>
+                <td>{{ inactive.player }}</td>
+            </tr>
+            <tr>
+                <th>{{ translations.growth }}</th>
+                <td>{{ inactive.growth }}</td>
+            </tr>
+            <tr>
+                <th>{{ translations.population }}</th>
+                <td>{{ inactive.population }}</td>
+            </tr>
+            <tr>
+                <th>{{ translations.village }}</th>
+                <td><a href="https://{{ inactive.world }}/position_details.php?x={{ inactive.x }}&y={{ inactive.y }}" target="_blank">{{ inactive.village }}</a></td>
+            </tr>
+        </table>
+    </div>
+{% endfor %}
+<form method="post">
+    <fieldset>
+        <legend>{{ translations.main }}</legend>
+        <label>{{ translations.world }}<select name="world">{% for world in worlds %}<option>{{ world.world }}</option>{% endfor %}</select></label>
+        <label>X<input type="number" value="0" name="x"/></label>
+        <label>Y<input type="number" value="0" name="y"/></label>
+        <label>{{ translations.distance }}<input type="number" value="0" name="distance" min="0"/></label>
+        <label>{{ translations.max_growth }}<input type="number" value="0" name="max_growth" min="0"/></label>
+        <label>{{ translations.per_days }}<input type="number" value="1" name="per_days" min="1" max="7"/></label>
+        <input type="submit"/>
+    </fieldset>
+</form>
 {% include 'footer.twig' %}
