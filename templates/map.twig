@@ -87,9 +87,9 @@
         const gridchange = () => {
             const show = document.getElementById('grid').checked;
             for (const child of grid.children) {
-                child.stroke(show ? 'rgba(0,0,0,0.25)' : 'rgba(0,0,0,0)')
+                child.stroke(show ? 'rgba(0,0,0,0.25)' : 'rgba(0,0,0,0)');
             }
-        }
+        };
         document.getElementById('grid').onchange = gridchange;
         gridchange();
         let playerHoverColor = document.getElementById('player_hover').value;

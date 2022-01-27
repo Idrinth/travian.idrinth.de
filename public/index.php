@@ -15,9 +15,11 @@ use De\Idrinth\Travian\Page\FAQ;
 use De\Idrinth\Travian\Page\HeroRecogniser;
 use De\Idrinth\Travian\Page\Home;
 use De\Idrinth\Travian\Page\Imprint;
+use De\Idrinth\Travian\Page\InactiveSearch;
 use De\Idrinth\Travian\Page\Login;
 use De\Idrinth\Travian\Page\Map;
 use De\Idrinth\Travian\Page\MyHero;
+use De\Idrinth\Travian\Page\OffPicker;
 use De\Idrinth\Travian\Page\Profile;
 use De\Idrinth\Travian\Page\ResourcePush;
 use De\Idrinth\Travian\Page\ResourcePushCreation;
@@ -107,4 +109,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->get('/bot-hunt/{world:world}.{villages:[0-9]+}.{population:[0-9]+}.txt', Bot::class)
     ->get('/worlds/{world:world}/map', Map::class)
     ->get('/faq', FAQ::class)
+    ->get('/inactive-search', InactiveSearch::class)
+    ->post('/inactive-search', InactiveSearch::class)
+    ->get('/off-picker', OffPicker::class)
+    ->post('/off-picker', OffPicker::class)
     ->run();
