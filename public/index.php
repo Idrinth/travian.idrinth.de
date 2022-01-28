@@ -2,6 +2,7 @@
 
 use alejoluc\LazyPDO\LazyPDO;
 use De\Idrinth\Travian\API\DeffCallCreation as APIDeffCallCreation;
+use De\Idrinth\Travian\API\Register;
 use De\Idrinth\Travian\Application;
 use De\Idrinth\Travian\DistanceCalculator;
 use De\Idrinth\Travian\Page\Alliance;
@@ -117,4 +118,5 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->get('/attack-organizer', AttackOrganizer::class)
     ->post('/attack-organizer', AttackOrganizer::class)
     ->post('/api/deff-call', APIDeffCallCreation::class)
+    ->post('/api/register', Register::class)
     ->run();

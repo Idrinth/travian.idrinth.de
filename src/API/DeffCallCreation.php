@@ -30,12 +30,12 @@ class DeffCallCreation
                 "INSERT INTO deff_calls (created,anti,grain_info_hours,grain_production,grain,grain_storage,heroes, player, id, `key`, scouts, troops, `x`, `y`, world, creator, arrival, alliance,advanced_troop_data) "
                 . "VALUES (:created,:anti,:grain_info_hours,:grain_production,:grain,:grain_storage,:heroes, :player, :id, :key, :scouts, :troops, :x, :y, :world, :creator, :arrival, :alliance,:advanced_troop_data)"
             );
-            $stmt2 = $this->database->prepare("SELECT aid,world FROM alliances WHERE id=:id");
-            $stmt2->execute([':id' => $post['alliance']]);
+            $stmt2 = $this->database->prepare('SELECT alliances.aid,world FROM alliances INNER JOIN alliance_server ON alliance_server.alliance=alliances.aid WHERE alliance_server.server_id=:id');
+            $stmt2->execute([':id' => $post['server_id']]);
             $row = $stmt2->fetch(PDO::FETCH_NUM);
             if ($row === false) {
                 header('Content-Type: application/json', true, 400);
-                $data['error'] = 'Invalid Alliance-ID ' . $post['alliance'];
+                $data['error'] = 'Invalid Alliance-ID ' . $post['server_id'];
                 echo json_encode($data);
                 return;
             }

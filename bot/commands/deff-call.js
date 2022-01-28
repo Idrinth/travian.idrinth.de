@@ -6,10 +6,6 @@ module.exports = {
         .setName('deff-call')
         .setDescription('Creates a new Deff-Call')
         .addStringOption(option =>
-            option.setName('alliance')
-                .setDescription('The id of the alliance')
-                .setRequired(true))
-        .addStringOption(option =>
             option.setName('arrival')
                 .setDescription('The time deff has to arrive')
                 .setRequired(true))
@@ -53,30 +49,29 @@ module.exports = {
         needle(
             'post',
             'https://travian.idrinth.de/api/deff-call',
-            'alliance=' + interaction.options.getString('alliance')
-                + '&arrival=' + interaction.options.getString('arrival')
+             'arrival=' + interaction.options.getString('arrival')
                 + '&x=' + interaction.options.getInteger('x')
                 + '&y=' + interaction.options.getInteger('y')
+                + '&player=' + interaction.options.getString('player')
                 + '&grain=' + interaction.options.getInteger('grain')
                 + '&grain-storage=' + interaction.options.getInteger('grain-storage')
                 + '&grain-production=' + interaction.options.getInteger('grain-production')
-                + '&advanced-troop-data=' + interaction.options.getBoolean('advanced')
+                + '&advanced-troop-data=' + (interaction.options.getBoolean('advanced')?1:0)
                 + '&troop-ratio=' + interaction.options.getInteger('troop-ratio')
                 + '&scouts=' + interaction.options.getInteger('scouts')
                 + '&heroes=' + interaction.options.getInteger('heroes')
                 + '&troops=' + interaction.options.getInteger('troops')
+                + '&server_id=' + interaction.guild.id
             ,
             {headers : {'X-API-KEY': process.env.API_KEY}}
         )
             .then(async function(resp) {
                 if (resp.statusCode !== 200) {
-                    console.log(resp);
                     interaction.reply({content: 'Failed creating Deff-Call: ' + resp.body.error, ephemeral: true});
                     return;
                 }
                 const id = resp.body.id;
                 const key = resp.body.key;
-                console.log(resp);
                 await interaction.reply(`@everyone Deff-Call: https://travian.idrinth.de/deff-call/${id}`);
                 await interaction.followUp({content: `https://travian.idrinth.de/deff-call/${id}/${key}`, ephemeral: true});
             })

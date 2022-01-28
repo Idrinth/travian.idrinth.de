@@ -4,18 +4,13 @@ const { Client, Collection, Intents } = require('discord.js');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const commands = [];
-const betaCommands = [];
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 client.commands = new Collection();
 
 for (const file of fs.readdirSync(__dirname + '/../bot/commands').filter(file => file.endsWith('.js'))) {
     const command = require(`${__dirname}/../bot/commands/${file}`);
     client.commands.set(command.data.name, command);
-    if (command.live){
-        commands.push(command.data.toJSON());
-    } else {
-        betaCommands.push(command.data.toJSON());
-    }
+    commands.push(command.data.toJSON());
 }
 for (const file of fs.readdirSync(__dirname + '/../bot/events').filter(file => file.endsWith('.js'))) {
     const event = require(`${__dirname}/../bot/events/${file}`);
@@ -30,7 +25,7 @@ const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_BOT_TOKEN);
 rest.put(Routes.applicationCommands(process.env.DISCORD_CLIENT_ID), { body: commands })
     .then(() => console.log('Successfully registered application commands.'))
     .catch(console.error);
-rest.put(Routes.applicationGuildCommands(process.env.DISCORD_CLIENT_ID, process.env.DISCORD_GUILD_ID), { body: betaCommands })
+rest.put(Routes.applicationGuildCommands(process.env.DISCORD_CLIENT_ID, process.env.DISCORD_GUILD_ID), { body: commands })
     .then(() => console.log('Successfully registered guild application commands.'))
     .catch(console.error);
 
