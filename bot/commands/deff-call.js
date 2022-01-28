@@ -27,42 +27,38 @@ module.exports = {
                 .setRequired(true))
         .addIntegerOption(option =>
             option.setName('grain')
-                .setDescription('The current grain the deff has')
-                .setRequired(false))
+                .setDescription('The current grain the deff has'))
         .addIntegerOption(option =>
             option.setName('grain-storage')
-                .setDescription('The maximum grain the deff has')
-                .setRequired(false))
+                .setDescription('The maximum grain the deff has'))
         .addIntegerOption(option =>
             option.setName('grain-production')
-                .setDescription('The maximum grain the deff has')
-                .setRequired(false))
+                .setDescription('The maximum grain the deff has'))
         .addBooleanOption(option =>
             option.setName('advanced')
-                .setDescription('Use advanced features.')
-                .setRequired(false))
+                .setDescription('Use advanced features.'))
         .addIntegerOption(option =>
             option.setName('troop-ratio')
-                .setDescription('Percent value of anti-infantry deff.')
-                .setRequired(false)),
+                .setDescription('Percent value of anti-infantry deff.')),
     async execute(interaction) {
         needle(
             'post',
-            'http://travian.idrinth.de/api/deff-call',
+            'https://travian.idrinth.de/api/deff-call',
             'alliance=' + interaction.options.getString('alliance')
                 + '&arrival=' + interaction.options.getString('arrival')
                 + '&x=' + interaction.options.getInteger('x')
                 + '&y=' + interaction.options.getInteger('y')
-                + '&grain=' + interaction.options.getInteger('grain', 0)
-                + '&grain-storage=' + interaction.options.getInteger('grain-storage', 0)
-                + '&grain-production=' + interaction.options.getInteger('grain-production', 0)
-                + '&advanced-troop-data=' + interaction.options.getBoolean('advanced', 0)
-                + '&troop-ratio=' + interaction.options.getInteger('troop-ratio', 50),
+                + '&grain=' + interaction.options.getInteger('grain')
+                + '&grain-storage=' + interaction.options.getInteger('grain-storage')
+                + '&grain-production=' + interaction.options.getInteger('grain-production')
+                + '&advanced-troop-data=' + interaction.options.getBoolean('advanced')
+                + '&troop-ratio=' + interaction.options.getInteger('troop-ratio')
+            ,
             {'X-API-KEY': process.env.API_KEY}
         )
             .then(async function(resp) {
-                const id = resp.id;
-                const key = resp.key;
+                const id = resp.body.id;
+                const key = resp.body.key;
                 await interaction.reply(`@everyone Deff-Call: https://travian.idrinth.de/deff-call/${id}`);
                 await interaction.followUp({content: `https://travian.idrinth.de/deff-call/${id}/${key}`, ephemeral: true});
             })

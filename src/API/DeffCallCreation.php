@@ -17,6 +17,7 @@ class DeffCallCreation
     public function run($post)
     {
         $apikey = getallheaders()['X-API-KEY']??'';
+        header('Content-Type: application/json');
         if ($apikey !== $_ENV['API_KEY']) {
             header('', true, 403);
             return;
