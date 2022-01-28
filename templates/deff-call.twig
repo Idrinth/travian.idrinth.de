@@ -17,9 +17,9 @@
                 <fieldset>
                     <legend>{{ translations.legend_troops_send }}</legend>
                     <label>{{ translations.account }}<input required name="account" value="{{ target.ingame }}" type="string"/></label>
-                    {% if target.scouts > 0 %}<label>{{ translations.scouts }}<input required name="scouts" type="number" min="0"/></label>{% endif %}
-                    {% if target.troops > 0 %}<label>{{ translations.troops }}<input required name="troops" type="number" min="0"/></label>{% endif %}
-                    {% if target.troops > 0 or target.heroes > 0 %}<label>{{ translations.hero }}<input required name="hero" type="number" min="0" max="1"/></label>{% endif %}
+                    {% if target.scouts > 0 %}<label>{{ translations.scouts }}<input required name="scouts" value="0" type="number" min="0"/></label>{% endif %}
+                    {% if target.troops > 0 %}<label>{{ translations.troops }}<input required name="troops" value="0" type="number" min="0"/></label>{% endif %}
+                    {% if target.troops > 0 or target.heroes > 0 %}<label>{{ translations.hero }}<input required name="hero" value="0" type="number" min="0" max="1"/></label>{% endif %}
                     <label>{{ translations.arrival }}<input required name="date" type="date" value="{{ target.arrival|slice(0, 10) }}"/><input required name="time" step="1" type="time" value="{{ target.arrival|slice(11, 8) }}"/></label>
                     <input type="submit"/>
                 </fieldset>
