@@ -17,6 +17,10 @@
                 <td>{{ inactive.population }}</td>
             </tr>
             <tr>
+                <th>{{ translations.distance }}</th>
+                <td>{{ num(inactive.distance) }}</td>
+            </tr>
+            <tr>
                 <th>{{ translations.village }}</th>
                 <td><a href="https://{{ inactive.world }}/position_details.php?x={{ inactive.x }}&y={{ inactive.y }}" target="_blank">{{ inactive.village }}</a></td>
             </tr>
@@ -26,12 +30,15 @@
 <form method="post">
     <fieldset>
         <legend>{{ translations.main }}</legend>
-        <label>{{ translations.world }}<select name="world">{% for world in worlds %}<option>{{ world.world }}</option>{% endfor %}</select></label>
-        <label>X<input type="number" value="0" name="x"/></label>
-        <label>Y<input type="number" value="0" name="y"/></label>
-        <label>{{ translations.distance }}<input type="number" value="0" name="distance" min="0"/></label>
-        <label>{{ translations.max_growth }}<input type="number" value="0" name="max_growth" min="0"/></label>
-        <label>{{ translations.per_days }}<input type="number" value="1" name="per_days" min="1" max="7"/></label>
+        <label>{{ translations.world }}<select name="world">
+            {% for world in worlds %}<option{% if world.world==inputs.world %} selected{% endif %}>{{ world.world }}</option>{% endfor %}
+        </select></label>
+        <label>X<input type="number" value="{{ inputs.x }}" name="x"/></label>
+        <label>Y<input type="number" value="{{ inputs.y }}" name="y"/></label>
+        <label>{{ translations.distance }}<input type="number" value="{{ inputs.distance }}" name="distance" min="1"/></label>
+        <label>{{ translations.max_growth }}<input type="number" value="{{ inputs.max_growth }}" name="max_growth" min="0"/></label>
+        <label>{{ translations.per_days }}<input type="number" value="{{ inputs.per_days }}" name="per_days" min="1" max="7"/></label>
+        <label>{{ translations.no_natars }}<input type="checkbox"{% if inputs.no_natars==1 %} checked{% endif %} value="1" name="no_natars" value="1"/></label>
         <input type="submit"/>
     </fieldset>
 </form>
