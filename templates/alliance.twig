@@ -23,7 +23,7 @@
         <th>Discord</th>
         <th>{{ translations.name }}</th>
         <th>{{ translations.rank }}</th>
-        <th>{{ translations.activity }}</th>
+        <th title="{{ translations.activity }}">AS</th>
         {% if mayPlan %}
             <th>{{ translations.troops }}</th>
         {% endif %}
@@ -46,7 +46,7 @@
             {% set found=false %}
             {% for act in activity %}
                 {% if act.user == player.aid %}
-                    <td title="{{ act.deffCalls }} Deff Calls
+                    <td style="text-align: center" title="{{ act.deffCalls }} Deff Calls
 {{ act.troops }} Deff Call: Troops
 {{ act.scouts }} Deff Call: Scouts
 {{ act.heroesDeff }} Deff Call: Hero
