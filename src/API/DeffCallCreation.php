@@ -3,9 +3,10 @@
 namespace De\Idrinth\Travian\API;
 
 use De\Idrinth\Travian\World;
-use Exception;
+use InvalidArgumentException;
 use PDO;
 use Ramsey\Uuid\Uuid;
+use Throwable;
 use Webmozart\Assert\Assert;
 
 class DeffCallCreation
@@ -16,10 +17,10 @@ class DeffCallCreation
     }
     public function run($post)
     {
-        $apikey = getallheaders()['X-API-KEY']??'';
-        header('Content-Type: application/json');
+        $apikey = getallheaders()['X-API-KEY']??getallheaders()['x-api-key']??'';
         if ($apikey !== $_ENV['API_KEY']) {
-            header('', true, 403);
+            header('Content-Type: application/json', true, 403);
+            echo 'API-Key "'.$apikey.'" Invalid';
             return;
         }
         $data = [];
@@ -31,9 +32,17 @@ class DeffCallCreation
             );
             $stmt2 = $this->database->prepare("SELECT aid,world FROM alliances WHERE id=:id");
             $stmt2->execute([':id' => $post['alliance']]);
-            list($post['alliance_lock'], $post['world']) = $stmt->fetch(PDO::FETCH_NUM);
+            $row = $stmt2->fetch(PDO::FETCH_NUM);
+            if ($row === false) {
+                header('Content-Type: application/json', true, 400);
+                $data['error'] = 'Invalid Alliance-ID ' . $post['alliance'];
+                echo json_encode($data);
+                return;
+            }
+            list($post['alliance_lock'], $post['world']) = $row;
             World::register($this->database, $post['world']);
             Assert::greaterThan(strtotime($post['arrival']), time() + 3600, 'Defence is in the past or within the next hour.');
+            Assert::greaterThan($post['heroes']+$post['scouts']+$post['troops'], 1, 'Defences without troops can\'t be created.');
             $key = Uuid::uuid4();
             $stmt->execute([
                 ':id' => $uuid,
@@ -56,11 +65,17 @@ class DeffCallCreation
                 ':grain_info_hours' => $post['grain-info-hours'] ?? 0,
                 ':anti' => $post['troop-ratio'] ?? 0,
             ]);
+            header('Content-Type: application/json', true, 200);
             $data['id'] = $uuid;
             $data['key'] = $key;
-        } catch(Exception $e) {
-            header('', true, 400);
+        } catch(InvalidArgumentException $e) {
+            header('Content-Type: application/json', true, 400);
             $data['error'] = $e->getMessage();
+            error_log("$e");
+        } catch(Throwable $e) {
+            header('Content-Type: application/json', true, 500);
+            $data['error'] = $e->getMessage();
+            error_log("$e");
         }
         echo json_encode($data);
     }

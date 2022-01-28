@@ -26,6 +26,15 @@ module.exports = {
                 .setDescription('The y-Coordinate the deff-call is on')
                 .setRequired(true))
         .addIntegerOption(option =>
+            option.setName('scouts')
+                .setDescription('The amount of scouts to send to this defence'))
+        .addIntegerOption(option =>
+            option.setName('troops')
+                .setDescription('The amount of troops(in crop) to send to this defence'))
+        .addIntegerOption(option =>
+            option.setName('heroes')
+                .setDescription('The amount of heroes to send to this defence'))
+        .addIntegerOption(option =>
             option.setName('grain')
                 .setDescription('The current grain the deff has'))
         .addIntegerOption(option =>
@@ -53,17 +62,26 @@ module.exports = {
                 + '&grain-production=' + interaction.options.getInteger('grain-production')
                 + '&advanced-troop-data=' + interaction.options.getBoolean('advanced')
                 + '&troop-ratio=' + interaction.options.getInteger('troop-ratio')
+                + '&scouts=' + interaction.options.getInteger('scouts')
+                + '&heroes=' + interaction.options.getInteger('heroes')
+                + '&troops=' + interaction.options.getInteger('troops')
             ,
-            {'X-API-KEY': process.env.API_KEY}
+            {headers : {'X-API-KEY': process.env.API_KEY}}
         )
             .then(async function(resp) {
+                if (resp.statusCode !== 200) {
+                    console.log(resp);
+                    interaction.reply({content: 'Failed creating Deff-Call: ' + resp.body.error, ephemeral: true});
+                    return;
+                }
                 const id = resp.body.id;
                 const key = resp.body.key;
+                console.log(resp);
                 await interaction.reply(`@everyone Deff-Call: https://travian.idrinth.de/deff-call/${id}`);
                 await interaction.followUp({content: `https://travian.idrinth.de/deff-call/${id}/${key}`, ephemeral: true});
             })
             .catch(function(err) {
-                interaction.followUp({content: 'Failed creating Deff-Call: ' + err, ephemeral: true});
+                interaction.reply({content: 'Failed creating Deff-Call: ' + err, ephemeral: true});
            });
     },
 };
