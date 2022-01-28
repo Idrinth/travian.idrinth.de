@@ -5,10 +5,6 @@ module.exports = {
         .setName('deff-call')
         .setDescription('Creates a new Deff-Call')
         .addStringOption(option =>
-            option.setName('world')
-                .setDescription('The world to create the deff-call on')
-                .setRequired(true))
-        .addStringOption(option =>
             option.setName('arrival')
                 .setDescription('The time deff has to arrive')
                 .setRequired(true))
@@ -41,6 +37,7 @@ module.exports = {
                 .setDescription('Use advanced features.')
                 .setRequired(false)),
     async execute(interaction) {
+        //require guild registration for world and alliance-locking
         await interaction.reply('Pong!');
     },
 };
