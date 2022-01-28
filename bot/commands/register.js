@@ -7,8 +7,12 @@ module.exports = {
         .addStringOption(option =>
             option.setName('alliance')
                 .setDescription('The id of the alliance (see in url)')
+                .setRequired(true))
+        .addStringOption(option =>
+            option.setName('key')
+                .setDescription('The key of the alliance (see in invite-url)')
                 .setRequired(true)),
     async execute(interaction) {
-        await interaction.reply('Pong!');
+        await interaction.reply({content: 'Pong!', ephemeral: true});
     },
 };
