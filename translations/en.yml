@@ -480,3 +480,4 @@ per_days: Per number of days
 max_growth: Maximum Growth
 growth: Account Growth
 no_natars: Ignore Natars
+max_population: Maximum Population for targets

@@ -20,8 +20,8 @@ class Map
     {
         World::register($this->database, $world);
         $data['villages'] = array_map(
-            function(array $row) {return ['isCapital' => 1===intval($row['is_capital'], 10), 'x' => intval($row['x'], 10), 'y' => intval($row['y'], 10), 'alliance' => $row['alliance_name'], 'village' => $row['village_name'], 'player' => $row['player_name']];},
-            $this->database->query("SELECT x,y,village_name,player_name,alliance_name,is_capital FROM `$world`")->fetchAll(PDO::FETCH_ASSOC)
+            function(array $row) {return ['population' => intval($row['population'], 10),'isCapital' => 1===intval($row['is_capital'], 10), 'x' => intval($row['x'], 10), 'y' => intval($row['y'], 10), 'alliance' => $row['alliance_name'], 'village' => $row['village_name'], 'player' => $row['player_name']];},
+            $this->database->query("SELECT x,y,village_name,player_name,alliance_name,is_capital,population FROM `$world`")->fetchAll(PDO::FETCH_ASSOC)
         );
         $this->twig->display('map.twig', $data);
     }
