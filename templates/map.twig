@@ -142,6 +142,7 @@
                 player: village.player,
                 alliance: village.alliance,
                 isCapital: village.isCapital,
+                isMarked: false,
             }) : new Konva.Circle({
                 x: 2 * (village.x +201),
                 y: village.y <0 ? 2 * (201 - village.y) : 2 * (201 - village.y),
@@ -150,6 +151,7 @@
                 player: village.player,
                 alliance: village.alliance,
                 isCapital: village.isCapital,
+                isMarked: false,
             });
             circle.on('mouseover touchstart', function () {
                 const names = document.getElementById('names').value.split(',');
@@ -172,6 +174,16 @@
                     }
                 }
                 document.getElementById('output').innerHTML = village.x + '|' + village.y + "<br/>Village: " + village.village + (village.isCapital ? '(Capital)' : '') + "<br/>Player: " + village.player + (village.alliance ? "<br/>Alliance: " + village.alliance : '');
+            });
+            circle.on('click', function () {
+                if (circle.attrs.isMarked) {
+                    circle.stroke('transparent');
+                    circle.strokeWidth(0);
+                } else {
+                    circle.stroke('black');
+                    circle.strokeWidth(1);
+                }
+                circle.attrs.isMarked = !circle.attrs.isMarked;
             });
             circle.on('mouseout touchend', paint);
             villages.add(circle);
