@@ -4,7 +4,7 @@ const permitted = require('../permission-check');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('deff-call')
+        .setName('res-push')
         .setDescription('Creates a new Deff-Call')
         .addStringOption(option =>
             option.setName('arrival')
@@ -23,65 +23,53 @@ module.exports = {
                 .setDescription('The y-Coordinate the deff-call is on')
                 .setRequired(true))
         .addIntegerOption(option =>
-            option.setName('troops')
+            option.setName('resources')
                 .setDescription('The amount of troops(in crop) to send to this defence')
                 .setRequired(true))
         .addIntegerOption(option =>
-            option.setName('scouts')
+            option.setName('grain')
                 .setDescription('The amount of scouts to send to this defence'))
         .addIntegerOption(option =>
-            option.setName('heroes')
+            option.setName('clay')
                 .setDescription('The amount of heroes to send to this defence'))
         .addIntegerOption(option =>
-            option.setName('grain')
+            option.setName('lumber')
                 .setDescription('The current grain the deff has'))
         .addIntegerOption(option =>
-            option.setName('grain-storage')
-                .setDescription('The maximum grain the deff has'))
-        .addIntegerOption(option =>
-            option.setName('grain-production')
-                .setDescription('The maximum grain the deff has'))
-        .addBooleanOption(option =>
-            option.setName('advanced')
-                .setDescription('Use advanced features.'))
-        .addIntegerOption(option =>
-            option.setName('troop-ratio')
-                .setDescription('Percent value of anti-infantry deff.')),
+            option.setName('iron')
+                .setDescription('The maximum grain the deff has')),
     async execute(interaction) {
-        if (!permitted(interaction, 'defence-coordinator')) {
-            return interaction.reply('You don\'t have a role called Defence-Coordinator or High-Council.');
+        if (!permitted(interaction, 'resource-coordinator')) {
+            return interaction.reply('You don\'t have a role called Resource-Coordinator or High-Council.');
         }
         needle(
             'post',
-            'https://travian.idrinth.de/api/deff-call',
+            'https://travian.idrinth.de/api/resource-push',
              'arrival=' + interaction.options.getString('arrival')
                 + '&x=' + interaction.options.getInteger('x')
                 + '&y=' + interaction.options.getInteger('y')
                 + '&player=' + interaction.options.getString('player')
+                + '&resources=' + interaction.options.getInteger('resources')
                 + '&grain=' + interaction.options.getInteger('grain')
-                + '&grain-storage=' + interaction.options.getInteger('grain-storage')
-                + '&grain-production=' + interaction.options.getInteger('grain-production')
-                + '&advanced-troop-data=' + (interaction.options.getBoolean('advanced')?1:0)
-                + '&troop-ratio=' + interaction.options.getInteger('troop-ratio')
-                + '&scouts=' + interaction.options.getInteger('scouts')
-                + '&heroes=' + interaction.options.getInteger('heroes')
-                + '&troops=' + interaction.options.getInteger('troops')
+                + '&clay=' + interaction.options.getInteger('clay')
+                + '&lumber=' + interaction.options.getInteger('lumber')
+                + '&iron=' + interaction.options.getInteger('iron')
                 + '&server_id=' + interaction.guild.id
             ,
             {headers : {'X-API-KEY': process.env.API_KEY}}
         )
             .then(async function(resp) {
                 if (resp.statusCode !== 200) {
-                    await interaction.reply({content: 'Failed creating Deff-Call: ' + resp.body.error, ephemeral: true});
+                    await interaction.reply({content: 'Failed creating Res-Push: ' + resp.body.error, ephemeral: true});
                     return;
                 }
                 const id = resp.body.id;
                 const key = resp.body.key;
-                await interaction.reply(`@everyone Deff-Call: https://travian.idrinth.de/deff-call/${id}`);
-                await interaction.followUp({content: `https://travian.idrinth.de/deff-call/${id}/${key}`, ephemeral: true});
+                await interaction.reply(`@everyone Resource-Push: https://travian.idrinth.de/resource-push/${id}`);
+                await interaction.followUp({content: `https://travian.idrinth.de/resource-push/${id}/${key}`, ephemeral: true});
             })
             .catch(function(err) {
-                interaction.reply({content: 'Failed creating Deff-Call: ' + err, ephemeral: true});
+                interaction.reply({content: 'Failed creating Res-Push: ' + err, ephemeral: true});
            });
     },
 };
