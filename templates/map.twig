@@ -123,18 +123,25 @@
             for (const circle of villages.children) {
                 if (circle.attrs.population < minPop || circle.attrs.population > maxPop) {
                     circle.fill('transparent');
+                    circle.stroke('transparent');
                 } else if (includes(names, circle.attrs.player)) {
                     circle.fill(playerColor);
+                    circle.stroke(playerColor);
                 } else if (includes(alliances, circle.attrs.alliance)) {
                     circle.fill(allianceColor);
+                    circle.stroke(allianceColor);
                 } else if (includes(alliances2, circle.attrs.alliance)) {
                     circle.fill(allianceColor2);
+                    circle.stroke(allianceColor2);
                 } else if (includes(alliances3, circle.attrs.alliance)) {
                     circle.fill(allianceColor3);
+                    circle.stroke(allianceColor3);
                 } else if (circle.attrs.isCapital) {
                     circle.fill(baseCapitolColor);
+                    circle.stroke(baseCapitolColor);
                 } else {
                     circle.fill(baseColor);
+                    circle.stroke(baseColor);
                 }
             }
         };
@@ -147,21 +154,25 @@
                 width: 2,
                 height: 2,
                 fill: 'red',
+                stroke: 'red',
                 player: village.player,
                 alliance: village.alliance,
                 isCapital: village.isCapital,
                 isMarked: false,
                 population: village.population,
+                strokeWidth: 0,
             }) : new Konva.Circle({
                 x: 2 * (village.x +201),
                 y: village.y <0 ? 2 * (201 - village.y) : 2 * (201 - village.y),
                 radius: 1,
                 fill: 'black',
+                stroke: 'black',
                 player: village.player,
                 alliance: village.alliance,
                 isCapital: village.isCapital,
                 isMarked: false,
                 population: village.population,
+                strokeWidth: 0,
             });
             circle.on('mouseover touchstart', function () {
                 const names = document.getElementById('names').value.split(',');
@@ -171,26 +182,30 @@
                 for (const circle of villages.children) {
                     if (equal(circle.attrs.player, village.player)) {
                         circle.fill(playerHoverColor);
+                        circle.stroke(playerHoverColor);
                     } else if (equal(circle.attrs.alliance, village.alliance)) {
                         circle.fill(allianceHoverColor);
+                        circle.stroke(allianceHoverColor);
                     } else if (includes(names, circle.attrs.player)) {
                         circle.fill(playerColor);
+                        circle.stroke(playerColor);
                     } else if (includes(alliances, circle.attrs.alliance)) {
                         circle.fill(allianceColor);
+                        circle.stroke(allianceColor);
                     } else if (includes(alliances2, circle.attrs.alliance)) {
                         circle.fill(allianceColor2);
+                        circle.stroke(allianceColor2);
                     } else if (includes(alliances3, circle.attrs.alliance)) {
                         circle.fill(allianceColor3);
+                        circle.stroke(allianceColor3);
                     }
                 }
                 document.getElementById('output').innerHTML = village.x + '|' + village.y + "<br/>Village: " + village.village + (village.isCapital ? '(Capital)' : '') + "<br/>Player: " + village.player + (village.alliance ? "<br/>Alliance: " + village.alliance : '') + "<br/>Population: " + village.population;
             });
             circle.on('click', function () {
                 if (circle.attrs.isMarked) {
-                    circle.stroke('transparent');
                     circle.strokeWidth(0);
                 } else {
-                    circle.stroke('black');
                     circle.strokeWidth(1);
                 }
                 circle.attrs.isMarked = !circle.attrs.isMarked;
@@ -247,6 +262,7 @@
             } else if (newScale < 1) {
                 newScale = 1;
             }
+            document.getElementById('scale').value = newScale;
             stage.scale({ x: newScale, y: newScale });
             stage.position({
                 x: newScale === 1 ? 0 : pointer.x - mousePointTo.x * newScale,
