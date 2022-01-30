@@ -3,8 +3,10 @@
 <form method="post">
     <fieldset>
         <legend>{{ translations.main }}</legend>
-        <label>{{ translations.name }}<input type="text" name="name"/></label>
-        <label title="ts8.x1.europe.travian.com">{{ translations.world }}*<input type="text" name="world"/></label>
+        <div class="split2">
+            <label>{{ translations.name }}<input type="text" name="name"/></label>
+            <label title="ts8.x1.europe.travian.com">{{ translations.world }}*<input type="text" name="world"/></label>
+        </div>
         <input type="submit"/>
     </fieldset>
 </form>

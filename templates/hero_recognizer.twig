@@ -59,19 +59,23 @@
 <form method="post" action="/hero-check">
     <fieldset>
         <legend>{{ translations.main }}</legend>
-        <label>{{ translations.hero_image_url }}<input required name="url" type="url" value="{{ inputs.url }}"/></label>
+        <div class="split2">
+            <label>{{ translations.hero_image_url }}<input required name="url" type="url" value="{{ inputs.url }}"/></label>
+        </div>
         <input type="submit"/>
     </fieldset>
     {% if session.id > 0 %}
         <fieldset>
             <legend>{{ translations.advanced }}</legend>
-            <label>{{ translations.hero_share }}<select name="hero_share">
-                <option value="0">{{ translations.none }}</option>
-                {% for alliance in alliances %}
-                    <option{% if inputs.hero_share==alliance.aid %} selected{% endif %} value="{{ alliance.aid }}">{{ alliance.world }}: {{ alliance.name }}</option>
-                {% endfor %}
-                </select></label>
-            <label>{{ translations.player_id }}<input type="number" name="player_id" value="{{ inputs.player_id }}" min="0"/></label>
+            <div class="split2">
+                <label>{{ translations.hero_share }}<select name="hero_share">
+                    <option value="0">{{ translations.none }}</option>
+                    {% for alliance in alliances %}
+                        <option{% if inputs.hero_share==alliance.aid %} selected{% endif %} value="{{ alliance.aid }}">{{ alliance.world }}: {{ alliance.name }}</option>
+                    {% endfor %}
+                    </select></label>
+                <label>{{ translations.player_id }}<input type="number" name="player_id" value="{{ inputs.player_id }}" min="0"/></label>
+            </div>
         </fieldset>
     {% endif %}
 </form>

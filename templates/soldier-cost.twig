@@ -37,8 +37,9 @@
 <form method="post">
     <fieldset>
         <legend>{{ translations.main }}</legend>
-        <label>{{ translations.troops }}<input required name="troops" type="number" min="1" value="{{ inputs.troops }}"/></label>
-        <label>{{ translations.troop_type }}<select required name="troop_type">
+        <div class="split2">
+            <label>{{ translations.troops }}<input required name="troops" type="number" min="1" value="{{ inputs.troops }}"/></label>
+            <label>{{ translations.troop_type }}<select required name="troop_type">
                 <optgroup label="{{ translations.romans }}">
                     <option{% if inputs.troop_type=='roman_legionaire' %} selected{% endif %} value="roman_legionaire">{{ translations.roman_soldier1 }}</option>
                     <option{% if inputs.troop_type=='roman_praetorian' %} selected{% endif %} value="roman_praetorian">{{ translations.roman_soldier2 }}</option>
@@ -90,34 +91,37 @@
                     <option{% if inputs.troop_type=='hun_catapult' %} selected{% endif %} value="hun_catapult">{{ translations.hun_catapult }}</option>
                 </optgroup>
             </select></label>
+        </div>
         <input type="submit"/>
     </fieldset>
     <fieldset>
         <legend>{{ translations.advanced }}</legend>
-        <label>{{ translations.recruiting_level }}<input required name="recruiting_level" type="number" min="1" max="20" value="{{ inputs.recruiting_level }}"/></label>
-        <label>{{ translations.use_great_recruiting }}<input name="use_great_recruiting" value="1" type="checkbox"{% if inputs.use_great_recruiting %} checked{% endif %}/></label>
-        <label>{{ translations.great_recruiting_level }}<input required name="great_recruiting_level" type="number" min="0" value="{{ inputs.great_recruiting_level }}" max="20"/></label>
-        <label>{{ translations.horse_trough_level }}<input required name="horse_trough_level" type="number" min="0" value="{{ inputs.horse_trough_level }}" max="20"/></label>
-        <label>{{ translations.helmet_bonus }}<select name="helmet_bonus">
-                <option{% if inputs.helmet_bonus==1 %} selected{% endif %} value="1">0%</option>
-                <option{% if inputs.helmet_bonus==0.9 %} selected{% endif %} value="0.9">10%</option>
-                <option{% if inputs.helmet_bonus==0.85 %} selected{% endif %} value="0.85">15%</option>
-                <option{% if inputs.helmet_bonus==0.8 %} selected{% endif %} value="0.8">20%</option>
-            </select></label>
-        <label>{{ translations.artefact_bonus }}<select name="artefact_bonus">
-                <option{% if inputs.artefact_bonus==1 %} selected{% endif %} value="1">0%</option>
-                <option{% if inputs.artefact_bonus==0.75 %} selected{% endif %} value="0.75">25%</option>
-                <option{% if inputs.artefact_bonus==0.5 %} selected{% endif %} value="0.5">50%</option>
-                <option{% if inputs.artefact_bonus==0.25 %} selected{% endif %} value="0.25">75%</option>
-            </select></label>
-        <label>{{ translations.alliance_bonus }}<select name="alliance_bonus">
-                <option{% if inputs.alliance_bonus==1 %} selected{% endif %} value="1">0%</option>
-                <option{% if inputs.alliance_bonus==0.98 %} selected{% endif %} value="0.98">2%</option>
-                <option{% if inputs.alliance_bonus==0.96 %} selected{% endif %} value="0.96">4%</option>
-                <option{% if inputs.alliance_bonus==0.94 %} selected{% endif %} value="0.94">6%</option>
-                <option{% if inputs.alliance_bonus==0.92 %} selected{% endif %} value="0.92">8%</option>
-                <option{% if inputs.alliance_bonus==0.9 %} selected{% endif %} value="0.9">10%</option>
-            </select></label>
+        <div class="split2">
+            <label>{{ translations.recruiting_level }}<input required name="recruiting_level" type="number" min="1" max="20" value="{{ inputs.recruiting_level }}"/></label>
+            <label>{{ translations.use_great_recruiting }}<input name="use_great_recruiting" value="1" type="checkbox"{% if inputs.use_great_recruiting %} checked{% endif %}/></label>
+            <label>{{ translations.great_recruiting_level }}<input required name="great_recruiting_level" type="number" min="0" value="{{ inputs.great_recruiting_level }}" max="20"/></label>
+            <label>{{ translations.horse_trough_level }}<input required name="horse_trough_level" type="number" min="0" value="{{ inputs.horse_trough_level }}" max="20"/></label>
+            <label>{{ translations.helmet_bonus }}<select name="helmet_bonus">
+                    <option{% if inputs.helmet_bonus==1 %} selected{% endif %} value="1">0%</option>
+                    <option{% if inputs.helmet_bonus==0.9 %} selected{% endif %} value="0.9">10%</option>
+                    <option{% if inputs.helmet_bonus==0.85 %} selected{% endif %} value="0.85">15%</option>
+                    <option{% if inputs.helmet_bonus==0.8 %} selected{% endif %} value="0.8">20%</option>
+                </select></label>
+            <label>{{ translations.artefact_bonus }}<select name="artefact_bonus">
+                    <option{% if inputs.artefact_bonus==1 %} selected{% endif %} value="1">0%</option>
+                    <option{% if inputs.artefact_bonus==0.75 %} selected{% endif %} value="0.75">25%</option>
+                    <option{% if inputs.artefact_bonus==0.5 %} selected{% endif %} value="0.5">50%</option>
+                    <option{% if inputs.artefact_bonus==0.25 %} selected{% endif %} value="0.25">75%</option>
+                </select></label>
+            <label>{{ translations.alliance_bonus }}<select name="alliance_bonus">
+                    <option{% if inputs.alliance_bonus==1 %} selected{% endif %} value="1">0%</option>
+                    <option{% if inputs.alliance_bonus==0.98 %} selected{% endif %} value="0.98">2%</option>
+                    <option{% if inputs.alliance_bonus==0.96 %} selected{% endif %} value="0.96">4%</option>
+                    <option{% if inputs.alliance_bonus==0.94 %} selected{% endif %} value="0.94">6%</option>
+                    <option{% if inputs.alliance_bonus==0.92 %} selected{% endif %} value="0.92">8%</option>
+                    <option{% if inputs.alliance_bonus==0.9 %} selected{% endif %} value="0.9">10%</option>
+                </select></label>
+        </div>
     </fieldset>
 </form>
 {% include 'footer.twig' %}

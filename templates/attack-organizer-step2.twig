@@ -249,26 +249,30 @@
 <form method="post">
     <fieldset>
         <legend>{{ translations.main }}</legend>
-        <label>{{ translations.off_min_catapults }}<input disabled type="number" name="off_catapults" value="{{ inputs.off_catapults }}"/></label>
-        <label>{{ translations.off_min_offence }}<input disabled type="number" name="offence" value="{{ inputs.offence }}"/></label>
-        <label>{{ translations.fake_min_catapults }}<input disabled type="number" name="fake_catapults" value="{{ inputs.fake_catapults }}"/></label>
-        <label>{{ translations.alliances_to_attack }}<input disabled type="text" name="alliances" value="{{ inputs.alliances }}"/></label>
-        <label>{{ translations.min_population }}<input disabled type="number" name="population" value="{{ inputs.population }}"/></label>
+        <div class="split2">
+            <label>{{ translations.off_min_catapults }}<input disabled type="number" name="off_catapults" value="{{ inputs.off_catapults }}"/></label>
+            <label>{{ translations.off_min_offence }}<input disabled type="number" name="offence" value="{{ inputs.offence }}"/></label>
+            <label>{{ translations.fake_min_catapults }}<input disabled type="number" name="fake_catapults" value="{{ inputs.fake_catapults }}"/></label>
+            <label>{{ translations.alliances_to_attack }}<input disabled type="text" name="alliances" value="{{ inputs.alliances }}"/></label>
+            <label>{{ translations.min_population }}<input disabled type="number" name="population" value="{{ inputs.population }}"/></label>
+        </div>
         <input type="submit"/>
     </fieldset>
     {% for village in targets %}
         <fieldset id="village{{village.id}}">
             <legend>{{ village.name }}({{ village.x }}|{{ village.y }})</legend>
-            <label>{{ translations.offs }}<select name="offs[{{ village.id }}][]" multiple>
-                {% for off in offs %}
-                    <option value="{{ off.aid }}">{{ off.player }}: {{ off.name }}({{ off.x }}|{{ off.y }}) {{ off.catapult }} {{ translations.catapults }}</option>
-                {% endfor %}
-            </select></label>
-            <label>{{ translations.fakes }}<select name="fakes[{{ village.id }}][]" multiple>
-                {% for fake in fakes %}
-                    <option value="{{ fake.aid }}">{{ fake.player }}: {{ fake.name }}({{ fake.x }}|{{ fake.y }}) {{ fake.catapult }} {{ translations.catapults }}</option>
-                {% endfor %}
-            </select></label>
+            <div class="split2">
+                <label>{{ translations.offs }}<select name="offs[{{ village.id }}][]" multiple>
+                    {% for off in offs %}
+                        <option value="{{ off.aid }}">{{ off.player }}: {{ off.name }}({{ off.x }}|{{ off.y }}) {{ off.catapult }} {{ translations.catapults }}</option>
+                    {% endfor %}
+                </select></label>
+                <label>{{ translations.fakes }}<select name="fakes[{{ village.id }}][]" multiple>
+                    {% for fake in fakes %}
+                        <option value="{{ fake.aid }}">{{ fake.player }}: {{ fake.name }}({{ fake.x }}|{{ fake.y }}) {{ fake.catapult }} {{ translations.catapults }}</option>
+                    {% endfor %}
+                </select></label>
+            </div>
         </fieldset>
     {% endfor %}
 </form>

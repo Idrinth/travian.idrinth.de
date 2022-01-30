@@ -4,18 +4,22 @@
 <form method="post">
     <fieldset>
         <legend>{{ labels.main }}</legend>
-        <label>{{ translations.impact_time }}<input type="date" name="date" value=""/><input name="time" type="time" step="1" value=""/></label>
+        <div class="split2">
+            <label>{{ translations.impact_time }}<input type="date" name="date" value=""/><input name="time" type="time" step="1" value=""/></label>
+        </div>
         <input type="submit"/>
     </fieldset>
     {% for village in villages %}
         <fieldset>
             <legend>{{ village.name }}({{ village.x }}|{{ village.y }})</legend>
-            {% for off in village.offs %}
-                <label title="{{ num(off.distance) }} fields, {{ off.time }}">{{ off.name }}: OFF {{ translations.waves }}<input name="offs[{{ village.id }}][{{ off.aid }}]" type="number" value="3" min="0" max="{{ off.catapults }}"/></label>
-            {% endfor %}
-            {% for fake in village.fakes %}
-                <label title="{{ num(fake.distance) }} fields, {{ fake.time }}">{{ fake.name }}: FAKE {{ translations.waves }}<input name="fakes[{{ village.id }}][{{ fake.aid }}]" type="number" value="3" min="0" max="{{ fake.catapults }}"/></label>
-            {% endfor %}
+            <div class="split2">
+                {% for off in village.offs %}
+                    <label title="{{ num(off.distance) }} fields, {{ off.time }}">{{ off.name }}: OFF {{ translations.waves }}<input name="offs[{{ village.id }}][{{ off.aid }}]" type="number" value="3" min="0" max="{{ off.catapults }}"/></label>
+                {% endfor %}
+                {% for fake in village.fakes %}
+                    <label title="{{ num(fake.distance) }} fields, {{ fake.time }}">{{ fake.name }}: FAKE {{ translations.waves }}<input name="fakes[{{ village.id }}][{{ fake.aid }}]" type="number" value="3" min="0" max="{{ fake.catapults }}"/></label>
+                {% endfor %}
+            </div>
         </fieldset>
     {% endfor %}
 </form>

@@ -3,11 +3,13 @@
 <form method="post">
     <fieldset>
         <legend>{{ translations.main }}</legend>
-        <label>{{ translations.alliance }}<select name="alliance">
-                {% for alliance in alliances %}
-                    <option value="{{ alliance.id }}">{{ alliance.name }}</option>
-                {% endfor %}
-            </select></label>
+        <div class="split2">
+            <label>{{ translations.alliance }}<select name="alliance">
+                    {% for alliance in alliances %}
+                        <option value="{{ alliance.id }}">{{ alliance.name }}</option>
+                    {% endfor %}
+                </select></label>
+        </div>
         <input type="submit"/>
     </fieldset>
 </form>

@@ -14,8 +14,10 @@
 <form method="post">
     <fieldset>
         <legend>{{ translations.main }}</legend>
-        <label>{{ translations.world }}<input required name="world"/></label>
-        <label>{{ translations.name }}<input required name="name"/></label>
+        <div class="split2">
+            <label>{{ translations.world }}<input required name="world"/></label>
+            <label>{{ translations.name }}<input required name="name"/></label>
+        </div>
         <input type="submit"/>
     </fieldset>
 </form>

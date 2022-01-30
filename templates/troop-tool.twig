@@ -105,23 +105,27 @@
 <form method="post">
     <fieldset>
         <legend>{{ translations.main }}</legend>
-        <label title="ts1.x1.europe.travian.com">{{ translations.world }}*<input type="text" name="world"/></label>
-        <label title="{{ translations.plus_troop_overview }}">{{ translations.source }}*<textarea name="source"></textarea></label>
+        <div class="split2">
+            <label title="ts1.x1.europe.travian.com">{{ translations.world }}*<input type="text" name="world"/></label>
+            <label title="{{ translations.plus_troop_overview }}">{{ translations.source }}*<textarea name="source"></textarea></label>
+        </div>
         <input type="submit"/>
     </fieldset>
 </form>
 {% if troops is not empty %}
     <h3>{{ translations.delete_village }}</h3>
     <form method="post">
-        <label>{{ translations.village }}<select name="aid">
-                {% for world,tribes in troops %}
-                    {% for tribe,villages in tribes %}
-                        {% for village in villages %}
-                            <option value="{{ village.aid }}">{{ village.world }}: {{ village.name }} ({{ village.x }}|{{ village.y }})</option>
+        <div class="split2">
+            <label>{{ translations.village }}<select name="aid">
+                    {% for world,tribes in troops %}
+                        {% for tribe,villages in tribes %}
+                            {% for village in villages %}
+                                <option value="{{ village.aid }}">{{ village.world }}: {{ village.name }} ({{ village.x }}|{{ village.y }})</option>
+                            {% endfor %}
                         {% endfor %}
                     {% endfor %}
-                {% endfor %}
-            </select></label>
+                </select></label>
+        </div>
         <input type="hidden" name="type" value="delete"/>
         <input type="submit"/>
     </form>
@@ -130,17 +134,19 @@
 <form method="post">
     <fieldset>
         <legend>{{ translations.main }}</legend>
-        <label title="ts1.x1.europe.travian.com">{{ translations.world }}*<input type="text" name="world"/></label>
-        <label>X<input type="number" name="x"/></label>
-        <label>Y<input type="number" name="y"/></label>
-        <label>{{ translations.name }}<input type="text" name="name"/></label>
-        <label>{{ translations.tribe }}<select name="tribe">
-                <option value="roman">{{ translations.romans }}</option>
-                <option value="gaul">{{ translations.gauls }}</option>
-                <option value="teuton">{{ translations.teutons }}</option>
-                <option value="hun">{{ translations.huns }}</option>
-                <option value="egyptian">{{ translations.egyptians }}</option>
-            </select></label>
+        <div class="split2">
+            <label title="ts1.x1.europe.travian.com">{{ translations.world }}*<input type="text" name="world"/></label>
+            <label>{{ translations.name }}<input type="text" name="name"/></label>
+            <label>X<input type="number" name="x"/></label>
+            <label>Y<input type="number" name="y"/></label>
+            <label>{{ translations.tribe }}<select name="tribe">
+                    <option value="roman">{{ translations.romans }}</option>
+                    <option value="gaul">{{ translations.gauls }}</option>
+                    <option value="teuton">{{ translations.teutons }}</option>
+                    <option value="hun">{{ translations.huns }}</option>
+                    <option value="egyptian">{{ translations.egyptians }}</option>
+                </select></label>
+        </div>
         <input type="submit"/>
     </fieldset>
 </form>

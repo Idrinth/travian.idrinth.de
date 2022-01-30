@@ -6,33 +6,39 @@
 <form method="post">
     <fieldset>
         <legend>{{ translations.main }}</legend>
-        <label title="ts9.x1.europe.travian.com">{{ translations.world }}*<input value="{{ inputs.world }}" required name="world"/></label>
-        <label>X<input required name="x" value="{{ inputs.x }}" type="number"/></label>
-        <label>Y<input required name="y" value="{{ inputs.y }}" type="number"/></label>
-        <label>{{ translations.player }}<input required name="player"/></label>
-        <label>{{ translations.arrival }}<input required name="date" value="{{ inputs.date }}" type="date"/><input required value="{{ inputs.time }}" name="time" step="1" type="time"/></label>
-        <label>{{ translations.desired_troops }}<input required value="{{ inputs.troops }}" name="troops" type="number" min="0"/></label>
-        <label>{{ translations.desired_scouts }}<input required value="{{ inputs.scouts }}" name="scouts" type="number" min="0"/></label>
-        <label>{{ translations.desired_heroes }}<input required value="{{ inputs.heroes }}" name="heroes" type="number" min="0"/></label>
+        <div class="split2">
+            <label title="ts9.x1.europe.travian.com">{{ translations.world }}*<input value="{{ inputs.world }}" required name="world"/></label>
+            <label>{{ translations.player }}<input required name="player"/></label>
+            <label>X<input required name="x" value="{{ inputs.x }}" type="number"/></label>
+            <label>Y<input required name="y" value="{{ inputs.y }}" type="number"/></label>
+            <label>{{ translations.arrival }}<input required name="date" value="{{ inputs.date }}" type="date"/><input required value="{{ inputs.time }}" name="time" step="1" type="time"/></label>
+            <label>{{ translations.desired_troops }}<input required value="{{ inputs.troops }}" name="troops" type="number" min="0"/></label>
+            <label>{{ translations.desired_scouts }}<input required value="{{ inputs.scouts }}" name="scouts" type="number" min="0"/></label>
+            <label>{{ translations.desired_heroes }}<input required value="{{ inputs.heroes }}" name="heroes" type="number" min="0"/></label>
+        </div>
         <input type="submit"/>
     </fieldset>
     <fieldset>
         <legend>{{ translations.grain }}</legend>
-        <label>{{ translations.grain }}<input required value="0" name="grain" type="number" min="0"/></label>
-        <label>{{ translations.grain_production }}<input required value="0" name="grain_production" type="number"/></label>
-        <label>{{ translations.grain_storage }}<input required value="0" name="grain_storage" type="number" min="0"/></label>
-        <label>{{ translations.grain_info_hours }}<input required value="1" name="grain_info_hours" type="number" min="1"/></label>
+        <div class="split2">
+            <label>{{ translations.grain }}<input required value="0" name="grain" type="number" min="0"/></label>
+            <label>{{ translations.grain_production }}<input required value="0" name="grain_production" type="number"/></label>
+            <label>{{ translations.grain_storage }}<input required value="0" name="grain_storage" type="number" min="0"/></label>
+            <label>{{ translations.grain_info_hours }}<input required value="1" name="grain_info_hours" type="number" min="1"/></label>
+        </div>
     </fieldset>
     <fieldset>
         <legend>{{ translations.advanced }}</legend>
-        <label>{{ translations.alliance_lock }}<select name="alliance_lock">
-            <option value="0">{{ translations.none }}</option>
-            {% for alliance in alliances %}
-                <option{% if inputs.alliance_lock==alliance.aid %} selected{% endif %} value="{{ alliance.aid }}">{{ alliance.world }}: {{ alliance.name }}</option>
-            {% endfor %}
-            </select></label>
-        <label>{{ translations.advanced_troop_data }}<input name="advanced_troop_data" type="hidden" value="0"/><input name="advanced_troop_data" checked type="checkbox" value="1"/></label>
-        <label>{{ translations.percent_infantry_deff }}<input name="anti" type="number" value="50" min="0" max="100"/></label>
+        <div class="split2">
+            <label>{{ translations.alliance_lock }}<select name="alliance_lock">
+                <option value="0">{{ translations.none }}</option>
+                {% for alliance in alliances %}
+                    <option{% if inputs.alliance_lock==alliance.aid %} selected{% endif %} value="{{ alliance.aid }}">{{ alliance.world }}: {{ alliance.name }}</option>
+                {% endfor %}
+                </select></label>
+            <label>{{ translations.advanced_troop_data }}<input name="advanced_troop_data" type="hidden" value="0"/><input name="advanced_troop_data" checked type="checkbox" value="1"/></label>
+            <label>{{ translations.percent_infantry_deff }}<input name="anti" type="number" value="50" min="0" max="100"/></label>
+        </div>
     </fieldset>
 </form>
 {% include 'footer.twig' %}

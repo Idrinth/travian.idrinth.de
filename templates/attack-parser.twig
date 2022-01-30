@@ -47,8 +47,10 @@
 <form method="post">
     <fieldset>
         <legend>{{ translations.main }}</legend>
-        <label>{{ translations.source }}<textarea name="source"></textarea></label>
-        <label>{{ translations.blind_time }}<input type="time" step="1" name="blind_time"/></label>
+        <div class="split2">
+            <label>{{ translations.source }}<textarea name="source"></textarea></label>
+            <label>{{ translations.blind_time }}<input type="time" step="1" name="blind_time"/></label>
+        </div>
         <input type="submit"/>
     </fieldset>
 </form>
