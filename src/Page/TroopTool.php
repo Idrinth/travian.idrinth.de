@@ -264,8 +264,8 @@ ORDER BY troops.tribe DESC, troops.name ASC");
                                 ':soldier6' => $list[6],
                                 ':ram' => $list[7],
                                 ':catapult' => $list[8],
-                                ':settler' => $list[9],
-                                ':chief' => $list[10],
+                                ':settler' => $list[10],
+                                ':chief' => $list[9],
                                 ':hero' => $list[11],
                             ]);
                     }
