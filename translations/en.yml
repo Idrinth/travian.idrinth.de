@@ -481,3 +481,4 @@ max_growth: Maximum Growth
 growth: Account Growth
 no_natars: Ignore Natars
 max_population: Maximum Population for targets
+troop_plus_import: Open the plus overview of your troops, get the Source Code of it with (usually) CTRL+U and paste it in to import all automatically. If you don't have plus, you can use this to at least import your villages.
