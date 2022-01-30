@@ -5,39 +5,39 @@ const permitted = require('../permission-check');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('res-push')
-        .setDescription('Creates a new Deff-Call')
+        .setDescription('Creates a new Resource-Push')
         .addStringOption(option =>
             option.setName('arrival')
-                .setDescription('The time deff has to arrive')
+                .setDescription('The time resources have to arrive')
                 .setRequired(true))
         .addStringOption(option =>
             option.setName('player')
-                .setDescription('The player to deff')
+                .setDescription('The player to push')
                 .setRequired(true))
         .addIntegerOption(option =>
             option.setName('x')
-                .setDescription('The x-Coordinate the deff-call is on')
+                .setDescription('The x-Coordinate the village is on')
                 .setRequired(true))
         .addIntegerOption(option =>
             option.setName('y')
-                .setDescription('The y-Coordinate the deff-call is on')
+                .setDescription('The y-Coordinate the village is on')
                 .setRequired(true))
         .addIntegerOption(option =>
             option.setName('resources')
-                .setDescription('The amount of troops(in crop) to send to this defence')
+                .setDescription('The amount of tresources to send to this push')
                 .setRequired(true))
         .addIntegerOption(option =>
             option.setName('grain')
-                .setDescription('The amount of scouts to send to this defence'))
+                .setDescription('The amount of grain to send to this push'))
         .addIntegerOption(option =>
             option.setName('clay')
-                .setDescription('The amount of heroes to send to this defence'))
+                .setDescription('The amount of clay to send to this push'))
         .addIntegerOption(option =>
             option.setName('lumber')
-                .setDescription('The current grain the deff has'))
+                .setDescription('The amount of lumber to send to this push'))
         .addIntegerOption(option =>
             option.setName('iron')
-                .setDescription('The maximum grain the deff has')),
+                .setDescription('The amount of iron to send to this push')),
     async execute(interaction) {
         if (!permitted(interaction, 'resource-coordinator')) {
             return interaction.reply('You don\'t have a role called Resource-Coordinator or High-Council.');
