@@ -25,7 +25,7 @@ class InactiveSearch
             'inputs' => [
                 'x' => 0,
                 'y' => 0,
-                'distance' => 0,
+                'distance' => 20,
                 'max_growth' => 5,
                 'per_days' => 2,
             ]
