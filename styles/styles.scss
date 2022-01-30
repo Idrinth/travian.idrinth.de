@@ -1,3 +1,18 @@
+h1 {
+    font-size: 2em;
+}
+h2 {
+    font-size: 1.8em;
+}
+h3 {
+    font-size: 1.6em;
+}
+h4 {
+    font-size: 1.4em;
+}
+h5 {
+    font-size: 1.2em;
+}
 html, body {
     width: 100%;
     min-height: 100%;
@@ -345,8 +360,8 @@ fieldset.invisible {
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     }
     body {
-        padding-top: 0.9em;
-        padding-bottom: 0.9em;
+        padding-top: 0.8em;
+        padding-bottom: 0.8em;
     }
     .collapsed-table {
         tr {
@@ -375,8 +390,8 @@ fieldset.invisible {
         grid-template-columns: 1fr 1fr 1fr 1fr;
     }
     body {
-        padding-top: 0.8em;
-        padding-bottom: 0.8em;
+        padding-top: 0.68em;
+        padding-bottom: 0.6em;
     }
 }
 @media screen and (max-width:700px) {
@@ -384,8 +399,8 @@ fieldset.invisible {
         grid-template-columns: 1fr 1fr 1fr;
     }
     body {
-        padding-top: 0.7em;
-        padding-bottom: 0.7em;
+        padding-top: 0.4em;
+        padding-bottom: 0.4em;
     }
     .grid2,
     .split2 {
@@ -393,6 +408,21 @@ fieldset.invisible {
     }
 }
 @media screen and (max-width:600px) {
+    h1 {
+        font-size: 1.5em;
+    }
+    h2 {
+        font-size: 1.4em;
+    }
+    h3 {
+        font-size: 1.3em;
+    }
+    h4 {
+        font-size: 1.2em;
+    }
+    h5 {
+        font-size: 1.1em;
+    }
     #header > .invisible {
         display:none;
     }
@@ -400,8 +430,8 @@ fieldset.invisible {
         grid-template-columns: 1fr 1fr;
     }
     body {
-        padding-top: 0.6em;
-        padding-bottom: 0.6em;
+        padding-top: 0.2em;
+        padding-bottom: 0.2em;
     }
     .collapsed-table {
         tr {
@@ -429,22 +459,15 @@ fieldset.invisible {
         padding-top: 0;
     }
     body {
-        padding-top: 0.5em;
-        padding-bottom: 0.5em;
+        padding-top: 0em;
+        padding-bottom: 0em;
     }
 }
 @media screen and (max-width:400px) {
-    body {
-        padding-top: 0.4em;
-        padding-bottom: 0.4em;
-    }
     .collapsed-table {
         tr {
           display: grid;
           grid-template-columns: 1fr 1fr 1fr 1fr;
-        }
-        tr:first-of-type{
-          display: none;
         }
         tr > th {
           grid-row-start: 1;
