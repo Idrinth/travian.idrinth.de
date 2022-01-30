@@ -214,63 +214,64 @@ ORDER BY troops.tribe DESC, troops.name ASC");
             $this->updateStatistics();
         } elseif (isset($post['source']) && $post['source']) {
             $doc = new DOMDocument();
-            $doc->loadHTML($post['source']);
-            $villages = $this->getVillages($doc);
-            $tribe = $this->getTribe($doc);
-            foreach ($villages as $village) {
-                $stmt = $this->database->prepare("SELECT 1 FROM troops WHERE user=:user AND world=:world AND x=:x AND y=:y");
-                $stmt->execute([
-                    ':user' => $_SESSION['id'],
-                    ':world' => World::toWorld($post['world']),
-                    ':y' => $village['y'],
-                    ':x' => $village['x'],
-                ]);
-                if ($stmt->fetchColumn() === false) {
-                    $this->database
-                        ->prepare("INSERT INTO troops(user,world,x,y,name, tribe) VALUES (:user,:world,:x,:y,:name,:tribe)")
-                        ->execute([
-                            ':user' => $_SESSION['id'],
-                            ':world' => World::toWorld($post['world']),
-                            ':y' => $village['y'],
-                            ':x' => $village['x'],
-                            ':name' => $village['name'],
-                            ':tribe' => $tribe,
-                        ]);
-                }
-            }
-            if ($doc->getElementById('troops') !== null) {
-                $els = $doc->getElementById('troops')->getElementsByTagName('tr');
-                for ($i=1; $i < $els->length -2; $i++) {
-                    $tds = $els->item($i)->childNodes;
-                    $list = [];
-                    for ($j=0;$j< $tds->length; $j++) {
-                        if ($tds->item($j)->nodeName === 'td') {
-                            $list[] = $tds->item($j)->textContent;
-                        }
+            if (true === $doc->loadHTML($post['source'])) {
+                $villages = $this->getVillages($doc);
+                $tribe = $this->getTribe($doc);
+                foreach ($villages as $village) {
+                    $stmt = $this->database->prepare("SELECT 1 FROM troops WHERE user=:user AND world=:world AND x=:x AND y=:y");
+                    $stmt->execute([
+                        ':user' => $_SESSION['id'],
+                        ':world' => World::toWorld($post['world']),
+                        ':y' => $village['y'],
+                        ':x' => $village['x'],
+                    ]);
+                    if ($stmt->fetchColumn() === false) {
+                        $this->database
+                            ->prepare("INSERT INTO troops(user,world,x,y,name, tribe) VALUES (:user,:world,:x,:y,:name,:tribe)")
+                            ->execute([
+                                ':user' => $_SESSION['id'],
+                                ':world' => World::toWorld($post['world']),
+                                ':y' => $village['y'],
+                                ':x' => $village['x'],
+                                ':name' => $village['name'],
+                                ':tribe' => $tribe,
+                            ]);
                     }
-                    $this->database
-                        ->prepare("UPDATE troops SET soldier1=:soldier1,soldier2=:soldier2,soldier3=:soldier3,soldier4=:soldier4,soldier5=:soldier5,soldier6=:soldier6,settler=:settler,chief=:chief,hero=:hero,ram=:ram,catapult=:catapult,name=:name WHERE user=:user AND world=:world AND x=:x AND y=:y")
-                        ->execute([
-                            ':user' => $_SESSION['id'],
-                            ':world' => World::toWorld($post['world']),
-                            ':y' => $villages[$i-1]['y'],
-                            ':x' => $villages[$i-1]['x'],
-                            ':name' => $villages[$i-1]['name'],
-                            ':soldier1' => $list[1],
-                            ':soldier2' => $list[2],
-                            ':soldier3' => $list[3],
-                            ':soldier4' => $list[4],
-                            ':soldier5' => $list[5],
-                            ':soldier6' => $list[6],
-                            ':ram' => $list[7],
-                            ':catapult' => $list[8],
-                            ':settler' => $list[9],
-                            ':chief' => $list[10],
-                            ':hero' => $list[11],
-                        ]);
                 }
+                if ($doc->getElementById('troops') !== null) {
+                    $els = $doc->getElementById('troops')->getElementsByTagName('tr');
+                    for ($i=1; $i < $els->length -2; $i++) {
+                        $tds = $els->item($i)->childNodes;
+                        $list = [];
+                        for ($j=0;$j< $tds->length; $j++) {
+                            if ($tds->item($j)->nodeName === 'td') {
+                                $list[] = $tds->item($j)->textContent;
+                            }
+                        }
+                        $this->database
+                            ->prepare("UPDATE troops SET soldier1=:soldier1,soldier2=:soldier2,soldier3=:soldier3,soldier4=:soldier4,soldier5=:soldier5,soldier6=:soldier6,settler=:settler,chief=:chief,hero=:hero,ram=:ram,catapult=:catapult,name=:name WHERE user=:user AND world=:world AND x=:x AND y=:y")
+                            ->execute([
+                                ':user' => $_SESSION['id'],
+                                ':world' => World::toWorld($post['world']),
+                                ':y' => $villages[$i-1]['y'],
+                                ':x' => $villages[$i-1]['x'],
+                                ':name' => $villages[$i-1]['name'],
+                                ':soldier1' => $list[1],
+                                ':soldier2' => $list[2],
+                                ':soldier3' => $list[3],
+                                ':soldier4' => $list[4],
+                                ':soldier5' => $list[5],
+                                ':soldier6' => $list[6],
+                                ':ram' => $list[7],
+                                ':catapult' => $list[8],
+                                ':settler' => $list[9],
+                                ':chief' => $list[10],
+                                ':hero' => $list[11],
+                            ]);
+                    }
+                }
+                $this->updateStatistics();
             }
-            $this->updateStatistics();
         }
         $stmt = $this->database->prepare("SELECT * FROM troops WHERE user=:id ORDER BY world DESC, tribe DESC, name ASC");
         $stmt->execute([':id' => $_SESSION['id']]);
