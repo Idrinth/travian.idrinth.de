@@ -173,9 +173,6 @@ table tr:nth-of-type(2n) {
 select {
     text-align: center;
 }
-input[type=number] {
-    text-align: right;
-}
 .page {
     background: rgba(0,0,0,0.05);
 }
@@ -434,9 +431,6 @@ fieldset.invisible {
     body {
         padding-top: 0.5em;
         padding-bottom: 0.5em;
-    }
-    input[type=number] {
-        text-align: left;
     }
 }
 @media screen and (max-width:400px) {
