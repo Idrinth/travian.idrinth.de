@@ -131,6 +131,13 @@
             circle.on('mouseover touchstart', function () {
                 document.getElementById('output').innerHTML = village.x + '|' + village.y + "<br/>Village: " + village.name + (village.isCapital ? '(Capital)' : '') + "<br/>Player: " + village.player + (village.alliance ? "<br/>Alliance: " + village.alliance : '');
             });
+            circle.on('click', function () {
+                const el = document.getElementById(`village${village.id}`);
+                if (el !== null) {
+                    el.classList.remove('invisible');
+                    el.scrollIntoView();
+                }
+            });
             circle.on('mouseout touchend', paint);
             villages.add(circle);
         }
@@ -250,7 +257,7 @@
         <input type="submit"/>
     </fieldset>
     {% for village in targets %}
-        <fieldset>
+        <fieldset id="village{{village.id}}">
             <legend>{{ village.name }}({{ village.x }}|{{ village.y }})</legend>
             <label>{{ translations.offs }}<select name="offs[{{ village.id }}][]" multiple>
                 {% for off in offs %}
