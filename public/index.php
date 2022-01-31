@@ -1,6 +1,7 @@
 <?php
 
 use alejoluc\LazyPDO\LazyPDO;
+use De\Idrinth\Travian\API\AttackParser as APIAttackParser;
 use De\Idrinth\Travian\API\DeffCallCreation as APIDeffCallCreation;
 use De\Idrinth\Travian\API\Register;
 use De\Idrinth\Travian\API\ResourcePushCreation as APIResourcePushCreation;
@@ -121,4 +122,5 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->post('/api/deff-call', APIDeffCallCreation::class)
     ->post('/api/register', Register::class)
     ->post('/api/resource-push', APIResourcePushCreation::class)
+    ->post('/api/parse-attack', APIAttackParser::class)
     ->run();
