@@ -8,7 +8,7 @@ module.exports = {
         .setDescription('Creates a new Resource-Push')
         .addStringOption(option =>
             option.setName('arrival')
-                .setDescription('The time resources have to arrive')
+                .setDescription('The time resources have to arrive in YYYY-MM-DD HH:MM:SS')
                 .setRequired(true))
         .addStringOption(option =>
             option.setName('player')

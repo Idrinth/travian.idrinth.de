@@ -8,11 +8,11 @@ module.exports = {
         .setDescription('Analyze attack')
         .addStringOption(option =>
             option.setName('duration')
-                .setDescription('The remaining time')
+                .setDescription('The remaining time in HH:MM:SS')
                 .setRequired(true))
         .addStringOption(option =>
             option.setName('blind-time')
-                .setDescription('The time the attack may have gone unnoticed')
+                .setDescription('The time the attack may have gone unnoticed in HH:MM:SS')
                 .setRequired(true))
         .addIntegerOption(option =>
             option.setName('from-x')
