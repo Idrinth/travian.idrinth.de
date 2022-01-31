@@ -1,3 +1,8 @@
+const YAML = require('yaml');
+const fs = require('fs');
+const file = fs.readFileSync(__dirname + '/../../translations/en.yml', 'utf8');
+const translations = YAML.parse(file);
+
 module.exports = {
     name: 'interactionCreate',
     execute(client, interaction) {
@@ -10,7 +15,7 @@ module.exports = {
             return;
         }
         try {
-            command.execute(interaction);
+            command.execute(interaction, translations);
         } catch (error) {
             console.error(error);
             interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });

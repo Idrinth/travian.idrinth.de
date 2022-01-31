@@ -29,11 +29,8 @@ module.exports = {
         .addIntegerOption(option =>
             option.setName('to-y')
                 .setDescription('The y-Coordinate the village is on')
-                .setRequired(true))
-        .addIntegerOption(option =>
-            option.setName('speed')
-                .setDescription('The world speed, defaults to 1')),
-    async execute(interaction) {
+                .setRequired(true)),
+    async execute(interaction, translations) {
         needle(
             'post',
             'https://travian.idrinth.de/api/parse-attack',
@@ -42,9 +39,7 @@ module.exports = {
                 + '&fromX=' + interaction.options.getInteger('from-x')
                 + '&fromY=' + interaction.options.getInteger('from-y')
                 + '&toX=' + interaction.options.getInteger('to-x')
-                + '&toY=' + interaction.options.getInteger('to-y')
-                + '&speed=' + interaction.options.getInteger('speed')
-            ,
+                + '&toY=' + interaction.options.getInteger('to-y'),
             {headers : {'X-API-KEY': process.env.API_KEY}}
         )
             .then(async function(resp) {
@@ -52,19 +47,21 @@ module.exports = {
                     await interaction.reply({content: 'Failed analyzing: ' + resp.body.error, ephemeral: true});
                     return;
                 }
-                await interaction.reply(
-                    `Attack (${interaction.options.getInteger('from-x')}|${interaction.options.getInteger('from-y')}) -> (${interaction.options.getInteger('to-x')}|${interaction.options.getInteger('to-y')})`
-                );
                 if (resp.body.length === 0) {
-                    await interaction.followUp(
+                    await interaction.reply(
                         `nothing matching!`
                     );
-                } 
-                for (const item of resp.body) {
-                    await interaction.followUp(
-                        `${item.start}->X->${item.returned} Speed ${item.speed} TS ${item.tournament_square}: ${item.units.join(',')}`
-                    );
+                    return;
                 }
+                content = `Attack (${interaction.options.getInteger('from-x')}|${interaction.options.getInteger('from-y')}) -> (${interaction.options.getInteger('to-x')}|${interaction.options.getInteger('to-y')})`;
+                for (const item of resp.body) {
+                    const units = [];
+                    for (const unit of item.units) {
+                        units.push(translations[unit]);
+                    }
+                    content += `\n${item.start}->X->${item.returned} Speed ${item.speed} TS ${item.tournament_square}: ${units.join(',')}`;
+                }
+                await interaction.reply(content);
             })
             .catch(function(err) {
                 interaction.reply({content: 'Failed analyzing: ' + err, ephemeral: true});
