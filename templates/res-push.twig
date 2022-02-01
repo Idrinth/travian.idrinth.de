@@ -9,7 +9,7 @@
     {% set lumber=lumber+supply.lumber %}
     {% set clay=clay+supply.clay %}
     {% set iron=iron+supply.iron %}
-    {% set crop=lumber+supply.crop %}
+    {% set crop=crop+supply.crop %}
     {% set resources=resources+supply.lumber+supply.clay+iron.lumber+supply.crop %}
 {% endfor %}
 <div class="split2">
@@ -43,7 +43,7 @@
                 {% if target.lumber > 0 %}<tr><th>{{translations.lumber }}</th><td>{{lumber}}/{{target.lumber}}</td></tr>{% endif %}
                 {% if target.clay > 0 %}<tr><th>{{translations.clay }}</th><td>{{clay}}/{{target.clay}}</td></tr>{% endif %}
                 {% if target.iron > 0 %}<tr><th>{{translations.iron }}</th><td>{{iron}}/{{target.iron}}</td></tr>{% endif %}
-                {% if target.crop > 0 %}<tr><th>{{translations.crop }}</th><td>{{resources}}/{{target.crop}}</td></tr>{% endif %}
+                {% if target.grain > 0 %}<tr><th>{{translations.crop }}</th><td>{{crop}}/{{target.grain}}</td></tr>{% endif %}
                 <tr><th>{{ translations.share }}</th><td><a class="not-highlighted" href="https://travian.idrinth.de/deff-call/{{ id }}">{{ translations.here }}</a></tr>
                         {% if key==target.key and key is not empty %}
                     <tr><th>{{ translations.share_full }}</th><td><a class="not-highlighted" href="https://travian.idrinth.de/deff-call/{{ id }}/{{ key }}">{{ translations.here }}</a></tr>
