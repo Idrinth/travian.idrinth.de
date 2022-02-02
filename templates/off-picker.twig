@@ -1,3 +1,45 @@
 {% include 'header.twig' %}
 <h2>{{ translations.off_picker }}</h2>
+<table>
+    <tr>
+        <th>{{ translations.village }}</th>
+        <th>{{ translations.position }}</th>
+        <th>{{ translations.off }}</th>
+        <th>{{ translations.catapults }}</th>
+        <th>{{ translations.rams }}</th>
+        <th>{{ translations.tournament_square }}</th>
+        <th>{{ translations.speed }}</th>
+        <th>{{ translations.distance }}</th>
+        <th>{{ translations.duration }}</th>
+    </tr>
+{% for off in offs %}
+    <tr>
+        <th>{{ off.name }}</th>
+        <td>({{ off.x }}|{{ off.y }})</td>
+        <td>{{ off.off }}</td>
+        <td>{{ off.catapult }}</td>
+        <td>{{ off.ram }}</td>
+        <td>{{ off.tournament_square }}</td>
+        <td>{{ off.speed }}</td>
+        <td>{{ num(off.distance) }}</td>
+        <td>{{ floor(off.duration/3600) }}:{{ floor((off.duration%3600)/60) }}:{{ off.duration%60 }}</td>
+    </tr>
+{% else %}
+{% endfor %}
+</table>
+<p>{{ translations.off_picker_description }}</p>
+<form method="post">
+    <fieldset>
+        <legend>{{ translations.main }}</legend>
+        <div class="split2">
+            <label>X<input value="{{ inputs.x }}" type="number" name="x"/></label>
+            <label>Y<input value="{{ inputs.y }}" type="number" name="y"/></label>
+            <label>{{ translations.min_offence }}<input value="{{ inputs.off }}" min="0" type="number" name="off"/></label>
+            <label>{{ translations.min_rams }}<input value="{{ inputs.rams }}" min="0" type="number" name="rams"></label>
+            <label>{{ translations.min_catapults }}<input value="{{ inputs.catapults }}" min="0" type="number" name="catapults"></label>
+            <label>{{ translations.world }}<input value="{{ inputs.world }}" name="world"></label>
+        </div>
+        <input type="submit"/>
+    </fieldset>
+</form>
 {% include 'footer.twig' %}

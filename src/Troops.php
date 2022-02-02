@@ -4,6 +4,51 @@ namespace De\Idrinth\Travian;
 
 interface Troops
 {
+    public const SCOUTS = [
+        'roman_soldier4',
+        'gaul_soldier3',
+        'teuton_soldier4',
+        'hun_soldier3',
+        'egyptian_soldier4',
+    ];
+    public const OFF = [
+        'roman_soldier3',
+        'roman_soldier5',
+        'roman_soldier6',
+        'gaul_soldier2',
+        'gaul_soldier4',
+        'gaul_soldier6',
+        'teuton_soldier1',
+        'teuton_soldier3',
+        'teuton_soldier6',
+        'hun_soldier1',
+        'hun_soldier2',
+        'hun_soldier4',
+        'hun_soldier5',
+        'hun_soldier6',
+        'egyptian_soldier3',
+        'egyptian_soldier6',
+    ];
+    public const DEFF = [
+        'roman_soldier1',
+        'roman_soldier2',
+        'roman_soldier6',
+        'gaul_soldier1',
+        'gaul_soldier5',
+        'gaul_soldier6',
+        'teuton_soldier1',
+        'teuton_soldier2',
+        'teuton_soldier3',
+        'teuton_soldier4',
+        'teuton_soldier5',
+        'teuton_soldier6',
+        'hun_soldier1',
+        'hun_soldier5',
+        'egyptian_soldier1',
+        'egyptian_soldier2',
+        'egyptian_soldier5',
+        'egyptian_soldier6',
+    ];
     public const CORN = [
         'hero' => 6,
         'roman_soldier1' => 1,

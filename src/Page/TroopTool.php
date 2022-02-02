@@ -44,62 +44,26 @@ class TroopTool
             $multi[$row['world']] = $multi[$row['world']] ?? 0;
             $voff = 0;
             $vdeff = 0;
-            if ($row['tribe'] === 'roman') {
-                $deff[$row['world']] += $row['soldier1'] * Troops::CORN['roman_soldier1'];
-                $deff[$row['world']] += $row['soldier2'] * Troops::CORN['roman_soldier2'];
-                $off[$row['world']] += $row['soldier3'] * Troops::CORN['roman_soldier3'];
-                $scouts[$row['world']] += $row['soldier4'] * Troops::CORN['roman_soldier4'];
-                $off[$row['world']] += $row['soldier5'] * Troops::CORN['roman_soldier5'];
-                $multi[$row['world']] += $row['soldier6'] * Troops::CORN['roman_soldier6'];
-                $off[$row['world']] += $row['ram'] * Troops::CORN['roman_ram'];
-                $off[$row['world']] += $row['catapult'] * Troops::CORN['roman_catapult'];
-                $voff += $row['soldier6'] * Troops::CORN['roman_soldier6'] + $row['soldier3'] * Troops::CORN['roman_soldier3'];
-                $vdeff += $row['soldier1'] * Troops::CORN['roman_soldier1'] + $row['soldier2'] * Troops::CORN['roman_soldier2'] + $row['soldier6'] * Troops::CORN['roman_soldier6'];
-            } elseif ($row['tribe'] === 'gaul') {
-                $deff[$row['world']] += $row['soldier1'] * Troops::CORN['gaul_soldier1'];
-                $off[$row['world']] += $row['soldier2'] * Troops::CORN['gaul_soldier2'];
-                $scouts[$row['world']] += $row['soldier3'] * Troops::CORN['gaul_soldier3'];
-                $off[$row['world']] += $row['soldier4'] * Troops::CORN['gaul_soldier4'];
-                $deff[$row['world']] += $row['soldier5'] * Troops::CORN['gaul_soldier5'];
-                $multi[$row['world']] += $row['soldier6'] * Troops::CORN['gaul_soldier6'];
-                $off[$row['world']] += $row['ram'] * Troops::CORN['gaul_ram'];
-                $off[$row['world']] += $row['catapult'] * Troops::CORN['gaul_catapult'];
-                $voff += $row['soldier2'] * Troops::CORN['gaul_soldier2'] + $row['soldier4'] * Troops::CORN['gaul_soldier4'] + $row['soldier6'] * Troops::CORN['gaul_soldier6'];
-                $vdeff += $row['soldier1'] * Troops::CORN['gaul_soldier1'] + $row['soldier5'] * Troops::CORN['gaul_soldier5'] + $row['soldier6'] * Troops::CORN['gaul_soldier6'];
-            } elseif ($row['tribe'] === 'teuton') {
-                $off[$row['world']] += $row['soldier1'] * Troops::CORN['teuton_soldier1'];
-                $deff[$row['world']] += $row['soldier2'] * Troops::CORN['teuton_soldier2'];
-                $off[$row['world']] += $row['soldier3'] * Troops::CORN['teuton_soldier3'];
-                $scouts[$row['world']] += $row['soldier4'] * Troops::CORN['teuton_soldier4'];
-                $deff[$row['world']] += $row['soldier5'] * Troops::CORN['teuton_soldier5'];
-                $off[$row['world']] += $row['soldier6'] * Troops::CORN['teuton_soldier6'];
-                $off[$row['world']] += $row['ram'] * Troops::CORN['teuton_ram'];
-                $off[$row['world']] += $row['catapult'] * Troops::CORN['teuton_catapult'];
-                $voff += $row['soldier1'] * Troops::CORN['teuton_soldier1'] + $row['soldier3'] * Troops::CORN['teuton_soldier3'] + $row['soldier6'] * Troops::CORN['teuton_soldier6'];
-                $vdeff += $row['soldier2'] * Troops::CORN['teuton_soldier2'] + $row['soldier5'] * Troops::CORN['teuton_soldier5'];
-            } elseif ($row['tribe'] === 'egyptian') {
-                $deff[$row['world']] += $row['soldier1'] * Troops::CORN['egyptian_soldier1'];
-                $deff[$row['world']] += $row['soldier2'] * Troops::CORN['egyptian_soldier2'];
-                $off[$row['world']] += $row['soldier3'] * Troops::CORN['egyptian_soldier3'];
-                $scouts[$row['world']] += $row['soldier4'] * Troops::CORN['egyptian_soldier4'];
-                $deff[$row['world']] += $row['soldier5'] * Troops::CORN['egyptian_soldier5'];
-                $multi[$row['world']] += $row['soldier6'] * Troops::CORN['egyptian_soldier6'];
-                $off[$row['world']] += $row['ram'] * Troops::CORN['egyptian_ram'];
-                $off[$row['world']] += $row['catapult'] * Troops::CORN['egyptian_catapult'];
-                $vdeff = $row['soldier1'] * Troops::CORN['egyptian_soldier1'] + $row['soldier2'] * Troops::CORN['egyptian_soldier2'] + $row['soldier5'] * Troops::CORN['egyptian_soldier5'] + $row['soldier6'] * Troops::CORN['egyptian_soldier6'];
-                $voff = $row['soldier3'] * Troops::CORN['egyptian_soldier3'] + $row['soldier6'] * Troops::CORN['egyptian_soldier6'];
-            } elseif ($row['tribe'] === 'hun') {
-                $multi[$row['world']] += $row['soldier1'] * Troops::CORN['hun_soldier1'];
-                $off[$row['world']] += $row['soldier2'] * Troops::CORN['hun_soldier2'];
-                $scouts[$row['world']] += $row['soldier3'] * Troops::CORN['hun_soldier3'];
-                $off[$row['world']] += $row['soldier4'] * Troops::CORN['hun_soldier4'];
-                $multi[$row['world']] += $row['soldier5'] * Troops::CORN['hun_soldier5'];
-                $off[$row['world']] += $row['soldier6'] * Troops::CORN['hun_soldier6'];
-                $off[$row['world']] += $row['ram'] * Troops::CORN['hun_ram'];
-                $off[$row['world']] += $row['catapult'] * Troops::CORN['hun_catapult'];
-                $voff += $row['soldier1'] * Troops::CORN['hun_soldier1'] + $row['soldier2'] * Troops::CORN['hun_soldier2'] + $row['soldier4'] * Troops::CORN['hun_soldier4'] + $row['soldier5'] * Troops::CORN['hun_soldier5'] + $row['soldier6'] * Troops::CORN['hun_soldier6'];
-                $vdeff += $row['soldier1'] * Troops::CORN['hun_soldier1'] + $row['soldier5'] * Troops::CORN['hun_soldier5'];
+            foreach ([1,2,3,4,5,6] as $soldier) {
+                $key = $row['tribe'] . '_soldier' . $soldier;
+                $isOff = in_array($key, Troops::OFF, true);
+                $isDeff = in_array($key, Troops::DEFF, true);
+                $isScout = in_array($key, Troops::SCOUTS, true);
+                if ($isScout) {
+                    $scouts[$row['world']] += $row['soldier' . $soldier] * Troops::CORN[$key];
+                } elseif ($isOff && $isDeff) {
+                    $multi[$row['world']] += $row['soldier' . $soldier] * Troops::CORN[$key];
+                    $vdeff += $row['soldier' . $soldier] * Troops::CORN[$key];
+                    $voff += $row['soldier' . $soldier] * Troops::CORN[$key];
+                } elseif ($isOff) {
+                    $off[$row['world']] += $row['soldier' . $soldier] * Troops::CORN[$key];
+                    $voff += $row['soldier' . $soldier] * Troops::CORN[$key];
+                } elseif ($isDeff) {
+                    $deff[$row['world']] += $row['soldier' . $soldier] * Troops::CORN[$key];
+                    $vdeff += $row['soldier' . $soldier] * Troops::CORN[$key];
+                }
             }
+            $off[$row['world']] += $row['ram'] * Troops::CORN[$row['tribe'] .'_ram'] + $row['catapult'] * Troops::CORN[$row['tribe'] .'_catapult'];
             $this->database
                 ->prepare('UPDATE troops SET off=:off,deff=:deff WHERE aid=:aid')
                 ->execute([':aid' => $row['aid'], ':off' => $voff, ':deff' => $vdeff]);
