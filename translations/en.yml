@@ -488,3 +488,14 @@ min_rams: Minimum Rams
 finish: Finish
 off: Off
 rams: Rams
+start_time: Start Time(min, max)
+fromVillage: Attacker
+toVillage: Defender
+attack_overview: Attack Overview
+manual_additions: Manual Additions
+rally_point_parser: Rally Point Parser
+fromX: from X
+fromY: from Y
+toX: to X
+toY: to Y
+mixkit_footer: Soundeffects are used under mixkit's free license.
