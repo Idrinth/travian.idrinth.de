@@ -9,7 +9,7 @@ class TravelTime
         $result = [];
         foreach(Troops::SPEED as $unit => $speed) {
             for ($i=0; $i<=20; $i++) {
-                $time = $this->time($distance, $speed, 0, $i, 0, 0);
+                $time = $this->time($distance, $speed, 0, $i, 0, 1);
                 if ($time[0] >= $duration && $time[0] <= $duration + $blindTime) {
                     $result[$unit] = $result[$unit] ?? [$speed, $i, $unit, $time, ''];
                 }
