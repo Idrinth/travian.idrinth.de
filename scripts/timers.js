@@ -10,6 +10,7 @@ const zeropad = (string) => {
 };
 window.setInterval(() => {
     const date = new Date();
+    let shouldPlay = false;
     document.getElementById('time').innerHTML = zeropad(date.getUTCHours()) + ':' + zeropad(date.getUTCMinutes()) + ':' + zeropad(date.getUTCSeconds());
     const elements = document.getElementsByClassName('countdown');
     for (let i = 0; i < elements.length; i++) {
@@ -21,7 +22,14 @@ window.setInterval(() => {
             elements[i].innerHTML = Math.floor(diff/86400000) + 'd ' + zeropad(diff.getUTCHours()) + ':' + zeropad(diff.getUTCMinutes()) + ':' + zeropad(diff.getUTCSeconds());
         } else {
             const diff = new Date(target - date);
+            if (diff < 10000 && !elements[i].hasAttribute('data-played')) {
+                elements[i].setAttribute('data-played', 'true');
+                shouldPlay = true;
+            }
             elements[i].innerHTML = zeropad(diff.getUTCHours()) + ':' + zeropad(diff.getUTCMinutes()) + ':' + zeropad(diff.getUTCSeconds());
         }
+    }
+    if (shouldPlay) {
+        document.getElementById('countdown-audio').play();
     }
 }, 100);

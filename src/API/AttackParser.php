@@ -37,8 +37,8 @@ class AttackParser
         $output = [];
         foreach($this->time->find($distance, intval($post['shoes'], 10), intval($post['map'], 10), $duration, $blindTime) as $unit => $row) {
             $output[$row[0]] = $output[$row[0]] ?? [
-                'start' => date('Y-m-d H:i:s', time()+duration - $row[3][0]),
-                'returned' => date('Y-m-d H:i:s', time()+duration + $row[3][1]),
+                'start' => date('Y-m-d H:i:s', time()+$duration - $row[3][0]),
+                'returned' => date('Y-m-d H:i:s', time()+$duration + $row[3][1]),
                 'tournament_square' => $row[1],
                 'speed' => $row[0],
                 'units' => [],
