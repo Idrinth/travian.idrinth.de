@@ -298,11 +298,11 @@ class DeffCall
             }
         }
         if ($data['totalPower'] === 0) {
-            $data['totalPower'] = 0;
-            $data['infantryPower'] = 0;
-            $data['cavalryPower'] = 0;
-            $data['infantryPercent'] = 0;
-            $data['cavalryPercent'] = 0;
+            $data['totalPower'] = 2;
+            $data['infantryPower'] = 1;
+            $data['cavalryPower'] = 1;
+            $data['infantryPercent'] = 50;
+            $data['cavalryPercent'] = 50;
         } else {
             $data['infantryPercent'] = floor($data['infantryPower']/$data['totalPower'] * 100);
             $data['cavalryPercent'] = floor($data['cavalryPower']/$data['totalPower'] * 100);

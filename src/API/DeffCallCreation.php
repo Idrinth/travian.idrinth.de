@@ -63,7 +63,7 @@ class DeffCallCreation
                 ':grain_storage' => $post['grain-storage'] ?? 0,
                 ':grain_production' => $post['grain-production'] ?? 0,
                 ':grain_info_hours' => $post['grain-info-hours'] ?? 0,
-                ':anti' => $post['troop-ratio'] ?? 0,
+                ':anti' => $post['troop-ratio'] ?? 50,
             ]);
             header('Content-Type: application/json', true, 200);
             $data['id'] = $uuid;

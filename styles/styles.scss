@@ -343,12 +343,18 @@ fieldset.invisible {
         background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.2), rgba(0,0,0,0.1));
         color: #fff;
         text-align: center;
+        height: 1em;
+        overflow: hidden;
         .left {
+            height: 1em;
+            overflow: hidden;
             background-color: blue;
             border-radius: 0.5em 0 0 0.5em;
             background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.2), rgba(0,0,0,0.1));
         }
         .right {
+            height: 1em;
+            overflow: hidden;
             background-color: green;
             border-radius: 0 0.5em 0.5em 0;
             background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.2), rgba(0,0,0,0.1));
