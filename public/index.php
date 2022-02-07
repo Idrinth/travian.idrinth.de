@@ -9,6 +9,7 @@ use De\Idrinth\Travian\Application;
 use De\Idrinth\Travian\DistanceCalculator;
 use De\Idrinth\Travian\Page\Alliance;
 use De\Idrinth\Travian\Page\AttackOrganizer;
+use De\Idrinth\Travian\Page\AttackOverview;
 use De\Idrinth\Travian\Page\AttackParser;
 use De\Idrinth\Travian\Page\Catcher;
 use De\Idrinth\Travian\Page\DeffCall;
@@ -123,4 +124,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->post('/api/register', Register::class)
     ->post('/api/resource-push', APIResourcePushCreation::class)
     ->post('/api/parse-attack', APIAttackParser::class)
+    ->get('/attack-overview', AttackOverview::class)
+    ->post('/attack-overview', AttackOverview::class)
+    ->get('/alliance/{id:uuid}/attack-overview', AttackOverview::class)
+    ->post('/alliance/{id:uuid}/attack-overview', AttackOverview::class)
     ->run();

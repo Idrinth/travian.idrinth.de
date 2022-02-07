@@ -488,7 +488,8 @@ min_rams: Minimum Rams
 finish: Finish
 off: Off
 rams: Rams
-start_time: Start Time(min, max)
+start_time_min: earliest Start Time
+start_time_max: latest Start Time
 fromVillage: Attacker
 toVillage: Defender
 attack_overview: Attack Overview

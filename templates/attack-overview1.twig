@@ -1,0 +1,55 @@
+{% include 'header.twig' %}
+<h2>{{ translations.attack_overview }}</h2>
+<table class="sortierbar">
+    <thead>
+        <tr>
+            <th>{{ translations.start_time_min }}</th>
+            <th>{{ translations.start_time_max }}</th>
+            <th>{{ translations.arrival }}</th>
+            <th>{{ translations.fromVillage }}</th>
+            <th>{{ translations.toVillage }}</th>
+            <th>{{ translations.speed }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for attack in attacks %}
+        <tr>
+            <td>{{ attack.earliestStart }}</td>
+            <td>{{ attack.latestStart }}</td>
+            <td>{{ attack.arrival }}</td>
+            <td>{{ attack.fromName}} ({{ attack.fromX }}|{{ attack.fromY }})</td>
+            <td>{{ attack.toName }} ({{ attack.toX }}|{{ attack.toY }})</td>
+            <td>{% for speed in attack.speed %}
+                {{ speed.0 }} TS {{ speed.1 }}<br />
+            {% endfor %}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<h3>{{ translations.manual_additions }}</h3>
+<form method="post">
+    <fieldset>
+        <legend>{{ translations.main }}</legend>
+        <div class="split2">
+            <label>{{ translations.fromX }}<input type="number" name="fromX"/></label>
+            <label>{{ translations.fromY }}<input type="number" name="fromY"/></label>
+            <label>{{ translations.toX }}<input type="number" name="toX"/></label>
+            <label>{{ translations.toY }}<input type="number" name="toY"/></label>
+            <label>{{ translations.blind_time }}<input type="time" step="1" name="blind_time"/></label>
+            <label>{{ translations.arrival }}<input type="date" name="date"/><input type="time" step="1" name="time"/></label>
+        </div>
+        <input type="submit"/>
+    </fieldset>
+</form><!--
+<h3>{{ translations.rally_point_parser }}</h3>
+<form method="post">
+    <fieldset>
+        <legend>{{ translations.main }}</legend>
+        <div class="split2">
+            <label>{{ translations.source }}<textarea name="source"></textarea></label>
+            <label>{{ translations.blind_time }}<input type="time" step="1" name="blind_time"/></label>
+        </div>
+        <input type="submit"/>
+    </fieldset>
+</form>-->
+{% include 'footer.twig' %}
