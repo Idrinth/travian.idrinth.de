@@ -65,7 +65,7 @@
                             <a href="/attack-parser">{{ translations.attack_parser }}</a>
                         </li>
                         <li>
-                            <a href="/attack-overview">{{ translations.attack_overview }}</a>
+                            <a{% if session.id is empty %} class="inactive"{% endif %} href="/attack-overview">{{ translations.attack_overview }}</a>
                         </li>
                     </ul>
                 </li>
