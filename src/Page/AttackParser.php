@@ -8,7 +8,7 @@ use De\Idrinth\Travian\Twig;
 use DOMDocument;
 use DOMElement;
 use PDO;
-use UI\Point;
+use De\Idrinth\Travian\Point;
 use UnexpectedValueException;
 
 class AttackParser
