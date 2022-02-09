@@ -36,7 +36,7 @@
 </script>
 {% for village in villages %}
 <div class="result">
-    <h3 onclick="this.parentNode.classList.toggle('hidden');">{{ village.name }}</h3>
+    <h3>{{ village.name }}</h3>
     <canvas id="village-{{ village.id }}"></canvas>
     <script type="text/javascript">
             onExists('Chart', () => {

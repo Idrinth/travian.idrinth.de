@@ -18,7 +18,7 @@
     {% else %}
         {% for result in results %}
             <div class="result">
-                <h3 onclick="this.parentNode.classList.toggle('hidden');"><em>{{ calculatedInputs.village.name }}</em>({{ calculatedInputs.village.x }}|{{ calculatedInputs.village.y }}) &rarr; <em>{{ result.village.name }}</em>({{ result.village.x }}|{{ result.village.y }})</h3>
+                <h3><em>{{ calculatedInputs.village.name }}</em>({{ calculatedInputs.village.x }}|{{ calculatedInputs.village.y }}) &rarr; <em>{{ result.village.name }}</em>({{ result.village.x }}|{{ result.village.y }})</h3>
                 <table>
                     <tr><th>{{ translations.distance }}</th><td>{{ num(result.distance) }}</td><td>{{ translations.traders_distance_info }}</td></tr>
                     <tr><th>{{ translations.travel_time }}</th><td>{{ result.travelTime }}s</td><td>{{ translations.traders_time_info }}</td></tr>
