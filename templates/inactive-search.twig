@@ -2,7 +2,7 @@
 <h2>{{ translations.inactive_search }}</h2>
 {% for inactive in inactives %}
     <div class="result">
-        <h3 onclick="this.parentNode.classList.toggle('hidden');">{{ inactive.x }}|{{ inactive.y }}</h3>
+        <h3 onclick="this.parentNode.classList.toggle('hidden');">{{ inactive.x }}|{{ inactive.y }}<a href="https://{{ inactive.world }}/position_details.php?x={{ inactive.x }}&y={{ inactive.y }}" target="_blank">&#8690;</a></h3>
         <table>
             <tr>
                 <th>{{ translations.player }}</th>
