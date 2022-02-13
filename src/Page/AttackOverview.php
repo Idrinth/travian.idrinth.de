@@ -63,8 +63,15 @@ class AttackOverview
         }
         $stmt = $this->database->prepare('SELECT * FROM alliance_attacks WHERE alliance=:id AND arrival>=:now');
         $stmt->execute([':now' => date('Y-m-d H:i:s'), ':id' => $alliance['aid']]);
+        $cache = [];
+        $stmt2 = $this->database->prepare('SELECT world_players.name
+FROM world_players
+INNER JOIN world_villages ON world_players.world=world_villages.world AND world_villages.player=world_players.id
+WHERE world_villages.world=:world AND world_villages.x=:x AND world_villages.y=:y
+ORDER BY world_villages.day DESC
+LIMIT 1');
         $this->twig->display('attack-overview1.twig', [
-            'attacks' => array_map(function (array $row) {
+            'attacks' => array_map(function (array $row) use($alliance, &$cache, &$stmt2) {
                 $speeds = $this->time->find(
                     $this->distance->distance(
                         new Point($row['fromX'], $row['fromY']),
@@ -81,6 +88,22 @@ class AttackOverview
                 foreach ($speeds as $speed) {
                     $row['speed'][$speed[0]] = $row['speed'][$speed[0]] ?? [$speed[0], $speed[1]];
                 }
+                if (isset($cache[$row['fromX'].'#'.$row['fromY']])) {
+                    $row['fromName'] = $cache[$row['fromX'].'#'.$row['fromY']];
+                } else {
+                    $stmt2->closeCursor();
+                    $stmt2->execute([':world' => $alliance['world'], ':x' => $row['fromX'], ':y' => 'fromY']);
+                    $row['fromName'] = $stmt2->fetchColumn();
+                    $cache[$row['fromX'].'#'.$row['fromY']] = $row['fromName'];
+                }
+                if (isset($cache[$row['toX'].'#'.$row['toY']])) {
+                    $row['toName'] = $cache[$row['toX'].'#'.$row['toY']];
+                } else {
+                    $stmt2->closeCursor();
+                    $stmt2->execute([':world' => $alliance['world'], ':x' => $row['toX'], ':y' => 'toY']);
+                    $row['toName'] = $stmt2->fetchColumn();
+                    $cache[$row['toX'].'#'.$row['toY']] = $row['toName'];
+                }                
                 return $row;
             }, $stmt->fetchAll(PDO::FETCH_ASSOC)),
         ]);

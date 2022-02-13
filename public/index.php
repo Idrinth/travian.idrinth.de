@@ -7,6 +7,7 @@ use De\Idrinth\Travian\API\Register;
 use De\Idrinth\Travian\API\ResourcePushCreation as APIResourcePushCreation;
 use De\Idrinth\Travian\Application;
 use De\Idrinth\Travian\DistanceCalculator;
+use De\Idrinth\Travian\Page\Alarm;
 use De\Idrinth\Travian\Page\Alliance;
 use De\Idrinth\Travian\Page\AttackOrganizer;
 use De\Idrinth\Travian\Page\AttackOverview;
@@ -128,4 +129,5 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->post('/attack-overview', AttackOverview::class)
     ->get('/alliance/{id:uuid}/attack-overview', AttackOverview::class)
     ->post('/alliance/{id:uuid}/attack-overview', AttackOverview::class)
+    ->get('/alarm', Alarm::class)
     ->run();

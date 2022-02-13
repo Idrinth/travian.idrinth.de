@@ -1,0 +1,13 @@
+{% include 'header.twig' %}
+<h2>{{ translations.alarm }}</h2>
+<p>{{ translation.alarm_info }}</p>
+<form method="get" class="alarm" data-alarm="{{ alarm }}">
+    <fieldset>
+        <legend>{{ translations.main }}</legend>
+        <div class="split2">
+            <label>{{ translations.time }}<input type="time" step="1" name="alarm" value="{{ alarm }}"/></label>
+        </div>
+        <input type="submit"/>
+    </fieldset>
+</form>
+{% include 'footer.twig' %}

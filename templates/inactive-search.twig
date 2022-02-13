@@ -2,7 +2,7 @@
 <h2>{{ translations.inactive_search }}</h2>
 {% for inactive in inactives %}
     <div class="result">
-        <h3>{{ inactive.x }}|{{ inactive.y }}<a href="https://{{ inactive.world }}/position_details.php?x={{ inactive.x }}&y={{ inactive.y }}" target="_blank">&#8690;</a></h3>
+        <h3>{{ inactive.x }}|{{ inactive.y }}<a href="https://{{ inactive.world }}/position_details.php?x={{ inactive.x }}&y={{ inactive.y }}" target="_blank">&#9876;</a></h3>
         <table>
             <tr>
                 <th>{{ translations.player }}</th>
@@ -34,9 +34,9 @@
             <label>{{ translations.world }}<select name="world">
                 {% for world in worlds %}<option{% if world.world==inputs.world %} selected{% endif %}>{{ world.world }}</option>{% endfor %}
             </select></label>
+            <label>{{ translations.distance }}<input type="number" value="{{ inputs.distance }}" name="distance" min="1"/></label>
             <label>X<input type="number" value="{{ inputs.x }}" name="x"/></label>
             <label>Y<input type="number" value="{{ inputs.y }}" name="y"/></label>
-            <label>{{ translations.distance }}<input type="number" value="{{ inputs.distance }}" name="distance" min="1"/></label>
             <label>{{ translations.max_growth }}<input type="number" value="{{ inputs.max_growth }}" name="max_growth" min="0"/></label>
             <label>{{ translations.per_days }}<input type="number" value="{{ inputs.per_days }}" name="per_days" min="1" max="7"/></label>
             <label>{{ translations.no_natars }}<input type="checkbox"{% if inputs.no_natars==1 %} checked{% endif %} value="1" name="no_natars" value="1"/></label>

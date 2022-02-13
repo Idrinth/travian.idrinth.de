@@ -11,7 +11,8 @@ const zeropad = (string) => {
 window.setInterval(() => {
     const date = new Date();
     let shouldPlay = false;
-    document.getElementById('time').innerHTML = zeropad(date.getUTCHours()) + ':' + zeropad(date.getUTCMinutes()) + ':' + zeropad(date.getUTCSeconds());
+    const now = zeropad(date.getUTCHours()) + ':' + zeropad(date.getUTCMinutes()) + ':' + zeropad(date.getUTCSeconds());
+    document.getElementById('time').innerHTML = now;
     const elements = document.getElementsByClassName('countdown');
     for (let i = 0; i < elements.length; i++) {
         const target = new Date(elements[i].getAttribute('data-countdown') + '.000+00:00');
@@ -27,6 +28,12 @@ window.setInterval(() => {
                 shouldPlay = true;
             }
             elements[i].innerHTML = zeropad(diff.getUTCHours()) + ':' + zeropad(diff.getUTCMinutes()) + ':' + zeropad(diff.getUTCSeconds());
+        }
+    }
+    const alarms = document.getElementsByClassName('alarm');
+    for (let i = 0; i < alarms.length; i++) {
+        if (alarms[i].getAttribute('data-alarm') === now) {
+            shouldPlay=true;
         }
     }
     if (shouldPlay) {

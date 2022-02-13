@@ -1,24 +1,20 @@
 {% include 'header.twig' %}
 <h2>{{ translations.attack_overview }}</h2>
-<table class="sortierbar">
+<table class="sortierbar" id="sort-table">
     <thead>
         <tr>
-            <th>{{ translations.start_time_min }}</th>
-            <th>{{ translations.start_time_max }}</th>
-            <th>{{ translations.arrival }}</th>
             <th>{{ translations.fromVillage }}</th>
             <th>{{ translations.toVillage }}</th>
+            <th>{{ translations.arrival }}</th>
             <th>{{ translations.speed }}</th>
         </tr>
     </thead>
     <tbody>
         {% for attack in attacks %}
-        <tr>
-            <td>{{ attack.earliestStart }}</td>
-            <td>{{ attack.latestStart }}</td>
-            <td>{{ attack.arrival }}</td>
-            <td>{{ attack.fromName}} ({{ attack.fromX }}|{{ attack.fromY }})</td>
-            <td>{{ attack.toName }} ({{ attack.toX }}|{{ attack.toY }})</td>
+        <tr data-attacker="{{ attack.fromName }}" data-defender="{{ attack.toName }}">
+            <td onclick="filter('attacker', '{{ attack.fromName }}')">{{ attack.fromName}} ({{ attack.fromX }}|{{ attack.fromY }})</td>
+            <td onclick="filter('defender', '{{ attack.toName }}')">{{ attack.toName }} ({{ attack.toX }}|{{ attack.toY }})</td>
+            <td title="{{ attack.earliestStart }} - {{ attack.latestStart }} -> {{ attack.arrival }}">{{ attack.arrival }}</td>
             <td>{% for speed in attack.speed %}
                 {{ speed.0 }} TS {{ speed.1 }}<br />
             {% endfor %}</td>
@@ -26,6 +22,21 @@
         {% endfor %}
     </tbody>
 </table>
+<script>
+    filter = (type, value) => {
+        const trs = document.getElementById('sort-table').getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+        for (let i=0;i<trs.length;i++) {
+            trs[i].removeAttribute('style');
+            if (type === 'attacker' && trs[i].getAttribute('data-attacker') !== value) {
+                trs[i].setAttribute('style', 'display:none');
+            }
+            if (type === 'defender' && trs[i].getAttribute('data-defender') !== value) {
+                trs[i].setAttribute('style', 'display:none');
+            }
+        }
+    };
+</script>
+<button onclick="filter('none')">Reset</button>
 <h3>{{ translations.manual_additions }}</h3>
 <form method="post">
     <fieldset>
