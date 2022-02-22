@@ -12,4 +12,7 @@
             els[i].classList.toggle('hidden');
         };
     }
+    if (els.length === 1) {
+        els[0].classList.toggle('hidden');
+    }
 })();
