@@ -21,7 +21,7 @@ traders_per_trade: 1取引あたりのトレーダー数
 travel_time: 移動時間
 distance: 距離
 main: メイン
-source: ソースコード
+source: ソースコード(Ctrl+U)
 source_title: マーケットプレイスの送信ウィンドウのソースコードを入力します。
 celebrations: 祝賀会
 help: コードや翻訳を手伝いたいですか？

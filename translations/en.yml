@@ -22,7 +22,7 @@ traders_per_trade: Traders per trade
 travel_time: Travel Time
 distance: Distance
 main: Main
-source: Source Code
+source: Source Code(Ctrl+U)
 source_title: Enter the source code of the market place's send window.
 celebrations: Celebrations
 help: Do you want to help with code or translations?

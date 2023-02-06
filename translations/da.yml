@@ -22,7 +22,7 @@ traders_per_trade: Købmænd pr. handel
 travel_time: Rejsetid
 distance: Distance
 main: Primær
-source: Source kode
+source: Source kode(Ctrl+U)
 source_title: Indtast source koden til markedspladsens sendevindue.
 celebrations: Fester
 help: Vil du hjælpe med kode eller oversættelser?

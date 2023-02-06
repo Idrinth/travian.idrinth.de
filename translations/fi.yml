@@ -21,7 +21,7 @@ traders_per_trade: Kauppiaita tarvitaan
 travel_time: Matka-aika
 distance: Etäisyys
 main: Main
-source: Lähdekoodi
+source: Lähdekoodi(Ctrl+U)
 source_title: Kopioi torin "lähetä resursseja" sivun lähdekoodi tähän.
 celebrations: Juhlinta
 help: Do you want to help with code or translations?
