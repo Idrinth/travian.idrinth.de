@@ -28,6 +28,8 @@
             <th>{{ translations.troops }}</th>
         {% endif %}
         <th>{{ translations.hero }}</th>
+        <th>{{ translations.alliance }}</th>
+        <th>{{ translations.population }}</th>
     </tr>
 {% for player in players %}
     <tr>
@@ -91,6 +93,12 @@
             {% if player.off_bonus %}<div>{{ player.off_bonus }} Off-Bonus</div>{% endif %}
             {% if player.deff_bonus %}<div>{{ player.deff_bonus }} Def-Bonus</div>{% endif %}
             {% if player.resources %}<div>{{ player.resources }} Resources</div>{% endif %}
+        </td>
+        <td>
+            {{ player.population }}
+        </td>
+        <td>
+            {{ player.alliance }}
         </td>
     </tr>
 {% endfor %}

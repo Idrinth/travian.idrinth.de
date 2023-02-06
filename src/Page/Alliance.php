@@ -67,12 +67,16 @@ class Alliance
                         ->execute([':alliance' => $alliance['aid'], ':user' => $post['user'], ':rank' => $post['rank']]);
                 }
             }
-            $stmt = $this->database->prepare('SELECT user_world.name,user_alliance.*,my_hero.resources,my_hero.off_bonus,my_hero.deff_bonus,my_hero.fighting_strength, users.aid, users.name as discord, users.discriminator
+            $stmt = $this->database->prepare('SELECT user_world.name,user_alliance.*,my_hero.resources,my_hero.off_bonus,my_hero.deff_bonus,my_hero.fighting_strength, users.aid, users.name as discord, users.discriminator, SUM(world_villages.population) AS population, world_alliances.name AS allianceName
 FROM user_alliance
 INNER JOIN users ON users.aid=user_alliance.user
 LEFT JOIN user_world ON users.aid=user_world.user AND user_world.world=:world
 LEFT JOIN my_hero ON my_hero.user=user_alliance.user AND my_hero.world=:world
-WHERE alliance=:alliance');
+LEFT JOIN world_players ON user_world.name=world_players.name AND world_players.world=:world
+LEFT JOIN world_alliances ON world_alliances.id=world_players.alliance AND world_alliances.world=:world
+LEFT JOIN world_villages ON world_villages.player=world_players.id AND world_villages.world=:world
+WHERE user_alliance.alliance=:alliance
+GROUP BY user_world.user');
             $stmt->execute([':alliance' => $alliance['aid'], ':world' => $alliance['world']]);
             $stmt2 = $this->database->prepare("SELECT deff_calls.player, deff_calls.id, deff_calls.arrival, deff_calls.world, deff_calls.x, deff_calls.y, deff_calls.key FROM deff_calls WHERE deleted=0 AND alliance=:alliance");
             $stmt2->execute([':alliance' => $alliance['aid']]);
