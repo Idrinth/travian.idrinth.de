@@ -17,15 +17,28 @@ class WorldImporter
 
     public function import(): void
     {
-        $stmt = $this->database->prepare("SELECT world FROM world_updates WHERE updated<:today OR ISNULL(updated) AND lastUsed>:yesterday");
+        $stmt = $this->database->prepare("SELECT world,hash FROM world_updates WHERE updated<:today OR ISNULL(updated) AND lastUsed>:yesterday");
         $stmt->execute([':today' => date('Y-m-d H:i:s', time() - 86400), ':yesterday' => date('Y-m-d H:i:s', time() - 86400*2)]);
         $multicurl = new MultiCurl();
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
             $multicurl->addGet('https://'.$row['world'].'/map.sql')->success(function(Curl $curl) use($row) {
                 $world = $row['world'];
+                $hash = md5($curl->response);
+                if ($row['hash'] === $hash) {
+                    return;
+                }
                 $this->database
-                    ->prepare('UPDATE world_updates SET updated=:now WHERE world=:world')
-                    ->execute([':now' => date('Y-m-d H:i:s'), ':world' => $world]);
+                    ->prepare('UPDATE world_updates SET updated=:now,hash=:hash WHERE world=:world')
+                    ->execute([':now' => date('Y-m-d H:i:s'), ':hash' => $hash, ':world' => $world]);
+                $this->database
+                    ->prepare('UPDATE world_alliances SET latest=0 WHERE world=:world')
+                    ->execute([':world' => $world]);
+                $this->database
+                    ->prepare('UPDATE world_players SET latest=0 WHERE world=:world')
+                    ->execute([':world' => $world]);
+                $this->database
+                    ->prepare('UPDATE world_villages SET latest=0 WHERE world=:world')
+                    ->execute([':world' => $world]);
                 $this->database->exec('TRUNCATE x_world');
                 foreach(explode("\n", $curl->response) as $row) {
                     if ($row) {
@@ -46,12 +59,12 @@ class WorldImporter
                     list($id, $name) = $stmt->fetch(PDO::FETCH_NUM);
                     if (!$id || $row['alliance_name'] !== $name) {
                         $this->database
-                            ->prepare('INSERT INTO world_alliances (id,world,name,`from`,`until`) VALUES(:id,:world,:name,:today,:today)')
+                            ->prepare('INSERT INTO world_alliances (id,world,name,`from`,`until`,latest) VALUES(:id,:world,:name,:today,:today,1)')
                             ->execute([':name' => $row['alliance_name'], ':id' => $row['alliance_id'], ':world' => $world, ':today' => date('Y-m-d')]);
                     } else {
                         $this->database
-                            ->prepare('UPDATE world_alliances SET until=:today WHERE aid=:id')
-                    ->execute([':id' => $id, ':today' => date('Y-m-d')]);
+                            ->prepare('UPDATE world_alliances SET until=:today,latest=1 WHERE aid=:id')
+                            ->execute([':id' => $id, ':today' => date('Y-m-d')]);
                     }
                 }
                 foreach ($this->database->query("SELECT DISTINCT player_id,player_name,alliance_id FROM `$world`")->fetchAll(PDO::FETCH_ASSOC) as $row) {
@@ -60,17 +73,17 @@ class WorldImporter
                     list($id, $name, $alliance) = $stmt->fetch(PDO::FETCH_NUM);
                     if (!$id || $row['player_name'] !== $name || $alliance !== $row['alliance_id']) {
                         $this->database
-                            ->prepare('INSERT INTO world_players (id,alliance,world,name,`from`,`until`) VALUES(:id,:alliance,:world,:name,:today,:today)')
+                            ->prepare('INSERT INTO world_players (id,alliance,world,name,`from`,`until`,latest) VALUES(:id,:alliance,:world,:name,:today,:today,1)')
                             ->execute([':name' => $row['player_name'], ':id' => $row['player_id'], ':alliance' => $row['alliance_id'], ':world' => $world, ':today' => date('Y-m-d')]);
                     } else {
                         $this->database
-                            ->prepare('UPDATE world_players SET until=:today WHERE aid=:id')
-                    ->execute([':id' => $id, ':today' => date('Y-m-d')]);
+                            ->prepare('UPDATE world_players SET until=:today,latest=1 WHERE aid=:id')
+                            ->execute([':id' => $id, ':today' => date('Y-m-d')]);
                     }
                 }
                 foreach ($this->database->query("SELECT DISTINCT tribe,village_id,player_id,population,village_name,x,y FROM `$world`")->fetchAll(PDO::FETCH_ASSOC) as $row) {
                     $this->database
-                        ->prepare('INSERT INTO world_villages (tribe,population,id,x,y,world,name,day,player) VALUES(:tribe,:population,:id,:x,:y,:world,:name,:today,:player)')
+                        ->prepare('INSERT INTO world_villages (tribe,population,id,x,y,world,name,day,player,latest) VALUES(:tribe,:population,:id,:x,:y,:world,:name,:today,:player,1)')
                         ->execute([
                             ':tribe' => [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 5 => 'natar', 6 => 'egyptian', 7 => 'hun'][intval($row['tribe'], 10)],
                             ':population' => $row['population'],
