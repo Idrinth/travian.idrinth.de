@@ -113,12 +113,12 @@
     </fieldset>
 </form>
 {% if troops is not empty %}
-    <h3>{{ translations.delete_village }}</h3>
+    <h3>{{ translations.delete_world }}</h3>
     <form method="post">
         <div class="split2">
             <label>{{ translations.world }}<select name="world">
                 {% for world,tribes in troops %}
-                    <option value="{{ world }}">{{ village.world }}</option>
+                    <option value="{{ world }}">{{ world }}</option>
                 {% endfor %}
             </select></label>
         </div>
