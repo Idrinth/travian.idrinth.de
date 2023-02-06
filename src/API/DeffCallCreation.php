@@ -42,7 +42,7 @@ class DeffCallCreation
             list($post['alliance_lock'], $post['world']) = $row;
             World::register($this->database, $post['world']);
             Assert::greaterThan(strtotime($post['arrival']), time() + 3600, 'Defence is in the past or within the next hour.');
-            Assert::greaterThan($post['heroes']+$post['scouts']+$post['troops'], 1, 'Defences without troops can\'t be created.');
+            Assert::greaterThan(intval($post['heroes'],10)+intval($post['scouts'],10)+intval($post['troops'],10), 1, 'Defences without troops can\'t be created.');
             $key = Uuid::uuid4();
             $stmt->execute([
                 ':id' => $uuid,

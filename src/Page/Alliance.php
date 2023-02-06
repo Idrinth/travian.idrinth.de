@@ -179,6 +179,8 @@ WHERE alliance=:aid');
             header('Location: /profile', true, 303);
             return;
         }
-        $this->twig->display('alliance-create.twig');
+        $stmt = $this->database->prepare("SELECT alliances.*,user_alliance.rank FROM user_alliance INNER JOIN alliances ON alliances.id=user_alliance.alliance WHERE user_alliance.user=:id");
+        $stmt->execute([':id' => $_SESSION['id']]);
+        $this->twig->display('alliance-create.twig', ['alliances' => $stmt->fetchAll()]);
     }
 }

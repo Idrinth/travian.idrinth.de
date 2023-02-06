@@ -29,6 +29,8 @@ use De\Idrinth\Travian\Page\OffPicker;
 use De\Idrinth\Travian\Page\Profile;
 use De\Idrinth\Travian\Page\ResourcePush;
 use De\Idrinth\Travian\Page\ResourcePushCreation;
+use De\Idrinth\Travian\Page\ShortAlliance;
+use De\Idrinth\Travian\Page\ShortDeffCall;
 use De\Idrinth\Travian\Page\SoldierCost;
 use De\Idrinth\Travian\Page\TroopTool;
 use De\Idrinth\Travian\Page\WorldAlliances;
@@ -70,8 +72,11 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->get('/deff-call', DeffCallCreation::class)
     ->post('/deff-call', DeffCallCreation::class)
     ->get('/deff-call/{id:uuid}', DeffCall::class)
+    ->get('/d/{id:uuid}', ShortDeffCall::class)
+    ->get('/d/{id:uuid}/{key:uuid}', ShortDeffCall::class)
     ->post('/deff-call/{id:uuid}', DeffCall::class)
     ->get('/deff-call/{id:uuid}/{key:uuid}', DeffCall::class)
+    ->get('/dc/{id:uuid}/{key:uuid}', ShortDeffCall::class)
     ->post('/deff-call/{id:uuid}/{key:uuid}', DeffCall::class)
     ->get('/login', Login::class)
     ->get('/profile', Profile::class)
@@ -87,6 +92,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->get('/alliance/{id:uuid}/attack-organizer/{attack:uuid}', AttackOrganizer::class)
     ->post('/alliance/{id:uuid}/attack-organizer/{attack:uuid}', AttackOrganizer::class)
     ->get('/alliance/{id:uuid}/{key:uuid}', Alliance::class)
+    ->get('/a/{id:uuid}/{key:uuid}', ShortAlliance::class)
     ->post('/troop-tool', TroopTool::class)
     ->get('/troop-tool', TroopTool::class)
     ->get('/troop-tool/{id:int}', TroopTool::class)

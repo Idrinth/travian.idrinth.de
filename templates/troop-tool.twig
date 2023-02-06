@@ -116,6 +116,18 @@
     <h3>{{ translations.delete_village }}</h3>
     <form method="post">
         <div class="split2">
+            <label>{{ translations.world }}<select name="world">
+                {% for world,tribes in troops %}
+                    <option value="{{ world }}">{{ village.world }}</option>
+                {% endfor %}
+            </select></label>
+        </div>
+        <input type="hidden" name="type" value="delete"/>
+        <input type="submit"/>
+    </form>
+    <h3>{{ translations.delete_village }}</h3>
+    <form method="post">
+        <div class="split2">
             <label>{{ translations.village }}<select name="aid">
                     {% for world,tribes in troops %}
                         {% for tribe,villages in tribes %}

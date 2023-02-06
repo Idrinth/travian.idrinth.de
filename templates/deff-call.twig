@@ -48,9 +48,9 @@
                 {% if target.troops > 0 %}<tr><th>{{ translations.troops }}</th><td>{{totalTroops }}/{{ target.troops }}</td></tr>{% endif %}
                 {% if target.scouts > 0 %}<tr><th>{{ translations.scouts }}</th><td>{{totalScouts }}/{{ target.scouts }}</td></tr>{% endif %}
                 {% if target.heroes > 0 %}<tr><th>{{ translations.heroes }}</th><td>{{totalHeroes }}/{{ target.heroes }}</td></tr>{% endif %}
-                <tr><th>{{ translations.share }}</th><td><a class="not-highlighted" href="https://travian.idrinth.de/deff-call/{{ id }}">{{ translations.here }}</a></tr>
+                <tr><th>{{ translations.share }}</th><td><a class="not-highlighted" href="https://travian.idrinth.de/d/{{ id }}">{{ translations.here }}</a></tr>
                         {% if key==target.key and key is not empty %}
-                    <tr><th>{{ translations.share_full }}</th><td><a class="not-highlighted" href="https://travian.idrinth.de/deff-call/{{ id }}/{{ key }}">{{ translations.here }}</a></tr>
+                    <tr><th>{{ translations.share_full }}</th><td><a class="not-highlighted" href="https://travian.idrinth.de/d/{{ id }}/{{ key }}">{{ translations.here }}</a></tr>
                         {% endif %}
         </table>
         {% if key==target.key and key is not empty %}

@@ -10,4 +10,17 @@
         <input type="submit"/>
     </fieldset>
 </form>
+{% if alliances is not empty %}
+<h3>{{ translations.alliances }}</h3>
+<table>
+    <tr><th>{{ translations.world }}</th><th>{{ translations.name }}</th><th>{{ translations.rank }}</th></tr>
+{% for alliance in alliances %}
+    <tr>
+        <th>{{ alliance.world }}</th>
+        <td><a href="/alliance/{{ alliance.id }}">{{ alliance.name }}</a></td>
+        <td>{{ alliance.rank }}</td>
+    </tr>
+{% endfor %}
+</table>
+{% endif %}
 {% include 'footer.twig' %}

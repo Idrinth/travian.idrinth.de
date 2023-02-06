@@ -7,7 +7,7 @@
 <div class="grid2">
 {% for deff_call in deff_calls %}
     <div>
-        <h3><a href="https://travian.idrinth.de/deff-call/{{ deff_call.id }}{% if deff_call.advanced==1 %}/{{ deff_call.key }}{% endif %}">{{ deff_call.player }} ({{ deff_call.x }}|{{ deff_call.y }})</a></h3>
+        <h3><a href="https://travian.idrinth.de/d/{{ deff_call.id }}{% if deff_call.advanced==1 %}/{{ deff_call.key }}{% endif %}">{{ deff_call.player }} ({{ deff_call.x }}|{{ deff_call.y }})</a></h3>
         <table>
             {% if deff_call.alliance.id is empty %}<tr><th>{{ translations.world }}</th><td>{{ deff_call.world }}</td></tr>{% endif %}
             {% if deff_call.alliance.id is not empty %}<tr><th>{{ translations.alliance }}</th><td><a href="/alliance/{{ deff_call.alliance.id }}">{{ deff_call.world }}: {{ deff_call.alliance.name }}</a></td></tr>{% endif %}

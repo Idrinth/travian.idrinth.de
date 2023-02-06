@@ -132,6 +132,10 @@ ORDER BY troops.tribe DESC, troops.name ASC");
             $this->database
                 ->prepare("DELETE FROM troops WHERE user=:id AND aid=:aid")
                 ->execute([':id' => $_SESSION['id'], ':aid' => $post['aid']]);
+        } elseif (isset($post['world']) && isset($post['type']) && $post['type']==='delete') {
+            $this->database
+                ->prepare("DELETE FROM troops WHERE user=:id AND world=:world")
+                ->execute([':id' => $_SESSION['id'], ':world' => $post['world']]);
         } elseif (isset($post['world']) && isset($post['tribe']) && isset($post['name']) && isset($post['x']) && isset($post['y'])) {
             $stmt = $this->database->prepare("SELECT 1 FROM troops WHERE user=:user AND world=:world AND x=:x AND y=:y");
             $stmt->execute([

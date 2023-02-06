@@ -66,6 +66,7 @@ class Delivery
     }
     private function getSpeed(\DOMDocument $doc): int
     {
+        return 1;
         $scripts = $doc->getElementsByTagName('script');
         for ($i = 0; $i < $scripts->length; $i++) {
             if (preg_match('/Travian.Game.speed\s+=/', $scripts->item($i)->textContent)) {
@@ -80,6 +81,10 @@ class Delivery
     }
     private function getMapSize(\DOMDocument $doc): array
     {
+        return [
+            'width' => 401,
+            'height' => 401,
+        ];
         $scripts = $doc->getElementsByTagName('script');
         for ($i = 0; $i < $scripts->length; $i++) {
             if (preg_match('/window.TravianDefaults\s+=/', $scripts->item($i)->textContent)) {
@@ -94,6 +99,7 @@ class Delivery
     }
     private function mayTravelOverMapBorder(\DOMDocument $doc): bool
     {
+        return true;
         $scripts = $doc->getElementsByTagName('script');
         for ($i = 0; $i < $scripts->length; $i++) {
             if (preg_match('/"travelOverTheWorldEdge":true/', $scripts->item($i)->textContent)) {

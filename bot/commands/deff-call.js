@@ -51,10 +51,21 @@ module.exports = {
         if (!permitted(interaction, 'defence-coordinator')) {
             return interaction.reply('You don\'t have a role called Defence-Coordinator or High-Council.');
         }
+        let datetime = interaction.options.getString('arrival');
+        let matches;
+        if (matches = datetime.match(/^([0-9]+):[0-9]+(:[0-9]+)?$/)) {
+            const now = new Date();
+            if (Number.parseInt(matches[1], 10) > now.getUTCHours()+1) {
+                datetime = `${now.getUTCFullYear()}-${now.getUTCMonth() +1}-${now.getUTCDate()} ${datetime}`;
+            } else {
+                const tomorrow = new Date(now.valueOf()+86400000);
+                datetime = `${tomorrow.getUTCFullYear()}-${tomorrow.getUTCMonth() +1}-${tomorrow.getUTCDate()} ${datetime}`;
+            }
+        }
         needle(
             'post',
             'https://travian.idrinth.de/api/deff-call',
-             'arrival=' + interaction.options.getString('arrival')
+             'arrival=' + datetime
                 + '&x=' + interaction.options.getInteger('x')
                 + '&y=' + interaction.options.getInteger('y')
                 + '&player=' + interaction.options.getString('player')
