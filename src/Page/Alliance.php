@@ -72,9 +72,9 @@ FROM user_alliance
 INNER JOIN users ON users.aid=user_alliance.user
 LEFT JOIN user_world ON users.aid=user_world.user AND user_world.world=:world
 LEFT JOIN my_hero ON my_hero.user=user_alliance.user AND my_hero.world=:world
-LEFT JOIN world_players ON user_world.name=world_players.name AND world_players.world=:world
-LEFT JOIN world_alliances ON world_alliances.id=world_players.alliance AND world_alliances.world=:world
-LEFT JOIN world_villages ON world_villages.player=world_players.id AND world_villages.world=:world
+LEFT JOIN world_players ON user_world.name=world_players.name AND world_players.world=:world AND world_players.latest
+LEFT JOIN world_alliances ON world_alliances.id=world_players.alliance AND world_alliances.world=:world AND world_alliances.latest
+LEFT JOIN world_villages ON world_villages.player=world_players.id AND world_villages.world=:world AND world_villages.latest
 WHERE user_alliance.alliance=:alliance
 GROUP BY user_world.user');
             $stmt->execute([':alliance' => $alliance['aid'], ':world' => $alliance['world']]);
