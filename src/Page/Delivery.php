@@ -180,7 +180,7 @@ class Delivery
         $data['clay'] = $inputs['clay'] > 0 ? floor($inputs['clay'] / $requiredTraders * $data['traders']) : 0;
         $data['iron'] = $inputs['iron'] > 0 ? floor($inputs['iron'] / $requiredTraders * $data['traders']) : 0;
         $data['crop'] = $inputs['crop'] > 0 ? floor($inputs['crop'] / $requiredTraders * $data['traders']) : 0;
-        $data['traders'] = $requiredTraders;
+        $data['requiredTraders'] = min($requiredTraders, $maxTraders);
         return $data;
     }
     public function run(array $post): void
