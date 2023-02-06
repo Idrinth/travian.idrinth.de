@@ -14,7 +14,7 @@ class WorldCleaner
 
     public function clean(): void
     {
-        $stmt = $this->database->prepare("SELECT world FROM world_updates WHERE NOT ISNULL(updated) AND updated<:twoWeeksPrior");
+        $stmt = $this->database->prepare("SELECT world FROM world_updates WHERE (NOT ISNULL(updated) AND updated<:twoWeeksPrior) OR (ISNULL(update) AND lastUsed<:twoWeeksPrior)");
         $stmt->execute([':twoWeeksPrior' => date('Y-m-d H:i:s', strtotime('now -2weeks'))]);
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $world) {
             $this->database->exec("DROP TABLE IF EXISTS `$world`");
