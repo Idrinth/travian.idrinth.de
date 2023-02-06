@@ -66,7 +66,6 @@ class Delivery
     }
     private function getSpeed(\DOMDocument $doc): int
     {
-        return 1;
         $scripts = $doc->getElementsByTagName('script');
         for ($i = 0; $i < $scripts->length; $i++) {
             if (preg_match('/Travian.Game.speed\s+=/', $scripts->item($i)->textContent)) {
@@ -77,14 +76,22 @@ class Delivery
                 return $speed;
             }
         }
-        throw new UnexpectedValueException('Couldn\'t find world speed');
+        return 1;
+    }
+    private function getMaxTraders(\DOMDocument $doc): int
+    {
+        $building = $doc->getElementById('build');
+        if ($building) {
+            foreach (explode(' ', $building->getAttribute('class')??'') as $class) {
+                if (preg_match('/^level[0-9]+$/', $class)) {
+                    return intval(substr($class, 4),10);
+                }
+            }
+        }
+        return 20;
     }
     private function getMapSize(\DOMDocument $doc): array
     {
-        return [
-            'width' => 401,
-            'height' => 401,
-        ];
         $scripts = $doc->getElementsByTagName('script');
         for ($i = 0; $i < $scripts->length; $i++) {
             if (preg_match('/window.TravianDefaults\s+=/', $scripts->item($i)->textContent)) {
@@ -95,18 +102,23 @@ class Delivery
                 ];
             }
         }
-        throw new UnexpectedValueException('Couldn\'t find map size');
+        return [
+            'width' => 401,
+            'height' => 401,
+        ];
     }
     private function mayTravelOverMapBorder(\DOMDocument $doc): bool
     {
-        return true;
         $scripts = $doc->getElementsByTagName('script');
         for ($i = 0; $i < $scripts->length; $i++) {
             if (preg_match('/"travelOverTheWorldEdge":true/', $scripts->item($i)->textContent)) {
                 return true;
             }
+            if (preg_match('/"travelOverTheWorldEdge":false/', $scripts->item($i)->textContent)) {
+                return false;
+            }
         }
-        return false;
+        return true;
     }
     private function getProduction(\DOMDocument $doc): array
     {
@@ -153,7 +165,7 @@ class Delivery
         }
         throw new UnexpectedValueException('No Village found');
     }
-    private function calculateVillageResult(array $mapSize, bool $mayTravelOverWorldEdge, array $rootVillage, array $village, int $requiredTraders, array $inputs): array
+    private function calculateVillageResult(array $mapSize, bool $mayTravelOverWorldEdge, array $rootVillage, array $village, int $requiredTraders, array $inputs, int $maxTraders): array
     {
         $data['village'] = $village;
         $data['distance'] = $this->distance->distance(new Point($rootVillage['x'], $rootVillage['y']), new Point($village['x'], $village['y']), $mapSize['width'], $mapSize['height'], $mayTravelOverWorldEdge);
@@ -162,7 +174,7 @@ class Delivery
         do {
             $data['traders']++;
             $total = $requiredTraders * (ceil(2 * $data['travelTime'] / 60) * 60) / $data['traders'];
-        } while ($total > 3600 && $data['traders']<20);
+        } while ($total > 3600 && $data['traders']<$maxTraders);
         $data['minBetweenTrades'] = ceil(60 / $requiredTraders * $data['traders']);
         $data['lumber'] = $inputs['lumber'] > 0 ? floor($inputs['lumber'] / $requiredTraders * $data['traders']) : 0;
         $data['clay'] = $inputs['clay'] > 0 ? floor($inputs['clay'] / $requiredTraders * $data['traders']) : 0;
@@ -228,9 +240,10 @@ class Delivery
                 }
                 $mapSize = $this->getMapSize($doc);
                 $mayTravelOverWorldEdge = $this->mayTravelOverMapBorder($doc);
+                $maxTraders = $this->getMaxTraders($doc);
                 $data['results'] = [];
                 foreach ($villages as $pos => $village) {
-                    $data['results'][$pos] = $this->calculateVillageResult($mapSize, $mayTravelOverWorldEdge, $data['calculatedInputs']['village'], $village, $requiredTraders, $data['calculatedInputs']);
+                    $data['results'][$pos] = $this->calculateVillageResult($mapSize, $mayTravelOverWorldEdge, $data['calculatedInputs']['village'], $village, $requiredTraders, $data['calculatedInputs'], $maxTraders);
                 }
                 if (count($villages) === 0) {
                     $data['results'] = ['error' => 'Only a single village entered, can\'t send to itself.'];
