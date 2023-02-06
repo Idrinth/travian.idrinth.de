@@ -10,6 +10,6 @@ class ShortDeffCall
             header("Location: /deff-call/$id/$key", true, 301);
             return;
         }
-        header("Location /deff-call/$id", true, 301);
+        header("Location: /deff-call/$id", true, 301);
     }
 }

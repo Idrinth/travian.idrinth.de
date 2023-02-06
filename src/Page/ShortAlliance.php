@@ -10,6 +10,6 @@ class ShortAlliance
             header("Location: /alliance/$id/$key", true, 301);
             return;
         }
-        header("Location /alliance/$id", true, 301);
+        header("Location: /alliance/$id", true, 301);
     }
 }
