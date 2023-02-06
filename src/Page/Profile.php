@@ -40,7 +40,7 @@ class Profile
                         ->prepare('DELETE FROM hero WHERE alliance=:alliance')
                         ->execute([':alliance' => $post['delete-alliance']]);
                     $this->database
-                        ->prepare('DELETE FROM alliance WHERE aid=:alliance')
+                        ->prepare('DELETE FROM alliances WHERE aid=:alliance')
                         ->execute([':alliance' => $post['delete-alliance']]);
                     $this->database
                         ->exec('DELETE FROM hero_updates WHERE hero NOT IN(SELECT aid FROM hero)');
