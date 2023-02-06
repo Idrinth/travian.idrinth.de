@@ -84,7 +84,7 @@ class Delivery
         if ($building) {
             foreach (explode(' ', $building->getAttribute('class')??'') as $class) {
                 if (preg_match('/^level[0-9]+$/', $class)) {
-                    return intval(substr($class, 4),10);
+                    return intval(substr($class, 5),10);
                 }
             }
         }
