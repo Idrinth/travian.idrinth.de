@@ -86,6 +86,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->get('/alliance', Alliance::class)
     ->post('/alliance', Alliance::class)
     ->get('/alliance/{id:uuid}', Alliance::class)
+    ->get('/a/{id:uuid}', ShortAlliance::class)
     ->post('/alliance/{id:uuid}', Alliance::class)
     ->get('/alliance/{id:uuid}/attack-organizer', AttackOrganizer::class)
     ->post('/alliance/{id:uuid}/attack-organizer', AttackOrganizer::class)

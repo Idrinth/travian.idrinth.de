@@ -15,7 +15,6 @@ class Twig extends Environment
         $this->addFunction(new TwigFunction('floor', 'floor'));
         $this->addFunction(new TwigFunction('round', 'round'));
         $this->addFunction(new TwigFunction('ceil', 'ceil'));
-        $this->addFunction(new TwigFunction('floor', 'floor'));
         $this->addFunction(new TwigFunction('strtotime', 'strtotime'));
         $this->addFunction(new TwigFunction('num', function($value) {
             return number_format(round($value * 10)/10, 1);
