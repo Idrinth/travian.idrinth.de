@@ -5,9 +5,6 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-CREATE DATABASE IF NOT EXISTS `travian` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin */;
-USE `travian`;
-
 CREATE TABLE IF NOT EXISTS `alliances` (
   `aid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `id` char(36) COLLATE utf8mb4_bin NOT NULL,
@@ -16,6 +13,34 @@ CREATE TABLE IF NOT EXISTS `alliances` (
   `key` char(36) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`aid`),
   UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+CREATE TABLE IF NOT EXISTS `alliance_attacks` (
+  `aid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `alliance` int(10) unsigned NOT NULL DEFAULT '0',
+  `fromX` int(11) NOT NULL DEFAULT '0',
+  `fromY` int(11) NOT NULL DEFAULT '0',
+  `toX` int(11) NOT NULL DEFAULT '0',
+  `toY` int(11) NOT NULL DEFAULT '0',
+  `arrival` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `earliestStart` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `latestStart` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `user` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`aid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+CREATE TABLE IF NOT EXISTS `alliance_server` (
+  `aid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `alliance` int(10) unsigned NOT NULL,
+  `server_id` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`aid`),
+  UNIQUE KEY `server_id` (`server_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+CREATE TABLE IF NOT EXISTS `alliance_world_alliance` (
+  `alliance` int(11) DEFAULT NULL,
+  `world_alliance` int(11) DEFAULT NULL,
+  UNIQUE KEY `alliance_world_alliance` (`alliance`,`world_alliance`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 CREATE TABLE IF NOT EXISTS `attack_plan` (
@@ -156,9 +181,9 @@ CREATE TABLE IF NOT EXISTS `resource_pushes` (
   `lumber` int(10) unsigned NOT NULL,
   `clay` int(10) unsigned NOT NULL,
   `resources` int(10) unsigned NOT NULL,
-  `x` int(10) unsigned NOT NULL,
+  `x` int(10) NOT NULL,
   `player` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `y` int(10) unsigned NOT NULL,
+  `y` int(10) NOT NULL,
   `world` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `alliance` int(10) unsigned NOT NULL DEFAULT '0',
   `arrival` datetime NOT NULL,
@@ -184,6 +209,24 @@ CREATE TABLE IF NOT EXISTS `resource_push_supplies` (
   `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`aid`),
   KEY `resource_push` (`resource_push`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+CREATE TABLE IF NOT EXISTS `toc.x2.america.travian.com` (
+  `field_id` int(10) NOT NULL,
+  `x` int(11) NOT NULL,
+  `y` int(11) NOT NULL,
+  `tribe` int(10) NOT NULL,
+  `village_id` int(11) NOT NULL DEFAULT '0',
+  `village_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `player_id` int(11) NOT NULL DEFAULT '0',
+  `player_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `alliance_id` int(11) NOT NULL DEFAULT '0',
+  `alliance_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `population` int(11) NOT NULL DEFAULT '0',
+  `region` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `is_capital` tinyint(4) NOT NULL,
+  `is_city` tinyint(4) DEFAULT NULL,
+  `points` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 CREATE TABLE IF NOT EXISTS `troops` (
@@ -227,6 +270,294 @@ CREATE TABLE IF NOT EXISTS `troop_updates` (
   KEY `user_date_world` (`user`,`date`,`world`(191))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
+CREATE TABLE IF NOT EXISTS `ts1.x1.international.travian.com` (
+  `field_id` int(10) NOT NULL,
+  `x` int(11) NOT NULL,
+  `y` int(11) NOT NULL,
+  `tribe` int(10) NOT NULL,
+  `village_id` int(11) NOT NULL DEFAULT '0',
+  `village_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `player_id` int(11) NOT NULL DEFAULT '0',
+  `player_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `alliance_id` int(11) NOT NULL DEFAULT '0',
+  `alliance_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `population` int(11) NOT NULL DEFAULT '0',
+  `region` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `is_capital` tinyint(4) NOT NULL,
+  `is_city` tinyint(4) DEFAULT NULL,
+  `points` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+CREATE TABLE IF NOT EXISTS `ts16.x1.europe.travian.com` (
+  `field_id` int(10) NOT NULL,
+  `x` int(11) NOT NULL,
+  `y` int(11) NOT NULL,
+  `tribe` int(10) NOT NULL,
+  `village_id` int(11) NOT NULL DEFAULT '0',
+  `village_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `player_id` int(11) NOT NULL DEFAULT '0',
+  `player_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `alliance_id` int(11) NOT NULL DEFAULT '0',
+  `alliance_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `population` int(11) NOT NULL DEFAULT '0',
+  `region` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `is_capital` tinyint(4) NOT NULL,
+  `is_city` tinyint(4) DEFAULT NULL,
+  `points` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+CREATE TABLE IF NOT EXISTS `ts2.x1.asia.travian.com` (
+  `field_id` int(10) NOT NULL,
+  `x` int(11) NOT NULL,
+  `y` int(11) NOT NULL,
+  `tribe` int(10) NOT NULL,
+  `village_id` int(11) NOT NULL DEFAULT '0',
+  `village_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `player_id` int(11) NOT NULL DEFAULT '0',
+  `player_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `alliance_id` int(11) NOT NULL DEFAULT '0',
+  `alliance_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `population` int(11) NOT NULL DEFAULT '0',
+  `region` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `is_capital` tinyint(4) NOT NULL,
+  `is_city` tinyint(4) DEFAULT NULL,
+  `points` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+CREATE TABLE IF NOT EXISTS `ts2.x1.europe.travian.com` (
+  `field_id` int(10) NOT NULL,
+  `x` int(11) NOT NULL,
+  `y` int(11) NOT NULL,
+  `tribe` int(10) NOT NULL,
+  `village_id` int(11) NOT NULL DEFAULT '0',
+  `village_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `player_id` int(11) NOT NULL DEFAULT '0',
+  `player_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `alliance_id` int(11) NOT NULL DEFAULT '0',
+  `alliance_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `population` int(11) NOT NULL DEFAULT '0',
+  `region` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `is_capital` tinyint(4) NOT NULL,
+  `is_city` tinyint(4) DEFAULT NULL,
+  `points` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+CREATE TABLE IF NOT EXISTS `ts20.x2.europe.travian.com` (
+  `field_id` int(10) NOT NULL,
+  `x` int(11) NOT NULL,
+  `y` int(11) NOT NULL,
+  `tribe` int(10) NOT NULL,
+  `village_id` int(11) NOT NULL DEFAULT '0',
+  `village_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `player_id` int(11) NOT NULL DEFAULT '0',
+  `player_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `alliance_id` int(11) NOT NULL DEFAULT '0',
+  `alliance_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `population` int(11) NOT NULL DEFAULT '0',
+  `region` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `is_capital` tinyint(4) NOT NULL,
+  `is_city` tinyint(4) DEFAULT NULL,
+  `points` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+CREATE TABLE IF NOT EXISTS `ts30.x3.asia.travian.com` (
+  `field_id` int(10) NOT NULL,
+  `x` int(11) NOT NULL,
+  `y` int(11) NOT NULL,
+  `tribe` int(10) NOT NULL,
+  `village_id` int(11) NOT NULL DEFAULT '0',
+  `village_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `player_id` int(11) NOT NULL DEFAULT '0',
+  `player_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `alliance_id` int(11) NOT NULL DEFAULT '0',
+  `alliance_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `population` int(11) NOT NULL DEFAULT '0',
+  `region` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `is_capital` tinyint(4) NOT NULL,
+  `is_city` tinyint(4) DEFAULT NULL,
+  `points` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+CREATE TABLE IF NOT EXISTS `ts31.x3.europe.travian.com` (
+  `field_id` int(10) NOT NULL,
+  `x` int(11) NOT NULL,
+  `y` int(11) NOT NULL,
+  `tribe` int(10) NOT NULL,
+  `village_id` int(11) NOT NULL DEFAULT '0',
+  `village_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `player_id` int(11) NOT NULL DEFAULT '0',
+  `player_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `alliance_id` int(11) NOT NULL DEFAULT '0',
+  `alliance_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `population` int(11) NOT NULL DEFAULT '0',
+  `region` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `is_capital` tinyint(4) NOT NULL,
+  `is_city` tinyint(4) DEFAULT NULL,
+  `points` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+CREATE TABLE IF NOT EXISTS `ts31.x3.international.travian.com` (
+  `field_id` int(10) NOT NULL,
+  `x` int(11) NOT NULL,
+  `y` int(11) NOT NULL,
+  `tribe` int(10) NOT NULL,
+  `village_id` int(11) NOT NULL DEFAULT '0',
+  `village_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `player_id` int(11) NOT NULL DEFAULT '0',
+  `player_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `alliance_id` int(11) NOT NULL DEFAULT '0',
+  `alliance_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `population` int(11) NOT NULL DEFAULT '0',
+  `region` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `is_capital` tinyint(4) NOT NULL,
+  `is_city` tinyint(4) DEFAULT NULL,
+  `points` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+CREATE TABLE IF NOT EXISTS `ts4.x1.europe.travian.com` (
+  `field_id` int(10) NOT NULL,
+  `x` int(11) NOT NULL,
+  `y` int(11) NOT NULL,
+  `tribe` int(10) NOT NULL,
+  `village_id` int(11) NOT NULL DEFAULT '0',
+  `village_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `player_id` int(11) NOT NULL DEFAULT '0',
+  `player_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `alliance_id` int(11) NOT NULL DEFAULT '0',
+  `alliance_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `population` int(11) NOT NULL DEFAULT '0',
+  `region` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `is_capital` tinyint(4) NOT NULL,
+  `is_city` tinyint(4) DEFAULT NULL,
+  `points` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+CREATE TABLE IF NOT EXISTS `ts5.x1.europe.travian.com` (
+  `field_id` int(10) NOT NULL,
+  `x` int(11) NOT NULL,
+  `y` int(11) NOT NULL,
+  `tribe` int(10) NOT NULL,
+  `village_id` int(11) NOT NULL DEFAULT '0',
+  `village_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `player_id` int(11) NOT NULL DEFAULT '0',
+  `player_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `alliance_id` int(11) NOT NULL DEFAULT '0',
+  `alliance_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `population` int(11) NOT NULL DEFAULT '0',
+  `region` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `is_capital` tinyint(4) NOT NULL,
+  `is_city` tinyint(4) DEFAULT NULL,
+  `points` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+CREATE TABLE IF NOT EXISTS `ts50.x5.asia.travian.com` (
+  `field_id` int(10) NOT NULL,
+  `x` int(11) NOT NULL,
+  `y` int(11) NOT NULL,
+  `tribe` int(10) NOT NULL,
+  `village_id` int(11) NOT NULL DEFAULT '0',
+  `village_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `player_id` int(11) NOT NULL DEFAULT '0',
+  `player_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `alliance_id` int(11) NOT NULL DEFAULT '0',
+  `alliance_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `population` int(11) NOT NULL DEFAULT '0',
+  `region` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `is_capital` tinyint(4) NOT NULL,
+  `is_city` tinyint(4) DEFAULT NULL,
+  `points` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+CREATE TABLE IF NOT EXISTS `ts6.x1.europe.travian.com` (
+  `field_id` int(10) NOT NULL,
+  `x` int(11) NOT NULL,
+  `y` int(11) NOT NULL,
+  `tribe` int(10) NOT NULL,
+  `village_id` int(11) NOT NULL DEFAULT '0',
+  `village_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `player_id` int(11) NOT NULL DEFAULT '0',
+  `player_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `alliance_id` int(11) NOT NULL DEFAULT '0',
+  `alliance_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `population` int(11) NOT NULL DEFAULT '0',
+  `region` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `is_capital` tinyint(4) NOT NULL,
+  `is_city` tinyint(4) DEFAULT NULL,
+  `points` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+CREATE TABLE IF NOT EXISTS `ts6.x1.international.travian.com` (
+  `field_id` int(10) NOT NULL,
+  `x` int(11) NOT NULL,
+  `y` int(11) NOT NULL,
+  `tribe` int(10) NOT NULL,
+  `village_id` int(11) NOT NULL DEFAULT '0',
+  `village_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `player_id` int(11) NOT NULL DEFAULT '0',
+  `player_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `alliance_id` int(11) NOT NULL DEFAULT '0',
+  `alliance_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `population` int(11) NOT NULL DEFAULT '0',
+  `region` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `is_capital` tinyint(4) NOT NULL,
+  `is_city` tinyint(4) DEFAULT NULL,
+  `points` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+CREATE TABLE IF NOT EXISTS `ts8.x1.asia.travian.com` (
+  `field_id` int(10) NOT NULL,
+  `x` int(11) NOT NULL,
+  `y` int(11) NOT NULL,
+  `tribe` int(10) NOT NULL,
+  `village_id` int(11) NOT NULL DEFAULT '0',
+  `village_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `player_id` int(11) NOT NULL DEFAULT '0',
+  `player_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `alliance_id` int(11) NOT NULL DEFAULT '0',
+  `alliance_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `population` int(11) NOT NULL DEFAULT '0',
+  `region` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `is_capital` tinyint(4) NOT NULL,
+  `is_city` tinyint(4) DEFAULT NULL,
+  `points` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+CREATE TABLE IF NOT EXISTS `ts8.x1.europe.travian.com` (
+  `field_id` int(10) NOT NULL,
+  `x` int(11) NOT NULL,
+  `y` int(11) NOT NULL,
+  `tribe` int(10) NOT NULL,
+  `village_id` int(11) NOT NULL DEFAULT '0',
+  `village_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `player_id` int(11) NOT NULL DEFAULT '0',
+  `player_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `alliance_id` int(11) NOT NULL DEFAULT '0',
+  `alliance_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `population` int(11) NOT NULL DEFAULT '0',
+  `region` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `is_capital` tinyint(4) NOT NULL,
+  `is_city` tinyint(4) DEFAULT NULL,
+  `points` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+CREATE TABLE IF NOT EXISTS `ts9.x1.europe.travian.com` (
+  `field_id` int(10) NOT NULL,
+  `x` int(11) NOT NULL,
+  `y` int(11) NOT NULL,
+  `tribe` int(10) NOT NULL,
+  `village_id` int(11) NOT NULL DEFAULT '0',
+  `village_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `player_id` int(11) NOT NULL DEFAULT '0',
+  `player_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `alliance_id` int(11) NOT NULL DEFAULT '0',
+  `alliance_name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `population` int(11) NOT NULL DEFAULT '0',
+  `region` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `is_capital` tinyint(4) NOT NULL,
+  `is_city` tinyint(4) DEFAULT NULL,
+  `points` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
 CREATE TABLE IF NOT EXISTS `users` (
   `aid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `discord_id` bigint(20) unsigned NOT NULL DEFAULT '0',
@@ -266,6 +597,7 @@ CREATE TABLE IF NOT EXISTS `world_alliances` (
   `name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '',
   `from` date NOT NULL,
   `until` date NOT NULL,
+  `latest` tinyint(3) unsigned NOT NULL DEFAULT '0',
   UNIQUE KEY `aid` (`aid`),
   KEY `id` (`id`,`world`(191)),
   KEY `name` (`name`(191))
@@ -279,6 +611,7 @@ CREATE TABLE IF NOT EXISTS `world_players` (
   `until` date NOT NULL,
   `alliance` int(10) unsigned NOT NULL DEFAULT '0',
   `world` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `latest` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`aid`),
   KEY `name` (`name`(191)),
   KEY `id` (`id`,`world`(191)) USING BTREE,
@@ -289,6 +622,7 @@ CREATE TABLE IF NOT EXISTS `world_updates` (
   `world` varchar(250) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
   `updated` datetime DEFAULT NULL,
   `lastUsed` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `hash` char(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`world`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
@@ -303,8 +637,10 @@ CREATE TABLE IF NOT EXISTS `world_villages` (
   `day` date NOT NULL,
   `population` int(10) unsigned NOT NULL,
   `tribe` enum('roman','gaul','egyptian','teuton','hun') COLLATE utf8mb4_bin NOT NULL,
+  `latest` tinyint(4) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`aid`),
-  KEY `world_player` (`world`(191),`player`)
+  KEY `world_player` (`world`(191),`player`),
+  KEY `id_world` (`id`,`world`(191))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 CREATE TABLE IF NOT EXISTS `x_world` (
