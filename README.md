@@ -8,7 +8,7 @@ The purpose of this repository is to allow everybody to contribute to the tools,
 
 ## Contribution
 
-Contributors are welcome, you will get the Translator-Role or the Contributor-Role on the related discord at https://discord.gg/WH7RWw7FqP .
+Contributors are welcome, you will get the Translator-Role or the Contributor-Role on the related discord at https://discord.gg/xHSF8CGPTh .
 
 ## Ideas and Feedback
 
