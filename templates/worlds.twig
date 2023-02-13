@@ -10,15 +10,15 @@
         <th>{{ translations.alliances }}</th>
         <th>{{ translations.map }}</th>
     </tr>
-    {% for world in worlds %}
+    {% for wrld in know_worlds %}
         <tr>
-            <th>{{ world.world }}</th>
-            <td>{{ world.updated }}</td>
-            <td>{{ world.lastUsed }}</td>
-            <td><a href="/worlds/{{ world.world }}/players">{{ world.players }}</a></td>
+            <th>{{ wrld.world }}</th>
+            <td>{{ wrld.updated }}</td>
+            <td>{{ wrld.lastUsed }}</td>
+            <td><a href="/worlds/{{ wrld.world }}/players">{{ wrld.players }}</a></td>
             <td>{{ world.villages }}</td>
-            <td><a href="/worlds/{{ world.world }}/alliances">{{ world.alliances }}</a></td>
-            <td><a href="/worlds/{{ world.world }}/map">{{ translations.map }}</a></td>
+            <td><a href="/worlds/{{ wrld.world }}/alliances">{{ wrld.alliances }}</a></td>
+            <td><a href="/worlds/{{ wrld.world }}/map">{{ translations.map }}</a></td>
         </tr>
     {% endfor %}
 </table>

@@ -22,8 +22,8 @@ class Worlds
             World::register($this->database, $post['world']);
         }
         $stmt = $this->database->query('SELECT * FROM world_updates');
-        $context['worlds'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($context['worlds'] as &$world) {
+        $context['known_worlds'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($context['known_worlds'] as &$world) {
             try {
                 $stmt = $this->database->query('SELECT COUNT(DISTINCT player_id) as players,COUNT(DISTINCT village_id) AS villages,COUNT(DISTINCT alliance_id) AS alliances FROM `' . $world['world'] . '`');
                 list($world['players'], $world['villages'], $world['alliances']) = $stmt->fetch(PDO::FETCH_NUM);
