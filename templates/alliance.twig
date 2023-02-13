@@ -34,7 +34,7 @@
 {% for player in players %}
     <tr>
         <th>{{ player.discord ~  '#' ~ player.discriminator }}</th>
-        <td>{{ player.name }}</td>
+        <td>{% if player.main == 0 %}(DUAL){% endif %}{{ player.name }}</td>
         <td>{% if mayInvite and player.rank!='Creator' and player.user!=session.id %}<form method="post">
                 <input type="hidden" name="user" value="{{ player.aid }}"/>
                 <select name="rank">
@@ -71,17 +71,19 @@
         {% if mayPlan %}
             {% set found=false %}
             {% for act in troops %}
-                {% if act.user == player.aid %}
-                    <td title="Updated {{ act.updated }}">
-                        <a href="/troop-tool/{{ player.aid }}">
-                            {% if act.troops %}<div>{{ act.troops }} Troops</div>{% endif %}
-                            {% if act.settlers %}<div>{{ act.settlers }} Settlers</div>{% endif %}
-                            {% if act.chiefs %}<div>{{ act.chiefs }} Chiefs</div>{% endif %}
-                            {% if act.rams %}<div>{{ act.rams }} Rams</div>{% endif %}
-                            {% if act.catapults %}<div>{{ act.catapults }} Catapults</div>{% endif %}
-                        </a>
-                    </td>
-                    {% set found=true %}
+                {% if act.main == 1 %}
+                    {% if act.user == player.aid %}
+                        <td title="Updated {{ act.updated }}">
+                            <a href="/troop-tool/{{ player.aid }}">
+                                {% if act.troops %}<div>{{ act.troops }} Troops</div>{% endif %}
+                                {% if act.settlers %}<div>{{ act.settlers }} Settlers</div>{% endif %}
+                                {% if act.chiefs %}<div>{{ act.chiefs }} Chiefs</div>{% endif %}
+                                {% if act.rams %}<div>{{ act.rams }} Rams</div>{% endif %}
+                                {% if act.catapults %}<div>{{ act.catapults }} Catapults</div>{% endif %}
+                            </a>
+                        </td>
+                        {% set found=true %}
+                    {% endif %}
                 {% endif %}
             {% endfor %}
             {% if not found %}
@@ -89,16 +91,22 @@
             {% endif %}
         {% endif %}
         <td>
-            {% if player.fighting_strength %}<div>{{ player.fighting_strength }} Fighting Strength</div>{% endif %}
-            {% if player.off_bonus %}<div>{{ player.off_bonus }} Off-Bonus</div>{% endif %}
-            {% if player.deff_bonus %}<div>{{ player.deff_bonus }} Def-Bonus</div>{% endif %}
-            {% if player.resources %}<div>{{ player.resources }} Resources</div>{% endif %}
+            {% if act.main == 1 %}
+                {% if player.fighting_strength %}<div>{{ player.fighting_strength }} Fighting Strength</div>{% endif %}
+                {% if player.off_bonus %}<div>{{ player.off_bonus }} Off-Bonus</div>{% endif %}
+                {% if player.deff_bonus %}<div>{{ player.deff_bonus }} Def-Bonus</div>{% endif %}
+                {% if player.resources %}<div>{{ player.resources }} Resources</div>{% endif %}
+            {% endif %}
         </td>
         <td>
-            {{ player.population }}
+            {% if act.main == 1 %}
+                {{ player.population }}
+            {% endif %}
         </td>
         <td>
-            {{ player.allianceName }}
+            {% if act.main == 1 %}
+                {{ player.allianceName }}
+            {% endif %}
         </td>
     </tr>
 {% endfor %}
