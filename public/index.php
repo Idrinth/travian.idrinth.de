@@ -53,8 +53,7 @@ $pdo = new LazyPDO(
     $_ENV['DATABASE_USER'],
     $_ENV['DATABASE_PASSWORD'],
     [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
     ]
 );
 $app
