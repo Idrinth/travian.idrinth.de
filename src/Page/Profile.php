@@ -5,6 +5,7 @@ namespace De\Idrinth\Travian\Page;
 use De\Idrinth\Travian\Twig;
 use De\Idrinth\Travian\World;
 use PDO;
+use Ramsey\Uuid\Uuid;
 
 class Profile
 {
@@ -56,18 +57,28 @@ class Profile
             $this->database
                 ->prepare('DELETE FROM user_world WHERE user=:user AND aid=:aid')
                 ->execute([':user' => $_SESSION['id'], ':aid' => $post['delete-world']]);
+        } elseif (isset($post['join-dual']) && isset($post['key'])) {
+            $world = World::toWorld($post['world']);
+            $stmt = $this->database->prepare('SELECT `user` FROM user_world WHERE user<>:user AND world=:world AND `join`=:key');
+            $stmt->execute([':user' => $_SESSION['id'], ':world' => $world]);
+            $data = $stmt->fetchColumn() ?: 0;
+            if ($data) {
+                $this->database
+                    ->prepare('UPDATE user_world SET main=0, dual=:dual WHERE user=:user AND world=:world')
+                    ->execute([':dual' => $data, ':user' => $_SESSION['id'], ':world' => $world]);
+            }
         } elseif(isset($post['world']) && isset($post['name'])) {
             $world = World::toWorld($post['world']);
             $stmt = $this->database->prepare('SELECT 1 FROM user_world WHERE user=:user AND world=:world');
             $stmt->execute([':user' => $_SESSION['id'], ':world' => $world]);
             if ($stmt->fetchColumn() == 1) {
                 $this->database
-                    ->prepare('UPDATE user_world SET name=:name WHERE user=:user AND world=:world')
-                    ->execute([':user' => $_SESSION['id'], ':world' => $world, ':name' => $post['name']]);
+                    ->prepare('UPDATE user_world SET name=:name,`join`=:join WHERE user=:user AND world=:world')
+                    ->execute([':user' => $_SESSION['id'], ':world' => $world, ':name' => $post['name'], ':join' => Uuid::uuid1()]);
             } else {
                 $this->database
-                    ->prepare('INSERT INTO user_world (name,user,world) VALUES (:name, :user, :world)')
-                    ->execute([':user' => $_SESSION['id'], ':world' => $world, ':name' => $post['name']]);
+                    ->prepare('INSERT INTO user_world (name,user,world,`join`) VALUES (:name, :user, :world,:join)')
+                    ->execute([':user' => $_SESSION['id'], ':world' => $world, ':name' => $post['name'], ':join' => Uuid::uuid1()]);
             }
             World::register($this->database, $world);
         }

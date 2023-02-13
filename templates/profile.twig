@@ -2,11 +2,13 @@
 <h2>{{ translations.profile }}</h2>
 <h3>{{ translations.accounts }}</h3>
 <table>
-    <tr><th>{{ translations.world }}</th><th>{{ translations.name }}</th><th>{{ translations.delete }}</th></tr>
+    <tr><th>{{ translations.world }}</th><th>{{ translations.name }}</th><th>{{ translations.dual }}</th><th>{{ translations.dual_key }}</th><th>{{ translations.delete }}</th></tr>
     {% for world in worlds %}
         <tr>
             <th>{{ world.world }}</th>
             <td>{{ world.name }}</td>
+            <td>{% if world.dual %}Dual{% else %}<form method="post"><input placeholder="{{ translations.dual_key }}" type="text" name="key" required/><input type="hidden" name="join-dual" value="{{ world.aid }}"/><input value="Join as Dual" type="submit"/>{% endif %}</td>
+            <td>{% if world.main %}{{ world.join }}{% endif %}</td>
             <td><form method="post"><input type="hidden" name="delete-world" value="{{ world.aid }}"/><input type="submit"/></td>
         </tr>
     {% endfor %}

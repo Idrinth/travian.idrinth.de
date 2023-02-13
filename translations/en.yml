@@ -505,3 +505,5 @@ alarm_info: To make the alarm work allow auto-play of audion for this website. T
 delete_world: Delete Worlddata
 total_traders: Total Traders
 total_traders_info: This is the total amount of traders required.
+dual: Dual
+dual_key: Dual Join Key
