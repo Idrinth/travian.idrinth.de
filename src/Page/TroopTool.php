@@ -290,7 +290,7 @@ AND user_world.`user`=:id');
                     ->execute([':world' => $post['imported-world'], ':id' => $user, ':x' => $row['x'], ':y' => $row['y'], ':name' => $row['name'], ':tribe' => $row['tribe']]);
             }
         }
-        $stmt = $this->database->prepare("SELECT * FROM troops WHERE (user=:id OR user IN (SELECT dual FROM user_world WHERE user=:id)) ORDER BY world DESC, tribe DESC, name ASC");
+        $stmt = $this->database->prepare("SELECT * FROM troops WHERE (user=:id OR user IN (SELECT `dual` FROM user_world WHERE user=:id)) ORDER BY world DESC, tribe DESC, name ASC");
         $stmt->execute([':id' => $_SESSION['id']]);
         $troopsData = [];
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
@@ -299,7 +299,7 @@ AND user_world.`user`=:id');
             $troopsData[$row['world']][$row['tribe']] = $troopsData[$row['world']][$row['tribe']] ?? [];
             $troopsData[$row['world']][$row['tribe']][] = $row;
         }
-        $stmt = $this->database->prepare("SELECT * FROM troop_updates WHERE (user=:id OR user IN (SELECT dual FROM user_world WHERE user=:id)) ORDER BY world DESC, `date` ASC");
+        $stmt = $this->database->prepare("SELECT * FROM troop_updates WHERE (user=:id OR user IN (SELECT `dual` FROM user_world WHERE user=:id)) ORDER BY world DESC, `date` ASC");
         $stmt->execute([':id' => $_SESSION['id']]);
         $charts = [];
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
