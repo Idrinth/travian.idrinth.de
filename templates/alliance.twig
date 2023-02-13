@@ -75,9 +75,9 @@
                 {% if player.main == 1 %}
                     {% if act.user == player.aid %}
                         <td>
-                            Updated {{ act.updated }}
+                            {{ act.updated }}
                         </td>
-                        <td title="Updated {{ act.updated }}">
+                        <td>
                             <a href="/troop-tool/{{ player.aid }}">
                                 {% if act.troops %}<div>{{ act.troops }} Troops</div>{% endif %}
                                 {% if act.settlers %}<div>{{ act.settlers }} Settlers</div>{% endif %}
