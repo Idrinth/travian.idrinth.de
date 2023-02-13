@@ -53,7 +53,7 @@
                 <select onchange="setCookie('world', this.value);lcation.reload();">
                     <option value="">{{ translations.select_world }}</option>
                     {% for w in worlds %}
-                        <option {% if w eq world %}selected {% endif %}}value="{{ w }}">{{ w }}</option>
+                        <option {% if w==world %}selected {% endif %}}value="{{ w }}">{{ w }}</option>
                     {% endfor %}
                 </select>
             </div>
