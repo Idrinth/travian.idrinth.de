@@ -78,12 +78,15 @@
                             {{ act.updated }}
                         </td>
                         <td>
-                            <a href="/troop-tool/{{ player.aid }}" title="{{ act.scouts }} Scouts\n{{ act.offensive }} Offensive\n{{ act.defensive }}\n{{ act.multipurpose }} Multipurpose">
-                                {% if act.troops %}<div>{{ act.troops }} Troops</div>{% endif %}
-                                {% if act.settlers %}<div>{{ act.settlers }} Settlers</div>{% endif %}
-                                {% if act.chiefs %}<div>{{ act.chiefs }} Chiefs</div>{% endif %}
-                                {% if act.rams %}<div>{{ act.rams }} Rams</div>{% endif %}
-                                {% if act.catapults %}<div>{{ act.catapults }} Catapults</div>{% endif %}
+                            <a href="/troop-tool/{{ player.aid }}" title="{{ act.scouts|number_format }} Scouts
+{{ act.offensive|number_format }} Offensive
+{{ act.defensive|number_format }} Defensive
+{{ act.multipurpose|number_format }} Multipurpose">
+                                {% if act.troops %}<div>{{ act.troops|number_format }} Troops</div>{% endif %}
+                                {% if act.settlers %}<div>{{ act.settlers|number_format }} Settlers</div>{% endif %}
+                                {% if act.chiefs %}<div>{{ act.chiefs|number_format }} Chiefs</div>{% endif %}
+                                {% if act.rams %}<div>{{ act.rams|number_format }} Rams</div>{% endif %}
+                                {% if act.catapults %}<div>{{ act.catapults|number_format }} Catapults</div>{% endif %}
                             </a>
                         </td>
                         {% set found=true %}
