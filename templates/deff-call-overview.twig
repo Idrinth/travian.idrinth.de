@@ -1,8 +1,8 @@
 {% include 'header.twig' %}
 <h2>{{ translations.deff_call_overview }}<select onchange="this.value ? window.location = 'https://travian.idrinth.de/deff-call-overview/' + this.value : window.location = 'https://travian.idrinth.de/deff-call-overview'">
-    <option{% if wrld.world==world %} selected{% endif %} value="">{{ translations.all_worlds }}</option>   
-    {% for wrld in worlds %}
-        <option{% if wrld.world==world %} selected{% endif %}>{{ wrld.world }}</option>   
+    <option value="">{{ translations.all_worlds }}</option>   
+    {% for wrld in deff_worlds %}
+        <option{% if wrld.world==deff_world %} selected{% endif %}>{{ wrld.world }}</option>   
 {% endfor %}</select></h2>
 <div class="grid2">
 {% for deff_call in deff_calls %}

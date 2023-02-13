@@ -47,8 +47,8 @@ GROUP BY aid');
             $stmt->execute([':id' => $_SESSION['id'], ':date' => date('y-m-d H:i:s', time() - 3600), ':world' => $world]);
             $data = [
                 'deff_calls' => $stmt->fetchAll(PDO::FETCH_ASSOC),
-                'world' => $world,
-                'worlds' => $worlds,
+                'deff_world' => $world,
+                'deff_worlds' => $worlds,
             ];
         } else {
             $stmt = $this->database->prepare('SELECT MAX(advanced) AS advanced,`key`, player,desiredTroops,desiredScouts,desiredHeroes,x,y,world,arrival,id,troops,scouts,heroes  FROM (
@@ -70,7 +70,7 @@ GROUP BY aid');
             $stmt->execute([':id' => $_SESSION['id'], ':date' => date('y-m-d H:i:s', time() - 3600)]);
             $data = [
                 'deff_calls' => $stmt->fetchAll(PDO::FETCH_ASSOC),
-                'worlds' => $worlds,
+                'deff_worlds' => $worlds,
             ];
         }
         $this->twig->display('deff-call-overview.twig', $data);
