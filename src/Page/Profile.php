@@ -64,10 +64,10 @@ class Profile
             $data = $stmt->fetchColumn() ?: 0;
             if ($data) {
                 $this->database
-                    ->prepare('UPDATE user_world SET main=1, dual=0 WHERE dual=:dual AND world=:world')
-                    ->execute([':dual' => $data, ':world' => $world]);
+                    ->prepare('UPDATE user_world SET main=1, `dual`=0 WHERE `dual`=:dual AND world=:world')
+                    ->execute([':dual' => $_SESSION['id'], ':world' => $world]);
                 $this->database
-                    ->prepare('UPDATE user_world SET main=0, dual=:dual WHERE user=:user AND world=:world')
+                    ->prepare('UPDATE user_world SET main=0, `dual`=:dual WHERE user=:user AND world=:world')
                     ->execute([':dual' => $data, ':user' => $_SESSION['id'], ':world' => $world]);
             }
         } elseif(isset($post['world']) && isset($post['name'])) {
