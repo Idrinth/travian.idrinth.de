@@ -59,10 +59,13 @@ class Profile
                 ->execute([':user' => $_SESSION['id'], ':aid' => $post['delete-world']]);
         } elseif (isset($post['join-dual']) && isset($post['key'])) {
             $world = World::toWorld($post['world']);
-            $stmt = $this->database->prepare('SELECT `user` FROM user_world WHERE user<>:user AND world=:world AND `join`=:key');
+            $stmt = $this->database->prepare('SELECT `user` FROM user_world WHERE main AND user<>:user AND world=:world AND `join`=:key');
             $stmt->execute([':user' => $_SESSION['id'], ':world' => $world]);
             $data = $stmt->fetchColumn() ?: 0;
             if ($data) {
+                $this->database
+                    ->prepare('UPDATE user_world SET main=1, dual=0 WHERE dual=:dual AND world=:world')
+                    ->execute([':dual' => $data, ':world' => $world]);
                 $this->database
                     ->prepare('UPDATE user_world SET main=0, dual=:dual WHERE user=:user AND world=:world')
                     ->execute([':dual' => $data, ':user' => $_SESSION['id'], ':world' => $world]);
