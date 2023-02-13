@@ -25,8 +25,10 @@ class Twig extends Environment
     {
         $context['lang'] = $_COOKIE['lang'] ?? 'en';
         $context['style'] = $_COOKIE['style'] ?? 'light';
+        $context['world'] = $_COOKIE['world'] ?? 'world';
         $context['translations'] = Translations::get($_COOKIE['lang'] ?? 'en');
         $context['session'] = $_SESSION;
+        $context['worlds'] = World::getAll();
         echo (new HtmlMin())->minify(parent::render($name, $context));
     }
 }

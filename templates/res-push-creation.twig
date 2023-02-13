@@ -7,7 +7,7 @@
     <fieldset>
         <legend>{{ translations.main }}</legend>
         <div class="split2">
-            <label title="ts9.x1.europe.travian.com">{{ translations.world }}*<input value="{{ inputs.world }}" required name="world"/></label>
+            <label title="ts9.x1.europe.travian.com">{{ translations.world }}*<input value="{% if inputs.world %}{{ inputs.world }}{% else %}{{ world }}{% endif %}" required name="world"/></label>
             <label>X<input required name="x" value="{{ inputs.x }}" type="number"/></label>
             <label>Y<input required name="y" value="{{ inputs.y }}" type="number"/></label>
             <label>{{ translations.player }}<input required name="player"/></label>

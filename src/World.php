@@ -7,6 +7,16 @@ use Webmozart\Assert\Assert;
 
 class World
 {
+    public static function getAll(PDO $database)
+    {
+        $stmt = $database
+            ->prepare('SELECT world FROM world_updates')
+            ->execute();
+        return array_map(function(array $row) {
+            return $row['world'];
+        }, $stmt->fetchAll(PDO::FETCH_ASSOC));
+    }
+
     public static function toWorld(string $input): string
     {
         if (strpos($input, 'https://') === 0) {

@@ -30,6 +30,14 @@ class Application
             'httponly' => false,
             'samesite' => 'Strict'
         ]);
+        setcookie('world', $_COOKIE['world']??'', [
+            'expires' => time() +self::LIFETIME,
+            'path' => '/',
+            'domain' => 'travian.idrinth.de',
+            'secure' => true,
+            'httponly' => false,
+            'samesite' => 'Strict'
+        ]);
         setcookie('style', $_COOKIE['style']??'light', [
             'expires' => time() +self::LIFETIME,
             'path' => '/',

@@ -32,7 +32,11 @@
         <legend>{{ translations.main }}</legend>
         <div class="split2">
             <label>{{ translations.world }}<select name="world">
-                {% for world in worlds %}<option{% if world.world==inputs.world %} selected{% endif %}>{{ world.world }}</option>{% endfor %}
+                {% if inputs.world %}
+                    {% for world in worlds %}<option{% if world.world==inputs.world %} selected{% endif %}>{{ world.world }}</option>{% endfor %}
+                {% else %}
+                    {% for world in worlds %}<option{% if world.world==world %} selected{% endif %}>{{ world.world }}</option>{% endfor %}
+                {% endif %}
             </select></label>
             <label>{{ translations.distance }}<input type="number" value="{{ inputs.distance }}" name="distance" min="1"/></label>
             <label>X<input type="number" value="{{ inputs.x }}" name="x"/></label>
