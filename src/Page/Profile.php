@@ -60,7 +60,7 @@ class Profile
         } elseif (isset($post['join-dual']) && isset($post['key'])) {
             $world = World::toWorld($post['join-dual']);
             $stmt = $this->database->prepare('SELECT `user` FROM user_world WHERE main AND user<>:user AND world=:world AND `join`=:key');
-            $stmt->execute([':user' => $_SESSION['id'], ':world' => $world]);
+            $stmt->execute([':user' => $_SESSION['id'], ':world' => $world, ':key' => $post['key']]);
             $data = $stmt->fetchColumn() ?: 0;
             if ($data) {
                 $this->database
