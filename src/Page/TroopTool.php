@@ -256,8 +256,8 @@ AND user_world.`user`=:id');
             $stmt->execute([':world' => $post['imported-world'], ':id' => $_SESSION['id']]);
             foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
                 $this->database
-                    ->prepare('INSERT INTO troops (`user`,`world`,`x`,`y`,`name`) VALUES (:id,:world,:x,:y,:name) ON DUPLICATE KEY UPDATE `name`=:name')
-                    ->execute([':world' => $post['imported-world'], ':id' => $_SESSION['id'], ':x' => $row['x'], ':y' => $row['y'], ':name' => $row['name']]);
+                    ->prepare('INSERT INTO troops (`user`,`world`,`x`,`y`,`name`,`tribe`) VALUES (:id,:world,:x,:y,:name,:tribe) ON DUPLICATE KEY UPDATE `name`=:name')
+                    ->execute([':world' => $post['imported-world'], ':id' => $_SESSION['id'], ':x' => $row['x'], ':y' => $row['y'], ':name' => $row['name'], ':tribe' => $row['tribe']]);
             }
         }
         $stmt = $this->database->prepare("SELECT * FROM troops WHERE user=:id ORDER BY world DESC, tribe DESC, name ASC");
