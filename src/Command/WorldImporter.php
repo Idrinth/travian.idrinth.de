@@ -22,6 +22,7 @@ class WorldImporter
         $multicurl = new MultiCurl();
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
             $multicurl->addGet('https://'.$row['world'].'/map.sql')->success(function(Curl $curl) use($row) {
+                try {
                 $world = $row['world'];
                 $hash = md5($curl->response);
                 $this->database
@@ -82,7 +83,6 @@ class WorldImporter
                     }
                 }
                 foreach ($this->database->query("SELECT DISTINCT tribe,village_id,player_id,population,village_name,x,y FROM `$world`")->fetchAll(PDO::FETCH_ASSOC) as $row) {
-                    var_dump($row['tribe']);
                     $this->database
                         ->prepare('INSERT INTO world_villages (tribe,population,id,x,y,world,name,day,player,latest) VALUES(:tribe,:population,:id,:x,:y,:world,:name,:today,:player,1)')
                         ->execute([
@@ -96,6 +96,10 @@ class WorldImporter
                             ':world' => $world,
                             ':today' => date('Y-m-d')
                         ]);
+                }
+                } catch (\Exception $e) {
+                    var_dump($e);
+                    var_dump($this->database->errorInfo());
                 }
             });
         }
