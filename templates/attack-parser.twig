@@ -9,7 +9,7 @@
         <td rowspan="2"><form method="post" target="_blank" action="/deff-call">
             <fieldset>
                 <legend>{{ translations.main }}</legend>
-                <label title="ts9.x1.europe.travian.com">{{ translations.world }}*<input value="{% if inputs.world %}{{ inputs.world }}{% else %}{{ world }}{% endif %}" required name="world"/></label>
+                <label title="ts9.x1.europe.travian.com">{{ translations.world }}*<input value="{% if inputs.world %}{{ inputs.world }}{% else %}{{ world }}{% endif %}"  list="world-datalist" required name="world"/></label>
                 <input required name="x" value="{{ attack.to.x }}" type="hidden"/>
                 <input required name="y" value="{{ attack.to.y }}" type="hidden"/>
                 <input type="hidden" value="{{ player }}" name="player"/>

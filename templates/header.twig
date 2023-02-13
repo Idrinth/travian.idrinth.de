@@ -56,6 +56,11 @@
                         <option {% if w==world %}selected {% endif %}}value="{{ w }}">{{ w }}</option>
                     {% endfor %}
                 </select>
+                <datalist id="world-datalist">
+                    {% for w in worlds %}
+                        <option value="{{ w }}"/>
+                    {% endfor %}
+                </datalist>
             </div>
         </div>
         <nav>

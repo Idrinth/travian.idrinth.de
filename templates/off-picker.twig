@@ -37,7 +37,7 @@
             <label>{{ translations.min_offence }}<input value="{{ inputs.off }}" min="0" type="number" name="off"/></label>
             <label>{{ translations.min_rams }}<input value="{{ inputs.rams }}" min="0" type="number" name="rams"></label>
             <label>{{ translations.min_catapults }}<input value="{{ inputs.catapults }}" min="0" type="number" name="catapults"></label>
-            <label>{{ translations.world }}<input value="{% if inputs.world %}{{ inputs.world }}{% else %}{{ world }}{% endif %}" name="world"></label>
+            <label>{{ translations.world }}<input list="world-datalist" value="{% if inputs.world %}{{ inputs.world }}{% else %}{{ world }}{% endif %}" name="world"></label>
         </div>
         <input type="submit"/>
     </fieldset>
