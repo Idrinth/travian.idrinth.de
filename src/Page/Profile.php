@@ -101,9 +101,11 @@ class Profile
             . "AND user_alliance.user=:user"
         );
         $stmt2 = $this->database->prepare(
-            "SELECT * "
-            . "FROM user_world "
-            . "WHERE user=:user"
+            "SELECT a.*,GROUP_CONCAT(users.name,'#',users.discriminator) AS duals
+FROM user_world AS a
+LEFT JOIN user_world AS b ON a.`user`=b.dual
+LEFT JOIN users ON users.aid=b.`user`
+WHERE a.user=:user"
         );
         $stmt->execute([':user' => $_SESSION['id']]);
         $stmt1->execute([':user' => $_SESSION['id']]);
