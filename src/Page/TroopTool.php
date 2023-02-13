@@ -4,6 +4,7 @@ namespace De\Idrinth\Travian\Page;
 
 use De\Idrinth\Travian\Troops;
 use De\Idrinth\Travian\Twig;
+use De\Idrinth\Travian\User;
 use De\Idrinth\Travian\World;
 use DOMDocument;
 use PDO;
@@ -27,9 +28,13 @@ class TroopTool
         $this->database = $database;
         $this->twig = $twig;
     }
-    private function updateStatistics()
-    {        
-        $stmt = $this->database->prepare("SELECT * FROM troops WHERE user=:user");
+    private function updateStatistics(User $user)
+    {
+        $stmt = $this->database->prepare("SELECT * FROM troops WHERE `user` IN(
+	SELECT `dual`
+	FROM user_world
+	WHERE `user`=:user
+) OR `user`=:user");
         $stmt->execute([':user' => $_SESSION['id']]);
         $worlds = [];
         $deff = [];
@@ -68,20 +73,24 @@ class TroopTool
                 ->prepare('UPDATE troops SET off=:off,deff=:deff WHERE aid=:aid')
                 ->execute([':aid' => $row['aid'], ':off' => $voff, ':deff' => $vdeff]);
         }
-        $stmt = $this->database->prepare("SELECT aid,world FROM troop_updates WHERE user=:user AND date=:today");
+        $stmt = $this->database->prepare("SELECT aid,world FROM troop_updates WHERE (`user` IN(
+	SELECT `dual`
+	FROM user_world
+	WHERE `user`=:user
+) OR `user`=:user) AND date=:today");
         $stmt->execute([':user' => $_SESSION['id'], ':today' => date('Y-m-d')]);
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
             if (isset($worlds[$row['world']])) {
                 $this->database
-                    ->prepare('UPDATE troop_updates SET offensive=:off,multipurpose=:multi, defensive=:deff, scouts=:scouts WHERE aid=:aid')
+                    ->prepare('UPDATE troop_updates SET offensive=:off,multipurpose=:multi, defensive=:deff, scouts=:scouts, latest=1 WHERE aid=:aid')
                     ->execute([':aid' => $row['aid'], ':off' => $off[$row['world']], ':multi' => $multi[$row['world']], ':deff' => $deff[$row['world']], ':scouts' => $scouts[$row['world']]]);
                 unset($worlds[$row['world']]);
             }
         }
         foreach ($worlds as $world) {
             $this->database
-                ->prepare('INSERT INTO troop_updates (multipurpose,user, world, offensive, defensive, scouts, `date`) VALUES (:multi, :id, :world, :off, :deff, :scouts, :date)')
-                ->execute([':date' => date('Y-m-d'),':id' => $_SESSION['id'], ':world' => $world, ':multi' => $multi[$world]??0, ':off' => $off[$world]??0, ':deff' => $deff[$world]??0, ':scouts' => $scouts[$world]??0]);
+                ->prepare('INSERT INTO troop_updates (multipurpose,user, world, offensive, defensive, scouts, `date`,latest) VALUES (:multi, :id, :world, :off, :deff, :scouts, :date, 1)')
+                ->execute([':date' => date('Y-m-d'),':id' => $user->getId($world), ':world' => $world, ':multi' => $multi[$world]??0, ':off' => $off[$world]??0, ':deff' => $deff[$world]??0, ':scouts' => $scouts[$world]??0]);
         }
     }
     public function run(array $post, $id = 0): void
@@ -130,16 +139,25 @@ ORDER BY troops.tribe DESC, troops.name ASC");
             return;
         } elseif (isset($post['aid']) && isset($post['type']) && $post['type']==='delete') {
             $this->database
-                ->prepare("DELETE FROM troops WHERE user=:id AND aid=:aid")
+                ->prepare("DELETE FROM troops WHERE (user=:id OR user IN (SELECT `dual` FROM user_world WHERE user=:id)) AND aid=:aid")
                 ->execute([':id' => $_SESSION['id'], ':aid' => $post['aid']]);
         } elseif (isset($post['world']) && isset($post['type']) && $post['type']==='delete') {
             $this->database
-                ->prepare("DELETE FROM troops WHERE user=:id AND world=:world")
+                ->prepare("DELETE FROM troops WHERE (user=:id OR user IN (SELECT `dual` FROM user_world WHERE user=:id)) AND world=:world")
                 ->execute([':id' => $_SESSION['id'], ':world' => $post['world']]);
         } elseif (isset($post['world']) && isset($post['tribe']) && isset($post['name']) && isset($post['x']) && isset($post['y'])) {
-            $stmt = $this->database->prepare("SELECT 1 FROM troops WHERE user=:user AND world=:world AND x=:x AND y=:y");
+            $stmt = $this->database->prepare('SELECT IF(`main`,`user`,`dual`) as id FROM user_world.`user`=:id AND user_world.world=:world');
+            $stmt->execute([':user' => $_SESSION['id'], ':world' => World::toWorld($post['world']),]);
+            $user = intval($stmt->fetch(\PDO::FETCH_COLUMN), 10) ?: $_SESSION['id'];
+            $stmt = $this->database->prepare("SELECT 1
+FROM troops
+LEFT JOIN user_world ON user_world.user=troops.user AND user_world.world=troops.world
+WHERE troops.user=:id
+AND troops.world=:world
+AND x=:X
+AND y=:y");
             $stmt->execute([
-                ':user' => $_SESSION['id'],
+                ':user' => $user,
                 ':world' => World::toWorld($post['world']),
                 ':y' => $post['y'],
                 ':x' => $post['x'],
@@ -148,7 +166,7 @@ ORDER BY troops.tribe DESC, troops.name ASC");
                 $this->database
                     ->prepare("INSERT INTO troops(user,world,x,y,name, tribe) VALUES (:user,:world,:x,:y,:name,:tribe)")
                     ->execute([
-                        ':user' => $_SESSION['id'],
+                        ':user' => $user,
                         ':world' => World::toWorld($post['world']),
                         ':y' => $post['y'],
                         ':x' => $post['x'],
@@ -158,12 +176,18 @@ ORDER BY troops.tribe DESC, troops.name ASC");
             }
         } elseif (isset($post['soldier1']) && is_array($post['soldier1'])) {
             foreach ($post['soldier1'] as $aid => $data) {
+                $stmt = $this->database->prepare('SELECT world FROM troops WHERE aid=:aid');
+                $stmt->execute([':aid' => $aid]);
+                $world = $stmt->fetch(\PDO::FETCH_COLUMN);
+                $stmt = $this->database->prepare('SELECT IF(`main`,`user`,`dual`) as id FROM user_world.`user`=:id AND user_world.world=:world');
+                $stmt->execute([':user' => $_SESSION['id'], ':world' => $world,]);
+                $user = intval($stmt->fetch(\PDO::FETCH_COLUMN), 10) ?: $_SESSION['id'];
                 $this->database
                     ->prepare("UPDATE troops "
                         . "SET tournament_square=:tournament_square,soldier1=:soldier1, soldier2=:soldier2, soldier3=:soldier3, soldier4=:soldier4, soldier5=:soldier5, soldier6=:soldier6, ram=:ram, catapult=:catapult, settler=:settler, chief=:chief, hero=:hero "
                         . "WHERE aid=:aid AND user=:user")
                     ->execute([
-                        ':user' => $_SESSION['id'],
+                        ':user' => $user,
                         ':aid' => $aid,
                         ':soldier1' => $post['soldier1'][$aid] ?? 0,
                         ':soldier2' => $post['soldier2'][$aid] ?? 0,
@@ -184,11 +208,14 @@ ORDER BY troops.tribe DESC, troops.name ASC");
             $doc = new DOMDocument();
             if (true === $doc->loadHTML($post['source'])) {
                 $villages = $this->getVillages($doc);
+                $stmt = $this->database->prepare('SELECT IF(`main`,`user`,`dual`) as id FROM user_world.`user`=:id AND user_world.world=:world');
+                $stmt->execute([':user' => $_SESSION['id'], ':world' => $world,]);
+                $user = intval($stmt->fetch(\PDO::FETCH_COLUMN), 10) ?: $_SESSION['id'];
                 $tribe = $this->getTribe($doc);
                 foreach ($villages as $village) {
                     $stmt = $this->database->prepare("SELECT 1 FROM troops WHERE user=:user AND world=:world AND x=:x AND y=:y");
                     $stmt->execute([
-                        ':user' => $_SESSION['id'],
+                        ':user' => $user,
                         ':world' => World::toWorld($post['world']),
                         ':y' => $village['y'],
                         ':x' => $village['x'],
@@ -197,7 +224,7 @@ ORDER BY troops.tribe DESC, troops.name ASC");
                         $this->database
                             ->prepare("INSERT INTO troops(user,world,x,y,name, tribe) VALUES (:user,:world,:x,:y,:name,:tribe)")
                             ->execute([
-                                ':user' => $_SESSION['id'],
+                                ':user' => $user,
                                 ':world' => World::toWorld($post['world']),
                                 ':y' => $village['y'],
                                 ':x' => $village['x'],
@@ -219,7 +246,7 @@ ORDER BY troops.tribe DESC, troops.name ASC");
                         $this->database
                             ->prepare("UPDATE troops SET soldier1=:soldier1,soldier2=:soldier2,soldier3=:soldier3,soldier4=:soldier4,soldier5=:soldier5,soldier6=:soldier6,settler=:settler,chief=:chief,hero=:hero,ram=:ram,catapult=:catapult,name=:name WHERE user=:user AND world=:world AND x=:x AND y=:y")
                             ->execute([
-                                ':user' => $_SESSION['id'],
+                                ':user' => $user,
                                 ':world' => World::toWorld($post['world']),
                                 ':y' => $villages[$i-1]['y'],
                                 ':x' => $villages[$i-1]['x'],
@@ -241,6 +268,9 @@ ORDER BY troops.tribe DESC, troops.name ASC");
                 $this->updateStatistics();
             }
         } elseif (isset($post['imported-world']) && $post['imported-world']) {
+            $stmt = $this->database->prepare('SELECT IF(`main`,`user`,`dual`) as id FROM user_world.`user`=:id AND user_world.world=:world');
+            $stmt->execute([':user' => $_SESSION['id'], ':world' => $world,]);
+            $user = intval($stmt->fetch(\PDO::FETCH_COLUMN), 10) ?: $_SESSION['id'];
             $stmt = $this->database->prepare('SELECT world_villages.`name`,`x`,`y`,tribe
 FROM world_players
 INNER JOIN world_villages
@@ -257,10 +287,10 @@ AND user_world.`user`=:id');
             foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
                 $this->database
                     ->prepare('INSERT INTO troops (`user`,`world`,`x`,`y`,`name`,`tribe`) VALUES (:id,:world,:x,:y,:name,:tribe) ON DUPLICATE KEY UPDATE `name`=:name')
-                    ->execute([':world' => $post['imported-world'], ':id' => $_SESSION['id'], ':x' => $row['x'], ':y' => $row['y'], ':name' => $row['name'], ':tribe' => $row['tribe']]);
+                    ->execute([':world' => $post['imported-world'], ':id' => $user, ':x' => $row['x'], ':y' => $row['y'], ':name' => $row['name'], ':tribe' => $row['tribe']]);
             }
         }
-        $stmt = $this->database->prepare("SELECT * FROM troops WHERE user=:id ORDER BY world DESC, tribe DESC, name ASC");
+        $stmt = $this->database->prepare("SELECT * FROM troops WHERE (user=:id OR user IN (SELECT dual FROM user_world WHERE user=:id)) ORDER BY world DESC, tribe DESC, name ASC");
         $stmt->execute([':id' => $_SESSION['id']]);
         $troopsData = [];
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
@@ -269,7 +299,7 @@ AND user_world.`user`=:id');
             $troopsData[$row['world']][$row['tribe']] = $troopsData[$row['world']][$row['tribe']] ?? [];
             $troopsData[$row['world']][$row['tribe']][] = $row;
         }
-        $stmt = $this->database->prepare("SELECT * FROM troop_updates WHERE user=:id ORDER BY world DESC, `date` ASC");
+        $stmt = $this->database->prepare("SELECT * FROM troop_updates WHERE (user=:id OR user IN (SELECT dual FROM user_world WHERE user=:id)) ORDER BY world DESC, `date` ASC");
         $stmt->execute([':id' => $_SESSION['id']]);
         $charts = [];
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
