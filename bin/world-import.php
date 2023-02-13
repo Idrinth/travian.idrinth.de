@@ -13,7 +13,6 @@ date_default_timezone_set('UTC');
     $_ENV['DATABASE_USER'],
     $_ENV['DATABASE_PASSWORD'],
     [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
     ]
 )))->import();
