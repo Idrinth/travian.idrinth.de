@@ -10,8 +10,8 @@ class World
     public static function getAll(PDO $database)
     {
         $stmt = $database
-            ->prepare('SELECT world FROM world_updates')
-            ->execute();
+            ->prepare('SELECT world FROM world_updates');
+        $stmt->execute();
         return array_map(function(array $row) {
             return $row['world'];
         }, $stmt->fetchAll(PDO::FETCH_ASSOC));
