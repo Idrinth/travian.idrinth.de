@@ -85,7 +85,7 @@ class WorldImporter
                     $this->database
                         ->prepare('INSERT INTO world_villages (tribe,population,id,x,y,world,name,day,player,latest) VALUES(:tribe,:population,:id,:x,:y,:world,:name,:today,:player,1)')
                         ->execute([
-                            ':tribe' => [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 5 => 'natar', 6 => 'egyptian', 7 => 'hun'][intval($row['tribe'], 10)],
+                            ':tribe' => [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 5 => 'natar', 6 => 'egyptian', 7 => 'hun', 8 => 'spartan'][intval($row['tribe'], 10)],
                             ':population' => $row['population'],
                             ':name' => $row['village_name'],
                             ':x' => $row['x'],
