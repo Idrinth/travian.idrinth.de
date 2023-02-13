@@ -71,7 +71,7 @@
         {% if mayPlan %}
             {% set found=false %}
             {% for act in troops %}
-                {% if act.main == 1 %}
+                {% if player.main == 1 %}
                     {% if act.user == player.aid %}
                         <td title="Updated {{ act.updated }}">
                             <a href="/troop-tool/{{ player.aid }}">
@@ -91,7 +91,7 @@
             {% endif %}
         {% endif %}
         <td>
-            {% if act.main == 1 %}
+            {% if player.main == 1 %}
                 {% if player.fighting_strength %}<div>{{ player.fighting_strength }} Fighting Strength</div>{% endif %}
                 {% if player.off_bonus %}<div>{{ player.off_bonus }} Off-Bonus</div>{% endif %}
                 {% if player.deff_bonus %}<div>{{ player.deff_bonus }} Def-Bonus</div>{% endif %}
@@ -99,12 +99,12 @@
             {% endif %}
         </td>
         <td>
-            {% if act.main == 1 %}
+            {% if player.main == 1 %}
                 {{ player.population }}
             {% endif %}
         </td>
         <td>
-            {% if act.main == 1 %}
+            {% if player.main == 1 %}
                 {{ player.allianceName }}
             {% endif %}
         </td>
