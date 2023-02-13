@@ -47,6 +47,7 @@ use De\Idrinth\Travian\Twig;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+$app = new Application();
 $pdo = new LazyPDO(
     'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
     $_ENV['DATABASE_USER'],
@@ -56,7 +57,7 @@ $pdo = new LazyPDO(
         PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
     ]
 );
-(new Application())
+$app
     ->register($pdo)
     ->register(new Twig($pdo))
     ->register(new DistanceCalculator())
