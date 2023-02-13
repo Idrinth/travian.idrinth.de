@@ -1,8 +1,8 @@
 {% include 'header.twig' %}
 <h2>{{ translations.troop_tool }}</h2>
 {% set lastWorld='' %}
-{% for world,tribes in troops %}
-    <h3>{{ world }}</h3>
+{% for woerld,tribes in troops %}
+    <h3>{{ woerld }}</h3>
     {% for tribe,villages in tribes %}
         <h4>{{ translations[tribe ~ 's'] }}</h4>
         <form method="post">
@@ -42,10 +42,10 @@
             </table>
             <input type="submit" value="Update"/>
         </form>
-        <canvas id="chart-{{ world|replace({'.': '-'}) }}"></canvas>
+        <canvas id="chart-{{ woerld|replace({'.': '-'}) }}"></canvas>
         <script>
             onExists('Chart', () => {
-          new Chart('chart-{{ world|replace({'.': '-'}) }}', {
+          new Chart('chart-{{ woerld|replace({'.': '-'}) }}', {
             type: 'line',
             options: {
               scales: {
@@ -62,31 +62,31 @@
               }
             },
             data: {
-              labels: {{ charts[world].labels|json_encode()|raw }},
+              labels: {{ charts[woerld].labels|json_encode()|raw }},
               datasets: [{
                 label: 'Offence',
-                data: {{ charts[world].offence|json_encode()|raw }},
+                data: {{ charts[woerld].offence|json_encode()|raw }},
                 fill: true,
                 borderColor: 'rgb(192, 75, 75)',
                 backgroundColor: 'rgba(192, 75, 75, 0.5)',
                 tension: 0.1
               },{
                 label: 'Multifunctional',
-                data: {{ charts[world].multi|json_encode()|raw }},
+                data: {{ charts[woerld].multi|json_encode()|raw }},
                 fill: true,
                 borderColor: 'rgb(192, 75, 192)',
                 backgroundColor: 'rgb(192, 75, 192, 0.5)',
                 tension: 0.1
               },{
                 label: 'Defence',
-                data: {{ charts[world].defence|json_encode()|raw }},
+                data: {{ charts[woerld].defence|json_encode()|raw }},
                 fill: true,
                 borderColor: 'rgb(75, 75, 192)',
                 backgroundColor: 'rgb(75, 75, 192, 0.5)',
                 tension: 0.1
               },{
                 label: 'Scouts',
-                data: {{ charts[world].scouts|json_encode()|raw }},
+                data: {{ charts[woerld].scouts|json_encode()|raw }},
                 fill: true,
                 borderColor: 'rgb(75, 192, 75)',
                 backgroundColor: 'rgb(75, 192, 75, 0.5)',
@@ -106,7 +106,7 @@
     <fieldset>
         <legend>{{ translations.main }}</legend>
         <div class="split2">
-            <label title="ts1.x1.europe.travian.com">{{ translations.world }}*<input list="world-datalist" value=""{{ world }} type="text" name="world"/></label>
+            <label title="ts1.x1.europe.travian.com">{{ translations.world }}*<input list="world-datalist" value="{{ world }}" type="text" name="world"/></label>
             <label title="{{ translations.plus_troop_overview }}">{{ translations.source }}*<textarea name="source"></textarea></label>
         </div>
         <input type="submit"/>
@@ -117,8 +117,8 @@
     <form method="post">
         <div class="split2">
             <label>{{ translations.world }}<select name="world">
-                {% for world,tribes in troops %}
-                    <option value="{{ world }}">{{ world }}</option>
+                {% for woerld,tribes in troops %}
+                    <option value="{{ woerld }}">{{ woerld }}</option>
                 {% endfor %}
             </select></label>
         </div>
@@ -129,7 +129,7 @@
     <form method="post">
         <div class="split2">
             <label>{{ translations.village }}<select name="aid">
-                    {% for world,tribes in troops %}
+                    {% for woerld,tribes in troops %}
                         {% for tribe,villages in tribes %}
                             {% for village in villages %}
                                 <option value="{{ village.aid }}">{{ village.world }}: {{ village.name }} ({{ village.x }}|{{ village.y }})</option>
