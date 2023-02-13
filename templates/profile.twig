@@ -5,8 +5,8 @@
     <tr><th>{{ translations.world }}</th><th>{{ translations.name }}</th><th>{{ translations.dual }}</th><th>{{ translations.dual_key }}</th><th>{{ translations.delete }}</th></tr>
     {% for wrld in user_worlds %}
         <tr>
-            <th>{{ wrld.world }}</th>
-            <td>{{ wrld.name }}{% if wrld.duals %} ({{ wrld.duals }}){% endif %}</td>
+            <th>{{ wrld.world }}{% if wrld.duals %} +({{ wrld.duals }}){% endif %}</th>
+            <td>{{ wrld.name }}</td>
             <td>{% if wrld.dual %}Dual{% else %}<form method="post"><input placeholder="{{ translations.dual_key }}" type="text" name="key" required/><input type="hidden" name="join-dual" value="{{ wrld.world }}"/><input value="Join as Dual" type="submit"/>{% endif %}</td>
             <td>{% if wrld.main %}{{ wrld.join }}{% endif %}</td>
             <td><form method="post"><input type="hidden" name="delete-world" value="{{ wrld.aid }}"/><input type="submit"/></td>
