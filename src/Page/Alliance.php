@@ -67,7 +67,7 @@ class Alliance
                         ->execute([':alliance' => $alliance['aid'], ':user' => $post['user'], ':rank' => $post['rank']]);
                 }
             }
-            $stmt = $this->database->prepare('SELECT user_world.name,user_alliance.*,my_hero.resources,my_hero.off_bonus,my_hero.deff_bonus,my_hero.fighting_strength, users.aid, users.name as discord, users.discriminator, SUM(world_villages.population) AS population, world_alliances.name AS allianceName
+            $stmt = $this->database->prepare('SELECT user_world.name user_world.main,user_alliance.*,my_hero.resources,my_hero.off_bonus,my_hero.deff_bonus,my_hero.fighting_strength, users.aid, users.name as discord, users.discriminator, SUM(world_villages.population) AS population, world_alliances.name AS allianceName
 FROM user_alliance
 INNER JOIN users ON users.aid=user_alliance.user
 LEFT JOIN user_world ON users.aid=user_world.user AND user_world.world=:world
