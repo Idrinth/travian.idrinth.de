@@ -25,6 +25,7 @@
         <th>{{ translations.rank }}</th>
         <th title="{{ translations.activity }}">AS</th>
         {% if mayPlan %}
+            <th>{{ translations.updated }}</th>
             <th>{{ translations.troops }}</th>
         {% endif %}
         <th>{{ translations.hero }}</th>
@@ -73,6 +74,9 @@
             {% for act in troops %}
                 {% if player.main == 1 %}
                     {% if act.user == player.aid %}
+                        <td>
+                            Updated {{ act.updated }}
+                        </td>
                         <td title="Updated {{ act.updated }}">
                             <a href="/troop-tool/{{ player.aid }}">
                                 {% if act.troops %}<div>{{ act.troops }} Troops</div>{% endif %}
@@ -87,6 +91,7 @@
                 {% endif %}
             {% endfor %}
             {% if not found %}
+                <td></td>
                 <td></td>
             {% endif %}
         {% endif %}
