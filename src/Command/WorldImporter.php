@@ -22,7 +22,6 @@ class WorldImporter
         $multicurl = new MultiCurl();
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
             $multicurl->addGet('https://'.$row['world'].'/map.sql')->success(function(Curl $curl) use($row) {
-                try {
                 $world = $row['world'];
                 $hash = md5($curl->response);
                 $this->database
@@ -96,10 +95,6 @@ class WorldImporter
                             ':world' => $world,
                             ':today' => date('Y-m-d')
                         ]);
-                }
-                } catch (\Exception $e) {
-                    var_dump($e);
-                    var_dump($this->database->errorInfo());
                 }
             });
         }
