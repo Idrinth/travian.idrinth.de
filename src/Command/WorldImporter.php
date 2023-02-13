@@ -24,12 +24,12 @@ class WorldImporter
             $multicurl->addGet('https://'.$row['world'].'/map.sql')->success(function(Curl $curl) use($row) {
                 $world = $row['world'];
                 $hash = md5($curl->response);
-                if ($row['hash'] === $hash) {
-                    return;
-                }
                 $this->database
                     ->prepare('UPDATE world_updates SET updated=:now,hash=:hash WHERE world=:world')
                     ->execute([':now' => date('Y-m-d H:i:s'), ':hash' => $hash, ':world' => $world]);
+                if ($row['hash'] === $hash) {
+                    return;
+                }
                 $this->database
                     ->prepare('UPDATE world_alliances SET latest=0 WHERE world=:world')
                     ->execute([':world' => $world]);
