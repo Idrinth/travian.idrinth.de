@@ -111,7 +111,7 @@ class Profile
         $this->twig->display('profile.twig', [
             'deff_calls' => $stmt->fetchAll(PDO::FETCH_ASSOC),
             'alliances' => $stmt1->fetchAll(PDO::FETCH_ASSOC),
-            'worlds' => $stmt2->fetchAll(PDO::FETCH_ASSOC),
+            'user_worlds' => $stmt2->fetchAll(PDO::FETCH_ASSOC),
         ]);
     }
 }
