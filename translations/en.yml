@@ -508,3 +508,4 @@ total_traders_info: This is the total amount of traders required.
 dual: Dual
 dual_key: Dual Join Key
 select_world: Your Gameworld
+import_from_map_sql: Import villages from map.sql

@@ -240,6 +240,25 @@ ORDER BY troops.tribe DESC, troops.name ASC");
                 }
                 $this->updateStatistics();
             }
+        } elseif (isset($post['imported-world']) && $post['imported-world']) {
+            $stmt = $this->database->prepare('SELECT world_villages.`name`,`x`,`y`,tribe
+FROM world_players
+INNER JOIN world_villages
+ON world_players.id=world_villages.player
+AND world_players.latest
+AND world_villages.latest
+AND world_players.world=:world
+AND world_villages.world=:world
+INNER JOIN user_world
+ON user_world.world=world_players.world
+AND world_players.`name`=user_world.`name`
+AND user_world.`user`=:id');
+            $stmt->execute([':world' => $post['imported-world'], ':id' => $_SESSION['id']]);
+            foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+                $this->database
+                    ->prepare('INSERT INTO troops (`user`,`world`,`x`,`y`,`name`) VALUES (:id,:world,:x,:y,:name) ON DUPLICATE KEY UPDATE `name`=:name')
+                    ->execute([':world' => $post['imported-world'], ':id' => $_SESSION['id'], ':x' => $row['x'], ':y' => $row['y'], ':name' => $row['name']]);
+            }
         }
         $stmt = $this->database->prepare("SELECT * FROM troops WHERE user=:id ORDER BY world DESC, tribe DESC, name ASC");
         $stmt->execute([':id' => $_SESSION['id']]);
@@ -267,9 +286,12 @@ ORDER BY troops.tribe DESC, troops.name ASC");
             $charts[$row['world']]['scouts'][] = intval($row['scouts'], 10);
             $charts[$row['world']]['labels'][] = $row['date'];
         }
+        $stmt = $this->database->prepare('SELECT * FROM user_world WHERE `user`=:user');
+        $stmt->execute([':user' => $_SESSION['id']]);
         $this->twig->display('troop-tool.twig', [
             'troops' => $troopsData,
             'charts' => $charts,
+            'played_words' => $stmt->fetchAll(),
         ]);
     }
     private function getVillages(DOMDocument $doc): array

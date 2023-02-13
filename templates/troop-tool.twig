@@ -162,4 +162,17 @@
         <input type="submit"/>
     </fieldset>
 </form>
+<h3>{{ translations.import_from_map_sql }}</h3>
+<form method="post">
+    <fieldset>
+        <legend>{{ translations.main }}</legend>
+        <div class="split2">
+            <label>{{ translations.world }}<select name="imported-world">
+                {% for wrld in played_words %}
+                    <option value="{{ wrld.world }}">{{ wrld.world }}: {{ wrld.name }}</option>
+                {% endfor %}
+                </select></label>
+        <input type="submit"/>
+    </fieldset>
+</form>
 {% include 'footer.twig' %}
