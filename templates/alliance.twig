@@ -78,7 +78,7 @@
                             {{ act.updated }}
                         </td>
                         <td>
-                            <a href="/troop-tool/{{ player.aid }}">
+                            <a href="/troop-tool/{{ player.aid }}" title="{{ act.scouts }} Scouts\n{{ act.offensive }} Offensive\n{{ act.defensive }}\n{{ act.multipurpose }} Multipurpose">
                                 {% if act.troops %}<div>{{ act.troops }} Troops</div>{% endif %}
                                 {% if act.settlers %}<div>{{ act.settlers }} Settlers</div>{% endif %}
                                 {% if act.chiefs %}<div>{{ act.chiefs }} Chiefs</div>{% endif %}

@@ -136,10 +136,15 @@ GROUP BY user_alliance.`user`");
 	SUM(troops.chief) AS chiefs,
 	SUM(troops.ram) AS rams,
 	SUM(troops.catapult) AS catapults,
-        MAX(troops.updated) AS updated
+   MAX(troops.updated) AS updated,
+   troop_updates.offensive,
+   troop_updates.multipurpose,
+   troop_updates.defensive,
+   troop_updates.scouts
 FROM alliances
 INNER JOIN user_alliance ON user_alliance.alliance=alliances.aid
 INNER JOIN troops ON user_alliance.user=troops.user AND alliances.world=troops.world
+LEFT JOIN troop_updates ON troop_updates.user=troops.user AND troops.world=troop_updates.world AND troop_updates.latest
 WHERE alliances.aid=:aid
 GROUP BY user_alliance.user,alliances.aid");
             $stmt5->execute([':aid' => $alliance['aid']]);
