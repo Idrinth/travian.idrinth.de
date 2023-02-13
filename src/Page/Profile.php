@@ -58,7 +58,7 @@ class Profile
                 ->prepare('DELETE FROM user_world WHERE user=:user AND aid=:aid')
                 ->execute([':user' => $_SESSION['id'], ':aid' => $post['delete-world']]);
         } elseif (isset($post['join-dual']) && isset($post['key'])) {
-            $world = World::toWorld($post['world']);
+            $world = World::toWorld($post['join-dual']);
             $stmt = $this->database->prepare('SELECT `user` FROM user_world WHERE main AND user<>:user AND world=:world AND `join`=:key');
             $stmt->execute([':user' => $_SESSION['id'], ':world' => $world]);
             $data = $stmt->fetchColumn() ?: 0;
