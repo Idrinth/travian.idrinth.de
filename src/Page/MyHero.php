@@ -31,7 +31,7 @@ class MyHero
             $stmt->execute([':aid' => $post['aid']]);
             $world = $stmt->fetch(PDO::FETCH_COLUMN);
             $stmt = $this->database->prepare('SELECT IF(`main`,`user`,`dual`) as id FROM user_world WHERE user_world.`user`=:id AND user_world.world=:world');
-            $stmt->execute([':user' => $_SESSION['id'], ':world' => $world,]);
+            $stmt->execute([':id' => $_SESSION['id'], ':world' => $world,]);
             $user = intval($stmt->fetch(\PDO::FETCH_COLUMN), 10) ?: $_SESSION['id'];
             $this->database
                 ->prepare('UPDATE my_hero SET boot_bonus=:bb,standard_bonus=:sb,fighting_strength=:fs, off_bonus=:ob, deff_bonus=:db, resources=:r WHERE aid=:aid AND user=:user')
