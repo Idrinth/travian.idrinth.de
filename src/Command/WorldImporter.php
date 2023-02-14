@@ -82,6 +82,17 @@ class WorldImporter
                     }
                 }
                 foreach ($this->database->query("SELECT DISTINCT tribe,village_id,player_id,population,village_name,x,y FROM `$world`")->fetchAll(PDO::FETCH_ASSOC) as $row) {
+                    var_dump('INSERT INTO world_villages (tribe,population,id,x,y,world,name,day,player,latest) VALUES(:tribe,:population,:id,:x,:y,:world,:name,:today,:player,1)', [
+                            ':tribe' => [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 5 => 'natar', 6 => 'egyptian', 7 => 'hun'][intval($row['tribe'], 10)],
+                            ':population' => $row['population'],
+                            ':name' => $row['village_name'],
+                            ':x' => $row['x'],
+                            ':y' => $row['y'],
+                            ':id' => $row['village_id'],
+                            ':player' => $row['player_id'],
+                            ':world' => $world,
+                            ':today' => date('Y-m-d')
+                        ]);
                     $this->database
                         ->prepare('INSERT INTO world_villages (tribe,population,id,x,y,world,name,day,player,latest) VALUES(:tribe,:population,:id,:x,:y,:world,:name,:today,:player,1)')
                         ->execute([
