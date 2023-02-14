@@ -69,7 +69,7 @@ WHERE ' . (isset($post['no_natars']) && $post['no_natars'] == 1 ? 'a.id<>1 AND '
             }
             $data['inputs'] = $post;
         }
-        $data['worlds'] = $this->database
+        $data['inactive_worlds'] = $this->database
             ->query('SELECT DISTINCT world FROM world_villages')
             ->fetchAll(PDO::FETCH_ASSOC);
         $this->twig->display('inactive-search.twig', $data);
