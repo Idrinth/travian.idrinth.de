@@ -4,7 +4,6 @@ namespace De\Idrinth\Travian\Page;
 
 use De\Idrinth\Travian\Troops;
 use De\Idrinth\Travian\Twig;
-use De\Idrinth\Travian\User;
 use De\Idrinth\Travian\World;
 use DOMDocument;
 use PDO;
