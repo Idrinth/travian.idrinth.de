@@ -211,7 +211,7 @@ AND y=:y");
             if (true === $doc->loadHTML($post['source'])) {
                 $villages = $this->getVillages($doc);
                 $stmt = $this->database->prepare('SELECT IF(`main`,`user`,`dual`) as id FROM user_world WHERE user_world.`user`=:id AND user_world.world=:world');
-                $stmt->execute([':user' => $_SESSION['id'], ':world' => $post['world'],]);
+                $stmt->execute([':id' => $_SESSION['id'], ':world' => $post['world'],]);
                 $user = intval($stmt->fetch(\PDO::FETCH_COLUMN), 10) ?: $_SESSION['id'];
                 $tribe = $this->getTribe($doc);
                 foreach ($villages as $village) {
