@@ -52,7 +52,7 @@ class MyHero
 FROM my_hero
 LEFT JOIN user_world
 ON user_world.`dual`=my_hero.user AND user_world.world=my_hero.world
-WHERE my_hero.`user`=:USER OR user_world.`user`=:USER
+WHERE my_hero.`user`=:user OR user_world.`user`=:user
 ORDER BY my_hero.world DESC');
         $stmt->execute([':user' => $_SESSION['id']]);        
         $data['heroes'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
