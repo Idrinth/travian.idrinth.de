@@ -179,7 +179,7 @@ AND y=:y");
                 $stmt = $this->database->prepare('SELECT world FROM troops WHERE aid=:aid');
                 $stmt->execute([':aid' => $aid]);
                 $world = $stmt->fetch(\PDO::FETCH_COLUMN);
-                $stmt = $this->database->prepare('SELECT IF(`main`,`user`,`dual`) as id FROM user_world.`user`=:id AND user_world.world=:world');
+                $stmt = $this->database->prepare('SELECT IF(`main`,`user`,`dual`) as id FROM user_world WHERE user_world.`user`=:id AND user_world.world=:world');
                 $stmt->execute([':id' => $_SESSION['id'], ':world' => $world,]);
                 $user = intval($stmt->fetch(\PDO::FETCH_COLUMN), 10) ?: $_SESSION['id'];
                 $this->database
@@ -208,7 +208,7 @@ AND y=:y");
             $doc = new DOMDocument();
             if (true === $doc->loadHTML($post['source'])) {
                 $villages = $this->getVillages($doc);
-                $stmt = $this->database->prepare('SELECT IF(`main`,`user`,`dual`) as id FROM user_world.`user`=:id AND user_world.world=:world');
+                $stmt = $this->database->prepare('SELECT IF(`main`,`user`,`dual`) as id FROM user_world WHERE user_world.`user`=:id AND user_world.world=:world');
                 $stmt->execute([':user' => $_SESSION['id'], ':world' => $world,]);
                 $user = intval($stmt->fetch(\PDO::FETCH_COLUMN), 10) ?: $_SESSION['id'];
                 $tribe = $this->getTribe($doc);
@@ -268,7 +268,7 @@ AND y=:y");
                 $this->updateStatistics();
             }
         } elseif (isset($post['imported-world']) && $post['imported-world']) {
-            $stmt = $this->database->prepare('SELECT IF(`main`,`user`,`dual`) as id FROM user_world.`user`=:id AND user_world.world=:world');
+            $stmt = $this->database->prepare('SELECT IF(`main`,`user`,`dual`) as id FROM user_world WHERE user_world.`user`=:id AND user_world.world=:world');
             $stmt->execute([':user' => $_SESSION['id'], ':world' => $world,]);
             $user = intval($stmt->fetch(\PDO::FETCH_COLUMN), 10) ?: $_SESSION['id'];
             $stmt = $this->database->prepare('SELECT world_villages.`name`,`x`,`y`,tribe
