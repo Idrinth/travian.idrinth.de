@@ -28,7 +28,7 @@ class TroopTool
         $this->database = $database;
         $this->twig = $twig;
     }
-    private function updateStatistics(User $user)
+    private function updateStatistics()
     {
         $stmt = $this->database->prepare("SELECT * FROM troops WHERE `user` IN(
 	SELECT `dual`
@@ -88,9 +88,12 @@ class TroopTool
             }
         }
         foreach ($worlds as $world) {
+            $stmt = $this->database->prepare('SELECT IF(`main`,`user`,`dual`) as id FROM user_world WHERE user_world.`user`=:id AND user_world.world=:world');
+            $stmt->execute([':id' => $_SESSION['id'], ':world' => $world,]);
+            $user = intval($stmt->fetch(\PDO::FETCH_COLUMN), 10) ?: $_SESSION['id'];
             $this->database
                 ->prepare('INSERT INTO troop_updates (multipurpose,user, world, offensive, defensive, scouts, `date`,latest) VALUES (:multi, :id, :world, :off, :deff, :scouts, :date, 1)')
-                ->execute([':date' => date('Y-m-d'),':id' => $user->getId($world), ':world' => $world, ':multi' => $multi[$world]??0, ':off' => $off[$world]??0, ':deff' => $deff[$world]??0, ':scouts' => $scouts[$world]??0]);
+                ->execute([':date' => date('Y-m-d'),':id' => $user, ':world' => $world, ':multi' => $multi[$world]??0, ':off' => $off[$world]??0, ':deff' => $deff[$world]??0, ':scouts' => $scouts[$world]??0]);
         }
     }
     public function run(array $post, $id = 0): void
