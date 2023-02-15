@@ -23,23 +23,25 @@ class Application
         session_set_cookie_params(self::LIFETIME, '/', 'travian.idrinth.de', true, true);
         session_start();
         setcookie('lang', $_COOKIE['lang']??'en', [
-            'expires' => time() +self::LIFETIME,
+            'expires' => time() + self::LIFETIME,
             'path' => '/',
             'domain' => 'travian.idrinth.de',
             'secure' => true,
             'httponly' => false,
             'samesite' => 'Strict'
         ]);
-        setcookie('world', $_COOKIE['world']??'', [
-            'expires' => time() +self::LIFETIME,
-            'path' => '/',
-            'domain' => 'travian.idrinth.de',
-            'secure' => true,
-            'httponly' => false,
-            'samesite' => 'Strict'
-        ]);
+        if (isset($_COOKIE['world'])) {
+            setcookie('world', $_COOKIE['world'], [
+                'expires' => time() + self::LIFETIME,
+                'path' => '/',
+                'domain' => 'travian.idrinth.de',
+                'secure' => true,
+                'httponly' => false,
+                'samesite' => 'Strict'
+            ]);
+        }
         setcookie('style', $_COOKIE['style']??'light', [
-            'expires' => time() +self::LIFETIME,
+            'expires' => time() + self::LIFETIME,
             'path' => '/',
             'domain' => 'travian.idrinth.de',
             'secure' => true,

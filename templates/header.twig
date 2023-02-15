@@ -50,7 +50,7 @@
                 {% else %}
                     <a href="/profile">{{ session.user }}#{{ session.discriminator }}</a>
                 {% endif %}
-                <select onchange="setCookie('world', this.value);lcation.reload();">
+                <select onchange="setCookie('world', this.value);location.reload();">
                     <option value="">{{ translations.select_world }}</option>
                     {% for w in worlds %}
                         <option {% if w==world %}selected {% endif %}}value="{{ w }}">{{ w }}</option>
