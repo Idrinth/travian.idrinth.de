@@ -69,7 +69,7 @@ class DeffCall
         }
         $stmt = $this->database->prepare('SELECT IF(`main`,`user`,`dual`) as id FROM user_world WHERE user_world.`user`=:id AND user_world.world=:world');
         $stmt->execute([':id' => $_SESSION['id'], ':world' => $data['target']['world'],]);
-        $user = intval($stmt->fetch(\PDO::FETCH_COLUMN), 10) ?: $_SESSION['id'];
+        $user = intval($stmt->fetch(\PDO::FETCH_COLUMN), 10) ?: $_SESSION['id'] ?? 0;
         $stmt = $this->database->prepare('SELECT name FROM user_world WHERE user_world.user=:user AND world=:world');
         $stmt->execute([':user' => $_SESSION['id'] ?? 0, ':world' => $data['target']['world']]);
         $data['target']['ingame'] = $stmt->fetchColumn() ?: '';
