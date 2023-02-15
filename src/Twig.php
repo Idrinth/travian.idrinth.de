@@ -29,7 +29,7 @@ class Twig extends Environment
     {
         $context['lang'] = $_COOKIE['lang'] ?? 'en';
         $context['style'] = $_COOKIE['style'] ?? 'light';
-        $context['world'] = $_COOKIE['world'] ?? 'world';
+        $context['world'] = $_COOKIE['world'] ?? '';
         $context['translations'] = Translations::get($_COOKIE['lang'] ?? 'en');
         $context['session'] = $_SESSION;
         $context['worlds'] = World::getAll($this->database);
