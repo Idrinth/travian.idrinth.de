@@ -159,7 +159,7 @@
 <table>
     <tr><th>{{ translations.account }}</th><th>{{ translations.troops }}</th><th>{{ translations.arrival }}</th><th></th></tr>
             {% for support in supports %}
-                {% if (key==target.key and key is not empty) or (session.id == support.creator and session.id > 0 ) %}
+                {% if (key==target.key and key is not empty) or (session.id == support.creator and session.id > 0 ) or (self == support.creator and self > 0 ) %}
             <tr{% if strtotime(support.arrival) > strtotime(target.arrival) %} class="late"{% endif %}>
                 <th{% if support.name is not empty %} title="{{ support.name ~ '#' ~ support.discriminator }}"{% endif %}>{{ support.account }}</th>
                 <td>{{ support.scouts }}{{ translations.scouts }}<br/>{{ support.troops }}{{ translations.troops }}<br/>{{ support.hero }}{{ translations.heroes }}</td>

@@ -67,6 +67,9 @@ class DeffCall
                 return;
             }
         }
+        $stmt = $this->database->prepare('SELECT IF(`main`,`user`,`dual`) as id FROM user_world WHERE user_world.`user`=:id AND user_world.world=:world');
+        $stmt->execute([':id' => $_SESSION['id'], ':world' => $data['target']['world'],]);
+        $user = intval($stmt->fetch(\PDO::FETCH_COLUMN), 10) ?: $_SESSION['id'];
         $stmt = $this->database->prepare('SELECT name FROM user_world WHERE user_world.user=:user AND world=:world');
         $stmt->execute([':user' => $_SESSION['id'] ?? 0, ':world' => $data['target']['world']]);
         $data['target']['ingame'] = $stmt->fetchColumn() ?: '';
@@ -141,7 +144,7 @@ class DeffCall
             $stmt = $this->database->prepare("INSERT INTO deff_call_supports (hero, scouts, troops,creator, amount, troop_type, arrival, deff_call, account) VALUES(:hero, :scouts, :troops,:creator, :amount, :troop_type, :arrival, :deff_call, :account)");
             $stmt->execute([
                 ':account' => $post['account'],
-                ':creator' => $_SESSION['id'] ?? 0,
+                ':creator' => $user,
                 ':arrival' => $post['date'] . ' ' . $post['time'],
                 ':deff_call' => $data['target']['aid'],
                 ':troop_type' => $post['troop_type'],
@@ -161,7 +164,7 @@ class DeffCall
         } elseif(isset($post['grain'])) {
             $this->database
                 ->prepare('INSERT INTO deff_call_supplies (account, user, deff_call, grain, arrival) VALUES (:account, :creator, :deff_call, :grain, :arrival)')
-                ->execute([':account' => $post['account'], ':creator' => $_SESSION['id']??0, ':deff_call' => $data['target']['aid'], ':grain' => $post['grain'], ':arrival' => $post['date'] . ' ' . $post['time']]);
+                ->execute([':account' => $post['account'], ':creator' => $user, ':deff_call' => $data['target']['aid'], ':grain' => $post['grain'], ':arrival' => $post['date'] . ' ' . $post['time']]);
             header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);
             return;
         }
@@ -209,7 +212,7 @@ class DeffCall
         if (($_SESSION['id']??0) > 0) {
             $remaining = strtotime($data['target']['arrival']) - time();
             $stmt = $this->database->prepare("SELECT * FROM troops WHERE user=:id AND world=:world");
-            $stmt->execute([':id' => $_SESSION['id'], ':world' => $data['target']['world']]);
+            $stmt->execute([':id' => $user, ':world' => $data['target']['world']]);
             $data['own'] = [];
             $worldWidth = 401;
             $worldHeight= 401;
@@ -236,7 +239,7 @@ class DeffCall
                 $standard=0;
                 if ($village['hero'] == 1) {
                     $stmt2 = $this->database->prepare('SELECT boot_bonus,standard_bonus FROM my_hero WHERE user=:user AND world=:world');
-                    $stmt2->execute([':user' => $_SESSION['id'], ':world' => $village['world']]);
+                    $stmt2->execute([':user' => $user, ':world' => $village['world']]);
                     list($boots, $standard) = $stmt2->fetch(PDO::FETCH_NUM);
                     $boots = intval($boots, 10);
                     $standard = intval($standard, 10);
@@ -314,6 +317,7 @@ class DeffCall
         }
         $data['overflowPercent'] = 100 - $data['cavalryPercent'] - $data['infantryPercent'];
         $data['corn'] = Troops::CORN;
+        $data['self'] = $user;
         World::register($this->database, $data['target']['world']);
         $this->twig->display($data['target']['advanced_troop_data'] ? 'advanced-deff-call.twig' : 'deff-call.twig', $data);
     }
