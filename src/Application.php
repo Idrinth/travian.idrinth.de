@@ -130,6 +130,7 @@ class Application
                     $obj->run($_POST, ...array_values($vars));
                 } catch (Throwable $t) {
                     header('', true, 500);
+                    error_log($t->getFile().':'.$t->getLine().': '.$t->getMessage());
                     error_log($t->getTraceAsString());
                 }
                 break;
