@@ -18,6 +18,7 @@ class Styles
             )
             ->getCss();
         echo $css;
+        return;
         echo (new CSS())->minify($css);
     }
 }
