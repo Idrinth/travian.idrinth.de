@@ -17,6 +17,6 @@
         "utf-8-validate": "^5.0.8",
         "@discordjs/rest": "^0.3.0",
         "needle": "^3.0.0",
-        "yaml": "^1.10.2"
+        "yaml": "^2.2.2"
     }
 }
