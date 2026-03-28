@@ -17,15 +17,21 @@ class AttackParser
     }
     public function run($post)
     {
-        $apikey = getallheaders()['X-API-KEY']??getallheaders()['x-api-key']??'';
+        $apikey = getallheaders()['X-API-KEY'] ?? getallheaders()['x-api-key'] ?? '';
         if ($apikey !== $_ENV['API_KEY']) {
             header('Content-Type: application/json', true, 403);
-            echo 'API-Key "'.$apikey.'" Invalid';
+            echo 'API-Key "' . $apikey . '" Invalid';
             return;
         }
         $blindTime = explode(':', $post['blind_time']);
+        while (count($blindTime) < 3) {
+            array_unshift($blindTime, '00');
+        }
         $blindTime = intval($blindTime[0])*3600 + intval($blindTime[1])*60 + intval($blindTime[2]);
         $duration = explode(':', $post['duration']);
+        while (count($duration) < 3) {
+            array_unshift($duration, '00');
+        }
         $duration = intval($duration[0])*3600 + intval($duration[1])*60 + intval($duration[2]);
         $distance = $this->distance->distance(
             new Point(intval($post['fromX'], 10), intval($post['fromY'], 10)),
