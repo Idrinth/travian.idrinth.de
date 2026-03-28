@@ -48,7 +48,7 @@ use De\Idrinth\Travian\Twig;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $app = new Application();
-$pdo = new LazyPDO(
+$pdo = new /*Lazy*/PDO(
     'mysql:host='.$_ENV['DATABASE_HOST'].';dbname=travian',
     $_ENV['DATABASE_USER'],
     $_ENV['DATABASE_PASSWORD'],
