@@ -35,7 +35,7 @@ module.exports = {
             'post',
             'https://travian.idrinth.de/api/parse-attack',
              'duration=' + interaction.options.getString('duration')
-                + '&blind_time=' + interaction.options.getString('blind_time')
+                + '&blind_time=' + interaction.options.getString('blind-time')
                 + '&fromX=' + interaction.options.getInteger('from-x')
                 + '&fromY=' + interaction.options.getInteger('from-y')
                 + '&toX=' + interaction.options.getInteger('to-x')
