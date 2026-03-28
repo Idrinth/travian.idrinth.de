@@ -24,9 +24,9 @@ class AttackParser
             return;
         }
         $blindTime = explode(':', $post['blind_time']);
-        $blindTime = $blindTime[0]*3600 + $blindTime[1]*60 + $blindTime[2];
+        $blindTime = intval($blindTime[0])*3600 + intval($blindTime[1])*60 + intval($blindTime[2]);
         $duration = explode(':', $post['duration']);
-        $duration = $duration[0]*3600 + $duration[1]*60 + $duration[2];
+        $duration = intval($duration[0])*3600 + intval($duration[1])*60 + intval($duration[2]);
         $distance = $this->distance->distance(
             new Point(intval($post['fromX'], 10), intval($post['fromY'], 10)),
             new Point(intval($post['toX'], 10), intval($post['toY'], 10)),
