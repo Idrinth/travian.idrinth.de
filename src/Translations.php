@@ -2,7 +2,7 @@
 
 namespace De\Idrinth\Travian;
 
-use Symfony\Component\Yaml\Yaml
+use Symfony\Component\Yaml\Yaml;
 
 class Translations
 {
