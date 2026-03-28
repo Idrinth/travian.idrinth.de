@@ -266,6 +266,7 @@ CREATE TABLE IF NOT EXISTS `troop_updates` (
   `scouts` int(11) unsigned NOT NULL,
   `date` date NOT NULL,
   `world` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '0',
+  `latest` tinyint(4) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`aid`),
   KEY `user_date_world` (`user`,`date`,`world`(191))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
@@ -298,6 +299,8 @@ CREATE TABLE IF NOT EXISTS `user_world` (
   `user` int(10) unsigned NOT NULL,
   `world` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '',
   `name` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '',
+  `dual` int(10) unsigned,
+  `main` int(10) unsigned,
   PRIMARY KEY (`aid`),
   KEY `user_world` (`user`,`world`(191))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
