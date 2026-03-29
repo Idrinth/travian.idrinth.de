@@ -101,7 +101,7 @@ nav {
 }
 nav > ul {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     margin: 0;
     padding: 0;
 }
@@ -343,7 +343,6 @@ fieldset.invisible {
         background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.2), rgba(0,0,0,0.1));
         color: #fff;
         text-align: center;
-        height: 1em;
         overflow: hidden;
         .left {
             height: 1em;
