@@ -1,5 +1,7 @@
 h1 {
     font-size: 2em;
+    margin: 0;
+    align-self: center;
 }
 h2 {
     font-size: 1.8em;
@@ -88,6 +90,7 @@ footer {
     color: #ddd;
     display: inline;
     vertical-align: middle;
+    align-self: center;
 }
 #header > * > select {
     color: #ddd;
