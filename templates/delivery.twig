@@ -66,11 +66,10 @@
                     <option value='vid_6' {% if inputs.speed == 'vid_6' %}selected{% endif %}>{{ translations.egyptians }}</option>
                     <option value='vid_7' {% if inputs.speed == 'vid_7' %}selected{% endif %}>{{ translations.huns }}</option>
                 </select></label>
-            <div title="{{ translations.additional_target_title }}">{{ translations.additional_target }}*
-                <label>X<input required type="number" name="x" value="{{ inputs.x }}"/></label>
-                <label>Y<input required type="number" name="y" value="{{ inputs.y }}"/></label>
-            </div>
             <label>{{ translations.only_crop }}*<input type="hidden" name="only_crop" value="0"/><input type="checkbox" name="only_crop" {% if inputs.only_crop %}checked {% endif %}value="1"/></label>
+            <h3 title="{{ translations.additional_target_title }}">{{ translations.additional_target }}*</h3>
+            <label>X<input required type="number" name="x" value="{{ inputs.x }}"/></label>
+            <label>Y<input required type="number" name="y" value="{{ inputs.y }}"/></label>
         </div>
     </fieldset>
 </form>
