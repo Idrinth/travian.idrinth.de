@@ -28,6 +28,10 @@ html {
     line-height: 1.45;
     height: 100%;
 }
+body {
+  display: grid;
+  grid-template-rows: 7em 2em auto 10em;
+}
 textarea, input, select {
     background: #eee;
     color: #333;
